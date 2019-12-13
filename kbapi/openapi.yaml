@@ -1,0 +1,960 @@
+openapi: 3.0.0
+info:
+  description: This is a definition for Discovery Stratus API - Need New Name!
+  version: 1.0.0
+  title: WorldCat Knowledge Base
+  license:
+    name: Licensing TBD
+    url: 'https://www.oclc.org/DiscoveryAPI'
+servers:
+  - url: 'https://worldcat.org/webservices/kb'
+security:
+  - api_key: []
+paths:
+  /rest/collections/search:
+    get:
+      tags:
+        - Member Enabled Collections
+      summary: 'Find member enabled collections in the WorldCat Knowledge base'
+      description: 'Given metadata find collections enabled by member library'
+      operationId: find-kb-collections
+      parameters:
+        - name: alt
+          in: query
+          description: Format to return results in. application/xml or application/json
+          schema:
+            type: string
+            default: xml
+            enum:
+              - xml
+              - json
+          required: false
+        - name: q
+          in: query
+          description: Keyword query to search by
+          required: false
+          schema:
+            type: string
+          example: Nature Publishing Group
+        - name: title
+          in: query
+          description: Search by title
+          required: false
+          schema:
+            type: string
+          examples: 
+           keyword:
+            value: Nature
+           exact-match:
+            value: "Nature"
+           starts-with:
+            value: "Nature%"           
+        - name: provider_uid
+          in: query
+          description: Identifier of the provider associated with the collection
+          required: false
+          schema:
+            type: string
+          example: NPG
+        - name: collection_uid
+          in: query
+          description: Identifier of the collection
+          required: false
+          schema:
+            type: string
+          example: NPG.journals
+        - name: search-type
+          in: query
+          description: Restrict to holdings held by Institutions in requested state
+          required: false
+          schema:
+            type: string
+            enum:
+              - search
+              - atoz
+            default: search  
+          example: atoz  
+        - name: startIndex
+          in: query
+          description: start position of the results to return (1 based), default 1
+          required: false
+          schema:
+            type: integer
+            format: int32
+            default: 1
+          example: 10
+        - name: itemsPerPage
+          in: query
+          description: maximum number of records to return, maximum 50, default 10
+          required: false
+          schema:
+            type: integer
+            format: int32
+            default: 10
+          example: 50
+        - name: orderBy
+          in: query
+          description: Criteria for sorting the results. possible sorting criteria are title, relevancy, holdings, preference, issn, isbn, oclcnum
+          required: false
+          schema:
+            type: string
+            default: title asc
+          example: relevancy          
+      responses:
+        '200':
+          description: Successful search
+          content:
+            application/json:
+              schema:
+                type: object            
+              examples:
+                success-search-collection: 
+                  $ref: '#/components/examples/success-search-collection'                    
+        '400':
+          description: Invalid query. The request was unacceptable, often due to missing a required parameter.
+          content:
+            application/json:
+              schema:
+                type: object            
+              examples:
+                missing-query-parameter:
+                  $ref: '#/components/examples/missing-query-parameter'
+                missing-query-parameter-value:
+                  $ref: '#/components/examples/missing-query-parameter-value'
+                invalid-oclc-number:
+                  $ref: '#/components/examples/invalid-oclc-number'
+              
+        '405':
+          description: 'Method not supported, see response Allow header'
+          content:
+            application/json:
+              schema:
+                type: object            
+              example:
+                $ref: '#/components/examples/method-not-allowed-error'               
+        '500':
+          description: 'Something went wrong (hopfully rare) - please try again'
+          content:
+            application/json:
+              schema:
+                type: object
+      security:
+        - api_key: []
+  /rest/collections/{collection_uid}:
+    get:
+      tags:
+        - Member Enabled Collections
+      summary: 'Read member enabled collections in the WorldCat Knowledge base by ID'
+      description: 'Given metadata find collections enabled by member library'
+      operationId: find-kb-collections
+      parameters:
+        - name: alt
+          in: query
+          description: Format to return results in. application/xml or application/json
+          schema:
+            type: string
+            default: xml
+            enum:
+              - xml
+              - json
+          required: false
+        - name: collection_uid
+          in: path
+          description: Identifier of the collection
+          required: true
+          schema:
+            type: string
+          example: NPG.journals              
+      responses:
+        '200':
+          description: Successful search
+          content:
+            application/json:
+              schema:
+                type: object            
+              examples:
+                success-read-collection: 
+                  $ref: '#/components/examples/success-read-collection'                    
+        '400':
+          description: Invalid query. The request was unacceptable, often due to missing a required parameter.
+          content:
+            application/json:
+              schema:
+                type: object            
+              examples:
+                missing-query-parameter:
+                  $ref: '#/components/examples/missing-query-parameter'
+                missing-query-parameter-value:
+                  $ref: '#/components/examples/missing-query-parameter-value'
+                invalid-oclc-number:
+                  $ref: '#/components/examples/invalid-oclc-number'
+              
+        '405':
+          description: 'Method not supported, see response Allow header'
+          content:
+            application/json:
+              schema:
+                type: object            
+              example:
+                $ref: '#/components/examples/method-not-allowed-error'               
+        '500':
+          description: 'Something went wrong (hopfully rare) - please try again'
+          content:
+            application/json:
+              schema:
+                type: object
+      security:
+        - api_key: [] 
+  /rest/entries/search:
+    get:
+      tags:
+        - Member Enabled Titles
+      summary: 'Find member enabled titles in the WorldCat Knowledge base'
+      description: 'Given metadata find titles enabled by member library'
+      operationId: find-kb-titles
+      parameters:
+        - name: alt
+          in: query
+          description: Format to return results in. application/xml or application/json
+          schema:
+            type: string
+            default: xml
+            enum:
+              - xml
+              - json
+          required: false
+        - name: q
+          in: query
+          description: Keyword query to search by
+          required: false
+          schema:
+            type: string
+          example: Ambient Findability
+        - name: title
+          in: query
+          description: Search by title
+          required: false
+          schema:
+            type: string
+          examples: 
+           keyword:
+            value: API Testing
+           exact-match:
+            value: "API Testing with Postman"
+           starts-with:
+            value: "API Testing%"           
+        - name: provider_uid
+          in: query
+          description: Identifier of the provider associated with the collection
+          required: false
+          schema:
+            type: string
+          example: NPG
+        - name: collection_uid
+          in: query
+          description: Identifier of the collection
+          required: false
+          schema:
+            type: string
+          example: NPG.journals
+        - name: issn
+          in: query
+          description: ISSN match
+          required: false
+          schema:
+            type: string
+          example: 0028-0836  
+        - name: isbn
+          in: query
+          description: ISBN match
+          required: false
+          schema:
+            type: string
+          example: 9780596007652
+        - name: oclcnum
+          in: query
+          description: OCLC number match
+          required: false
+          schema:
+            type: string
+          example: 890474283
+        - name: content
+          in: query
+          description: Indicator to select records of a specific content type; possible values are fulltext, selectedft, abstracts, indexed, print, and ebook.
+          required: false
+          schema:
+            type: string
+            enum:
+              - fulltext
+              - selectedft
+              - abstracts
+              - indexed
+              - print
+              - ebook
+            example: ebook                                  
+        - name: search-type
+          in: query
+          description: Restrict to holdings held by Institutions in requested state
+          required: false
+          schema:
+            type: string
+            enum:
+              - search
+              - atoz
+            default: search  
+          example: atoz  
+        - name: startIndex
+          in: query
+          description: start position of the results to return (1 based), default 1
+          required: false
+          schema:
+            type: integer
+            format: int32
+            default: 1
+          example: 10
+        - name: itemsPerPage
+          in: query
+          description: maximum number of records to return, maximum 50, default 10
+          required: false
+          schema:
+            type: integer
+            format: int32
+            default: 10
+          example: 50
+        - name: orderBy
+          in: query
+          description: Criteria for sorting the results. possible sorting criteria are title, relevancy, holdings, preference, issn, isbn, oclcnum
+          required: false
+          schema:
+            type: string
+            default: title asc
+          example: relevancy          
+      responses:
+        '200':
+          description: Successful search
+          content:
+            application/json:
+              schema:
+                type: object            
+              examples:
+                success-search-collection: 
+                  $ref: '#/components/examples/success-search-collection'                    
+        '400':
+          description: Invalid query. The request was unacceptable, often due to missing a required parameter.
+          content:
+            application/json:
+              schema:
+                type: object            
+              examples:
+                missing-query-parameter:
+                  $ref: '#/components/examples/missing-query-parameter'
+                missing-query-parameter-value:
+                  $ref: '#/components/examples/missing-query-parameter-value'
+                invalid-oclc-number:
+                  $ref: '#/components/examples/invalid-oclc-number'
+              
+        '405':
+          description: 'Method not supported, see response Allow header'
+          content:
+            application/json:
+              schema:
+                type: object            
+              example:
+                $ref: '#/components/examples/method-not-allowed-error'               
+        '500':
+          description: 'Something went wrong (hopfully rare) - please try again'
+          content:
+            application/json:
+              schema:
+                type: object
+      security:
+        - api_key: []
+  /rest/entries/{entry_uid}:
+    get:
+      tags:
+        - Member Enabled Titles
+      summary: 'Read member enabled Titles in the WorldCat Knowledge base by ID'
+      description: 'Given metadata find titles enabled by member library'
+      operationId: find-kb-titles
+      parameters:
+        - name: alt
+          in: query
+          description: Format to return results in. application/xml or application/json
+          schema:
+            type: string
+            default: xml
+            enum:
+              - xml
+              - json
+          required: false
+        - name: entry_uid
+          in: path
+          description: Identifier of the title
+          required: true
+          schema:
+            type: string
+          example: safari.tech,44119961              
+      responses:
+        '200':
+          description: Successful search
+          content:
+            application/json:
+              schema:
+                type: object            
+              examples:
+                success-read-collection: 
+                  $ref: '#/components/examples/success-read-entry'                    
+        '400':
+          description: Invalid query. The request was unacceptable, often due to missing a required parameter.
+          content:
+            application/json:
+              schema:
+                type: object            
+              examples:
+                missing-query-parameter:
+                  $ref: '#/components/examples/missing-query-parameter'
+                missing-query-parameter-value:
+                  $ref: '#/components/examples/missing-query-parameter-value'
+                invalid-oclc-number:
+                  $ref: '#/components/examples/invalid-oclc-number'
+              
+        '405':
+          description: 'Method not supported, see response Allow header'
+          content:
+            application/json:
+              schema:
+                type: object            
+              example:
+                $ref: '#/components/examples/method-not-allowed-error'               
+        '500':
+          description: 'Something went wrong (hopfully rare) - please try again'
+          content:
+            application/json:
+              schema:
+                type: object
+      security:
+        - api_key: []                
+  /rest/providers/search:
+    get:
+      tags:
+        - Member Enabled Titles
+      summary: 'Find member enabled titles in the WorldCat Knowledge base'
+      description: 'Given metadata find titles enabled by member library'
+      operationId: find-kb-titles
+      parameters:
+        - name: alt
+          in: query
+          description: Format to return results in. application/xml or application/json
+          schema:
+            type: string
+            default: xml
+            enum:
+              - xml
+              - json
+          required: false
+        - name: q
+          in: query
+          description: Keyword query to search by
+          required: false
+          schema:
+            type: string
+          example: Nature Publishing Group
+        - name: title
+          in: query
+          description: Search by title
+          required: false
+          schema:
+            type: string
+          examples: 
+           keyword:
+            value: Nature
+           exact-match:
+            value: "Nature"
+           starts-with:
+            value: "Nature%"           
+        - name: provider_uid
+          in: query
+          description: Identifier of the provider associated with the collection
+          required: false
+          schema:
+            type: string
+          example: NPG
+        - name: startIndex
+          in: query
+          description: start position of the results to return (1 based), default 1
+          required: false
+          schema:
+            type: integer
+            format: int32
+            default: 1
+          example: 10
+        - name: itemsPerPage
+          in: query
+          description: maximum number of records to return, maximum 50, default 10
+          required: false
+          schema:
+            type: integer
+            format: int32
+            default: 10
+          example: 50
+        - name: orderBy
+          in: query
+          description: Criteria for sorting the results. possible sorting criteria are title, relevancy, holdings, preference, issn, isbn, oclcnum
+          required: false
+          schema:
+            type: string
+            default: title asc
+          example: relevancy          
+      responses:
+        '200':
+          description: Successful search
+          content:
+            application/json:
+              schema:
+                type: object            
+              examples:
+                success-search-collection: 
+                  $ref: '#/components/examples/success-search-provider'                    
+        '400':
+          description: Invalid query. The request was unacceptable, often due to missing a required parameter.
+          content:
+            application/json:
+              schema:
+                type: object            
+              examples:
+                missing-query-parameter:
+                  $ref: '#/components/examples/missing-query-parameter'
+                missing-query-parameter-value:
+                  $ref: '#/components/examples/missing-query-parameter-value'
+                invalid-oclc-number:
+                  $ref: '#/components/examples/invalid-oclc-number'
+              
+        '405':
+          description: 'Method not supported, see response Allow header'
+          content:
+            application/json:
+              schema:
+                type: object            
+              example:
+                $ref: '#/components/examples/method-not-allowed-error'               
+        '500':
+          description: 'Something went wrong (hopfully rare) - please try again'
+          content:
+            application/json:
+              schema:
+                type: object
+      security:
+        - api_key: []
+  /rest/providers/{provider_ID}:
+    get:
+      tags:
+        - Member Enabled Providers
+      summary: 'Read member enabled providers in the WorldCat Knowledge base by ID'
+      description: 'Given metadata find providers enabled by member library'
+      operationId: find-kb-providers
+      parameters:
+        - name: alt
+          in: query
+          description: Format to return results in. application/xml or application/json
+          schema:
+            type: string
+            default: xml
+            enum:
+              - xml
+              - json
+          required: false
+        - name: provider_ID
+          in: path
+          description: Identifier of the collection
+          required: true
+          schema:
+            type: string
+          example: NPG.journals              
+      responses:
+        '200':
+          description: Successful search
+          content:
+            application/json:
+              schema:
+                type: object            
+              examples:
+                success-read-collection: 
+                  $ref: '#/components/examples/success-read-provider'                    
+        '400':
+          description: Invalid query. The request was unacceptable, often due to missing a required parameter.
+          content:
+            application/json:
+              schema:
+                type: object            
+              examples:
+                missing-query-parameter:
+                  $ref: '#/components/examples/missing-query-parameter'
+                missing-query-parameter-value:
+                  $ref: '#/components/examples/missing-query-parameter-value'
+                invalid-oclc-number:
+                  $ref: '#/components/examples/invalid-oclc-number'
+              
+        '405':
+          description: 'Method not supported, see response Allow header'
+          content:
+            application/json:
+              schema:
+                type: object            
+              example:
+                $ref: '#/components/examples/method-not-allowed-error'               
+        '500':
+          description: 'Something went wrong (hopfully rare) - please try again'
+          content:
+            application/json:
+              schema:
+                type: object
+      security:
+        - api_key: []
+  /openurl/resolve:
+    get:
+      tags:
+        - Member Enabled Title by OpenURL
+      summary: 'Find member enabled title based on OpenURL'
+      description: 'Given an OpenURL find title enabled by member library'
+      operationId: find-title-by-openurl
+      parameters:
+        - name: svc_id
+          in: query
+          description: Response format
+          schema:
+            type: string
+            enum:
+              - json
+              - xml
+            default: json              
+          required: false          
+        - name: rft.title
+          in: query
+          description: Title of item
+          schema:
+            type: string
+          required: false        
+        - name: rft.btitle
+          in: query
+          description: Book Title
+          schema:
+            type: string        
+        - name: rft.jtitle
+          in: query
+          description: Journal Title
+          schema:
+            type: string            
+          required: false        
+        - name: rft.issn
+          in: query
+          description: ISSN
+          schema:
+            type: string
+          required: false        
+        - name: rft.eissn
+          in: query
+          description: Electronic ISSN
+          schema:
+            type: string
+          required: false        
+        - name: rft.isbn
+          in: query
+          description: ISBN
+          schema:
+            type: string            
+          required: false        
+        - name: rft.oclcnum
+          in: query
+          description: OCLC Number
+          schema:
+            type: string
+          required: false        
+        - name: rft.pub
+          in: query
+          description: Publisher name
+          schema:
+            type: string
+          required: false        
+        - name: rft.date
+          in: query
+          description: Publication date, in the format YYYY, YYYY-MM, or YYYY-MM-DD
+          schema:
+            type: string
+          required: false        
+        - name: rft.volume
+          in: query
+          description: Journal volume
+          schema:
+            type: string
+          required: false        
+        - name: rft.issue
+          in: query
+          description: Journal issue
+          schema:
+            type: string
+          required: false        
+        - name: rft.spage
+          in: query
+          description: Start page
+          schema:
+            type: string
+          required: false        
+        - name: rft.epage
+          in: query
+          description: End page
+          schema:
+            type: string
+          required: false        
+        - name: rft.atitle
+          in: query
+          description: Article Title
+          schema:
+            type: string            
+          required: false        
+        - name: rft.aufirst
+          in: query
+          description: Author first name
+          schema:
+            type: string
+          required: false        
+        - name: rft.auinit
+          in: query
+          description: Author initial
+          schema:
+            type: string
+          required: false        
+        - name: rft.aulast
+          in: query
+          description: Author Last name
+          schema:
+            type: string
+          required: false        
+        - name: rft.sici
+          in: query
+          description: Serial Item and Contribution Identifier
+          schema:
+            type: string
+          required: false        
+        - name: rft.provider_uid
+          in: query
+          description: Provider uid as defined by knowledge base
+          schema:
+            type: string        
+        - name: rft.collection_uid
+          in: query
+          description: Collection uid as defined by knowledge base
+          schema:
+            type: string
+          required: false        
+        - name: rft.content
+          in: query
+          description: Format to return results in. application/xml or application/json
+          schema:
+            type: string
+            default: fulltext
+            enum:
+              - fulltext
+              - selectedft
+              - abstracts
+              - indexed
+              - print
+              - ebook
+          required: false        
+        - name: rft.institution_id
+          in: query
+          description: WorldCat Registry Id for institution
+          schema:
+            type: string
+          required: false        
+        - name: rft.jkey
+          in: query
+          description: Vendor defined journal id for particular vendors
+          schema:
+            type: string
+          required: false        
+        - name: rft.openaccess
+          in: query
+          description: Open Access flag
+          schema:
+            type: string
+            enum:
+              - none
+              - yes
+              - no            
+          required: false        
+        - name: rfr_id
+          in: query
+          description: OpenURL referrer identifier
+          schema:
+            type: string
+          required: false        
+        - name: rft.id
+          in: query
+          description: identifier for item
+          examples:
+            doi: 
+              value: info:doi...
+            pmid:
+              value: info:pmid...
+        - name: rft.force_remote_lookup
+          in: query
+          description: Force PMID/DOI lookup
+          schema:
+            type: string
+            enum:
+              - yes
+              - no
+          required: no                                      
+      responses:
+        '200':
+          description: Successful search
+          content:
+            application/json:
+              schema:
+                type: object            
+              examples:
+                success-read-collection: 
+                  $ref: '#/components/examples/success-openurl-single'                    
+        '400':
+          description: Invalid query. The request was unacceptable, often due to missing a required parameter.
+          content:
+            application/json:
+              schema:
+                type: object            
+              examples:
+                missing-query-parameter:
+                  $ref: '#/components/examples/missing-query-parameter'
+                missing-query-parameter-value:
+                  $ref: '#/components/examples/missing-query-parameter-value'
+                invalid-oclc-number:
+                  $ref: '#/components/examples/invalid-oclc-number'
+              
+        '405':
+          description: 'Method not supported, see response Allow header'
+          content:
+            application/json:
+              schema:
+                type: object            
+              example:
+                $ref: '#/components/examples/method-not-allowed-error'               
+        '500':
+          description: 'Something went wrong (hopfully rare) - please try again'
+          content:
+            application/json:
+              schema:
+                type: object
+      security:
+        - api_key: []  
+  /openurl/mresolve:
+    get:
+      tags:
+        - Member Enabled Titles by OpenURL
+      summary: 'Find member enabled titles based on OpenURL'
+      description: 'Given an OpenURL find titles enabled by member library'
+      operationId: find-titles-by-openurl
+      parameters:
+        - name: queries
+          in: query
+          description: JSON object contain queries
+          schema:
+            type: object
+          required: true      
+        - name: alt
+          in: query
+          description: Format to return results in. application/xml or application/json
+          schema:
+            type: string
+            default: xml
+            enum:
+              - xml
+              - json
+          required: false              
+      responses:
+        '200':
+          description: Successful search
+          content:
+            application/json:
+              schema:
+                type: object            
+              examples:
+                success-read-collection: 
+                  $ref: '#/components/examples/success-openurl-multiple'                    
+        '400':
+          description: Invalid query. The request was unacceptable, often due to missing a required parameter.
+          content:
+            application/json:
+              schema:
+                type: object            
+              examples:
+                missing-query-parameter:
+                  $ref: '#/components/examples/missing-query-parameter'
+                missing-query-parameter-value:
+                  $ref: '#/components/examples/missing-query-parameter-value'
+                invalid-oclc-number:
+                  $ref: '#/components/examples/invalid-oclc-number'
+              
+        '405':
+          description: 'Method not supported, see response Allow header'
+          content:
+            application/json:
+              schema:
+                type: object            
+              example:
+                $ref: '#/components/examples/method-not-allowed-error'               
+        '500':
+          description: 'Something went wrong (hopfully rare) - please try again'
+          content:
+            application/json:
+              schema:
+                type: object
+      security:
+        - api_key: []                                
+components:
+  securitySchemes:
+    api_key:
+      type: apiKey
+      name: wskey
+      in: query
+  examples:
+    success-read-collection:
+      summary: successful request to read a collection
+      value: { "title": "Nature Publishing Group", "id": "http://worldcat.org/webservices/kb/rest/collections/NPG.journals", "updated": "2014-02-15T20:20:12Z", "links": [{ "href": "http://worldcat.org/webservices/kb/rest/collections/NPG.journals", "rel": "self" }, { "href": "http://worldcat.org/webservices/kb/rest/collections/NPG.journals.html", "rel": "alternate" }, { "href": "http://www.nature.com", "rel": "via" }, { "href": "http://worldcat.org/webservices/kb/export/6569/6569_NPG.journals_kbart.txt", "rel": "enclosure", "title": "kbart file", "length": 52000 } ], "kb:provider_uid": "NPG", "kb:provider_name": "Nature Publishing Group", "kb:collection_uid": "NPG.journals", "kb:owner_institution": "6569", "kb:source_institution": "6569", "kb:collection_status": "raw", "kb:collection_type": "browsable", "kb:title_link_template": "[[localstem]][[url]]", "kb:linkscheme": "npg", "kb:uhf_version": "release134", "kb:marcdelivery_no_delete": "false", "kb:google_scholar_enabled": "true", "kb:open": "true", "kb:available_entries": "104", "kb:selected_entries": "104", "kb:localstem": "true" }
+    success-search-collection:
+      summary: successful search of collections
+      value: { "title": "WorldCat KnowledgeBase Search: Nature", "updated": "2019-12-12T16:44:25.434Z", "id": "urn:uuid:e318046f4275b7e1dcd64e20a4cd13aa", "author": "OCLC", "links": [ { "href": "http://worldcat.org/webservices/kb/rest/collections/search?q=Nature&startIndex=1&search-type=search&itemsPerPage=10&scope=my&orderBy=title+asc&institution_id=128807", "rel": "self" } ], "os:totalResults": "1", "os:startIndex": "1", "os:itemsPerPage": "10", "os:Query": "q=Nature&startIndex=1&search-type=search&itemsPerPage=10&scope=my&orderBy=title+asc&institution_id=128807", "entries": [ { "title": "Nature Open Access Content", "id": "http://worldcat.org/webservices/kb/rest/collections/NPG.openAccess,128807", "updated": "2019-11-26T16:24:16Z", "published": "2012-07-24T01:05:53Z", "links": [ { "href": "http://worldcat.org/webservices/kb/rest/collections/NPG.openAccess,128807", "rel": "self" }, { "href": "http://worldcat.org/webservices/kb/rest/collections/NPG.openAccess,128807.html", "rel": "alternate" }, { "href": "https://www.nature.com", "rel": "via" }, { "href": "http://worldcat.org/webservices/kb/rest/collections/NPG.openAccess", "rel": "parent" }, { "href": "http://worldcat.org/webservices/kb/export/128807/128807_NPG.openAccess_kbart.txt", "rel": "enclosure", "title": "kbart file", "length": 53000 } ], "kb:provider_uid": "NPG", "kb:provider_name": "Nature Publishing Group", "kb:collection_uid": "NPG.openAccess", "kb:owner_institution": "128807", "kb:source_institution": "6569", "kb:collection_status": "copy", "kb:collection_type": "autoapprove browsable openaccess", "kb:title_link_template": "[[localstem]][[url]]", "kb:linkscheme": "npg", "kb:uhf_version": "release1574104235-NPG", "kb:wcsync_enabled": "false", "kb:marcdelivery_enabled": "false", "kb:marcdelivery_no_delete": "false", "kb:open": "false", "kb:available_entries": "106", "kb:selected_entries": "106", "kb:localstem": "true" } ] }    
+    success-read-entry:
+      summary: successful request to read a title
+      value: { "title": "API Testing with Postman", "id": "http://worldcat.org/webservices/kb/rest/entries/safari.tech,44119961", "published": "2019-03-16T20:03:56Z", "links": [ { "href": "http://worldcat.org/webservices/kb/rest/entries/safari.tech,44119961.html", "rel": "alternate" }, { "href": "http://worldcat.org/webservices/kb/rest/entries/safari.tech,44119961", "rel": "self" }, { "href": "http://linker2.worldcat.org/?jHome=http%3A%2F%2Fmy.safaribooksonline.com%2F9781789616569%3Ftocview%3Dtrue&linktype=best", "rel": "via" }, { "href": "http://my.safaribooksonline.com/9781789616569?tocview=true", "rel": "canonical" } ], "kb:entry_uid": "44119961", "kb:entry_status": "raw", "kb:bkey": "9781789616569", "kb:collection_uid": "safari.tech", "kb:collection_name": "Safari Tech Books Online", "kb:provider_uid": "safari", "kb:provider_name": "Safari Books Online", "kb:isbn": "9781789616569", "kb:publisher": "Packt Publishing", "kb:coverage": "ebook@2019-02-28", "kb:coll_type": "browsable" }
+    success-search-entry:
+      summary: successful search of titles
+      value: { "title": "WorldCat KnowledgeBase Search: ", "updated": "2019-12-12T17:26:26.410Z", "id": "urn:uuid:a50aa25f7027897af3a96b6c6dd9c109", "author": "OCLC", "links": [ { "href": "http://worldcat.org/webservices/kb/rest/entries/search?startIndex=1&search-type=search&itemsPerPage=10&isbn=9781789616569&scope=my&orderBy=title+asc&institution_id=128807", "rel": "self" } ], "os:totalResults": "1", "os:startIndex": "1", "os:itemsPerPage": "10", "os:Query": "startIndex=1&search-type=search&itemsPerPage=10&isbn=9781789616569&scope=my&orderBy=title+asc&institution_id=128807", "entries": [ { "title": "API Testing with Postman", "id": "http://worldcat.org/webservices/kb/rest/entries/safari.tech,44119961", "published": "2019-03-16T20:03:56Z", "links": [ { "href": "http://worldcat.org/webservices/kb/rest/entries/safari.tech,44119961.html", "rel": "alternate" }, { "href": "http://worldcat.org/webservices/kb/rest/entries/safari.tech,44119961", "rel": "self" }, { "href": "http://linker2.worldcat.org/?jHome=http%3A%2F%2Fmy.safaribooksonline.com%2F9781789616569%3Ftocview%3Dtrue&linktype=best", "rel": "via" }, { "href": "http://my.safaribooksonline.com/9781789616569?tocview=true", "rel": "canonical" } ], "kb:entry_uid": "44119961", "kb:entry_status": "raw", "kb:bkey": "9781789616569", "kb:collection_uid": "safari.tech", "kb:collection_name": "Safari Tech Books Online", "kb:provider_uid": "safari", "kb:provider_name": "Safari Books Online", "kb:isbn": "9781789616569", "kb:publisher": "Packt Publishing", "kb:coverage": "ebook@2019-02-28", "kb:coll_type": "browsable" } ] }
+    success-read-provider:
+      summary: successful request to read a provider
+      value: {}
+    success-search-provider:
+      summary: successful search of providers
+      value: {}
+    success-openurl-single:
+      summary: successful openurl request
+      value: {}
+    success-openurl-multiple:
+      summary: successful openurl request for multiple items
+      value: {}                
+    unauthorized:
+      summary: Error returned when valid API credentials not sent or invalid
+      value: {"message": "Unauthorized"}
+    forbidden:
+      summary: Error returned when API credentials not for resource
+      value: {"message": "Forbidden"}
+    method-not-allowed-error:
+      summary: Error when invalid HTTP method used
+      value: {"title": "NOT_ALLOWED", "detail": "POST method not allowed"}
+    not-acceptable-error:
+      summary: Error when media type in Accept header not supported
+      value: {"title": "NOT_ACCEPTABLE", "detail": "Media type application/xml not supported. Supported media types: application/json"}
+    missing-query-parameter:
+      summary: Error returned when required query parameter not sent
+      value: {"type": "MISSING_QUERY_PARAMETER", "title": "Validation Failure", "detail": "Required String parameter 'q' is not present"}      
+externalDocs:
+  description: Find out more about OCLC
+  url: 'https://www.oclc.org'
