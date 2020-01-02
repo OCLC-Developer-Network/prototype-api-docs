@@ -997,6 +997,12 @@ components:
         coverage:
           description: Coverage for title in date format
           type: string
+        coll_type:
+          description: Kind of collection
+          type: string
+          enum:
+            - openaccess
+            - browseable          
         coverageenum:
           description: Coverage enumeration in volume/issue format
           type: string        
@@ -1058,19 +1064,13 @@ components:
             - openaccess
             - browseable        
         title_link_template:
-          description: something
-          type: string        
-        linkscheme:
-          description: something
-          type: string        
+          description: pattern for creating link to title
+          type: string                
         uhf_version:
           description: something
           type: string        
         marcdelivery_no_delete:
-          description: something
-          type: boolean        
-        google_scholar_enabled:
-          description: something
+          description: Whether or not to deliver MARC records for collection 
           type: boolean                  
         open:
           description: If the collection is open access
@@ -1085,7 +1085,7 @@ components:
           format: int32                  
         localstem:  
           description: something
-          type: string    
+          type: boolean    
     Provider:
       type: object
       properties:
