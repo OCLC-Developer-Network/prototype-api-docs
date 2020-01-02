@@ -1,6 +1,6 @@
 openapi: 3.0.0
 info:
-  description: This is a definition for Discovery Stratus API - Need New Name!
+  description: WorldCat Knowledge base API
   version: 1.0.0
   title: WorldCat Knowledge Base
   license:
@@ -121,8 +121,6 @@ paths:
                   $ref: '#/components/examples/missing-query-parameter'
                 missing-query-parameter-value:
                   $ref: '#/components/examples/missing-query-parameter-value'
-                invalid-oclc-number:
-                  $ref: '#/components/examples/invalid-oclc-number'
               
         '405':
           description: 'Method not supported, see response Allow header'
@@ -186,8 +184,6 @@ paths:
                   $ref: '#/components/examples/missing-query-parameter'
                 missing-query-parameter-value:
                   $ref: '#/components/examples/missing-query-parameter-value'
-                invalid-oclc-number:
-                  $ref: '#/components/examples/invalid-oclc-number'
               
         '405':
           description: 'Method not supported, see response Allow header'
@@ -350,8 +346,6 @@ paths:
                   $ref: '#/components/examples/missing-query-parameter'
                 missing-query-parameter-value:
                   $ref: '#/components/examples/missing-query-parameter-value'
-                invalid-oclc-number:
-                  $ref: '#/components/examples/invalid-oclc-number'
               
         '405':
           description: 'Method not supported, see response Allow header'
@@ -415,8 +409,6 @@ paths:
                   $ref: '#/components/examples/missing-query-parameter'
                 missing-query-parameter-value:
                   $ref: '#/components/examples/missing-query-parameter-value'
-                invalid-oclc-number:
-                  $ref: '#/components/examples/invalid-oclc-number'
               
         '405':
           description: 'Method not supported, see response Allow header'
@@ -437,10 +429,10 @@ paths:
   /rest/providers/search:
     get:
       tags:
-        - Member Enabled Titles
-      summary: 'Find member enabled titles in the WorldCat Knowledge base'
-      description: 'Given metadata find titles enabled by member library'
-      operationId: find-kb-titles
+        - Member Enabled Providers
+      summary: 'Find member enabled providers in the WorldCat Knowledge base'
+      description: 'Given metadata find providers enabled by member library'
+      operationId: find-kb-providers
       parameters:
         - name: alt
           in: query
@@ -526,8 +518,6 @@ paths:
                   $ref: '#/components/examples/missing-query-parameter'
                 missing-query-parameter-value:
                   $ref: '#/components/examples/missing-query-parameter-value'
-                invalid-oclc-number:
-                  $ref: '#/components/examples/invalid-oclc-number'
               
         '405':
           description: 'Method not supported, see response Allow header'
@@ -591,8 +581,6 @@ paths:
                   $ref: '#/components/examples/missing-query-parameter'
                 missing-query-parameter-value:
                   $ref: '#/components/examples/missing-query-parameter-value'
-                invalid-oclc-number:
-                  $ref: '#/components/examples/invalid-oclc-number'
               
         '405':
           description: 'Method not supported, see response Allow header'
@@ -826,8 +814,6 @@ paths:
                   $ref: '#/components/examples/missing-query-parameter'
                 missing-query-parameter-value:
                   $ref: '#/components/examples/missing-query-parameter-value'
-                invalid-oclc-number:
-                  $ref: '#/components/examples/invalid-oclc-number'
               
         '405':
           description: 'Method not supported, see response Allow header'
@@ -851,14 +837,15 @@ paths:
         - Member Enabled Titles by OpenURL
       summary: 'Find member enabled titles based on OpenURL'
       description: 'Given an OpenURL find titles enabled by member library'
-      operationId: find-titles-by-openurl
+      operationId: find-multiple-titles-by-openurl
       parameters:
         - name: queries
           in: query
           description: JSON object contain queries
           schema:
             type: object
-          required: true      
+          required: true
+          example: {"queryForBook":{"rft.isbn":"9780596007652"},"queryForJournal":{"rft.issn":"0028-0836"}, "queryForArticle":{"rft.title":"Nature", "rft.issn":"0028-0836", "rft.date":"2010-02-18", "rft.volume":"463", "rft.issue":"7283", "rft.spage":"850", "rft.atitle":"Nature's+choices"}}      
         - name: alt
           in: query
           description: Format to return results in. application/xml or application/json
@@ -890,8 +877,6 @@ paths:
                   $ref: '#/components/examples/missing-query-parameter'
                 missing-query-parameter-value:
                   $ref: '#/components/examples/missing-query-parameter-value'
-                invalid-oclc-number:
-                  $ref: '#/components/examples/invalid-oclc-number'
               
         '405':
           description: 'Method not supported, see response Allow header'
@@ -918,28 +903,28 @@ components:
   examples:
     success-read-collection:
       summary: successful request to read a collection
-      value: { "title": "Nature Publishing Group", "id": "http://worldcat.org/webservices/kb/rest/collections/NPG.journals", "updated": "2014-02-15T20:20:12Z", "links": [{ "href": "http://worldcat.org/webservices/kb/rest/collections/NPG.journals", "rel": "self" }, { "href": "http://worldcat.org/webservices/kb/rest/collections/NPG.journals.html", "rel": "alternate" }, { "href": "http://www.nature.com", "rel": "via" }, { "href": "http://worldcat.org/webservices/kb/export/6569/6569_NPG.journals_kbart.txt", "rel": "enclosure", "title": "kbart file", "length": 52000 } ], "kb:provider_uid": "NPG", "kb:provider_name": "Nature Publishing Group", "kb:collection_uid": "NPG.journals", "kb:owner_institution": "6569", "kb:source_institution": "6569", "kb:collection_status": "raw", "kb:collection_type": "browsable", "kb:title_link_template": "[[localstem]][[url]]", "kb:linkscheme": "npg", "kb:uhf_version": "release134", "kb:marcdelivery_no_delete": "false", "kb:google_scholar_enabled": "true", "kb:open": "true", "kb:available_entries": "104", "kb:selected_entries": "104", "kb:localstem": "true" }
+      value: { "title": "Nature Publishing Group", "id": "http://worldcat.org/webservices/kb/rest/collections/NPG.journals", "updated": "2014-02-15T20:20:12Z", "links": [{ "href": "http://worldcat.org/webservices/kb/rest/collections/NPG.journals", "rel": "self" }, { "href": "http://worldcat.org/webservices/kb/rest/collections/NPG.journals.html", "rel": "alternate" }, { "href": "http://www.nature.com", "rel": "via" }, { "href": "http://worldcat.org/webservices/kb/export/6569/6569_NPG.journals_kbart.txt", "rel": "enclosure", "title": "kbart file", "length": 52000 } ], "provider_uid": "NPG", "provider_name": "Nature Publishing Group", "collection_uid": "NPG.journals", "owner_institution": "6569", "source_institution": "6569", "collection_status": "raw", "collection_type": "browsable", "title_link_template": "[[localstem]][[url]]", "linkscheme": "npg", "uhf_version": "release134", "marcdelivery_no_delete": "false", "google_scholar_enabled": "true", "open": "true", "available_entries": "104", "selected_entries": "104", "localstem": "true" }
     success-search-collection:
       summary: successful search of collections
-      value: { "title": "WorldCat KnowledgeBase Search: Nature", "updated": "2019-12-12T16:44:25.434Z", "id": "urn:uuid:e318046f4275b7e1dcd64e20a4cd13aa", "author": "OCLC", "links": [ { "href": "http://worldcat.org/webservices/kb/rest/collections/search?q=Nature&startIndex=1&search-type=search&itemsPerPage=10&scope=my&orderBy=title+asc&institution_id=128807", "rel": "self" } ], "os:totalResults": "1", "os:startIndex": "1", "os:itemsPerPage": "10", "os:Query": "q=Nature&startIndex=1&search-type=search&itemsPerPage=10&scope=my&orderBy=title+asc&institution_id=128807", "entries": [ { "title": "Nature Open Access Content", "id": "http://worldcat.org/webservices/kb/rest/collections/NPG.openAccess,128807", "updated": "2019-11-26T16:24:16Z", "published": "2012-07-24T01:05:53Z", "links": [ { "href": "http://worldcat.org/webservices/kb/rest/collections/NPG.openAccess,128807", "rel": "self" }, { "href": "http://worldcat.org/webservices/kb/rest/collections/NPG.openAccess,128807.html", "rel": "alternate" }, { "href": "https://www.nature.com", "rel": "via" }, { "href": "http://worldcat.org/webservices/kb/rest/collections/NPG.openAccess", "rel": "parent" }, { "href": "http://worldcat.org/webservices/kb/export/128807/128807_NPG.openAccess_kbart.txt", "rel": "enclosure", "title": "kbart file", "length": 53000 } ], "kb:provider_uid": "NPG", "kb:provider_name": "Nature Publishing Group", "kb:collection_uid": "NPG.openAccess", "kb:owner_institution": "128807", "kb:source_institution": "6569", "kb:collection_status": "copy", "kb:collection_type": "autoapprove browsable openaccess", "kb:title_link_template": "[[localstem]][[url]]", "kb:linkscheme": "npg", "kb:uhf_version": "release1574104235-NPG", "kb:wcsync_enabled": "false", "kb:marcdelivery_enabled": "false", "kb:marcdelivery_no_delete": "false", "kb:open": "false", "kb:available_entries": "106", "kb:selected_entries": "106", "kb:localstem": "true" } ] }    
+      value: { "title": "WorldCat KnowledgeBase Search: Nature", "updated": "2019-12-12T16:44:25.434Z", "id": "urn:uuid:e318046f4275b7e1dcd64e20a4cd13aa", "author": "OCLC", "links": [ { "href": "http://worldcat.org/webservices/kb/rest/collections/search?q=Nature&startIndex=1&search-type=search&itemsPerPage=10&scope=my&orderBy=title+asc&institution_id=128807", "rel": "self" } ], "os:totalResults": "1", "os:startIndex": "1", "os:itemsPerPage": "10", "os:Query": "q=Nature&startIndex=1&search-type=search&itemsPerPage=10&scope=my&orderBy=title+asc&institution_id=128807", "entries": [ { "title": "Nature Open Access Content", "id": "http://worldcat.org/webservices/kb/rest/collections/NPG.openAccess,128807", "updated": "2019-11-26T16:24:16Z", "published": "2012-07-24T01:05:53Z", "links": [ { "href": "http://worldcat.org/webservices/kb/rest/collections/NPG.openAccess,128807", "rel": "self" }, { "href": "http://worldcat.org/webservices/kb/rest/collections/NPG.openAccess,128807.html", "rel": "alternate" }, { "href": "https://www.nature.com", "rel": "via" }, { "href": "http://worldcat.org/webservices/kb/rest/collections/NPG.openAccess", "rel": "parent" }, { "href": "http://worldcat.org/webservices/kb/export/128807/128807_NPG.openAccess_kbart.txt", "rel": "enclosure", "title": "kbart file", "length": 53000 } ], "provider_uid": "NPG", "provider_name": "Nature Publishing Group", "collection_uid": "NPG.openAccess", "owner_institution": "128807", "source_institution": "6569", "collection_status": "copy", "collection_type": "autoapprove browsable openaccess", "title_link_template": "[[localstem]][[url]]", "linkscheme": "npg", "uhf_version": "release1574104235-NPG", "wcsync_enabled": "false", "marcdelivery_enabled": "false", "marcdelivery_no_delete": "false", "open": "false", "available_entries": "106", "selected_entries": "106", "localstem": "true" } ] }    
     success-read-entry:
       summary: successful request to read a title
-      value: { "title": "API Testing with Postman", "id": "http://worldcat.org/webservices/kb/rest/entries/safari.tech,44119961", "published": "2019-03-16T20:03:56Z", "links": [ { "href": "http://worldcat.org/webservices/kb/rest/entries/safari.tech,44119961.html", "rel": "alternate" }, { "href": "http://worldcat.org/webservices/kb/rest/entries/safari.tech,44119961", "rel": "self" }, { "href": "http://linker2.worldcat.org/?jHome=http%3A%2F%2Fmy.safaribooksonline.com%2F9781789616569%3Ftocview%3Dtrue&linktype=best", "rel": "via" }, { "href": "http://my.safaribooksonline.com/9781789616569?tocview=true", "rel": "canonical" } ], "kb:entry_uid": "44119961", "kb:entry_status": "raw", "kb:bkey": "9781789616569", "kb:collection_uid": "safari.tech", "kb:collection_name": "Safari Tech Books Online", "kb:provider_uid": "safari", "kb:provider_name": "Safari Books Online", "kb:isbn": "9781789616569", "kb:publisher": "Packt Publishing", "kb:coverage": "ebook@2019-02-28", "kb:coll_type": "browsable" }
+      value: { "title": "API Testing with Postman", "id": "http://worldcat.org/webservices/kb/rest/entries/safari.tech,44119961", "published": "2019-03-16T20:03:56Z", "links": [ { "href": "http://worldcat.org/webservices/kb/rest/entries/safari.tech,44119961.html", "rel": "alternate" }, { "href": "http://worldcat.org/webservices/kb/rest/entries/safari.tech,44119961", "rel": "self" }, { "href": "http://linker2.worldcat.org/?jHome=http%3A%2F%2Fmy.safaribooksonline.com%2F9781789616569%3Ftocview%3Dtrue&linktype=best", "rel": "via" }, { "href": "http://my.safaribooksonline.com/9781789616569?tocview=true", "rel": "canonical" } ], "entry_uid": "44119961", "entry_status": "raw", "bkey": "9781789616569", "collection_uid": "safari.tech", "collection_name": "Safari Tech Books Online", "provider_uid": "safari", "provider_name": "Safari Books Online", "isbn": "9781789616569", "publisher": "Packt Publishing", "coverage": "ebook@2019-02-28", "coll_type": "browsable" }
     success-search-entry:
       summary: successful search of titles
-      value: { "title": "WorldCat KnowledgeBase Search: ", "updated": "2019-12-12T17:26:26.410Z", "id": "urn:uuid:a50aa25f7027897af3a96b6c6dd9c109", "author": "OCLC", "links": [ { "href": "http://worldcat.org/webservices/kb/rest/entries/search?startIndex=1&search-type=search&itemsPerPage=10&isbn=9781789616569&scope=my&orderBy=title+asc&institution_id=128807", "rel": "self" } ], "os:totalResults": "1", "os:startIndex": "1", "os:itemsPerPage": "10", "os:Query": "startIndex=1&search-type=search&itemsPerPage=10&isbn=9781789616569&scope=my&orderBy=title+asc&institution_id=128807", "entries": [ { "title": "API Testing with Postman", "id": "http://worldcat.org/webservices/kb/rest/entries/safari.tech,44119961", "published": "2019-03-16T20:03:56Z", "links": [ { "href": "http://worldcat.org/webservices/kb/rest/entries/safari.tech,44119961.html", "rel": "alternate" }, { "href": "http://worldcat.org/webservices/kb/rest/entries/safari.tech,44119961", "rel": "self" }, { "href": "http://linker2.worldcat.org/?jHome=http%3A%2F%2Fmy.safaribooksonline.com%2F9781789616569%3Ftocview%3Dtrue&linktype=best", "rel": "via" }, { "href": "http://my.safaribooksonline.com/9781789616569?tocview=true", "rel": "canonical" } ], "kb:entry_uid": "44119961", "kb:entry_status": "raw", "kb:bkey": "9781789616569", "kb:collection_uid": "safari.tech", "kb:collection_name": "Safari Tech Books Online", "kb:provider_uid": "safari", "kb:provider_name": "Safari Books Online", "kb:isbn": "9781789616569", "kb:publisher": "Packt Publishing", "kb:coverage": "ebook@2019-02-28", "kb:coll_type": "browsable" } ] }
+      value: { "title": "WorldCat KnowledgeBase Search: ", "updated": "2019-12-12T17:26:26.410Z", "id": "urn:uuid:a50aa25f7027897af3a96b6c6dd9c109", "author": "OCLC", "links": [ { "href": "http://worldcat.org/webservices/kb/rest/entries/search?startIndex=1&search-type=search&itemsPerPage=10&isbn=9781789616569&scope=my&orderBy=title+asc&institution_id=128807", "rel": "self" } ], "os:totalResults": "1", "os:startIndex": "1", "os:itemsPerPage": "10", "os:Query": "startIndex=1&search-type=search&itemsPerPage=10&isbn=9781789616569&scope=my&orderBy=title+asc&institution_id=128807", "entries": [ { "title": "API Testing with Postman", "id": "http://worldcat.org/webservices/kb/rest/entries/safari.tech,44119961", "published": "2019-03-16T20:03:56Z", "links": [ { "href": "http://worldcat.org/webservices/kb/rest/entries/safari.tech,44119961.html", "rel": "alternate" }, { "href": "http://worldcat.org/webservices/kb/rest/entries/safari.tech,44119961", "rel": "self" }, { "href": "http://linker2.worldcat.org/?jHome=http%3A%2F%2Fmy.safaribooksonline.com%2F9781789616569%3Ftocview%3Dtrue&linktype=best", "rel": "via" }, { "href": "http://my.safaribooksonline.com/9781789616569?tocview=true", "rel": "canonical" } ], "entry_uid": "44119961", "entry_status": "raw", "bkey": "9781789616569", "collection_uid": "safari.tech", "collection_name": "Safari Tech Books Online", "provider_uid": "safari", "provider_name": "Safari Books Online", "isbn": "9781789616569", "publisher": "Packt Publishing", "coverage": "ebook@2019-02-28", "coll_type": "browsable" } ] }
     success-read-provider:
       summary: successful request to read a provider
-      value: {}
+      value: {"title": "Nature Publishing Group", "id": "http://worldcat.org/webservices/kb/rest/providers/NPG", "links": [ { "href": "http://worldcat.org/webservices/kb/rest/providers/NPG", "rel": "self" }, { "href": "http://www.nature.com", "rel": "via" }, { "href": "http://worldcat.org/webservices/kb/rest/providers/NPG.html", "rel": "alternate" } ], "provider_uid": "NPG", "vic_id": "572cde9e-0a1d-40ce-9f54-ad3ffcf42aa6", "provider_name": "Nature Publishing Group", "available_collections": "22", "selected_collections": "22", "available_entries": "1115", "selected_entries": "1115"}
     success-search-provider:
       summary: successful search of providers
       value: {}
     success-openurl-single:
       summary: successful openurl request
-      value: {}
+      value: [ { "coverage": "ebook@2005-09-26", "collection_url": "http://my.safaribooksonline.com", "collection_uid": "safari.tech", "oclcnums": "65183407 61260129 878406930 861529762 847462570 61849699 270992543", "isbn": "9780596007652", "provider_uid": "safari", "source": "holdings", "title": "Ambient Findability", "collection_type": "browsable", "content": "ebook", "url": "http://linker2.worldcat.org/?jHome=http%3A%2F%2Fmy.safaribooksonline.com%2F0596007655%3Ftocview%3Dtrue&linktype=best", "institution_id": [ "128807" ], "uid": "1883656", "bkey": "0596007655", "publisher": "O'Reilly Media, Inc. - O'Reilly Media", "openaccess": "no", "id": "d6edd1064311b081e77051faf19e687e", "provider_name": "Safari Books Online", "collection_name": "Safari Tech Books Online", "oclcnum": "61849699" } ]
     success-openurl-multiple:
       summary: successful openurl request for multiple items
-      value: {}                
+      value: { "queryForBook": { "result": [ { "coverage": "ebook@2005-09-26", "collection_url": "http://my.safaribooksonline.com", "collection_uid": "safari.tech", "oclcnums": "65183407 61260129 878406930 861529762 847462570 61849699 270992543", "isbn": "9780596007652", "provider_uid": "safari", "source": "holdings", "title": "Ambient Findability", "collection_type": "browsable", "content": "ebook", "url": "http://linker2.worldcat.org/?jHome=http%3A%2F%2Fmy.safaribooksonline.com%2F0596007655%3Ftocview%3Dtrue&linktype=best", "institution_id": [ "128807" ], "uid": "1883656", "bkey": "0596007655", "publisher": "O'Reilly Media, Inc. - O'Reilly Media", "openaccess": "no", "id": "d6edd1064311b081e77051faf19e687e", "provider_name": "Safari Books Online", "collection_name": "Safari Tech Books Online", "oclcnum": "61849699" } ] }, "queryForJournal": { "result": [ { "coverage": "fulltext@2005-10-05~2018-08-29", "collection_url": "https://www.nature.com", "collection_uid": "NPG.openAccess", "jkey": "nature", "oclcnums": "1058009839 1586310 993757444", "provider_uid": "NPG", "eissn": "1476-4687", "linkerurl": "http://linker2.worldcat.org/?jKey=nature&rft.institution_id=128807&linktype=best&eissn=1476-4687&title=Nature&linkScheme=npg&jHome=https%3A%2F%2Fwww.nature.com%2Fnature&issn=0028-0836&provider=NPG&pkgName=openAccess&linkclass=to_article", "source": "holdings", "title": "Nature", "collection_type": "autoapprove browsable openaccess", "content": "fulltext", "url": "http://linker2.worldcat.org/?jHome=https%3A%2F%2Fwww.nature.com%2Fnature&linktype=best", "institution_id": [ "128807" ], "uid": "40067081", "issn": "0028-0836", "publisher": "Nature Publishing Group", "openaccess": "yes", "id": "4261821ec9fcc25391bf7643b6a817e5", "provider_name": "Nature Publishing Group", "collection_name": "Nature Open Access Content", "coverage_enum": "fulltext", "oclcnum": "1058009839" }, { "coverage": "fulltext@1878~1922", "collection_url": "https://www.hathitrust.org/", "collection_uid": "hathitrust.UsDnldRestrict", "oclcnums": "65289277 855510898 4285192 499775149 630212514 421716612 942765934 852453895 993757444 933310873 47076528 1087156682 932537059 396102007 740974185 669712494 9269265 682135186 7417753 8315982 14638648 610353595 1058009839 1586310 466385074", "provider_uid": "hathitrust", "source": "openaccess", "title": "Nature", "collection_type": "autoapprove browsable openaccess", "content": "fulltext", "url": "http://linker2.worldcat.org/?jHome=https%3A%2F%2Fcatalog.hathitrust.org%2Fapi%2Fvolumes%2Foclc%2F1586310.html&linktype=best", "institution_id": [ "128807" ], "uid": "47723575", "bkey": "mdp.39015038818442", "issn": "0028-0836", "publisher": "Macmillan Journals Ltd., etc.", "openaccess": "yes", "id": "b93693c2879e9d0f7a9fb5a616ac9dc3", "provider_name": "HathiTrust Digital Library", "collection_name": "HathiTrust US Access with possible download restrictions", "coverage_enum": "fulltext", "oclcnum": "65289277" }, { "coverage": "fulltext@1869~1875", "collection_uid": "global.53639.8.mcgillejournalsopenaccess", "oclcnums": "65289277 863853449 4285192 297226504 630212514 421716612 942765934 993757444 243591959 933310873 47076528 1087156682 932537059 396102007 740974185 9269265 682135186 7417753 8315982 14638648 610353595 1058009839 466385074 1586310", "eissn": "1476-4687", "source": "openaccess", "title": "Nature", "collection_type": "openaccess deprecated cooperative", "content": "fulltext", "url": "http://linker2.worldcat.org/?jHome=http%3A%2F%2Fdigicoll.library.wisc.edu%2Fcgi-bin%2FHistSciTech%2FHistSciTech-idx%3Ftype%3Dbrowse%26scope%3DHISTSCITECH.NATURE&linktype=best", "institution_id": [ "128807" ], "issn": "0028-0836", "openaccess": "yes", "id": "19da7263f842da819060197f40bd7a2b", "collection_name": "Open Access eJournals (McGill)", "coverage_enum": "fulltext", "oclcnum": "47076528" }, { "coverage": "fulltext@1870~1875", "collection_url": "https://www.hathitrust.org/", "collection_uid": "hathitrust.OutsideDnldRestrict", "oclcnums": "65289277 855510898 4285192 499775149 630212514 421716612 942765934 140122618 852453895 993757444 933310873 47076528 1087156682 932537059 396102007 740974185 669712494 9269265 682135186 7417753 8315982 14638648 610353595 1058009839 1586310 466385074", "provider_uid": "hathitrust", "source": "openaccess", "title": "Nature", "collection_type": "autoapprove browsable openaccess", "content": "fulltext", "url": "http://linker2.worldcat.org/?jHome=https%3A%2F%2Fcatalog.hathitrust.org%2Fapi%2Fvolumes%2Foclc%2F140122618.html&linktype=best", "institution_id": [ "128807" ], "uid": "44464947", "bkey": "nyp.33433016842746", "issn": "0028-0836", "publisher": "Macmillan Journals ltd.", "openaccess": "yes", "id": "2a5bc70a369aa3e24cf600a1759a0102", "provider_name": "HathiTrust Digital Library", "collection_name": "HathiTrust Outside US Access with possible download restrictions", "coverage_enum": "fulltext", "oclcnum": "65289277" }, { "coverage": "fulltext@1869~1878", "collection_url": "https://www.hathitrust.org/", "collection_uid": "hathitrust.OutsideDnldRestrict", "oclcnums": "65289277 855510898 4285192 499775149 630212514 421716612 942765934 852453895 993757444 933310873 47076528 1087156682 932537059 396102007 740974185 669712494 9269265 682135186 7417753 8315982 14638648 610353595 1058009839 1586310 466385074", "provider_uid": "hathitrust", "source": "openaccess", "title": "Nature", "collection_type": "autoapprove browsable openaccess", "content": "fulltext", "url": "http://linker2.worldcat.org/?jHome=https%3A%2F%2Fcatalog.hathitrust.org%2Fapi%2Fvolumes%2Foclc%2F1586310.html&linktype=best", "institution_id": [ "128807" ], "uid": "46041304", "bkey": "uc1.31210005082027", "issn": "0028-0836", "publisher": "Macmillan Journals Ltd., etc.", "openaccess": "yes", "id": "520808ea5f7493ef8fa35210d416b2e8", "provider_name": "HathiTrust Digital Library", "collection_name": "HathiTrust Outside US Access with possible download restrictions", "coverage_enum": "fulltext", "oclcnum": "65289277" }, { "coverage": "fulltext@1869~1873", "collection_url": "http://www.hathitrust.org/", "collection_uid": "hathitrust.pdAccess", "oclcnums": "855510898 863853449 297226504 499775149 421716612 505014713 630212514 801435398 47076528 740974185 669712494 7417753 8315982 14638648 252459251 466385074 65289277 4285192 942765934 932537059 396102007 9269265 682135186 433679811 496009298 610353595 1586310", "provider_uid": "hathitrust", "source": "openaccess", "title": "Nature", "collection_type": "autoapprove browsable openaccess deprecated", "content": "fulltext", "url": "http://linker2.worldcat.org/?jHome=http%3A%2F%2Fcatalog.hathitrust.org%2Fapi%2Fvolumes%2Foclc%2F496009298.html&linktype=best", "institution_id": [ "128807" ], "uid": "18400864", "bkey": "coo.31924066893615", "issn": "0028-0836", "openaccess": "yes", "id": "225a22a80d99e3cdf56eb7cc3d326755", "provider_name": "HathiTrust Digital Library", "collection_name": "HathiTrust Public Domain Access", "coverage_enum": "fulltext", "oclcnum": "47076528" }, { "coverage": "fulltext@1869~1877", "collection_url": "https://www.hathitrust.org/", "collection_uid": "hathitrust.OutsideDnldRestrict", "oclcnums": "855510898 863853449 496009298 1586310", "provider_uid": "hathitrust", "source": "openaccess", "title": "Nature", "collection_type": "autoapprove browsable openaccess", "content": "fulltext", "url": "http://linker2.worldcat.org/?jHome=https%3A%2F%2Fcatalog.hathitrust.org%2Fapi%2Fvolumes%2Foclc%2F496009298.html&linktype=best", "institution_id": [ "128807" ], "uid": "44552745", "bkey": "coo.31924066893847", "issn": "0028-0836", "publisher": "Macmillan.", "openaccess": "yes", "id": "9c08d5ef62e46baa383d22075ba88c1e", "provider_name": "HathiTrust Digital Library", "collection_name": "HathiTrust Outside US Access with possible download restrictions", "coverage_enum": "fulltext", "oclcnum": "863853449" }, { "coverage": "fulltext@1869~1877", "collection_url": "https://www.hathitrust.org/", "collection_uid": "hathitrust.UsDnldRestrict", "oclcnums": "855510898 863853449 496009298 1586310", "provider_uid": "hathitrust", "source": "openaccess", "title": "Nature", "collection_type": "autoapprove browsable openaccess", "content": "fulltext", "url": "http://linker2.worldcat.org/?jHome=https%3A%2F%2Fcatalog.hathitrust.org%2Fapi%2Fvolumes%2Foclc%2F496009298.html&linktype=best", "institution_id": [ "128807" ], "uid": "46739507", "bkey": "coo.31924066893847", "issn": "0028-0836", "publisher": "Macmillan.", "openaccess": "yes", "id": "8587f6072d21eacbc70f57cba481b11b", "provider_name": "HathiTrust Digital Library", "collection_name": "HathiTrust US Access with possible download restrictions", "coverage_enum": "fulltext", "oclcnum": "863853449" }, { "coverage": "fulltext@1869~1873", "collection_url": "http://www.hathitrust.org/", "collection_uid": "hathitrust.pdAccess", "oclcnums": "855510898 863853449 297226504 499775149 421716612 505014713 630212514 801435398 47076528 740974185 669712494 7417753 8315982 14638648 252459251 466385074 65289277 4285192 942765934 932537059 396102007 9269265 682135186 433679811 610353595 1586310", "provider_uid": "hathitrust", "source": "openaccess", "title": "Nature", "collection_type": "autoapprove browsable openaccess deprecated", "content": "fulltext", "url": "http://linker2.worldcat.org/?jHome=http%3A%2F%2Fcatalog.hathitrust.org%2Fapi%2Fvolumes%2Foclc%2F1586310.html&linktype=best", "institution_id": [ "128807" ], "uid": "5804956", "bkey": "mdp.39015038818269", "issn": "0028-0836", "openaccess": "yes", "id": "cd7b75934349bf07acf540d350585a62", "provider_name": "HathiTrust Digital Library", "collection_name": "HathiTrust Public Domain Access", "coverage_enum": "fulltext", "oclcnum": "47076528" }, { "coverage": "fulltext@1869~1878", "collection_url": "https://www.hathitrust.org/", "collection_uid": "hathitrust.UsDnldRestrict", "oclcnums": "65289277 855510898 4285192 499775149 630212514 421716612 942765934 852453895 993757444 933310873 47076528 1087156682 932537059 396102007 740974185 669712494 9269265 682135186 7417753 8315982 14638648 610353595 1058009839 1586310 466385074", "provider_uid": "hathitrust", "source": "openaccess", "title": "Nature", "collection_type": "autoapprove browsable openaccess", "content": "fulltext", "url": "http://linker2.worldcat.org/?jHome=https%3A%2F%2Fcatalog.hathitrust.org%2Fapi%2Fvolumes%2Foclc%2F1586310.html&linktype=best", "institution_id": [ "128807" ], "uid": "49229610", "bkey": "uc1.31210005082027", "issn": "0028-0836", "publisher": "Macmillan Journals Ltd., etc.", "openaccess": "yes", "id": "10ddc9b636369fc35085f416f21e9687", "provider_name": "HathiTrust Digital Library", "collection_name": "HathiTrust US Access with possible download restrictions", "coverage_enum": "fulltext", "oclcnum": "65289277" }, { "coverage": "fulltext@1874~1921", "collection_url": "http://www.hathitrust.org/", "collection_uid": "hathitrust.pdusAccess", "oclcnums": "65289277 855510898 863853449 4285192 499775149 630212514 421716612 942765934 852453895 993757444 933310873 47076528 1087156682 932537059 396102007 740974185 669712494 9269265 682135186 7417753 496009298 8315982 14638648 610353595 1058009839 466385074 1586310", "provider_uid": "hathitrust", "source": "openaccess", "title": "Nature", "collection_type": "autoapprove browsable openaccess deprecated", "content": "fulltext", "url": "http://linker2.worldcat.org/?jHome=http%3A%2F%2Fcatalog.hathitrust.org%2Fapi%2Fvolumes%2Foclc%2F496009298.html&linktype=best", "institution_id": [ "128807" ], "uid": "18690922", "bkey": "coo.31924072038395", "issn": "0028-0836", "openaccess": "yes", "id": "6d995bedf04219f448356e4e821eea12", "provider_name": "HathiTrust Digital Library", "collection_name": "HathiTrust Public Domain only in US Access", "coverage_enum": "fulltext", "oclcnum": "863853449" }, { "coverage": "fulltext@1870~1875", "collection_url": "https://www.hathitrust.org/", "collection_uid": "hathitrust.UsDnldRestrict", "oclcnums": "65289277 855510898 4285192 499775149 630212514 421716612 942765934 140122618 852453895 993757444 933310873 47076528 1087156682 932537059 396102007 740974185 669712494 9269265 682135186 7417753 8315982 14638648 610353595 1058009839 1586310 466385074", "provider_uid": "hathitrust", "source": "openaccess", "title": "Nature", "collection_type": "autoapprove browsable openaccess", "content": "fulltext", "url": "http://linker2.worldcat.org/?jHome=https%3A%2F%2Fcatalog.hathitrust.org%2Fapi%2Fvolumes%2Foclc%2F140122618.html&linktype=best", "institution_id": [ "128807" ], "uid": "46545263", "bkey": "nyp.33433016842746", "issn": "0028-0836", "publisher": "Macmillan Journals ltd.", "openaccess": "yes", "id": "b279a6a0bcdbfa8946e649779a74d2bc", "provider_name": "HathiTrust Digital Library", "collection_name": "HathiTrust US Access with possible download restrictions", "coverage_enum": "fulltext", "oclcnum": "65289277" }, { "coverage": "fulltext@1878~1887", "collection_url": "https://www.hathitrust.org/", "collection_uid": "hathitrust.UsDnldRestrict", "oclcnums": "65289277 855510898 4285192 499775149 630212514 421716612 942765934 140122618 852453895 993757444 933310873 47076528 1087156682 932537059 396102007 740974185 669712494 9269265 682135186 7417753 8315982 14638648 610353595 1058009839 1586310 466385074", "provider_uid": "hathitrust", "source": "openaccess", "title": "Nature", "collection_type": "autoapprove browsable openaccess", "content": "fulltext", "url": "http://linker2.worldcat.org/?jHome=https%3A%2F%2Fcatalog.hathitrust.org%2Fapi%2Fvolumes%2Foclc%2F140122618.html&linktype=best", "institution_id": [ "128807" ], "uid": "46664680", "bkey": "nyp.33433016842928", "issn": "0028-0836", "publisher": "Macmillan Journals ltd.", "openaccess": "yes", "id": "30b582c98de415a38e3f52d3cf3160ee", "provider_name": "HathiTrust Digital Library", "collection_name": "HathiTrust US Access with possible download restrictions", "coverage_enum": "fulltext", "oclcnum": "65289277" }, { "coverage": "fulltext@1873~1987", "collection_url": "http://www.hathitrust.org/", "collection_uid": "hathitrust.pdusAccess", "oclcnums": "65289277 855510898 4285192 499775149 630212514 421716612 942765934 852453895 993757444 933310873 47076528 1087156682 932537059 396102007 740974185 568729044 669712494 9269265 682135186 7417753 8315982 14638648 610353595 1058009839 1586310 466385074", "provider_uid": "hathitrust", "source": "openaccess", "title": "Nature", "collection_type": "autoapprove browsable openaccess deprecated", "content": "fulltext", "url": "http://linker2.worldcat.org/?jHome=http%3A%2F%2Fcatalog.hathitrust.org%2Fapi%2Fvolumes%2Foclc%2F1586310.html&linktype=best", "institution_id": [ "128807" ], "uid": "4278754", "bkey": "mdp.39015038818343", "issn": "0028-0836", "openaccess": "yes", "id": "0ca4a862ee7f4f817461ec2d1996cd60", "provider_name": "HathiTrust Digital Library", "collection_name": "HathiTrust Public Domain only in US Access", "coverage_enum": "fulltext", "oclcnum": "568729044" }, { "coverage": "fulltext@1881~1921", "collection_url": "https://www.hathitrust.org/", "collection_uid": "hathitrust.UsDnldRestrict", "oclcnums": "855510898 863853449 496009298 1586310", "provider_uid": "hathitrust", "source": "openaccess", "title": "Nature", "collection_type": "autoapprove browsable openaccess", "content": "fulltext", "url": "http://linker2.worldcat.org/?jHome=https%3A%2F%2Fcatalog.hathitrust.org%2Fapi%2Fvolumes%2Foclc%2F496009298.html&linktype=best", "institution_id": [ "128807" ], "uid": "46918299", "bkey": "coo.31924066893904", "issn": "0028-0836", "publisher": "Macmillan.", "openaccess": "yes", "id": "e64a3f2bf3b30fa2f2ce9f7246069356", "provider_name": "HathiTrust Digital Library", "collection_name": "HathiTrust US Access with possible download restrictions", "coverage_enum": "fulltext", "oclcnum": "863853449" } ] }, "queryForArticle": { "result": [ { "coverage": "fulltext@2005-10-05~2018-08-29", "collection_url": "https://www.nature.com", "collection_uid": "NPG.openAccess", "jkey": "nature", "oclcnums": "1058009839 1586310 993757444", "provider_uid": "NPG", "eissn": "1476-4687", "linkerurl": "http://linker2.worldcat.org/?date=2010-02-18&issue=7283&jKey=nature&rft.institution_id=128807&linktype=best&spage=850&eissn=1476-4687&title=Nature&atitle=Nature%27s+choices&volume=463&linkScheme=npg&jHome=https%3A%2F%2Fwww.nature.com%2Fnature&issn=0028-0836&provider=NPG&pkgName=openAccess&linkclass=to_article", "source": "holdings", "title": "Nature", "collection_type": "openaccess browsable autoapprove", "content": "fulltext", "url": "http://linker2.worldcat.org/?jHome=https%3A%2F%2Fwww.nature.com%2Fnature&linktype=best", "institution_id": [ "128807" ], "uid": "40067081", "issn": "0028-0836", "publisher": "Nature Publishing Group", "openaccess": "yes", "id": "4261821ec9fcc25391bf7643b6a817e5", "provider_name": "Nature Publishing Group", "collection_name": "Nature Open Access Content", "coverage_enum": "fulltext", "oclcnum": "1058009839" } ] } }                
     unauthorized:
       summary: Error returned when valid API credentials not sent or invalid
       value: {"message": "Unauthorized"}
@@ -954,7 +939,274 @@ components:
       value: {"title": "NOT_ACCEPTABLE", "detail": "Media type application/xml not supported. Supported media types: application/json"}
     missing-query-parameter:
       summary: Error returned when required query parameter not sent
-      value: {"type": "MISSING_QUERY_PARAMETER", "title": "Validation Failure", "detail": "Required String parameter 'q' is not present"}      
+      value: {"type": "MISSING_QUERY_PARAMETER", "title": "Validation Failure", "detail": "Required String parameter 'q' is not present"}
+  schemas:
+    Title:
+      type: object
+      properties:
+        title:
+          description: Name of title
+          type: string
+        id:
+          description: URL for title in API
+          type: string  
+        links:
+          description: links associated with title 
+          type: array
+          items:
+            $ref: '#/components/schemas/Link'
+        entry_uid:
+          description: Id for title
+          type: string       
+        entry_status:
+          description: status for title. possible values for Entries are raw, copy, and overlay
+          type: string        
+        bkey:
+          description: Vendor defined book id
+          type: string 
+        jkey:
+          description: Vendor defined journal id
+          type: string                  
+        collection_uid:
+          description: Id for collection title is part of
+          type: string        
+        collection_name:
+          description: Name of collection title is part of
+          type: string        
+        provider_uid:
+          description: Id for provider who supplies title
+          type: string        
+        provider_name:
+          description: Name of provider who supplies title
+          type: string        
+        oclcnum:
+          description: OCLC Number of the title
+          type: string
+        isbn:
+          description: ISBN for title
+          type: string
+        issn:
+          description: ISSN for the title
+          type: string
+        eissn:
+          description: EISSN for the title
+          type: string                    
+        publisher:
+          description: Publisher of title
+          type: string        
+        coverage:
+          description: Coverage for title in date format
+          type: string
+        coverageenum:
+          description: Coverage enumeration in volume/issue format
+          type: string        
+        author:   
+          description: Author
+          type: string        
+        ext:
+          type: string        
+        title_notes:
+          description: institution specific public notes
+          type: string        
+        staff_notes:
+          description: institution specific staff notes
+          type: string        
+        coverage_notes:
+          description: notes about coverage
+          type: string
+    Collection:
+      type: object
+      properties:
+        title:
+          description: Name of Collection
+          type: string
+        id:
+          description: URL for Collection in API
+          type: string  
+        links:
+          description: links associated with Collection
+          type: array
+          items:
+            $ref: '#/components/schemas/Link'
+        provider_uid:
+          description: Id for provider who supplies the collection
+          type: string
+        provider_name:
+          description: name for provider who supplies the collection
+          type: string          
+        collection_uid:
+          description: Id for collection
+          type: string        
+        owner_institution:
+          description: Institution who has holdings set fo the collection
+          type: string        
+        source_institution:
+          description: The institution who originally added the collection to the knowledge base. 6569 represents OCLC
+          type: string        
+        collection_status:
+          description: Status of the collection
+          type: string
+          enum:
+            - raw
+            - copy
+            - select
+            - empty                  
+        collection_type:
+          description: Kind of collection
+          type: string
+          enum:
+            - openaccess
+            - browseable        
+        title_link_template:
+          description: something
+          type: string        
+        linkscheme:
+          description: something
+          type: string        
+        uhf_version:
+          description: something
+          type: string        
+        marcdelivery_no_delete:
+          description: something
+          type: boolean        
+        google_scholar_enabled:
+          description: something
+          type: boolean                  
+        open:
+          description: If the collection is open access
+          type: boolean                  
+        available_entries:
+          description: Number of available entries in a collection
+          type: integer
+          format: int32                  
+        selected_entries:
+          description: Number of selected entries in a collection
+          type: integer
+          format: int32                  
+        localstem:  
+          description: something
+          type: string    
+    Provider:
+      type: object
+      properties:
+        title:
+          description: Name of Provider
+          type: string
+        id:
+          description: URL for Provider in API
+          type: string  
+        links:
+          description: links associated with Provider
+          type: array
+          items:
+            $ref: '#/components/schemas/Link'
+        provider_uid:
+          description: Id for provider
+          type: string
+        provider_name:
+          description: name for provider
+          type: string
+        vic_id:
+          description: id for provider in vendor information center
+          type: string
+        available_collections:
+          description: number of available collection associated with provider
+          type: integer
+          format: int32          
+        selected_collection:
+          description: Number of collections from provider selected by institution
+          type: integer
+          format: int32          
+        available_entries:
+          description: Number of available titles from provider
+          type: integer
+          format: int32                  
+        selected_entries:
+          description: Number of selected titles from provider selected by institution
+          type: integer
+          format: int32                    
+    Settings:
+      type: object
+      description: something
+      properties:
+        title:
+          description: Name of Institution
+          type: string
+        id:
+          description: URL for Institution Settings in API
+          type: string  
+        links:
+          description: links associated with Provider
+          type: array
+          items:
+            $ref: '#/components/schemas/Link'
+        institution_name:
+          description: Name of Institution
+          type: string
+        institution_id:
+          description: WorldCat Registry ID of Institution
+          type: integer
+        download_ip:
+          description: something
+          type: string
+        preferred_oclc_symbol:
+          description: something
+          type: string
+        holdingcode:
+          description: something
+          type: string                                                                                                   
+        google_scholar_enabled:
+          description: something
+          type: boolean
+        wcsync_enabled:
+          description: something
+          type: boolean
+        marc_delivery_enabled:
+          description: something
+          type: boolean
+        marc_delivery_no_delete:
+          description: something
+          type: boolean
+        eswitch_enabled:
+          description: something
+          type: boolean
+        eswitch_eligible:
+          description: something
+          type: boolean 
+        article_filter_enabled:
+          description: something
+          type: boolean
+        oclc_symbols:
+          description: something
+          type: string
+        openaccess_in_resolver:
+          description: something
+          type: string  
+        oclcnum_opac_url:
+          description: URL to link to catalog by OCLC Number
+          type: string
+        selected_collections:
+          description: something
+          type: integer
+          format: int32
+        galesiteid:
+          description: something
+          type: string                                                                                                   
+    Link:
+      type: object
+      properties:
+        href:
+          type: string
+        rel:
+          type: string
+          enum:
+            - self
+            - alternate
+            - parent
+            - enclosure
+            - via                  
+                  
+                
 externalDocs:
   description: Find out more about OCLC
   url: 'https://www.oclc.org'
