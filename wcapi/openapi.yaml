@@ -1,0 +1,977 @@
+openapi: 3.0.0
+info:
+  description: WorldCat Search API
+  version: 1.0.0
+  title: WorldCat Search API
+  license:
+    name: Licensing TBD
+servers:
+  - url: 'https://worldcat.org/webservices/catalog'
+security:
+  - api_key: []
+paths:
+  /search/worldcat/opensearch:
+    get:
+      tags:
+        - OpenSearch
+      summary: 'Search using OpenSearch standard'
+      description: 'Given metadata find matching bibliographic records'
+      operationId: search-opensearch
+      parameters:
+        - name: q
+          in: query
+          description: Query to send to the service
+          schema:
+            type: string          
+          required: true
+          example: APIs
+        - name: format
+          in: query
+          description: Format to return the data in
+          schema:
+            type: string
+            default: atom
+            enum:
+              - atom
+              - rss                      
+          required: false
+          example: rss
+        - name: start
+          in: query
+          description: start position
+          schema:
+            type: integer
+            default: 1          
+          required: false
+          example: 10
+        - name: count
+          in: query
+          description: number of records to return
+          schema:
+            type: integer
+            default: 10          
+          required: false
+          example: 25
+        - name: servicelevel
+          in: query
+          description: amount of metadata to return
+          schema:
+            type: string
+            default: default
+            enum:
+              - default
+              - full                      
+          required: false
+          example: full
+        - name: frbrGrouping
+          in: query
+          description: whether or not to group together similar editions
+          schema:
+            type: string
+            default: on
+            enum:
+              - on
+              - off                      
+          required: false  
+          example: off                                                          
+      responses:
+        '200':
+          description: Successful search
+          content:
+            application/json:
+              schema:
+                type: object            
+              examples:
+                success-search-collection: 
+                  $ref: '#/components/examples/success-search-opensearch'                    
+        '400':
+          description: Invalid query. The request was unacceptable, often due to missing a required parameter.
+          content:
+            application/json:
+              schema:
+                type: object            
+              examples:
+                missing-query-parameter:
+                  $ref: '#/components/examples/missing-query-parameter'
+              
+        '405':
+          description: 'Method not supported, see response Allow header'
+          content:
+            application/json:
+              schema:
+                type: object            
+              example:
+                $ref: '#/components/examples/method-not-allowed-error'               
+        '500':
+          description: 'Something went wrong (hopfully rare) - please try again'
+          content:
+            application/json:
+              schema:
+                type: object
+      security:
+        - api_key: []
+  /search/worldcat/sru:
+    get:
+      tags:
+        - SRU
+      summary: 'Search using SRU standard'
+      description: 'Given metadata find matching bibliographic records'
+      operationId: search-opensearch
+      parameters:
+        - name: query
+          in: query
+          description: Query to send to the service
+          required: true
+        - name: recordSchema
+          in: query
+          description: Query to send to the service
+          schema:
+            type: string
+            default: info%3Asrw%2Fschema%2F1%2Fmarcxml
+            enum:
+              - info%3Asrw%2Fschema%2F1%2Fmarcxml
+              - info%3Asrw%2Fschema%2F1%2Fdc
+          required: false
+          example: info%3Asrw%2Fschema%2F1%2Fdc
+        - name: startRecord
+          in: query
+          description: position to start in result set
+          required: false
+        - name: maximiumRecords
+          in: query
+          description: number of records to return. 100 is the maximium supported
+          required: false
+        - name: sortKeys
+          in: query
+          description: How the result should be sorted
+          required: false          
+        - name: servicelevel
+          in: query
+          description: amount of metadata to return
+          schema:
+            type: string
+            default: default
+            enum:
+              - default
+              - full                      
+          required: false
+          example: full
+        - name: frbrGrouping
+          in: query
+          description: whether or not to group together similar editions
+          schema:
+            type: string
+            default: on
+            enum:
+              - on
+              - off                      
+          required: false  
+          example: off                     
+      responses:
+        '200':
+          description: Successful search
+          content:
+            application/json:
+              schema:
+                type: object            
+              examples:
+                success-search-collection: 
+                  $ref: '#/components/examples/success-search-opensearch'                    
+        '400':
+          description: Invalid query. The request was unacceptable, often due to missing a required parameter.
+          content:
+            application/json:
+              schema:
+                type: object            
+              examples:
+                missing-query-parameter:
+                  $ref: '#/components/examples/missing-query-parameter'
+              
+        '405':
+          description: 'Method not supported, see response Allow header'
+          content:
+            application/json:
+              schema:
+                type: object            
+              example:
+                $ref: '#/components/examples/method-not-allowed-error'               
+        '500':
+          description: 'Something went wrong (hopfully rare) - please try again'
+          content:
+            application/json:
+              schema:
+                type: object
+      security:
+        - api_key: []  
+  /catalog/content/{oclcnumber}:
+    get:
+      tags:
+        - Read
+      summary: 'Read single record'
+      description: 'Read bibliographic record by OCLC Number'
+      operationId: read-oclcnumber
+      parameters:
+        - name: oclcnumber
+          in: path
+          description: OCLC Number of record to retrieve
+          required: true
+        - name: recordSchema
+          in: query
+          description: Query to send to the service
+          schema:
+            type: string
+            default: info%3Asrw%2Fschema%2F1%2Fmarcxml
+            enum:
+              - info%3Asrw%2Fschema%2F1%2Fmarcxml
+              - info%3Asrw%2Fschema%2F1%2Fdc
+          required: false
+          example: info%3Asrw%2Fschema%2F1%2Fdc          
+        - name: servicelevel
+          in: query
+          description: amount of metadata to return
+          schema:
+            type: string
+            default: default
+            enum:
+              - default
+              - full                  
+          required: false
+          example: full                  
+      responses:
+        '200':
+          description: Successful search
+          content:
+            application/json:
+              schema:
+                type: object            
+              examples:
+                success-search-collection: 
+                  $ref: '#/components/examples/success-search-opensearch'                    
+        '400':
+          description: Invalid query. The request was unacceptable, often due to missing a required parameter.
+          content:
+            application/json:
+              schema:
+                type: object            
+              examples:
+                missing-query-parameter:
+                  $ref: '#/components/examples/missing-query-parameter'
+              
+        '405':
+          description: 'Method not supported, see response Allow header'
+          content:
+            application/json:
+              schema:
+                type: object            
+              example:
+                $ref: '#/components/examples/method-not-allowed-error'               
+        '500':
+          description: 'Something went wrong (hopfully rare) - please try again'
+          content:
+            application/json:
+              schema:
+                type: object
+      security:
+        - api_key: []        
+  /catalog/content/isbn/{isbn}:
+    get:
+      tags:
+        - Read
+      summary: 'Read single record by ISBN'
+      description: 'Read bibliographic record by ISBN'
+      operationId: read-isbn
+      parameters:
+        - name: isbn
+          in: path
+          description: ISBN of record to retrieve
+          required: true
+        - name: recordSchema
+          in: query
+          description: Query to send to the service
+          schema:
+            type: string
+            default: info%3Asrw%2Fschema%2F1%2Fmarcxml
+            enum:
+              - info%3Asrw%2Fschema%2F1%2Fmarcxml
+              - info%3Asrw%2Fschema%2F1%2Fdc
+          required: false
+          example: info%3Asrw%2Fschema%2F1%2Fdc          
+        - name: servicelevel
+          in: query
+          description: amount of metadata to return
+          schema:
+            type: string
+            default: default
+            enum:
+              - default
+              - full                  
+          required: false
+          example: full                  
+      responses:
+        '200':
+          description: Successful search
+          content:
+            application/json:
+              schema:
+                type: object            
+              examples:
+                success-search-collection: 
+                  $ref: '#/components/examples/success-search-opensearch'                    
+        '400':
+          description: Invalid query. The request was unacceptable, often due to missing a required parameter.
+          content:
+            application/json:
+              schema:
+                type: object            
+              examples:
+                missing-query-parameter:
+                  $ref: '#/components/examples/missing-query-parameter'
+              
+        '405':
+          description: 'Method not supported, see response Allow header'
+          content:
+            application/json:
+              schema:
+                type: object            
+              example:
+                $ref: '#/components/examples/method-not-allowed-error'               
+        '500':
+          description: 'Something went wrong (hopfully rare) - please try again'
+          content:
+            application/json:
+              schema:
+                type: object
+      security:
+        - api_key: []
+  /catalog/content/issn/{issn}:
+    get:
+      tags:
+        - Read
+      summary: 'Read single record by ISSN'
+      description: 'Read bibliographic record by ISSN'
+      operationId: read-issn
+      parameters:
+        - name: issn
+          in: path
+          description: ISSN of record to retrieve
+          required: true
+        - name: recordSchema
+          in: query
+          description: Query to send to the service
+          schema:
+            type: string
+            default: info%3Asrw%2Fschema%2F1%2Fmarcxml
+            enum:
+              - info%3Asrw%2Fschema%2F1%2Fmarcxml
+              - info%3Asrw%2Fschema%2F1%2Fdc
+          required: false
+          example: info%3Asrw%2Fschema%2F1%2Fdc          
+        - name: servicelevel
+          in: query
+          description: amount of metadata to return
+          schema:
+            type: string
+            default: default
+            enum:
+              - default
+              - full                  
+          required: false
+          example: full                  
+      responses:
+        '200':
+          description: Successful search
+          content:
+            application/json:
+              schema:
+                type: object            
+              examples:
+                success-search-collection: 
+                  $ref: '#/components/examples/success-search-opensearch'                    
+        '400':
+          description: Invalid query. The request was unacceptable, often due to missing a required parameter.
+          content:
+            application/json:
+              schema:
+                type: object            
+              examples:
+                missing-query-parameter:
+                  $ref: '#/components/examples/missing-query-parameter'
+              
+        '405':
+          description: 'Method not supported, see response Allow header'
+          content:
+            application/json:
+              schema:
+                type: object            
+              example:
+                $ref: '#/components/examples/method-not-allowed-error'               
+        '500':
+          description: 'Something went wrong (hopfully rare) - please try again'
+          content:
+            application/json:
+              schema:
+                type: object
+      security:
+        - api_key: []                                
+  /catalog/content/sn/{sn}:
+    get:
+      tags:
+        - Read
+      summary: 'Read single record by Standard Number'
+      description: 'Read bibliographic record by Standard Number'
+      operationId: read-sn
+      parameters:
+        - name: sn
+          in: path
+          description: Standard number of record to retrieve
+          required: true
+        - name: recordSchema
+          in: query
+          description: Query to send to the service
+          schema:
+            type: string
+            default: info%3Asrw%2Fschema%2F1%2Fmarcxml
+            enum:
+              - info%3Asrw%2Fschema%2F1%2Fmarcxml
+              - info%3Asrw%2Fschema%2F1%2Fdc
+          required: false
+          example: info%3Asrw%2Fschema%2F1%2Fdc          
+        - name: servicelevel
+          in: query
+          description: amount of metadata to return
+          schema:
+            type: string
+            default: default
+            enum:
+              - default
+              - full                  
+          required: false
+          example: full                  
+      responses:
+        '200':
+          description: Successful search
+          content:
+            application/json:
+              schema:
+                type: object            
+              examples:
+                success-search-collection: 
+                  $ref: '#/components/examples/success-search-opensearch'                    
+        '400':
+          description: Invalid query. The request was unacceptable, often due to missing a required parameter.
+          content:
+            application/json:
+              schema:
+                type: object            
+              examples:
+                missing-query-parameter:
+                  $ref: '#/components/examples/missing-query-parameter'
+              
+        '405':
+          description: 'Method not supported, see response Allow header'
+          content:
+            application/json:
+              schema:
+                type: object            
+              example:
+                $ref: '#/components/examples/method-not-allowed-error'               
+        '500':
+          description: 'Something went wrong (hopfully rare) - please try again'
+          content:
+            application/json:
+              schema:
+                type: object
+      security:
+        - api_key: []   
+  /catalog/content/citations/{oclcnumber}:
+    get:
+      tags:
+        - Citation
+      summary: 'Get citation format for single record'
+      description: 'Get citation format for single record by OCLC Number'
+      operationId: cite-oclcnumber
+      parameters:
+        - name: oclcnumber
+          in: path
+          description: OCLC Number of record to retrieve
+          required: true
+        - name: cformat
+          in: query
+          description: Citation format to return
+          schema:
+            type: string
+            default: mla
+            enum:
+              - apa
+              - chicago
+              - harvard
+              - mla
+              - turabian
+              - all
+          required: false
+          example: all          
+                 
+      responses:
+        '200':
+          description: Successful search
+          content:
+            application/json:
+              schema:
+                type: object            
+              examples:
+                success-search-collection: 
+                  $ref: '#/components/examples/success-search-opensearch'                    
+        '400':
+          description: Invalid query. The request was unacceptable, often due to missing a required parameter.
+          content:
+            application/json:
+              schema:
+                type: object            
+              examples:
+                missing-query-parameter:
+                  $ref: '#/components/examples/missing-query-parameter'
+              
+        '405':
+          description: 'Method not supported, see response Allow header'
+          content:
+            application/json:
+              schema:
+                type: object            
+              example:
+                $ref: '#/components/examples/method-not-allowed-error'               
+        '500':
+          description: 'Something went wrong (hopfully rare) - please try again'
+          content:
+            application/json:
+              schema:
+                type: object
+      security:
+        - api_key: []                                                
+  /catalog/content/libraries/{oclcnumber}:
+    get:
+      tags:
+        - Holdings
+      summary: 'Get holdings'
+      description: 'Get holdings by OCLC Number'
+      operationId: holdings-oclcnumber
+      parameters:
+        - name: oclcnumber
+          in: path
+          description: OCLC Number of record to retrieve
+          required: true
+        - name: oclcsymbol
+          in: query
+          description: OCLC Symbol of library to check holdings for
+          schema:
+            type: string            
+          required: false
+          example: TXH
+        - name: ip
+          in: query
+          description: IP address. API will try to resolve this to geographic location
+          schema:
+            type: string            
+          required: false
+          example: 153.40.170.1          
+        - name: lat
+          in: query
+          description: Latitude
+          schema:
+            type: string            
+          required: false
+          example: 37.502508
+        - name: lon
+          in: query
+          description: Longitude
+          schema:
+            type: string            
+          required: false
+          example: -122.22702
+        - name: location
+          in: query
+          description: Location to limit to. Can be postal code, state, province, country code
+          schema:
+            type: string            
+          required: false
+          example: 94002          
+        - name: libtype
+          in: query
+          description: type of library to limit to. 1 - academic, 2 - public, 3 - government, 4 - other
+          schema:
+            type: string
+            enum:
+              - 1
+              - 2
+              - 3
+              - 4            
+          required: false
+          example: 2                                        
+        - name: servicelevel
+          in: query
+          description: amount of metadata to return
+          schema:
+            type: string
+            default: default
+            enum:
+              - default
+              - full                  
+          required: false
+          example: full
+        - name: frbrGrouping
+          in: query
+          description: whether or not to group together similar editions
+          schema:
+            type: string
+            default: on
+            enum:
+              - on
+              - off                      
+          required: false  
+          example: off
+        - name: startLibrary
+          in: query
+          description: Start position
+          schema:
+            type: integer
+            default: 1                
+          required: false  
+          example: 1
+        - name: maximiumLibraries
+          in: query
+          description: Maximium number of libraires to show
+          schema:
+            type: integer
+            default: 10                
+          required: false  
+          example: 1
+        - name: format
+          in: query
+          description: format to return response in
+          schema:
+            type: string
+            default: xml
+            enum:
+              - xml
+              - json                      
+          required: false  
+          example: json                                                
+      responses:
+        '200':
+          description: Successful search
+          content:
+            application/json:
+              schema:
+                type: object            
+              examples:
+                success-search-collection: 
+                  $ref: '#/components/examples/success-search-opensearch'                    
+        '400':
+          description: Invalid query. The request was unacceptable, often due to missing a required parameter.
+          content:
+            application/json:
+              schema:
+                type: object            
+              examples:
+                missing-query-parameter:
+                  $ref: '#/components/examples/missing-query-parameter'
+              
+        '405':
+          description: 'Method not supported, see response Allow header'
+          content:
+            application/json:
+              schema:
+                type: object            
+              example:
+                $ref: '#/components/examples/method-not-allowed-error'               
+        '500':
+          description: 'Something went wrong (hopfully rare) - please try again'
+          content:
+            application/json:
+              schema:
+                type: object
+      security:
+        - api_key: []        
+  /catalog/content/isbn/{isbn}:
+    get:
+      tags:
+        - Read
+      summary: 'Read single record by ISBN'
+      description: 'Read bibliographic record by ISBN'
+      operationId: read-isbn
+      parameters:
+        - name: isbn
+          in: path
+          description: ISBN of record to retrieve
+          required: true
+        - name: recordSchema
+          in: query
+          description: Query to send to the service
+          schema:
+            type: string
+            default: info%3Asrw%2Fschema%2F1%2Fmarcxml
+            enum:
+              - info%3Asrw%2Fschema%2F1%2Fmarcxml
+              - info%3Asrw%2Fschema%2F1%2Fdc
+          required: false
+          example: info%3Asrw%2Fschema%2F1%2Fdc          
+        - name: servicelevel
+          in: query
+          description: amount of metadata to return
+          schema:
+            type: string
+            default: default
+            enum:
+              - default
+              - full                  
+          required: false
+          example: full                  
+      responses:
+        '200':
+          description: Successful search
+          content:
+            application/json:
+              schema:
+                type: object            
+              examples:
+                success-search-collection: 
+                  $ref: '#/components/examples/success-search-opensearch'                    
+        '400':
+          description: Invalid query. The request was unacceptable, often due to missing a required parameter.
+          content:
+            application/json:
+              schema:
+                type: object            
+              examples:
+                missing-query-parameter:
+                  $ref: '#/components/examples/missing-query-parameter'
+              
+        '405':
+          description: 'Method not supported, see response Allow header'
+          content:
+            application/json:
+              schema:
+                type: object            
+              example:
+                $ref: '#/components/examples/method-not-allowed-error'               
+        '500':
+          description: 'Something went wrong (hopfully rare) - please try again'
+          content:
+            application/json:
+              schema:
+                type: object
+      security:
+        - api_key: []
+  /catalog/content/issn/{issn}:
+    get:
+      tags:
+        - Read
+      summary: 'Read single record by ISSN'
+      description: 'Read bibliographic record by ISSN'
+      operationId: read-issn
+      parameters:
+        - name: issn
+          in: path
+          description: ISSN of record to retrieve
+          required: true
+        - name: recordSchema
+          in: query
+          description: Query to send to the service
+          schema:
+            type: string
+            default: info%3Asrw%2Fschema%2F1%2Fmarcxml
+            enum:
+              - info%3Asrw%2Fschema%2F1%2Fmarcxml
+              - info%3Asrw%2Fschema%2F1%2Fdc
+          required: false
+          example: info%3Asrw%2Fschema%2F1%2Fdc          
+        - name: servicelevel
+          in: query
+          description: amount of metadata to return
+          schema:
+            type: string
+            default: default
+            enum:
+              - default
+              - full                  
+          required: false
+          example: full                  
+      responses:
+        '200':
+          description: Successful search
+          content:
+            application/json:
+              schema:
+                type: object            
+              examples:
+                success-search-collection: 
+                  $ref: '#/components/examples/success-search-opensearch'                    
+        '400':
+          description: Invalid query. The request was unacceptable, often due to missing a required parameter.
+          content:
+            application/json:
+              schema:
+                type: object            
+              examples:
+                missing-query-parameter:
+                  $ref: '#/components/examples/missing-query-parameter'
+              
+        '405':
+          description: 'Method not supported, see response Allow header'
+          content:
+            application/json:
+              schema:
+                type: object            
+              example:
+                $ref: '#/components/examples/method-not-allowed-error'               
+        '500':
+          description: 'Something went wrong (hopfully rare) - please try again'
+          content:
+            application/json:
+              schema:
+                type: object
+      security:
+        - api_key: []                                
+  /catalog/content/sn/{sn}:
+    get:
+      tags:
+        - Read
+      summary: 'Read single record by Standard Number'
+      description: 'Read bibliographic record by Standard Number'
+      operationId: read-sn
+      parameters:
+        - name: sn
+          in: path
+          description: Standard number of record to retrieve
+          required: true
+        - name: recordSchema
+          in: query
+          description: Query to send to the service
+          schema:
+            type: string
+            default: info%3Asrw%2Fschema%2F1%2Fmarcxml
+            enum:
+              - info%3Asrw%2Fschema%2F1%2Fmarcxml
+              - info%3Asrw%2Fschema%2F1%2Fdc
+          required: false
+          example: info%3Asrw%2Fschema%2F1%2Fdc          
+        - name: servicelevel
+          in: query
+          description: amount of metadata to return
+          schema:
+            type: string
+            default: default
+            enum:
+              - default
+              - full                  
+          required: false
+          example: full                  
+      responses:
+        '200':
+          description: Successful search
+          content:
+            application/json:
+              schema:
+                type: object            
+              examples:
+                success-search-collection: 
+                  $ref: '#/components/examples/success-search-opensearch'                    
+        '400':
+          description: Invalid query. The request was unacceptable, often due to missing a required parameter.
+          content:
+            application/json:
+              schema:
+                type: object            
+              examples:
+                missing-query-parameter:
+                  $ref: '#/components/examples/missing-query-parameter'
+              
+        '405':
+          description: 'Method not supported, see response Allow header'
+          content:
+            application/json:
+              schema:
+                type: object            
+              example:
+                $ref: '#/components/examples/method-not-allowed-error'               
+        '500':
+          description: 'Something went wrong (hopfully rare) - please try again'
+          content:
+            application/json:
+              schema:
+                type: object
+      security:
+        - api_key: []  
+components:
+  securitySchemes:
+    api_key:
+      type: apiKey
+      name: wskey
+      in: query
+  examples:
+    success-search-opensearch:
+      summary: successful request to read a collection
+      value: ""                
+    unauthorized:
+      summary: Error returned when valid API credentials not sent or invalid
+      value: ""
+    forbidden:
+      summary: Error returned when API credentials not for resource
+      value: ""
+    method-not-allowed-error:
+      summary: Error when invalid HTTP method used
+      value: ""
+    not-acceptable-error:
+      summary: Error when media type in Accept header not supported
+      value: ""
+    missing-query-parameter:
+      summary: Error returned when required query parameter not sent
+      value: ""
+  schemas:
+    atom_results:
+      type: object
+      properties:
+        title:
+          description: Name of title
+          type: string
+        id:
+          description: URL for title in API
+          type: string
+    rss_results:
+      type: object
+      properties:
+        title:
+          description: Name of title
+          type: string
+        id:
+          description: URL for title in API
+          type: string
+    sru_results:
+      type: object
+      properties:
+        title:
+          description: Name of title
+          type: string
+        id:
+          description: URL for title in API
+          type: string
+    marc:
+      type: object
+      properties:
+        title:
+          description: Name of title
+          type: string
+        id:
+          description: URL for title in API
+          type: string
+    dublin_core:
+      type: object
+      properties:
+        title:
+          description: Name of title
+          type: string
+        id:
+          description: URL for title in API
+          type: string                                                              
+externalDocs:
+  description: Find out more about OCLC
+  url: 'https://www.oclc.org'
