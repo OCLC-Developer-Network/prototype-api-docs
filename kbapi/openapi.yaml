@@ -118,8 +118,6 @@ paths:
               examples:
                 missing-query-parameter:
                   $ref: '#/components/examples/missing-query-parameter'
-                missing-query-parameter-value:
-                  $ref: '#/components/examples/missing-query-parameter-value'
               
         '405':
           description: 'Method not supported, see response Allow header'
@@ -181,8 +179,6 @@ paths:
               examples:
                 missing-query-parameter:
                   $ref: '#/components/examples/missing-query-parameter'
-                missing-query-parameter-value:
-                  $ref: '#/components/examples/missing-query-parameter-value'
               
         '405':
           description: 'Method not supported, see response Allow header'
@@ -343,8 +339,6 @@ paths:
               examples:
                 missing-query-parameter:
                   $ref: '#/components/examples/missing-query-parameter'
-                missing-query-parameter-value:
-                  $ref: '#/components/examples/missing-query-parameter-value'
               
         '405':
           description: 'Method not supported, see response Allow header'
@@ -406,8 +400,6 @@ paths:
               examples:
                 missing-query-parameter:
                   $ref: '#/components/examples/missing-query-parameter'
-                missing-query-parameter-value:
-                  $ref: '#/components/examples/missing-query-parameter-value'
               
         '405':
           description: 'Method not supported, see response Allow header'
@@ -515,8 +507,6 @@ paths:
               examples:
                 missing-query-parameter:
                   $ref: '#/components/examples/missing-query-parameter'
-                missing-query-parameter-value:
-                  $ref: '#/components/examples/missing-query-parameter-value'
               
         '405':
           description: 'Method not supported, see response Allow header'
@@ -577,10 +567,7 @@ paths:
                 type: object            
               examples:
                 missing-query-parameter:
-                  $ref: '#/components/examples/missing-query-parameter'
-                missing-query-parameter-value:
-                  $ref: '#/components/examples/missing-query-parameter-value'
-              
+                  $ref: '#/components/examples/missing-query-parameter'              
         '405':
           description: 'Method not supported, see response Allow header'
           content:
@@ -810,10 +797,7 @@ paths:
                 type: object            
               examples:
                 missing-query-parameter:
-                  $ref: '#/components/examples/missing-query-parameter'
-                missing-query-parameter-value:
-                  $ref: '#/components/examples/missing-query-parameter-value'
-              
+                  $ref: '#/components/examples/missing-query-parameter'              
         '405':
           description: 'Method not supported, see response Allow header'
           content:
@@ -874,8 +858,6 @@ paths:
               examples:
                 missing-query-parameter:
                   $ref: '#/components/examples/missing-query-parameter'
-                missing-query-parameter-value:
-                  $ref: '#/components/examples/missing-query-parameter-value'
               
         '405':
           description: 'Method not supported, see response Allow header'
