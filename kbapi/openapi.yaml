@@ -166,7 +166,7 @@ paths:
           content:
             application/json:
               schema:
-                type: object            
+                $ref: '#/components/schemas/Collection'            
               examples:
                 success-read-collection: 
                   $ref: '#/components/examples/success-read-collection'                    
@@ -387,7 +387,7 @@ paths:
           content:
             application/json:
               schema:
-                type: object            
+                $ref: '#/components/schemas/Title'            
               examples:
                 success-read-collection: 
                   $ref: '#/components/examples/success-read-entry'                    
@@ -555,7 +555,7 @@ paths:
           content:
             application/json:
               schema:
-                type: object            
+                $ref: '#/components/schemas/Provider'            
               examples:
                 success-read-collection: 
                   $ref: '#/components/examples/success-read-provider'                    
@@ -1185,9 +1185,7 @@ components:
             - alternate
             - parent
             - enclosure
-            - via                  
-                  
-                
+            - via                                                    
 externalDocs:
   description: Find out more about OCLC
   url: 'https://www.oclc.org'
