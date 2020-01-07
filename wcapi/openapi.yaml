@@ -691,7 +691,7 @@ paths:
                 type: object
       security:
         - api_key: []        
-  /catalog/content/isbn/{isbn}:
+  /catalog/content/libraries/isbn/{isbn}:
     get:
       tags:
         - Read
@@ -761,7 +761,7 @@ paths:
                 type: object
       security:
         - api_key: []
-  /catalog/content/issn/{issn}:
+  /catalog/content/libraries/issn/{issn}:
     get:
       tags:
         - Read
@@ -831,7 +831,7 @@ paths:
                 type: object
       security:
         - api_key: []                                
-  /catalog/content/sn/{sn}:
+  /catalog/content/libraries/sn/{sn}:
     get:
       tags:
         - Read
