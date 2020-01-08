@@ -873,8 +873,22 @@ paths:
               schema:
                 type: object            
               examples:
-                success-search-collection: 
-                  $ref: '#/components/examples/success-search-opensearch'                    
+                success-search-holdings-oclcSymbol: 
+                  $ref: '#/components/examples/success-search-holdings-oclcSymbol'
+                success-search-holdings-zipcode: 
+                  $ref: '#/components/examples/success-search-holdings-zipcode'
+                success-search-holdings-state: 
+                  $ref: '#/components/examples/success-search-holdings-state'
+            application/json:
+              schema:
+                type: object            
+              examples:
+                success-search-holdings-oclcSymbol: 
+                  $ref: '#/components/examples/success-search-holdings-oclcSymbol-json'
+                success-search-holdings-zipcode: 
+                  $ref: '#/components/examples/success-search-holdings-zipcode-json'
+                success-search-holdings-state: 
+                  $ref: '#/components/examples/success-search-holdings-state-json'                    
         '400':
           description: Invalid query. The request was unacceptable, often due to missing a required parameter.
           content:
@@ -957,8 +971,22 @@ paths:
               schema:
                 type: object            
               examples:
-                success-search-collection: 
-                  $ref: '#/components/examples/success-search-opensearch'                    
+                success-search-holdings-oclcSymbol: 
+                  $ref: '#/components/examples/success-search-holdings-oclcSymbol'
+                success-search-holdings-zipcode: 
+                  $ref: '#/components/examples/success-search-holdings-zipcode'
+                success-search-holdings-state: 
+                  $ref: '#/components/examples/success-search-holdings-state'
+            application/json:
+              schema:
+                type: object            
+              examples:
+                success-search-holdings-oclcSymbol: 
+                  $ref: '#/components/examples/success-search-holdings-oclcSymbol-json'
+                success-search-holdings-zipcode: 
+                  $ref: '#/components/examples/success-search-holdings-zipcode-json'
+                success-search-holdings-state: 
+                  $ref: '#/components/examples/success-search-holdings-state-json'                    
         '400':
           description: Invalid query. The request was unacceptable, often due to missing a required parameter.
           content:
@@ -1041,8 +1069,22 @@ paths:
               schema:
                 type: object            
               examples:
-                success-search-collection: 
-                  $ref: '#/components/examples/success-search-opensearch'                    
+                success-search-holdings-oclcSymbol: 
+                  $ref: '#/components/examples/success-search-holdings-oclcSymbol'
+                success-search-holdings-zipcode: 
+                  $ref: '#/components/examples/success-search-holdings-zipcode'
+                success-search-holdings-state: 
+                  $ref: '#/components/examples/success-search-holdings-state'
+            application/json:
+              schema:
+                type: object            
+              examples:
+                success-search-holdings-oclcSymbol: 
+                  $ref: '#/components/examples/success-search-holdings-oclcSymbol-json'
+                success-search-holdings-zipcode: 
+                  $ref: '#/components/examples/success-search-holdings-zipcode-json'
+                success-search-holdings-state: 
+                  $ref: '#/components/examples/success-search-holdings-state-json'                    
         '400':
           description: Invalid query. The request was unacceptable, often due to missing a required parameter.
           content:
@@ -1092,16 +1134,202 @@ components:
   examples:
     success-search-atom:
       summary: successful search via OpenSearch with Atom Response
-      value: ""
+      value: >
+        <?xml version="1.0" encoding="UTF-8" standalone="no"?>
+        <feed xmlns="http://www.w3.org/2005/Atom" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:diag="http://www.loc.gov/zing/srw/diagnostic/" xmlns:oclcterms="http://purl.org/oclc/terms/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:opensearch="http://a9.com/-/spec/opensearch/1.1/">
+            <title>OCLC Worldcat Search: srw.bn = "161775188X"</title>
+            <id>http://worldcat.org/webservices/catalog/search/worldcat/opensearch?q=srw.bn+%3D+%22161775188X%22&amp;start=1&amp;count=10&amp;format=atom&amp;wskey=key</id>
+            <updated>2020-01-08T13:48:22-05:00</updated>
+            <subtitle>Search results for srw.bn = "161775188X" at http://worldcat.org/webservices/catalog</subtitle>
+            <opensearch:totalResults>1</opensearch:totalResults>
+            <opensearch:startIndex>1</opensearch:startIndex>
+            <opensearch:itemsPerPage>10</opensearch:itemsPerPage>
+            <opensearch:Query role="request" searchTerms="srw.bn = &quot;161775188X&quot;" startPage="1"/>
+            <link rel="alternate" href="http://worldcat.org/webservices/catalog/search/worldcat/opensearch?q=srw.bn+%3D+%22161775188X%22&amp;start=1&amp;count=10&amp;wskey=key" type="text/html"/>
+            <link rel="self" href="http://worldcat.org/webservices/catalog/search/worldcat/opensearch?q=srw.bn+%3D+%22161775188X%22&amp;start=1&amp;count=10&amp;format=atom&amp;wskey=key" type="application/atom+xml"/>
+            <link rel="first" href="http://worldcat.org/webservices/catalog/search/worldcat/opensearch?q=srw.bn+%3D+%22161775188X%22&amp;start=1&amp;count=10&amp;format=atom&amp;wskey=key" type="application/atom+xml"/>
+            <link rel="last" href="http://worldcat.org/webservices/catalog/search/worldcat/opensearch?q=srw.bn+%3D+%22161775188X%22&amp;start=1&amp;count=10&amp;format=atom&amp;wskey=key" type="application/atom+xml"/>
+            <link rel="search" type="application/opensearchdescription+xml" href="http://worldcat.org/webservices/catalog/opensearch.description.xml"/>
+            <entry>
+                <author>
+                    <name>Tofield, Simon.</name>
+                </author>
+                <title>Simon's cat vs. the world</title>
+                <link href="http://worldcat.org/oclc/933464218"/>
+                <id>http://worldcat.org/oclc/933464218</id>
+                <updated>2017-04-05T22:55:37Z</updated>
+                <summary>In short, wordless cartoons, Simon's cat frustrates him by destroying his property, harassing other animals, and generally making a mess of things.</summary>
+                <dc:identifier>urn:ISBN:9781617751882</dc:identifier>
+                <dc:identifier>urn:ISBN:161775188X</dc:identifier>
+                <oclcterms:recordIdentifier>933464218</oclcterms:recordIdentifier>
+            </entry>
+        </feed>      
     success-search-rss:
       summary: successful search via OpenSearch with RSS Response
-      value: ""      
+      value: >
+        <?xml version="1.0" encoding="UTF-8" standalone="no"?>
+        <rss xmlns:URLEncoder="java://java.net.URLEncoder" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:oclcterms="http://purl.org/oclc/terms/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:opensearch="http://a9.com/-/spec/opensearch/1.1/" xmlns:diag="http://www.loc.gov/zing/srw/diagnostic/" xmlns:srw="http://www.loc.gov/zing/srw/" version="2.0">
+            <channel>
+                <title>OCLC Worldcat Search: srw.bn = "161775188X"</title>
+                <link>http://worldcat.org/webservices/catalog/search/worldcat/opensearch?q=srw.bn+%3D+%22161775188X%22&amp;start=1&amp;count=10&amp;format=atom&amp;wskey=key</link>
+                <description>Search results for "srw.bn = "161775188X"" at http://worldcat.org/webservices/catalog</description>
+                <opensearch:totalResults>1</opensearch:totalResults>
+                <opensearch:startIndex>1</opensearch:startIndex>
+                <opensearch:itemsPerPage>10</opensearch:itemsPerPage>
+                <atom:link rel="search" type="application/opensearchdescription+xml" href="http://worldcat.org/webservices/catalog/opensearch.description.xml"/>
+                <opensearch:Query role="request" searchTerms="srw.bn = &quot;161775188X&quot;" startPage="1"/>
+                <item>
+                    <title>Simon's cat vs. the world</title>
+                    <author>
+                        <name>Tofield, Simon.</name>
+                    </author>
+                    <link>http://worldcat.org/oclc/933464218</link>
+                    <description>In short, wordless cartoons, Simon's cat frustrates him by destroying his property, harassing other animals, and generally making a mess of things.</description>
+                    <guid>http://worldcat.org/oclc/933464218</guid>
+                    <dc:identifier>urn:ISBN:9781617751882</dc:identifier>
+                    <dc:identifier>urn:ISBN:161775188X</dc:identifier>
+                    <oclcterms:recordIdentifier>933464218</oclcterms:recordIdentifier>
+                </item>
+            </channel>
+        </rss>            
     success-search-sru-marc:
-      summary: successful request to read a collection
-      value: ""
+      summary: successful search for records in MARC format
+      value: >
+        <?xml version="1.0" encoding="UTF-8" standalone="no"?>
+        <?xml-stylesheet type='text/xsl' href='/webservices/catalog/xsl/searchRetrieveResponse.xsl'?>
+        <searchRetrieveResponse xmlns="http://www.loc.gov/zing/srw/" xmlns:oclcterms="http://purl.org/oclc/terms/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:diag="http://www.loc.gov/zing/srw/diagnostic/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+            <version>1.1</version>
+            <numberOfRecords>1</numberOfRecords>
+            <records>
+                <record>
+                    <recordSchema>marcxml</recordSchema>
+                    <recordPacking>xml</recordPacking>
+                    <recordData>
+                        <record xmlns="http://www.loc.gov/MARC21/slim">
+                            <leader>00000cam a2200000Mi 4500</leader>
+                            <controlfield tag="001">933464218</controlfield>
+                            <controlfield tag="008">130321s2013    xx a     6    000 0 eng d</controlfield>
+                            <datafield ind1=" " ind2=" " tag="020">
+                                <subfield code="a">9781617751882 : HRD</subfield>
+                            </datafield>
+                            <datafield ind1=" " ind2=" " tag="020">
+                                <subfield code="a">161775188X : HRD</subfield>
+                            </datafield>
+                            <datafield ind1="1" ind2=" " tag="100">
+                                <subfield code="a">Tofield, Simon.</subfield>
+                            </datafield>
+                            <datafield ind1="1" ind2="0" tag="245">
+                                <subfield code="a">Simon's cat vs. the world /</subfield>
+                                <subfield code="c">Simon Tolfield.</subfield>
+                            </datafield>
+                            <datafield ind1="3" ind2=" " tag="246">
+                                <subfield code="a">Simon's cat versus the world</subfield>
+                            </datafield>
+                            <datafield ind1=" " ind2=" " tag="260">
+                                <subfield code="b">Consortium Book Sales &amp; Dist</subfield>
+                                <subfield code="c">2013.</subfield>
+                            </datafield>
+                            <datafield ind1=" " ind2=" " tag="300">
+                                <subfield code="a">96 pages :</subfield>
+                                <subfield code="b">illustrations</subfield>
+                            </datafield>
+                            <datafield ind1=" " ind2=" " tag="520">
+                                <subfield code="a">In short, wordless cartoons, Simon's cat frustrates him by destroying his property, harassing other animals, and generally making a mess of things.</subfield>
+                            </datafield>
+                            <datafield ind1=" " ind2="0" tag="650">
+                                <subfield code="a">Cats</subfield>
+                                <subfield code="v">Comic books, strips, etc.</subfield>
+                            </datafield>
+                            <datafield ind1=" " ind2="0" tag="650">
+                                <subfield code="a">Human-animal relationships</subfield>
+                                <subfield code="v">Comic books, strips, etc.</subfield>
+                            </datafield>
+                            <datafield ind1=" " ind2="0" tag="650">
+                                <subfield code="a">English wit and humor, Pictorial.</subfield>
+                            </datafield>
+                            <datafield ind1=" " ind2="7" tag="650">
+                                <subfield code="a">Cats.</subfield>
+                                <subfield code="2">fast</subfield>
+                                <subfield code="0">(OCoLC)fst00849374</subfield>
+                            </datafield>
+                            <datafield ind1=" " ind2="7" tag="650">
+                                <subfield code="a">English wit and humor, Pictorial.</subfield>
+                                <subfield code="2">fast</subfield>
+                                <subfield code="0">(OCoLC)fst00912418</subfield>
+                            </datafield>
+                            <datafield ind1=" " ind2="7" tag="650">
+                                <subfield code="a">Human-animal relationships.</subfield>
+                                <subfield code="2">fast</subfield>
+                                <subfield code="0">(OCoLC)fst00963482</subfield>
+                            </datafield>
+                            <datafield ind1=" " ind2="7" tag="655">
+                                <subfield code="a">Comic books, strips, etc.</subfield>
+                                <subfield code="2">fast</subfield>
+                                <subfield code="0">(OCoLC)fst01423722</subfield>
+                            </datafield>
+                        </record>
+                    </recordData>
+                </record>
+            </records>
+            <nextRecordPosition/>
+            <resultSetIdleTime/>
+            <echoedSearchRetrieveRequest xmlns:srw="http://www.loc.gov/zing/srw/">
+                <version>1.1</version>
+                <query>srw.bn = "161775188X"</query>
+                <maximumRecords>10</maximumRecords>
+                <recordPacking>xml</recordPacking>
+                <startRecord>1</startRecord>
+                <sortKeys>relevance</sortKeys>
+                <wskey>key</wskey>
+            </echoedSearchRetrieveRequest>
+        </searchRetrieveResponse>      
     success-search-sru-dc:
-      summary: successful request to read a collection
-      value: ""                            
+      summary: successful search for records in Dublin Core format
+      value: >
+        <?xml version="1.0" encoding="UTF-8" standalone="no"?>
+        <?xml-stylesheet type='text/xsl' href='/webservices/catalog/xsl/searchRetrieveResponse.xsl'?>
+        <searchRetrieveResponse xmlns="http://www.loc.gov/zing/srw/" xmlns:oclcterms="http://purl.org/oclc/terms/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:diag="http://www.loc.gov/zing/srw/diagnostic/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+            <version>1.1</version>
+            <numberOfRecords>1</numberOfRecords>
+            <records>
+                <record>
+                    <recordSchema>info:srw/schema/1/dc</recordSchema>
+                    <recordPacking>xml</recordPacking>
+                    <recordData>
+                        <oclcdcs>
+                            <dc:creator>Tofield, Simon.</dc:creator>
+                            <dc:date>2013</dc:date>
+                            <dc:description>In short, wordless cartoons, Simon's cat frustrates him by destroying his property, harassing other animals, and generally making a mess of things.</dc:description>
+                            <dc:format>96 pages : illustrations</dc:format>
+                            <dc:identifier>9781617751882 : HRD</dc:identifier>
+                            <dc:identifier>161775188X : HRD</dc:identifier>
+                            <dc:language xsi:type="http://purl.org/dc/terms/ISO639-2">eng</dc:language>
+                            <dc:publisher>Consortium Book Sales &amp; Dist</dc:publisher>
+                            <dc:subject xsi:type="http://purl.org/dc/terms/LCSH">Cats--Comic books, strips, etc.</dc:subject>
+                            <dc:subject xsi:type="http://purl.org/dc/terms/LCSH">Human-animal relationships--Comic books, strips, etc.</dc:subject>
+                            <dc:subject xsi:type="http://purl.org/dc/terms/LCSH">English wit and humor, Pictorial.</dc:subject>
+                            <dc:title>Simon's cat vs. the world </dc:title>
+                            <dc:title>Simon's cat versus the world</dc:title>
+                            <dc:type>Text</dc:type>
+                            <oclcterms:recordCreationDate xsi:type="http://purl.org/oclc/terms/marc008date">130321</oclcterms:recordCreationDate>
+                            <oclcterms:recordIdentifier>933464218</oclcterms:recordIdentifier>
+                        </oclcdcs>
+                    </recordData>
+                </record>
+            </records>
+            <nextRecordPosition/>
+            <resultSetIdleTime/>
+            <echoedSearchRetrieveRequest xmlns:srw="http://www.loc.gov/zing/srw/">
+                <version>1.1</version>
+                <query>srw.bn = "161775188X"</query>
+                <maximumRecords>10</maximumRecords>
+                <recordSchema>info:srw/schema/1/dc</recordSchema>
+                <recordPacking>xml</recordPacking>
+                <startRecord>1</startRecord>
+                <sortKeys>relevance</sortKeys>
+                <wskey>key</wskey>
+            </echoedSearchRetrieveRequest>
+        </searchRetrieveResponse>                                  
     success-read-record:
       summary: successful read of a single record in MARC
       value: >
