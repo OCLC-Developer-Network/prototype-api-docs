@@ -24,7 +24,13 @@ paths:
           schema:
             type: string          
           required: true
-          example: APIs
+          examples: 
+            simple_query: 
+              value: APIs
+            search_by_ISBN: 
+              value: srw.bn+%3D+%22161775188X%22
+            search_by_title:
+              value: srw.ti+all+%22jazz+patterns%22
         - name: format
           in: query
           description: Format to return the data in
@@ -139,6 +145,15 @@ paths:
           in: query
           description: Query to send to the service
           required: true
+          examples:
+            title_author: 
+              value: srw.au+%3D+%22mann%22+and+srw.ti+%3D+%22faustus%22
+            keyword:
+              value: srw.kw%3D%22civil%20war%22
+            keyword_subjects: 
+              value: srw.kw+%3D+%22civil+war%22+and+%28srw.su+%3D+%22antietam%22+OR+srw.su+%3D+%22sharpsburg%22
+            isbn:
+              value: srw.bn+%3D%22078946988X%22
         - name: recordSchema
           in: query
           description: Query to send to the service
@@ -248,6 +263,7 @@ paths:
           in: path
           description: OCLC Number of record to retrieve
           required: true
+          example: 15550774
         - name: recordSchema
           in: query
           description: Query to send to the service
@@ -335,6 +351,7 @@ paths:
           in: path
           description: ISBN of record to retrieve
           required: true
+          example: 078946988X
         - name: recordSchema
           in: query
           description: Query to send to the service
@@ -421,6 +438,7 @@ paths:
           in: path
           description: ISSN of record to retrieve
           required: true
+          example: 0000-0019
         - name: recordSchema
           in: query
           description: Query to send to the service
@@ -507,6 +525,7 @@ paths:
           in: path
           description: Standard number of record to retrieve
           required: true
+          example: sn 99035013
         - name: recordSchema
           in: query
           description: Query to send to the service
@@ -593,6 +612,7 @@ paths:
           in: path
           description: OCLC Number of record to retrieve
           required: true
+          example: 15550774
         - name: cformat
           in: query
           description: Citation format to return
@@ -671,6 +691,7 @@ paths:
           in: path
           description: OCLC Number of record to retrieve
           required: true
+          example: 15550774
         - name: oclcsymbol
           in: query
           description: OCLC Symbol of library to check holdings for
@@ -843,6 +864,7 @@ paths:
           in: path
           description: ISBN of record to retrieve
           required: true
+          example: 078946988X
         - name: recordSchema
           in: query
           description: Query to send to the service
@@ -941,6 +963,7 @@ paths:
           in: path
           description: ISSN of record to retrieve
           required: true
+          example: 0000-0019
         - name: recordSchema
           in: query
           description: Query to send to the service
@@ -1039,6 +1062,7 @@ paths:
           in: path
           description: Standard number of record to retrieve
           required: true
+          example: sn 99035013
         - name: recordSchema
           in: query
           description: Query to send to the service
