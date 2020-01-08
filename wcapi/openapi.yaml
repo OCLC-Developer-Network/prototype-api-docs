@@ -1441,7 +1441,31 @@ components:
       value: '<p class="citation_style_APA">Richardson, L., &amp; Ruby, S. (2007). <i>RESTful web services</i>. </p><p class="citation_style_MLA">Richardson, Leonard, and Sam Ruby. <i>Restful Web Services</i>. , 2007. Print. </p><p class="citation_style_CHICAGO">Richardson, Leonard, and Sam Ruby. 2007. <i>RESTful web services</i>. </p><p class="citation_style_HARVARD">RICHARDSON, L., &amp; RUBY, S. (2007). <i>RESTful web services</i>. </p><p class="citation_style_TURABIAN">Richardson, Leonard, and Sam Ruby. <i>RESTful Web Services</i>. 2007. </p>'  
     success-search-holdings-oclcSymbol:
       summary: successful search holdings by OCLC Symbol
-      value: '<?xml version="1.0" encoding="UTF-8" standalone="no"?> <holdings xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://www.loc.gov/standards/iso20775/N121_ISOholdings_v4.xsd"> <holding> <institutionIdentifier> <value>OCO</value> <typeOrSource> <pointer>http://worldcat.org/registry/institutions/</pointer> </typeOrSource> </institutionIdentifier> <physicalLocation>Columbus Metropolitan Library</physicalLocation> <physicalAddress> <text>Columbus, OH 43215 United States</text> </physicalAddress> <electronicAddress> <text>https://www.worldcat.org/wcpa/oclc/82671871?page=frame&amp;url=https%3A%2F%2Fcml.bibliocommons.com%2Fsearch%3Fcustom_query%3Didentifier%3A9780596529260%26checksum%3Df6c5d1891bede16b5e082c3de85b2d70&amp;title=Columbus+Metropolitan+Library&amp;linktype=opac&amp;detail=OCO%3AColumbus+Metropolitan+Library%3APublic Library&amp;app=wcapi&amp;id=</text> </electronicAddress> <holdingSimple> <copiesSummary> <copiesCount>1</copiesCount> </copiesSummary> </holdingSimple> </holding> </holdings>'
+      value: >
+        <?xml version="1.0" encoding="UTF-8" standalone="no"?>
+        <holdings xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:noNamespaceSchemaLocation="http://www.loc.gov/standards/iso20775/N121_ISOholdings_v4.xsd">
+            <holding>
+                <institutionIdentifier>
+                    <value>OCO</value>
+                    <typeOrSource>
+                        <pointer>http://worldcat.org/registry/institutions/</pointer>
+                    </typeOrSource>
+                </institutionIdentifier>
+                <physicalLocation>Columbus Metropolitan Library</physicalLocation>
+                <physicalAddress>
+                    <text>Columbus, OH 43215 United States</text>
+                </physicalAddress>
+                <electronicAddress>
+                    <text>https://www.worldcat.org/wcpa/oclc/82671871?page=frame&amp;url=https%3A%2F%2Fcml.bibliocommons.com%2Fsearch%3Fcustom_query%3Didentifier%3A9780596529260%26checksum%3Df6c5d1891bede16b5e082c3de85b2d70&amp;title=Columbus+Metropolitan+Library&amp;linktype=opac&amp;detail=OCO%3AColumbus+Metropolitan+Library%3APublic Library&amp;app=wcapi&amp;id=</text>
+                </electronicAddress>
+                <holdingSimple>
+                    <copiesSummary>
+                        <copiesCount>1</copiesCount>
+                    </copiesSummary>
+                </holdingSimple>
+            </holding>
+        </holdings>      
     success-search-holdings-zipcode:
       summary: successful search holdings by zip code
       value: >
