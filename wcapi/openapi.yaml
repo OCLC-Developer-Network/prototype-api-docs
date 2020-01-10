@@ -84,7 +84,7 @@ paths:
         '200':
           description: Successful search
           content:
-            application/xml:
+            '*/*':
               schema:
                 type: object            
               examples:
@@ -95,7 +95,7 @@ paths:
         '400':
           description: Invalid query. The request was unacceptable, often due to missing a required parameter.
           content:
-            application/xml:
+            '*/*':
               schema:
                 type: object            
               examples:
@@ -104,23 +104,19 @@ paths:
         '401':
           description: Invalid authentication credentials
           content:
-            application/xml:
+            '*/*':
               schema:
                 type: object            
               examples:
-                missing-query-parameter:
+                no_key:
                   $ref: '#/components/examples/unauthorized'
-            text/html:
-              schema:
-                type: object            
-              examples:
-                missing-query-parameter:
-                  $ref: '#/components/examples/unauthorized_bad_key'                                    
+                bad_key:
+                  $ref: '#/components/examples/unauthorized_bad_key'                                   
               
         '405':
           description: 'Method not supported, see response Allow header'
           content:
-            application/xml:
+            '*/*':
               schema:
                 type: object            
               example:
@@ -128,7 +124,7 @@ paths:
         '500':
           description: 'Something went wrong (hopfully rare) - please try again'
           content:
-            application/xml:
+            '*/*':
               schema:
                 type: object
       security:
@@ -203,7 +199,7 @@ paths:
         '200':
           description: Successful search
           content:
-            application/xml:
+            '*/*':
               schema:
                 type: object            
               examples:
@@ -214,7 +210,7 @@ paths:
         '400':
           description: Invalid query. The request was unacceptable, often due to missing a required parameter.
           content:
-            application/xml:
+            '*/*':
               schema:
                 type: object            
               examples:
@@ -223,22 +219,18 @@ paths:
         '401':
           description: Invalid authentication credentials
           content:
-            application/xml:
+            '*/*':
               schema:
                 type: object            
               examples:
-                missing-query-parameter:
+                no_key:
                   $ref: '#/components/examples/unauthorized'
-            text/html:
-              schema:
-                type: object            
-              examples:
-                missing-query-parameter:
-                  $ref: '#/components/examples/unauthorized_bad_key'              
+                bad_key:
+                  $ref: '#/components/examples/unauthorized_bad_key'             
         '405':
           description: 'Method not supported, see response Allow header'
           content:
-            application/xml:
+            '*/*':
               schema:
                 type: object            
               example:
@@ -246,7 +238,7 @@ paths:
         '500':
           description: 'Something went wrong (hopfully rare) - please try again'
           content:
-            application/xml:
+            '*/*':
               schema:
                 type: object
       security:
@@ -290,7 +282,7 @@ paths:
         '200':
           description: Successful search
           content:
-            application/xml:
+            '*/*':
               schema:
                 type: object            
               examples:
@@ -301,7 +293,7 @@ paths:
         '400':
           description: Invalid query. The request was unacceptable, often due to missing a required parameter.
           content:
-            application/xml:
+            '*/*':
               schema:
                 type: object            
               examples:
@@ -310,23 +302,19 @@ paths:
         '401':
           description: Invalid authentication credentials
           content:
-            application/xml:
+            '*/*':
               schema:
                 type: object            
               examples:
-                missing-query-parameter:
+                no_key:
                   $ref: '#/components/examples/unauthorized'
-            text/html:
-              schema:
-                type: object            
-              examples:
-                missing-query-parameter:
-                  $ref: '#/components/examples/unauthorized_bad_key'                  
+                bad_key:
+                  $ref: '#/components/examples/unauthorized_bad_key'                 
               
         '405':
           description: 'Method not supported, see response Allow header'
           content:
-            application/xml:
+            '*/*':
               schema:
                 type: object            
               example:
@@ -334,7 +322,7 @@ paths:
         '500':
           description: 'Something went wrong (hopfully rare) - please try again'
           content:
-            application/xml:
+            '*/*':
               schema:
                 type: object
       security:
@@ -378,7 +366,7 @@ paths:
         '200':
           description: Successful search
           content:
-            application/xml:
+            '*/*':
               schema:
                 type: object            
               examples:
@@ -389,7 +377,7 @@ paths:
         '400':
           description: Invalid query. The request was unacceptable, often due to missing a required parameter.
           content:
-            application/xml:
+            '*/*':
               schema:
                 type: object            
               examples:
@@ -398,22 +386,18 @@ paths:
         '401':
           description: Invalid authentication credentials
           content:
-            application/xml:
+            '*/*':
               schema:
                 type: object            
               examples:
-                missing-query-parameter:
+                no_key:
                   $ref: '#/components/examples/unauthorized'
-            text/html:
-              schema:
-                type: object            
-              examples:
-                missing-query-parameter:
-                  $ref: '#/components/examples/unauthorized_bad_key'              
+                bad_key:
+                  $ref: '#/components/examples/unauthorized_bad_key'             
         '405':
           description: 'Method not supported, see response Allow header'
           content:
-            application/xml:
+            '*/*':
               schema:
                 type: object            
               example:
@@ -421,7 +405,7 @@ paths:
         '500':
           description: 'Something went wrong (hopfully rare) - please try again'
           content:
-            application/xml:
+            '*/*':
               schema:
                 type: object
       security:
@@ -465,7 +449,7 @@ paths:
         '200':
           description: Successful search
           content:
-            application/xml:
+            '*/*':
               schema:
                 type: object            
               examples:
@@ -476,7 +460,7 @@ paths:
         '400':
           description: Invalid query. The request was unacceptable, often due to missing a required parameter.
           content:
-            application/xml:
+            '*/*':
               schema:
                 type: object            
               examples:
@@ -485,22 +469,18 @@ paths:
         '401':
           description: Invalid authentication credentials
           content:
-            application/xml:
+            '*/*':
               schema:
                 type: object            
               examples:
-                missing-query-parameter:
+                no_key:
                   $ref: '#/components/examples/unauthorized'
-            text/html:
-              schema:
-                type: object            
-              examples:
-                missing-query-parameter:
-                  $ref: '#/components/examples/unauthorized_bad_key'              
+                bad_key:
+                  $ref: '#/components/examples/unauthorized_bad_key'             
         '405':
           description: 'Method not supported, see response Allow header'
           content:
-            application/xml:
+            '*/*':
               schema:
                 type: object            
               example:
@@ -508,7 +488,7 @@ paths:
         '500':
           description: 'Something went wrong (hopfully rare) - please try again'
           content:
-            application/xml:
+            '*/*':
               schema:
                 type: object
       security:
@@ -552,7 +532,7 @@ paths:
         '200':
           description: Successful search
           content:
-            application/xml:
+            '*/*':
               schema:
                 type: object            
               examples:
@@ -563,7 +543,7 @@ paths:
         '400':
           description: Invalid query. The request was unacceptable, often due to missing a required parameter.
           content:
-            application/xml:
+            '*/*':
               schema:
                 type: object            
               examples:
@@ -572,22 +552,18 @@ paths:
         '401':
           description: Invalid authentication credentials
           content:
-            application/xml:
+            '*/*':
               schema:
                 type: object            
               examples:
-                missing-query-parameter:
+                no_key:
                   $ref: '#/components/examples/unauthorized'
-            text/html:
-              schema:
-                type: object            
-              examples:
-                missing-query-parameter:
-                  $ref: '#/components/examples/unauthorized_bad_key'              
+                bad_key:
+                  $ref: '#/components/examples/unauthorized_bad_key'            
         '405':
           description: 'Method not supported, see response Allow header'
           content:
-            application/xml:
+            '*/*':
               schema:
                 type: object            
               example:
@@ -595,7 +571,7 @@ paths:
         '500':
           description: 'Something went wrong (hopfully rare) - please try again'
           content:
-            application/xml:
+            '*/*':
               schema:
                 type: object
       security:
@@ -633,16 +609,14 @@ paths:
         '200':
           description: Successful search
           content:
-            application/xml:
-              schema:
-                type: object            
+            '*/*':           
               examples:
                 success-search-collection: 
                   $ref: '#/components/examples/success-read-citation'                    
         '400':
           description: Invalid query. The request was unacceptable, often due to missing a required parameter.
           content:
-            application/xml:
+            '*/*':
               schema:
                 type: object            
               examples:
@@ -651,22 +625,18 @@ paths:
         '401':
           description: Invalid authentication credentials
           content:
-            application/xml:
+            '*/*':
               schema:
                 type: object            
               examples:
-                missing-query-parameter:
+                no_key:
                   $ref: '#/components/examples/unauthorized'
-            text/html:
-              schema:
-                type: object            
-              examples:
-                missing-query-parameter:
-                  $ref: '#/components/examples/unauthorized_bad_key'              
+                bad_key:
+                  $ref: '#/components/examples/unauthorized_bad_key'             
         '405':
           description: 'Method not supported, see response Allow header'
           content:
-            application/xml:
+            '*/*':
               schema:
                 type: object            
               example:
@@ -674,7 +644,7 @@ paths:
         '500':
           description: 'Something went wrong (hopfully rare) - please try again'
           content:
-            application/xml:
+            '*/*':
               schema:
                 type: object
       security:
@@ -792,7 +762,7 @@ paths:
         '200':
           description: Successful search
           content:
-            application/xml:
+            '*/*':
               schema:
                 type: object            
               examples:
@@ -815,7 +785,7 @@ paths:
         '400':
           description: Invalid query. The request was unacceptable, often due to missing a required parameter.
           content:
-            application/xml:
+            '*/*':
               schema:
                 type: object            
               examples:
@@ -824,22 +794,18 @@ paths:
         '401':
           description: Invalid authentication credentials
           content:
-            application/xml:
+            '*/*':
               schema:
                 type: object            
               examples:
-                missing-query-parameter:
+                no_key:
                   $ref: '#/components/examples/unauthorized'
-            text/html:
-              schema:
-                type: object            
-              examples:
-                missing-query-parameter:
-                  $ref: '#/components/examples/unauthorized_bad_key'              
+                bad_key:
+                  $ref: '#/components/examples/unauthorized_bad_key'             
         '405':
           description: 'Method not supported, see response Allow header'
           content:
-            application/xml:
+            '*/*':
               schema:
                 type: object            
               example:
@@ -847,7 +813,7 @@ paths:
         '500':
           description: 'Something went wrong (hopfully rare) - please try again'
           content:
-            application/xml:
+            '*/*':
               schema:
                 type: object
       security:
@@ -891,7 +857,7 @@ paths:
         '200':
           description: Successful search
           content:
-            application/xml:
+            '*/*':
               schema:
                 type: object            
               examples:
@@ -914,7 +880,7 @@ paths:
         '400':
           description: Invalid query. The request was unacceptable, often due to missing a required parameter.
           content:
-            application/xml:
+            '*/*':
               schema:
                 type: object            
               examples:
@@ -923,22 +889,18 @@ paths:
         '401':
           description: Invalid authentication credentials
           content:
-            application/xml:
+            '*/*':
               schema:
                 type: object            
               examples:
-                missing-query-parameter:
+                no_key:
                   $ref: '#/components/examples/unauthorized'
-            text/html:
-              schema:
-                type: object            
-              examples:
-                missing-query-parameter:
-                  $ref: '#/components/examples/unauthorized_bad_key'              
+                bad_key:
+                  $ref: '#/components/examples/unauthorized_bad_key'             
         '405':
           description: 'Method not supported, see response Allow header'
           content:
-            application/xml:
+            '*/*':
               schema:
                 type: object            
               example:
@@ -946,7 +908,7 @@ paths:
         '500':
           description: 'Something went wrong (hopfully rare) - please try again'
           content:
-            application/xml:
+            '*/*':
               schema:
                 type: object
       security:
@@ -990,7 +952,7 @@ paths:
         '200':
           description: Successful search
           content:
-            application/xml:
+            '*/*':
               schema:
                 type: object            
               examples:
@@ -1013,7 +975,7 @@ paths:
         '400':
           description: Invalid query. The request was unacceptable, often due to missing a required parameter.
           content:
-            application/xml:
+            '*/*':
               schema:
                 type: object            
               examples:
@@ -1022,22 +984,18 @@ paths:
         '401':
           description: Invalid authentication credentials
           content:
-            application/xml:
+            '*/*':
               schema:
                 type: object            
               examples:
-                missing-query-parameter:
+                no_key:
                   $ref: '#/components/examples/unauthorized'
-            text/html:
-              schema:
-                type: object            
-              examples:
-                missing-query-parameter:
-                  $ref: '#/components/examples/unauthorized_bad_key'              
+                bad_key:
+                  $ref: '#/components/examples/unauthorized_bad_key'          
         '405':
           description: 'Method not supported, see response Allow header'
           content:
-            application/xml:
+            '*/*':
               schema:
                 type: object            
               example:
@@ -1045,7 +1003,7 @@ paths:
         '500':
           description: 'Something went wrong (hopfully rare) - please try again'
           content:
-            application/xml:
+            '*/*':
               schema:
                 type: object
       security:
@@ -1089,7 +1047,7 @@ paths:
         '200':
           description: Successful search
           content:
-            application/xml:
+            '*/*':
               schema:
                 type: object            
               examples:
@@ -1112,7 +1070,7 @@ paths:
         '400':
           description: Invalid query. The request was unacceptable, often due to missing a required parameter.
           content:
-            application/xml:
+            '*/*':
               schema:
                 type: object            
               examples:
@@ -1121,22 +1079,19 @@ paths:
         '401':
           description: Invalid authentication credentials
           content:
-            application/xml:
+            '*/*':
               schema:
                 type: object            
               examples:
-                missing-query-parameter:
+                no_key:
                   $ref: '#/components/examples/unauthorized'
-            text/html:
-              schema:
-                type: object            
-              examples:
-                missing-query-parameter:
-                  $ref: '#/components/examples/unauthorized_bad_key'              
+                bad_key:
+                  $ref: '#/components/examples/unauthorized_bad_key'   
+                             
         '405':
           description: 'Method not supported, see response Allow header'
           content:
-            application/xml:
+            '*/*':
               schema:
                 type: object            
               example:
@@ -1144,7 +1099,7 @@ paths:
         '500':
           description: 'Something went wrong (hopfully rare) - please try again'
           content:
-            application/xml:
+            '*/*':
               schema:
                 type: object
       security:
@@ -1420,21 +1375,43 @@ components:
       value: >
         <?xml version="1.0" encoding="UTF-8" standalone="no"?>
         <oclcdcs xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:oclcterms="http://purl.org/oclc/terms/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-            <dc:contributor>Ruby, Sam.</dc:contributor>
-            <dc:creator>Richardson, Leonard, 1979-</dc:creator>
-            <dc:description>Includes index.</dc:description>
-            <dc:description>Shows how to use the REST architectural style to create web sites that can be used by computers as well as machines, providing basic rules for using REST and real-life examples of such Web services.</dc:description>
-            <dc:description>The Programmable Web and Its Inhabitants -- Writing Web Service Clients -- What Makes RESTful Services Different? -- The Resource-Oriented Architecture -- Designing Read-Only Resource-Oriented Services -- Designing Read/Write Resource-Oriented Services -- A Service Implementation -- REST and ROA Best Practices -- The Building Blocks of Services -- The Resource-Oriented Architecture Versus Big Web Services -- Ajax Applications as REST Clients -- Frameworks for RESTful Services -- Some Resources for REST and Some RESTful Resources -- The HTTP Response Code Top 42 -- The HTTP Header Top Infinity.</dc:description>
-            <dc:format>xxiv, 419 pages : illustrations ; 24 cm</dc:format>
-            <dc:identifier>9780596529260</dc:identifier>
-            <dc:identifier>0596529260</dc:identifier>
+            <dc:creator>McPherson, James M.</dc:creator>
+            <dc:date>1988</dc:date>
+            <dc:description>Includes bibliographical references (p. 865-882) and index.</dc:description>
+            <dc:description>Awards: Pulitzer Prize, History, 1989.</dc:description>
+            <dc:description>Pulitzer Prize, History, 1989.</dc:description>
+            <dc:description>Filled with fresh interpretations and information, puncturing old myths and challenging new ones, this fast-paced narrative fully integrates the political, social, and military events that crowded the two decades from the outbreak of one war in Mexico to the ending of another at Appomattox. Packed with drama and analytical insight, the book vividly recounts the momentous episodes that preceded the Civil War: the Dred Scott decision, the Lincoln-Douglas debates, John Brown's raid on Harper's Ferry. It then moves into a chronicle of the war itself, the battles, the strategic maneuvering on both sides, the politics, and the personalities. Particularly notable are new views on such matters as the slavery expansion issue in the 1850s, the origins of the Republican Party, the causes of secession, internal dissent and anti-war opposition in the North and the South, and the reasons for the Union's victory. The book's title refers to the sentiments that informed both the Northern and Southern views of the conflict: the South seceded in the name of that freedom of self-determination and self-government for which their fathers had fought in 1776, while the North stood fast in defense of the Union founded by those fathers as the bulwark of American liberty. Eventually, the North had to grapple with the underlying cause of the war, slavery, and adopt a policy of emancipation as a second war aim. This "new birth of freedom," as Lincoln called it, constitutes the proudest legacy of America's bloodiest conflict. This volume makes sense of that vast and confusing "second American Revolution" we call the Civil War, a war that transformed a nation and expanded our heritage of liberty.</dc:description>
+            <dc:description>From the Halls of Montezuma -- The United States at midcentury -- Mexico will poison us -- An empire for slavery -- Slavery, rum, and Romanism -- The crime against Kansas -- Mudsills and greasy mechanics for A. Lincoln -- The Revolution of 1860 -- The counterrevolution of 1861 -- Facing both ways: the upper south's dilemma -- Amateurs go to war -- Farewell to the Ninety Days' War -- Blockade and beachhead: the Salt-water War, 1861-1862 -- The River War in 1862 -- The sinews of war -- Billy Yank's chickahominy blues -- We must free the slaves or be ourselves subdued -- Carry me back to old Virginny -- John Bull's Virginia reel -- Three rivers in winter, 1862-1863 -- Fire in the rear -- Long remember: the summer of '63 -- Johnny Reb's Chattanooga blues -- When this cruel war is over -- If it takes all summer -- After four years of failure -- We are going to be wiped off the earth -- South Carolina must be destroyed -- We are all Americans -- To the shoals of victory</dc:description>
+            <dc:format>xix, 909 p., [16] p. of plates : ill., maps, ports. ; 25 cm.</dc:format>
+            <dc:identifier>0195038630 (alk. paper)</dc:identifier>
+            <dc:identifier>9780195038637 (alk. paper)</dc:identifier>
+            <dc:identifier>9780195168952</dc:identifier>
+            <dc:identifier>019516895X</dc:identifier>
             <dc:language xsi:type="http://purl.org/dc/terms/ISO639-2">eng</dc:language>
-            <dc:subject xsi:type="http://purl.org/dc/terms/LCSH">Web services.</dc:subject>
-            <dc:title>RESTful web services </dc:title>
+            <dc:publisher>Oxford University Press</dc:publisher>
+            <dc:relation xsi:type="http://purl.org/dc/terms/URI">http://catdir.loc.gov/catdir/enhancements/fy0725/87011045-b.html</dc:relation>
+            <dc:relation xsi:type="http://purl.org/dc/terms/URI">http://catdir.loc.gov/catdir/enhancements/fy0603/87011045-d.html</dc:relation>
+            <dc:relation xsi:type="http://purl.org/dc/terms/URI">http://www.gbv.de/dms/bowker/toc/9780195038637.pdf</dc:relation>
+            <dc:relation>The Oxford history of the United States ; v. 6</dc:relation>
+            <dc:relation>Oxford history of the United States ; v. 6.</dc:relation>
+            <dc:subject>United States--History--1861-1865, Civil War.</dc:subject>
+            <dc:subject>United States--History--1861-1865, Civil War--Campaigns.</dc:subject>
+            <dc:subject>American Civil War</dc:subject>
+            <dc:subject xsi:type="http://purl.org/dc/terms/DDC">973.7/3</dc:subject>
+            <dc:subject xsi:type="http://purl.org/dc/terms/LCC">E173 .O94 vol. 6</dc:subject>
+            <dc:subject xsi:type="http://purl.org/dc/terms/LCC">E470 .M23 1988</dc:subject>
+            <dc:subject xsi:type="http://purl.org/dc/terms/LCSH">United States--History--Civil War, 1861-1865--Campaigns.</dc:subject>
+            <dc:subject xsi:type="http://purl.org/dc/terms/LCSH">United States--History--Civil War, 1861-1865.</dc:subject>
+            <dc:title>Battle cry of freedom : the Civil War era </dc:title>
             <dc:type>Text</dc:type>
-            <oclcterms:recordCreationDate xsi:type="http://purl.org/oclc/terms/marc008date">071012</oclcterms:recordCreationDate>
-            <oclcterms:recordIdentifier xsi:type="http://purl.org/oclc/terms/lccn">  2007278140</oclcterms:recordIdentifier>
-            <oclcterms:recordIdentifier>82671871</oclcterms:recordIdentifier>
+            <oclcterms:recordContentSource>DLC</oclcterms:recordContentSource>
+            <oclcterms:recordCreationDate xsi:type="http://purl.org/oclc/terms/marc008date">870402</oclcterms:recordCreationDate>
+            <oclcterms:recordIdentifier xsi:type="http://purl.org/oclc/terms/lccn">   87011045 </oclcterms:recordIdentifier>
+            <oclcterms:recordIdentifier>15550774</oclcterms:recordIdentifier>
+            <oclcterms:languageOfCataloging xsi:type="http://purl.org/oclc/terms/iso639-2b">eng</oclcterms:languageOfCataloging>
+            <oclcterms:recordOCLCControlNumberCross-Reference xsi:type="http://purl.org/oclc/terms/oclcmarc019">18960948</oclcterms:recordOCLCControlNumberCross-Reference>
+            <oclcterms:recordOCLCControlNumberCross-Reference xsi:type="http://purl.org/oclc/terms/oclcmarc019">731388883</oclcterms:recordOCLCControlNumberCross-Reference>
+            <oclcterms:recordTranscribingAgency>DLC</oclcterms:recordTranscribingAgency>
         </oclcdcs>              
     success-read-citation:
       summary: successful read of a single record citation
@@ -1538,53 +1515,7 @@ components:
       value: '<!DOCTYPE html> <html> <head> <title>Apache Tomcat/8.0.33 - Error report</title> <style type="text/css"> H1 { font-family: Tahoma, Arial, sans-serif; color: white; background-color: #525D76; font-size: 22px; } H2 { font-family: Tahoma, Arial, sans-serif; color: white; background-color: #525D76; font-size: 16px; } H3 { font-family: Tahoma, Arial, sans-serif; color: white; background-color: #525D76; font-size: 14px; } BODY { font-family: Tahoma, Arial, sans-serif; color: black; background-color: white; } B { font-family: Tahoma, Arial, sans-serif; color: white; background-color: #525D76; } P { font-family: Tahoma, Arial, sans-serif; background: white; color: black; font-size: 12px; } A { color: black; } A.name { color: black; } .line { height: 1px; background-color: #525D76; border: none; } </style> </head> <body> <h1>HTTP Status 405 - HTTP method PUT is not supported by this URL</h1> <div class="line"></div> <p><b>type</b> Status report</p> <p><b>message</b> <u>HTTP method PUT is not supported by this URL</u></p> <p><b>description</b> <u>The specified HTTP method is not allowed for the requested resource.</u></p> <hr class="line"> <h3>Apache Tomcat/8.0.33</h3> </body> </html>'
     missing-query-parameter:
       summary: Error returned when required query parameter not sent
-      value: ""
-  schemas:
-    atom_results:
-      type: object
-      properties:
-        title:
-          description: Name of title
-          type: string
-        id:
-          description: URL for title in API
-          type: string
-    rss_results:
-      type: object
-      properties:
-        title:
-          description: Name of title
-          type: string
-        id:
-          description: URL for title in API
-          type: string
-    sru_results:
-      type: object
-      properties:
-        title:
-          description: Name of title
-          type: string
-        id:
-          description: URL for title in API
-          type: string
-    marc:
-      type: object
-      properties:
-        title:
-          description: Name of title
-          type: string
-        id:
-          description: URL for title in API
-          type: string
-    dublin_core:
-      type: object
-      properties:
-        title:
-          description: Name of title
-          type: string
-        id:
-          description: URL for title in API
-          type: string                                                              
+      value: ""                                                                                                                                                       
 externalDocs:
   description: Find out more about OCLC
   url: 'https://www.oclc.org'
