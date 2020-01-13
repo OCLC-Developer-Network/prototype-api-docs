@@ -1,0 +1,356 @@
+openapi: 3.0.0
+info:
+  description: WMS Collection Management API
+  version: 1.0.0
+  title: WMS Collection Management API
+  license:
+    name: Licensing TBD
+servers:
+  - url: 'https://circ.sd00.worldcat.org'
+    description: Dublin datacenter
+  - url: 'https://circ.sd02.worldcat.org'
+    description: EMEA datacenter
+  - url: 'https://circ.sd03.worldcat.org'
+    description: Australia datacenter
+  - url: 'https://circ.sd04.worldcat.org'
+    description: Toronto datacenter
+security:
+  - api_key: []
+paths:
+  /LHR:
+    get:
+      tags:
+        - Copy
+      summary: 'Find Copy in WMS Circulation'
+      description: 'Given a Copy ID find a copy in WMS Circulation'
+      operationId: search-circulation-copy
+      parameters:
+        - name: q
+          in: query
+          description: Query to search for results
+          schema:
+            type: string
+          examples:
+            oclc-number-search:
+              value: oclc:33252178
+            barcode-search:
+              value: barcode:K123456789             
+          required: true
+      responses:
+        '200':
+          description: Successful search
+          content:
+            application/atom+xml:
+              schema:
+                type: object            
+              examples:
+                success-search-copies-atom: 
+                  $ref: '#/components/examples/success-search-copies-atom'
+                success-search-copies-atom-by-barcode: 
+                  $ref: '#/components/examples/success-search-copies-atom-by-barcode'                            
+            application/atom+json:
+              schema:
+                type: object            
+              examples:
+                success-search-copies-atom-json: 
+                  $ref: '#/components/examples/success-search-copies-atom-json'
+                success-search-copies-atom-json-by-barcode: 
+                  $ref: '#/components/examples/success-search-copies-atom-json-by-barcode'                  
+            application/json:
+              schema:
+                type: object            
+              examples:
+                success-search-copies-json: 
+                  $ref: '#/components/examples/success-search-copies-json'
+                success-search-copies-json-by-barcode: 
+                  $ref: '#/components/examples/success-search-copies-json-by-barcode'                                      
+        '400':
+          description: Invalid query. The request was unacceptable, often due to missing a required parameter.
+          content:
+            application/json:
+              schema:
+                type: object            
+              examples:
+                missing-query-parameter:
+                  $ref: '#/components/examples/missing-query-parameter'
+                missing-query-parameter-value:
+                  $ref: '#/components/examples/missing-query-parameter-value'
+              
+        '405':
+          description: 'Method not supported, see response Allow header'
+          content:
+            application/json:
+              schema:
+                type: object            
+              example:
+                $ref: '#/components/examples/method-not-allowed-error'               
+        '500':
+          description: 'Something went wrong (hopfully rare) - please try again'
+          content:
+            application/json:
+              schema:
+                type: object              
+    post:
+      responses:
+        '200':
+          description: Successful search
+          content:
+            application/json:
+              schema:
+                type: object            
+              examples:
+                success-search-collection: 
+                  $ref: '#/components/examples/success-search-collection'                    
+        '400':
+          description: Invalid query. The request was unacceptable, often due to missing a required parameter.
+          content:
+            application/json:
+              schema:
+                type: object            
+              examples:
+                missing-query-parameter:
+                  $ref: '#/components/examples/missing-query-parameter'
+                missing-query-parameter-value:
+                  $ref: '#/components/examples/missing-query-parameter-value'
+              
+        '405':
+          description: 'Method not supported, see response Allow header'
+          content:
+            application/json:
+              schema:
+                type: object            
+              example:
+                $ref: '#/components/examples/method-not-allowed-error'               
+        '500':
+          description: 'Something went wrong (hopfully rare) - please try again'
+          content:
+            application/json:
+              schema:
+                type: object    
+  /LHR/{copyID}:
+    get:
+      tags:
+        - Copy
+      summary: 'Find Copy in WMS Circulation'
+      description: 'Given a Copy ID find a copy in WMS Circulation'
+      operationId: find-circulation-copy
+      parameters:
+        - name: copyID
+          in: path
+          description: Accession number for LHR or CopyID
+          schema:
+            type: integer
+            format: int32
+          required: true                  
+      responses:
+        '200':
+          description: Successful search
+          content:
+            application/atom+json:
+              schema:
+                type: object            
+              examples:
+                read-copy-atom: 
+                  $ref: '#/components/examples/read-copy-atom'
+            application/atom+json:
+              schema:
+                type: object            
+              examples:
+                read-copy-atom-json: 
+                  $ref: '#/components/examples/read-copy-atom-json'
+            application/json:
+              schema:
+                type: object            
+              examples:
+                read-copy-json: 
+                  $ref: '#/components/examples/read-copy-json'                    
+        '400':
+          description: Invalid query. The request was unacceptable, often due to missing a required parameter.
+          content:
+            application/json:
+              schema:
+                type: object            
+              examples:
+                missing-query-parameter:
+                  $ref: '#/components/examples/missing-query-parameter'
+                missing-query-parameter-value:
+                  $ref: '#/components/examples/missing-query-parameter-value'
+              
+        '405':
+          description: 'Method not supported, see response Allow header'
+          content:
+            application/json:
+              schema:
+                type: object            
+              example:
+                $ref: '#/components/examples/method-not-allowed-error'               
+        '500':
+          description: 'Something went wrong (hopfully rare) - please try again'
+          content:
+            application/json:
+              schema:
+                type: object
+    put:
+      tags:
+        - Copy
+      summary: 'Update Copy in WMS Circulation'
+      description: 'Given a Copy ID Update a copy in WMS Circulation'
+      operationId: update-circulation-copy
+      parameters:
+        - name: copyID
+          in: path
+          description: Accession number for LHR or CopyID
+          schema:
+            type: integer
+            format: int32
+          required: true                  
+      responses:
+        '200':
+          description: Successful search
+          content:
+            application/json:
+              schema:
+                type: object            
+              examples:
+                success-search-collection: 
+                  $ref: '#/components/examples/success-search-collection'                    
+        '400':
+          description: Invalid query. The request was unacceptable, often due to missing a required parameter.
+          content:
+            application/json:
+              schema:
+                type: object            
+              examples:
+                missing-query-parameter:
+                  $ref: '#/components/examples/missing-query-parameter'
+                missing-query-parameter-value:
+                  $ref: '#/components/examples/missing-query-parameter-value'
+              
+        '405':
+          description: 'Method not supported, see response Allow header'
+          content:
+            application/json:
+              schema:
+                type: object            
+              example:
+                $ref: '#/components/examples/method-not-allowed-error'               
+        '500':
+          description: 'Something went wrong (hopfully rare) - please try again'
+          content:
+            application/json:
+              schema:
+                type: object
+    delete:
+      tags:
+        - Copy
+      summary: 'Delete Copy in WMS Circulation'
+      description: 'Given a Copy ID Delete a copy in WMS Circulation'
+      operationId: delete-circulation-copy
+      parameters:
+        - name: copyID
+          in: path
+          description: Accession number for LHR or CopyID
+          schema:
+            type: integer
+            format: int32
+          required: true                  
+      responses:
+        '200':
+          description: Successful search
+          content:
+            application/json:
+              schema:
+                type: object            
+              examples:
+                success-search-collection: 
+                  $ref: '#/components/examples/success-search-collection'                    
+        '400':
+          description: Invalid query. The request was unacceptable, often due to missing a required parameter.
+          content:
+            application/json:
+              schema:
+                type: object            
+              examples:
+                missing-query-parameter:
+                  $ref: '#/components/examples/missing-query-parameter'
+                missing-query-parameter-value:
+                  $ref: '#/components/examples/missing-query-parameter-value'
+              
+        '405':
+          description: 'Method not supported, see response Allow header'
+          content:
+            application/json:
+              schema:
+                type: object            
+              example:
+                $ref: '#/components/examples/method-not-allowed-error'               
+        '500':
+          description: 'Something went wrong (hopfully rare) - please try again'
+          content:
+            application/json:
+              schema:
+                type: object                                                         
+components:
+  securitySchemes:
+    api_key:
+      type: apiKey
+      name: wskey
+      in: query
+  examples:
+    success-search-copies-atom:
+      summary: ""
+      value: ""
+    success-search-copies-atom-by-barcode:
+      summary: ""
+      value: ""
+    success-search-copies-atom-json:
+      summary: ""
+      value: ""     
+    success-search-copies-atom-json-by-barcode:
+      summary: ""
+      value: ""
+    success-search-copies-json: 
+      summary: ""
+      value: ""
+    success-search-copies-json-by-barcode:      
+      summary: ""
+      value: ""
+    read-copy-atom:
+      summary: ""
+      value: ""
+    read-copy-atom-json:
+      summary: ""
+      value: ""
+    read-copy-json:
+      summary: ""
+      value: ""                                                            
+    unauthorized:
+      summary: Error returned when valid API credentials not sent or invalid
+      value: {"message": "Unauthorized"}
+    forbidden:
+      summary: Error returned when API credentials not for resource
+      value: {"message": "Forbidden"}
+    method-not-allowed-error-atom:
+      summary: Error when invalid HTTP method used
+      value: {"title": "NOT_ALLOWED", "detail": "POST method not allowed"}
+    method-not-allowed-error-atom-json:
+      summary: Error when invalid HTTP method used
+      value: {"title": "NOT_ALLOWED", "detail": "POST method not allowed"}
+    method-not-allowed-error-json:
+      summary: Error when invalid HTTP method used
+      value: {"title": "NOT_ALLOWED", "detail": "POST method not allowed"}            
+    not-acceptable-error-atom:
+      summary: Error when media type in Accept header not supported
+      value: {"title": "NOT_ACCEPTABLE", "detail": "Media type application/xml not supported. Supported media types: application/json"}
+    not-acceptable-error-atom-json:
+      summary: Error when media type in Accept header not supported
+      value: {"title": "NOT_ACCEPTABLE", "detail": "Media type application/xml not supported. Supported media types: application/json"}
+    not-acceptable-error-json:
+      summary: Error when media type in Accept header not supported
+      value: {"title": "NOT_ACCEPTABLE", "detail": "Media type application/xml not supported. Supported media types: application/json"}            
+    missing-query-parameter:
+      summary: Error returned when required query parameter not sent
+      value: {"type": "MISSING_QUERY_PARAMETER", "title": "Validation Failure", "detail": "Required String parameter 'q' is not present"}       
+externalDocs:
+  description: Find out more about OCLC
+  url: 'https://www.oclc.org'
