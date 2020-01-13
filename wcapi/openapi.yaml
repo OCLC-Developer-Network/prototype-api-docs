@@ -91,18 +91,13 @@ paths:
                 success-search-atom: 
                   $ref: '#/components/examples/success-search-atom'
                 success-search-rss: 
-                  $ref: '#/components/examples/success-search-rss'                      
-        '400':
-          description: Invalid query. The request was unacceptable, often due to missing a required parameter.
-          content:
-            '*/*':
-              schema:
-                type: object            
-              examples:
+                  $ref: '#/components/examples/success-search-rss'
                 limit-only:
                   $ref: '#/components/examples/limit-only'
                 unsupported-index:
-                  $ref: '#/components/examples/unsupported-index'                  
+                  $ref: '#/components/examples/unsupported-index'
+                cql-query-syntax-error:
+                  $ref: '#/components/examples/cql-query-syntax-error'                                                            
         '401':
           description: Invalid authentication credentials
           content:
@@ -113,7 +108,16 @@ paths:
                 no_key:
                   $ref: '#/components/examples/unauthorized'
                 bad_key:
-                  $ref: '#/components/examples/unauthorized_bad_key'                                   
+                  $ref: '#/components/examples/unauthorized_bad_key'
+        '403':
+          description: Unauthorized. Typically the key is over its quota
+          content:
+            '*/*':
+              schema:
+                type: object            
+              examples:
+                overlimit:
+                  $ref: '#/components/examples/overlimit'                                                     
               
         '405':
           description: 'Method not supported, see response Allow header'
@@ -208,18 +212,13 @@ paths:
                 success-search-marc: 
                   $ref: '#/components/examples/success-search-sru-marc'
                 success-search-dc: 
-                  $ref: '#/components/examples/success-search-sru-dc'                    
-        '400':
-          description: Invalid query. The request was unacceptable, often due to missing a required parameter.
-          content:
-            '*/*':
-              schema:
-                type: object            
-              examples:
+                  $ref: '#/components/examples/success-search-sru-dc'
                 limit-only:
                   $ref: '#/components/examples/limit-only'
                 unsupported-index:
-                  $ref: '#/components/examples/unsupported-index'   
+                  $ref: '#/components/examples/unsupported-index'
+                cql-query-syntax-error:
+                  $ref: '#/components/examples/cql-query-syntax-error'                     
         '401':
           description: Invalid authentication credentials
           content:
@@ -230,7 +229,16 @@ paths:
                 no_key:
                   $ref: '#/components/examples/unauthorized'
                 bad_key:
-                  $ref: '#/components/examples/unauthorized_bad_key'             
+                  $ref: '#/components/examples/unauthorized_bad_key'
+        '403':
+          description: Unauthorized. Typically the key is over its quota
+          content:
+            '*/*':
+              schema:
+                type: object            
+              examples:
+                overlimit:
+                  $ref: '#/components/examples/overlimit'                               
         '405':
           description: 'Method not supported, see response Allow header'
           content:
@@ -293,16 +301,9 @@ paths:
                 success-search-marc: 
                   $ref: '#/components/examples/success-read-record'
                 success-search-dc: 
-                  $ref: '#/components/examples/success-read-record-dc'                    
-        '400':
-          description: Invalid query. The request was unacceptable, often due to missing a required parameter.
-          content:
-            '*/*':
-              schema:
-                type: object            
-              examples:
-                missing-query-parameter:
-                  $ref: '#/components/examples/missing-query-parameter'
+                  $ref: '#/components/examples/success-read-record-dc'
+                fail-record-does-not-exist:
+                  $ref: '#/components/examples/record-does-not-exist'                  
         '401':
           description: Invalid authentication credentials
           content:
@@ -314,7 +315,15 @@ paths:
                   $ref: '#/components/examples/unauthorized'
                 bad_key:
                   $ref: '#/components/examples/unauthorized_bad_key'                 
-              
+        '403':
+          description: Unauthorized. Typically the key is over its quota
+          content:
+            '*/*':
+              schema:
+                type: object            
+              examples:
+                overlimit:
+                  $ref: '#/components/examples/overlimit'              
         '405':
           description: 'Method not supported, see response Allow header'
           content:
@@ -377,16 +386,9 @@ paths:
                 success-search-marc: 
                   $ref: '#/components/examples/success-read-record'
                 success-search-dc: 
-                  $ref: '#/components/examples/success-read-record-dc'                      
-        '400':
-          description: Invalid query. The request was unacceptable, often due to missing a required parameter.
-          content:
-            '*/*':
-              schema:
-                type: object            
-              examples:
-                missing-query-parameter:
-                  $ref: '#/components/examples/missing-query-parameter'
+                  $ref: '#/components/examples/success-read-record-dc'
+                fail-record-does-not-exist:
+                  $ref: '#/components/examples/record-does-not-exist'                  
         '401':
           description: Invalid authentication credentials
           content:
@@ -398,6 +400,15 @@ paths:
                   $ref: '#/components/examples/unauthorized'
                 bad_key:
                   $ref: '#/components/examples/unauthorized_bad_key'             
+        '403':
+          description: Unauthorized. Typically the key is over its quota
+          content:
+            '*/*':
+              schema:
+                type: object            
+              examples:
+                overlimit:
+                  $ref: '#/components/examples/overlimit'
         '405':
           description: 'Method not supported, see response Allow header'
           content:
@@ -460,16 +471,9 @@ paths:
                 success-search-marc: 
                   $ref: '#/components/examples/success-read-record'
                 success-search-dc: 
-                  $ref: '#/components/examples/success-read-record-dc'                      
-        '400':
-          description: Invalid query. The request was unacceptable, often due to missing a required parameter.
-          content:
-            '*/*':
-              schema:
-                type: object            
-              examples:
-                missing-query-parameter:
-                  $ref: '#/components/examples/missing-query-parameter'
+                  $ref: '#/components/examples/success-read-record-dc'
+                fail-record-does-not-exist:
+                  $ref: '#/components/examples/record-does-not-exist'                  
         '401':
           description: Invalid authentication credentials
           content:
@@ -481,6 +485,15 @@ paths:
                   $ref: '#/components/examples/unauthorized'
                 bad_key:
                   $ref: '#/components/examples/unauthorized_bad_key'             
+        '403':
+          description: Unauthorized. Typically the key is over its quota
+          content:
+            '*/*':
+              schema:
+                type: object            
+              examples:
+                overlimit:
+                  $ref: '#/components/examples/overlimit'
         '405':
           description: 'Method not supported, see response Allow header'
           content:
@@ -543,16 +556,9 @@ paths:
                 success-search-marc: 
                   $ref: '#/components/examples/success-read-record'
                 success-search-dc: 
-                  $ref: '#/components/examples/success-read-record-dc'                      
-        '400':
-          description: Invalid query. The request was unacceptable, often due to missing a required parameter.
-          content:
-            '*/*':
-              schema:
-                type: object            
-              examples:
-                missing-query-parameter:
-                  $ref: '#/components/examples/missing-query-parameter'
+                  $ref: '#/components/examples/success-read-record-dc'
+                fail-record-does-not-exist:
+                  $ref: '#/components/examples/record-does-not-exist'
         '401':
           description: Invalid authentication credentials
           content:
@@ -564,6 +570,15 @@ paths:
                   $ref: '#/components/examples/unauthorized'
                 bad_key:
                   $ref: '#/components/examples/unauthorized_bad_key'            
+        '403':
+          description: Unauthorized. Typically the key is over its quota
+          content:
+            '*/*':
+              schema:
+                type: object            
+              examples:
+                overlimit:
+                  $ref: '#/components/examples/overlimit'
         '405':
           description: 'Method not supported, see response Allow header'
           content:
@@ -616,16 +631,7 @@ paths:
             '*/*':           
               examples:
                 success-search-collection: 
-                  $ref: '#/components/examples/success-read-citation'                    
-        '400':
-          description: Invalid query. The request was unacceptable, often due to missing a required parameter.
-          content:
-            '*/*':
-              schema:
-                type: object            
-              examples:
-                missing-query-parameter:
-                  $ref: '#/components/examples/missing-query-parameter'
+                  $ref: '#/components/examples/success-read-citation'
         '401':
           description: Invalid authentication credentials
           content:
@@ -637,6 +643,15 @@ paths:
                   $ref: '#/components/examples/unauthorized'
                 bad_key:
                   $ref: '#/components/examples/unauthorized_bad_key'             
+        '403':
+          description: Unauthorized. Typically the key is over its quota
+          content:
+            '*/*':
+              schema:
+                type: object            
+              examples:
+                overlimit:
+                  $ref: '#/components/examples/overlimit'
         '405':
           description: 'Method not supported, see response Allow header'
           content:
@@ -785,13 +800,9 @@ paths:
                 no-holdings-xml:
                   $ref: '#/components/examples/no-holdings-xml'
                 no-holdings-json:
-                  $ref: '#/components/examples/no-holdings-json'                                                                                            
-        '400':
-          description: Invalid query. The request was unacceptable, often due to missing a required parameter.
-          content:
-            '*/*':
-              schema:
-                type: object            
+                  $ref: '#/components/examples/no-holdings-json'
+                fail-record-does-not-exist:
+                  $ref: '#/components/examples/record-does-not-exist'                                                                                                                          
         '401':
           description: Invalid authentication credentials
           content:
@@ -803,6 +814,15 @@ paths:
                   $ref: '#/components/examples/unauthorized'
                 bad_key:
                   $ref: '#/components/examples/unauthorized_bad_key'             
+        '403':
+          description: Unauthorized. Typically the key is over its quota
+          content:
+            '*/*':
+              schema:
+                type: object            
+              examples:
+                overlimit:
+                  $ref: '#/components/examples/overlimit'
         '405':
           description: 'Method not supported, see response Allow header'
           content:
@@ -877,13 +897,9 @@ paths:
                 no-holdings-xml:
                   $ref: '#/components/examples/no-holdings-xml'
                 no-holdings-json:
-                  $ref: '#/components/examples/no-holdings-json'                    
-        '400':
-          description: Invalid query. The request was unacceptable, often due to missing a required parameter.
-          content:
-            '*/*':
-              schema:
-                type: object
+                  $ref: '#/components/examples/no-holdings-json'
+                fail-record-does-not-exist:
+                  $ref: '#/components/examples/record-does-not-exist'                  
         '401':
           description: Invalid authentication credentials
           content:
@@ -895,6 +911,15 @@ paths:
                   $ref: '#/components/examples/unauthorized'
                 bad_key:
                   $ref: '#/components/examples/unauthorized_bad_key'             
+        '403':
+          description: Unauthorized. Typically the key is over its quota
+          content:
+            '*/*':
+              schema:
+                type: object            
+              examples:
+                overlimit:
+                  $ref: '#/components/examples/overlimit'
         '405':
           description: 'Method not supported, see response Allow header'
           content:
@@ -969,13 +994,9 @@ paths:
                 no-holdings-xml:
                   $ref: '#/components/examples/no-holdings-xml'
                 no-holdings-json:
-                  $ref: '#/components/examples/no-holdings-json'                    
-        '400':
-          description: Invalid query. The request was unacceptable, often due to missing a required parameter.
-          content:
-            '*/*':
-              schema:
-                type: object
+                  $ref: '#/components/examples/no-holdings-json'
+                fail-record-does-not-exist:
+                  $ref: '#/components/examples/record-does-not-exist'                  
         '401':
           description: Invalid authentication credentials
           content:
@@ -987,6 +1008,15 @@ paths:
                   $ref: '#/components/examples/unauthorized'
                 bad_key:
                   $ref: '#/components/examples/unauthorized_bad_key'          
+        '403':
+          description: Unauthorized. Typically the key is over its quota
+          content:
+            '*/*':
+              schema:
+                type: object            
+              examples:
+                overlimit:
+                  $ref: '#/components/examples/overlimit'
         '405':
           description: 'Method not supported, see response Allow header'
           content:
@@ -1061,13 +1091,9 @@ paths:
                 no-holdings-xml:
                   $ref: '#/components/examples/no-holdings-xml'
                 no-holdings-json:
-                  $ref: '#/components/examples/no-holdings-json'                    
-        '400':
-          description: Invalid query. The request was unacceptable, often due to missing a required parameter.
-          content:
-            '*/*':
-              schema:
-                type: object                  
+                  $ref: '#/components/examples/no-holdings-json'
+                fail-record-does-not-exist:
+                  $ref: '#/components/examples/record-does-not-exist'                                
         '401':
           description: Invalid authentication credentials
           content:
@@ -1079,7 +1105,15 @@ paths:
                   $ref: '#/components/examples/unauthorized'
                 bad_key:
                   $ref: '#/components/examples/unauthorized_bad_key'   
-                             
+        '403':
+          description: Unauthorized. Typically the key is over its quota
+          content:
+            '*/*':
+              schema:
+                type: object            
+              examples:
+                overlimit:
+                  $ref: '#/components/examples/overlimit'
         '405':
           description: 'Method not supported, see response Allow header'
           content:
@@ -1508,6 +1542,32 @@ components:
     overlimit:
       summary: Error returned when request is over key's daily quota
       value: ""    
+    cql-query-syntax-error:
+      summary: Error in the CQL query syntax specified in the request
+      value: >
+        <?xml version="1.0" encoding="UTF-8" standalone="no"?>
+        <?xml-stylesheet type='text/xsl' href='/webservices/catalog/xsl/searchRetrieveResponse.xsl'?>
+        <searchRetrieveResponse xmlns="http://www.loc.gov/zing/srw/" xmlns:oclcterms="http://purl.org/oclc/terms/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:diag="http://www.loc.gov/zing/srw/diagnostic/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+            <version>1.1</version>
+            <numberOfRecords>0</numberOfRecords>
+            <diagnostics xmlns:srw="http://www.loc.gov/zing/srw/" xmlns:srw8="info:srw/extension/8/spelling" xmlns:srw2="http://www.loc.gov/zing/srw/update/" xmlns:srw3="http://www.loc.gov/zing/srw/diagnostic/" xmlns:srw6="info:srw/extension/6/facetSummary" xmlns:srw7="info:srw/extension/7/componentpostings" xmlns:srw4="http://www.loc.gov/zing/cql/xcql/" xmlns:srw5="info:srw/extension/5/restrictorSummary">
+                <srw3:diagnostic>
+                    <srw3:uri>info:srw/diagnostic/1/108</srw3:uri>
+                    <srw3:details>1</srw3:details>
+                    <srw3:message>CQL Malformed Query</srw3:message>
+                </srw3:diagnostic>
+            </diagnostics>
+            <echoedSearchRetrieveRequest xmlns:srw="http://www.loc.gov/zing/srw/">
+                <version>1.1</version>
+                <query>bn = "161775188X"</query>
+                <maximumRecords>10</maximumRecords>
+                <recordSchema>info:srw/schema/1/dc</recordSchema>
+                <recordPacking>xml</recordPacking>
+                <startRecord>1</startRecord>
+                <sortKeys>relevance</sortKeys>
+                <wskey>zVUdo28RoSsc9k35iLYB3rgLzibYQeMXtfX4gQnmqL0rK2UGcizxGt2pGes95XTmoBwvD92WbSPIuxP2</wskey>
+            </echoedSearchRetrieveRequest>
+        </searchRetrieveResponse>      
     limit-only:
       summary: Error returned search performed using limit only
       value: >
@@ -1530,6 +1590,16 @@ components:
                 <message>Unsupported index</message>
             </diagnostic>
         </diagnostics>
+    record-does-not-exist:
+      summary: Error returned when record does not exist in the system
+      value: >
+        <?xml version="1.0" encoding="UTF-8" standalone="no"?>
+        <diagnostics xmlns:oclcterms="http://purl.org/oclc/terms/" xmlns:dc="http://purl.org/dc/elements/1.1/">
+            <diagnostic xmlns="http://www.loc.gov/zing/srw/diagnostic/">
+                <uri>info:srw/diagnostic/1/65</uri>
+                <message>Record does not exist</message>
+            </diagnostic>
+        </diagnostics>      
     no-holdings-xml:
       summary: Error returned when searching holdings and none found
       value: >
