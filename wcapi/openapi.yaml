@@ -99,8 +99,10 @@ paths:
               schema:
                 type: object            
               examples:
-                missing-query-parameter:
-                  $ref: '#/components/examples/missing-query-parameter'
+                limit-only:
+                  $ref: '#/components/examples/limit-only'
+                unsupported-index:
+                  $ref: '#/components/examples/unsupported-index'                  
         '401':
           description: Invalid authentication credentials
           content:
@@ -214,8 +216,10 @@ paths:
               schema:
                 type: object            
               examples:
-                missing-query-parameter:
-                  $ref: '#/components/examples/missing-query-parameter'
+                limit-only:
+                  $ref: '#/components/examples/limit-only'
+                unsupported-index:
+                  $ref: '#/components/examples/unsupported-index'   
         '401':
           description: Invalid authentication credentials
           content:
@@ -766,31 +770,28 @@ paths:
               schema:
                 type: object            
               examples:
-                success-search-holdings-oclcSymbol: 
+                success-search-holdings-oclcSymbol-xml: 
                   $ref: '#/components/examples/success-search-holdings-oclcSymbol'
                 success-search-holdings-zipcode: 
                   $ref: '#/components/examples/success-search-holdings-zipcode'
                 success-search-holdings-state: 
-                  $ref: '#/components/examples/success-search-holdings-state'
-            application/json:
-              schema:
-                type: object            
-              examples:
-                success-search-holdings-oclcSymbol: 
+                  $ref: '#/components/examples/success-search-holdings-state'            
+                success-search-holdings-oclcSymbol-json: 
                   $ref: '#/components/examples/success-search-holdings-oclcSymbol-json'
-                success-search-holdings-zipcode: 
+                success-search-holdings-zipcode-json: 
                   $ref: '#/components/examples/success-search-holdings-zipcode-json'
-                success-search-holdings-state: 
-                  $ref: '#/components/examples/success-search-holdings-state-json'                                                                          
+                success-search-holdings-state-json: 
+                  $ref: '#/components/examples/success-search-holdings-state-json'
+                no-holdings-xml:
+                  $ref: '#/components/examples/no-holdings-xml'
+                no-holdings-json:
+                  $ref: '#/components/examples/no-holdings-json'                                                                                            
         '400':
           description: Invalid query. The request was unacceptable, often due to missing a required parameter.
           content:
             '*/*':
               schema:
                 type: object            
-              examples:
-                missing-query-parameter:
-                  $ref: '#/components/examples/missing-query-parameter'
         '401':
           description: Invalid authentication credentials
           content:
@@ -861,31 +862,28 @@ paths:
               schema:
                 type: object            
               examples:
-                success-search-holdings-oclcSymbol: 
+                success-search-holdings-oclcSymbol-xml: 
                   $ref: '#/components/examples/success-search-holdings-oclcSymbol'
                 success-search-holdings-zipcode: 
                   $ref: '#/components/examples/success-search-holdings-zipcode'
                 success-search-holdings-state: 
-                  $ref: '#/components/examples/success-search-holdings-state'
-            application/json:
-              schema:
-                type: object            
-              examples:
-                success-search-holdings-oclcSymbol: 
+                  $ref: '#/components/examples/success-search-holdings-state'            
+                success-search-holdings-oclcSymbol-json: 
                   $ref: '#/components/examples/success-search-holdings-oclcSymbol-json'
-                success-search-holdings-zipcode: 
+                success-search-holdings-zipcode-json: 
                   $ref: '#/components/examples/success-search-holdings-zipcode-json'
-                success-search-holdings-state: 
-                  $ref: '#/components/examples/success-search-holdings-state-json'                    
+                success-search-holdings-state-json: 
+                  $ref: '#/components/examples/success-search-holdings-state-json'
+                no-holdings-xml:
+                  $ref: '#/components/examples/no-holdings-xml'
+                no-holdings-json:
+                  $ref: '#/components/examples/no-holdings-json'                    
         '400':
           description: Invalid query. The request was unacceptable, often due to missing a required parameter.
           content:
             '*/*':
               schema:
-                type: object            
-              examples:
-                missing-query-parameter:
-                  $ref: '#/components/examples/missing-query-parameter'
+                type: object
         '401':
           description: Invalid authentication credentials
           content:
@@ -956,31 +954,28 @@ paths:
               schema:
                 type: object            
               examples:
-                success-search-holdings-oclcSymbol: 
+                success-search-holdings-oclcSymbol-xml: 
                   $ref: '#/components/examples/success-search-holdings-oclcSymbol'
                 success-search-holdings-zipcode: 
                   $ref: '#/components/examples/success-search-holdings-zipcode'
                 success-search-holdings-state: 
-                  $ref: '#/components/examples/success-search-holdings-state'
-            application/json:
-              schema:
-                type: object            
-              examples:
-                success-search-holdings-oclcSymbol: 
+                  $ref: '#/components/examples/success-search-holdings-state'            
+                success-search-holdings-oclcSymbol-json: 
                   $ref: '#/components/examples/success-search-holdings-oclcSymbol-json'
-                success-search-holdings-zipcode: 
+                success-search-holdings-zipcode-json: 
                   $ref: '#/components/examples/success-search-holdings-zipcode-json'
-                success-search-holdings-state: 
-                  $ref: '#/components/examples/success-search-holdings-state-json'                    
+                success-search-holdings-state-json: 
+                  $ref: '#/components/examples/success-search-holdings-state-json'
+                no-holdings-xml:
+                  $ref: '#/components/examples/no-holdings-xml'
+                no-holdings-json:
+                  $ref: '#/components/examples/no-holdings-json'                    
         '400':
           description: Invalid query. The request was unacceptable, often due to missing a required parameter.
           content:
             '*/*':
               schema:
-                type: object            
-              examples:
-                missing-query-parameter:
-                  $ref: '#/components/examples/missing-query-parameter'
+                type: object
         '401':
           description: Invalid authentication credentials
           content:
@@ -1051,31 +1046,28 @@ paths:
               schema:
                 type: object            
               examples:
-                success-search-holdings-oclcSymbol: 
+                success-search-holdings-oclcSymbol-xml: 
                   $ref: '#/components/examples/success-search-holdings-oclcSymbol'
                 success-search-holdings-zipcode: 
                   $ref: '#/components/examples/success-search-holdings-zipcode'
                 success-search-holdings-state: 
-                  $ref: '#/components/examples/success-search-holdings-state'
-            application/json:
-              schema:
-                type: object            
-              examples:
-                success-search-holdings-oclcSymbol: 
+                  $ref: '#/components/examples/success-search-holdings-state'            
+                success-search-holdings-oclcSymbol-json: 
                   $ref: '#/components/examples/success-search-holdings-oclcSymbol-json'
-                success-search-holdings-zipcode: 
+                success-search-holdings-zipcode-json: 
                   $ref: '#/components/examples/success-search-holdings-zipcode-json'
-                success-search-holdings-state: 
-                  $ref: '#/components/examples/success-search-holdings-state-json'                    
+                success-search-holdings-state-json: 
+                  $ref: '#/components/examples/success-search-holdings-state-json'
+                no-holdings-xml:
+                  $ref: '#/components/examples/no-holdings-xml'
+                no-holdings-json:
+                  $ref: '#/components/examples/no-holdings-json'                    
         '400':
           description: Invalid query. The request was unacceptable, often due to missing a required parameter.
           content:
             '*/*':
               schema:
-                type: object            
-              examples:
-                missing-query-parameter:
-                  $ref: '#/components/examples/missing-query-parameter'
+                type: object                  
         '401':
           description: Invalid authentication credentials
           content:
@@ -1513,9 +1505,44 @@ components:
     method-not-allowed-error:
       summary: Error when invalid HTTP method used
       value: '<!DOCTYPE html> <html> <head> <title>Apache Tomcat/8.0.33 - Error report</title> <style type="text/css"> H1 { font-family: Tahoma, Arial, sans-serif; color: white; background-color: #525D76; font-size: 22px; } H2 { font-family: Tahoma, Arial, sans-serif; color: white; background-color: #525D76; font-size: 16px; } H3 { font-family: Tahoma, Arial, sans-serif; color: white; background-color: #525D76; font-size: 14px; } BODY { font-family: Tahoma, Arial, sans-serif; color: black; background-color: white; } B { font-family: Tahoma, Arial, sans-serif; color: white; background-color: #525D76; } P { font-family: Tahoma, Arial, sans-serif; background: white; color: black; font-size: 12px; } A { color: black; } A.name { color: black; } .line { height: 1px; background-color: #525D76; border: none; } </style> </head> <body> <h1>HTTP Status 405 - HTTP method PUT is not supported by this URL</h1> <div class="line"></div> <p><b>type</b> Status report</p> <p><b>message</b> <u>HTTP method PUT is not supported by this URL</u></p> <p><b>description</b> <u>The specified HTTP method is not allowed for the requested resource.</u></p> <hr class="line"> <h3>Apache Tomcat/8.0.33</h3> </body> </html>'
-    missing-query-parameter:
-      summary: Error returned when required query parameter not sent
-      value: ""                                                                                                                                                       
+    overlimit:
+      summary: Error returned when request is over key's daily quota
+      value: ""    
+    limit-only:
+      summary: Error returned search performed using limit only
+      value: >
+        <?xml version="1.0" ?>
+        <diagnostics>
+            <diagnostic xmlns="http://www.loc.gov/zing/srw/diagnostic/">
+                <uri>info:srw/diagnostic/1/18</uri>
+                <details>srw.li </details>
+                <message>Limit index, can only be used to narrow a result for a non-limit index</message>
+            </diagnostic>
+        </diagnostics>      
+    unsupported-index:
+      summary: Error returned search uses unsupported index
+      value: >
+        <?xml version="1.0" ?>
+        <diagnostics>
+            <diagnostic xmlns="http://www.loc.gov/zing/srw/diagnostic/">
+                <uri>info:srw/diagnostic/1/16</uri>
+                <details>srw.lc</details>
+                <message>Unsupported index</message>
+            </diagnostic>
+        </diagnostics>
+    no-holdings-xml:
+      summary: Error returned when searching holdings and none found
+      value: >
+        <?xml version="1.0" encoding="UTF-8" standalone="no"?>
+        <diagnostics>
+            <diagnostic xmlns="http://www.loc.gov/zing/srw/diagnostic/">
+                <uri>info:srw/diagnostic/1/65</uri>
+                <message>Holding not found</message>
+            </diagnostic>
+        </diagnostics>
+    no-holdings-json:
+      summary: Error returned when searching holdings and none found
+      value: {"title":"Simon's cat","author":"Tofield, Simon.","publisher":"Grand Central Pub.","date":"2009.","ISBN":["9780446560061","0446560065"],"OCLCnumber":"318877925","library":[{"diagnostic":{"uri":"info:srw/diagnostic/1/65","details":"","message":"Holding not found"}}]}                                                                                                                                                                                                     
 externalDocs:
   description: Find out more about OCLC
   url: 'https://www.oclc.org'
