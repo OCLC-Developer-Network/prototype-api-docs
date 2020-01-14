@@ -34,6 +34,14 @@ paths:
           schema:
             type: string
           example: no:15703846                 
+        - name: x-return-group-availability
+          in: query
+          description: Whether or not to return group availability information.
+          required: false          
+          schema:
+            type: boolean
+            default: false
+          example: true
       responses:
         '200':
           description: Successful search
@@ -50,6 +58,8 @@ paths:
                   $ref: '#/components/examples/success-group-response'                                      
                 success-no-holdings: 
                   $ref: '#/components/examples/success-no-holdings'
+                failure-not-part-of-holding-group:
+                  $ref: '#/components/examples/holding-group-error'
         '400':
           description: Invalid query. The request was unacceptable, often due to missing a required parameter.
           content:
@@ -59,7 +69,16 @@ paths:
               examples:
                 missing-query-parameter:
                   $ref: '#/components/examples/missing-query-parameter'
-              
+        '403':
+          description: Unauthorized
+          content:
+            '*/*':
+              schema:
+                type: object            
+              examples:
+                missing-query-parameter:
+                  $ref: '#/components/examples/invalid-context-error'              
+        
         '405':
           description: 'Method not supported, see response Allow header'
           content:
@@ -936,6 +955,32 @@ components:
                 </ns3:diagnostic>
             </diagnostics>
         </searchRetrieveResponse>         
+    invalid-context-error:
+      summary: Error returned when context of access token doesn't match the x-registryId parameter
+      value: >
+        <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+        <searchRetrieveResponse xmlns="http://www.loc.gov/zing/srw/" xmlns:ns2="http://www.loc.gov/zing/cql/xcql/" xmlns:ns3="http://www.loc.gov/zing/srw/diagnostic/" xmlns:ns4="http://www.loc.gov/zing/srw/update/">
+            <diagnostics>
+                <ns3:diagnostic>
+                    <ns3:uri>info:srw/diagnostic/1/68</ns3:uri>
+                    <ns3:message>Request parameter institution id 91475 does not match authenticating context institution 128807</ns3:message>
+                </ns3:diagnostic>
+            </diagnostics>
+        </searchRetrieveResponse>      
+    holding-group-error:
+      summary: Error returned when group availability requested and institution not part of a group
+      value: >
+        <?xml version="1.0" encoding="UTF-8"?>
+        <searchRetrieveResponse xmlns="http://www.loc.gov/zing/srw/" xmlns:ns2="http://www.loc.gov/zing/cql/xcql/" xmlns:ns4="http://www.loc.gov/zing/srw/update/" xmlns:ns3="http://www.loc.gov/zing/srw/diagnostic/">
+           <numberOfRecords>0</numberOfRecords>
+           <nextRecordPosition>0</nextRecordPosition>
+           <diagnostics>
+              <ns3:diagnostic>
+                 <ns3:uri>info:srw/diagnostic/1/2</ns3:uri>
+                 <ns3:message>Requested Group holdings for a non-grouped Institution</ns3:message>
+              </ns3:diagnostic>
+           </diagnostics>
+        </searchRetrieveResponse>      
     method-not-allowed-error:
       summary: HTTP method not supported by the service
       value: >
