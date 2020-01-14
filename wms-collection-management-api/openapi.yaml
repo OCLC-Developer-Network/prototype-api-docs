@@ -170,7 +170,7 @@ paths:
         '200':
           description: Successful search
           content:
-            application/atom+json:
+            application/atom+xml:
               schema:
                 type: object            
               examples:
