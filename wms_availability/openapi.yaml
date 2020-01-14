@@ -98,10 +98,15 @@ components:
     availability_auth:
       type: oauth2
       flows:
-        implicit:
+        clientCredentials:
           tokenUrl: https://oauth.oclc.org/token
           scopes:
             WMS_Availability: perform all the operation in the WMS Availability API
+        authorizationCode:
+          authorizationUrl: https://oauth.oclc.org/auth
+          tokenUrl: https://oauth.oclc.org/token
+          scopes:
+            WMS_Availability: perform all the operation in the WMS Availability API                      
   examples:
     success:
       summary: successful request for monograph
