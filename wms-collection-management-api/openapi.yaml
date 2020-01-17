@@ -80,17 +80,19 @@ paths:
               examples:
                 missing-query-parameter:
                   $ref: '#/components/examples/missing-query-parameter'
-                missing-query-parameter-value:
-                  $ref: '#/components/examples/missing-query-parameter-value'
-              
         '405':
           description: 'Method not supported, see response Allow header'
           content:
             application/json:
               schema:
                 type: object            
-              example:
-                $ref: '#/components/examples/method-not-allowed-error'               
+              examples:
+                method-not-allowed-error-atom:
+                  $ref: '#/components/examples/method-not-allowed-error-atom'
+                method-not-allowed-error-atom-json:
+                  $ref: '#/components/examples/method-not-allowed-error-atom-json'
+                method-not-allowed-error-json:
+                  $ref: '#/components/examples/method-not-allowed-error-json'               
         '500':
           description: 'Something went wrong (hopfully rare) - please try again'
           content:
@@ -114,14 +116,32 @@ paths:
               type: object       
       responses:
         '200':
-          description: Successful search
+          description: Successful create
           content:
+            application/atom-xml:
+              schema:
+                type: object            
+              examples:
+                read-monograph-copy-atom: 
+                  $ref: '#/components/examples/read-monograph-copy-atom'
+                read-serial-copy-atom: 
+                  $ref: '#/components/examples/read-serial-copy-atom'                  
+            application/atom-json:
+              schema:
+                type: object            
+              examples:
+                read-monograph-copy-atom-json: 
+                  $ref: '#/components/examples/read-monograph-copy-atom-json'
+                read-serial-copy-atom-json: 
+                  $ref: '#/components/examples/read-serial-copy-atom-json'                  
             application/json:
               schema:
                 type: object            
               examples:
-                success-search-collection: 
-                  $ref: '#/components/examples/success-search-collection'                    
+                read-monograph-copy-json: 
+                  $ref: '#/components/examples/read-copy-json'
+                read-serial-copy-json: 
+                  $ref: '#/components/examples/read-serial-copy-json'                  
         '400':
           description: Invalid query. The request was unacceptable, often due to missing a required parameter.
           content:
@@ -131,8 +151,6 @@ paths:
               examples:
                 missing-query-parameter:
                   $ref: '#/components/examples/missing-query-parameter'
-                missing-query-parameter-value:
-                  $ref: '#/components/examples/missing-query-parameter-value'
               
         '405':
           description: 'Method not supported, see response Allow header'
@@ -140,8 +158,13 @@ paths:
             application/json:
               schema:
                 type: object            
-              example:
-                $ref: '#/components/examples/method-not-allowed-error'               
+              examples:
+                method-not-allowed-error-atom:
+                  $ref: '#/components/examples/method-not-allowed-error-atom'
+                method-not-allowed-error-atom-json:
+                  $ref: '#/components/examples/method-not-allowed-error-atom-json'
+                method-not-allowed-error-json:
+                  $ref: '#/components/examples/method-not-allowed-error-json'              
         '500':
           description: 'Something went wrong (hopfully rare) - please try again'
           content:
@@ -170,24 +193,30 @@ paths:
         '200':
           description: Successful search
           content:
-            application/atom+xml:
+            application/atom-xml:
               schema:
                 type: object            
               examples:
-                read-copy-atom: 
-                  $ref: '#/components/examples/read-copy-atom'
-            application/atom+json:
+                read-monograph-copy-atom: 
+                  $ref: '#/components/examples/read-monograph-copy-atom'
+                read-serial-copy-atom: 
+                  $ref: '#/components/examples/read-serial-copy-atom'                  
+            application/atom-json:
               schema:
                 type: object            
               examples:
-                read-copy-atom-json: 
-                  $ref: '#/components/examples/read-copy-atom-json'
+                read-monograph-copy-atom-json: 
+                  $ref: '#/components/examples/read-monograph-copy-atom-json'
+                read-serial-copy-atom-json: 
+                  $ref: '#/components/examples/read-serial-copy-atom-json'                  
             application/json:
               schema:
                 type: object            
               examples:
-                read-copy-json: 
-                  $ref: '#/components/examples/read-copy-json'                    
+                read-monograph-copy-json: 
+                  $ref: '#/components/examples/read-copy-json'
+                read-serial-copy-json: 
+                  $ref: '#/components/examples/read-serial-copy-json'                    
         '400':
           description: Invalid query. The request was unacceptable, often due to missing a required parameter.
           content:
@@ -197,17 +226,19 @@ paths:
               examples:
                 missing-query-parameter:
                   $ref: '#/components/examples/missing-query-parameter'
-                missing-query-parameter-value:
-                  $ref: '#/components/examples/missing-query-parameter-value'
-              
         '405':
           description: 'Method not supported, see response Allow header'
           content:
             application/json:
               schema:
                 type: object            
-              example:
-                $ref: '#/components/examples/method-not-allowed-error'               
+              examples:
+                method-not-allowed-error-atom:
+                  $ref: '#/components/examples/method-not-allowed-error-atom'
+                method-not-allowed-error-atom-json:
+                  $ref: '#/components/examples/method-not-allowed-error-atom-json'
+                method-not-allowed-error-json:
+                  $ref: '#/components/examples/method-not-allowed-error-json'              
         '500':
           description: 'Something went wrong (hopfully rare) - please try again'
           content:
@@ -241,12 +272,30 @@ paths:
         '200':
           description: Successful search
           content:
+            application/atom-xml:
+              schema:
+                type: object            
+              examples:
+                read-monograph-copy-atom: 
+                  $ref: '#/components/examples/read-monograph-copy-atom'
+                read-serial-copy-atom: 
+                  $ref: '#/components/examples/read-serial-copy-atom'                  
+            application/atom-json:
+              schema:
+                type: object            
+              examples:
+                read-monograph-copy-atom-json: 
+                  $ref: '#/components/examples/read-monograph-copy-atom-json'
+                read-serial-copy-atom-json: 
+                  $ref: '#/components/examples/read-serial-copy-atom-json'                  
             application/json:
               schema:
                 type: object            
               examples:
-                success-search-collection: 
-                  $ref: '#/components/examples/success-search-collection'                    
+                read-monograph-copy-json: 
+                  $ref: '#/components/examples/read-copy-json'
+                read-serial-copy-json: 
+                  $ref: '#/components/examples/read-serial-copy-json'                    
         '400':
           description: Invalid query. The request was unacceptable, often due to missing a required parameter.
           content:
@@ -256,17 +305,19 @@ paths:
               examples:
                 missing-query-parameter:
                   $ref: '#/components/examples/missing-query-parameter'
-                missing-query-parameter-value:
-                  $ref: '#/components/examples/missing-query-parameter-value'
-              
         '405':
           description: 'Method not supported, see response Allow header'
           content:
             application/json:
               schema:
                 type: object            
-              example:
-                $ref: '#/components/examples/method-not-allowed-error'               
+              examples:
+                method-not-allowed-error-atom:
+                  $ref: '#/components/examples/method-not-allowed-error-atom'
+                method-not-allowed-error-atom-json:
+                  $ref: '#/components/examples/method-not-allowed-error-atom-json'
+                method-not-allowed-error-json:
+                  $ref: '#/components/examples/method-not-allowed-error-json'               
         '500':
           description: 'Something went wrong (hopfully rare) - please try again'
           content:
@@ -292,14 +343,7 @@ paths:
           required: true                  
       responses:
         '200':
-          description: Successful search
-          content:
-            application/json:
-              schema:
-                type: object            
-              examples:
-                success-search-collection: 
-                  $ref: '#/components/examples/success-search-collection'                    
+          description: Successful delete                    
         '400':
           description: Invalid query. The request was unacceptable, often due to missing a required parameter.
           content:
@@ -309,17 +353,19 @@ paths:
               examples:
                 missing-query-parameter:
                   $ref: '#/components/examples/missing-query-parameter'
-                missing-query-parameter-value:
-                  $ref: '#/components/examples/missing-query-parameter-value'
-              
         '405':
           description: 'Method not supported, see response Allow header'
           content:
             application/json:
               schema:
                 type: object            
-              example:
-                $ref: '#/components/examples/method-not-allowed-error'               
+              examples:
+                method-not-allowed-error-atom:
+                  $ref: '#/components/examples/method-not-allowed-error-atom'
+                method-not-allowed-error-atom-json:
+                  $ref: '#/components/examples/method-not-allowed-error-atom-json'
+                method-not-allowed-error-json:
+                  $ref: '#/components/examples/method-not-allowed-error-json'                                                   
         '500':
           description: 'Something went wrong (hopfully rare) - please try again'
           content:
@@ -359,15 +405,4551 @@ components:
     success-search-copies-json-by-barcode:      
       summary: ""
       value: ""
-    read-copy-atom:
-      summary: ""
-      value: ""
-    read-copy-atom-json:
-      summary: ""
-      value: ""
+    read-monograph-copy-atom:
+      summary: "Example of Atom response monograph copy"
+      value: >
+        <?xml version="1.0" encoding="UTF-8"?><entry xmlns="http://www.w3.org/2005/Atom">
+          <title type="text"/>
+          <link href="https://circ.sd00.worldcat.org/LHR/206730955?inst=128807"/>
+          <updated>2019-07-23T21:33:12.700Z</updated>
+          <content type="application/xml">
+            <copy xmlns="http://worldcat.org/xmlschemas/Copy-1.0" id="https://circ.sd00.worldcat.org/LHR/206730955?inst=128807">
+              <institution>http://www.worldcat.org/webservices/registry/content/Institutions/128807</institution>
+              <bib>/bibs/319501305</bib>
+              <lastUpdateDate>2019-07-23T17:33:12.700-04:00</lastUpdateDate>
+              <recordType>SINGLE_PART</recordType>
+              <receiptStatus>UNKNOWN</receiptStatus>
+              <copyNumber>2</copyNumber>
+              <holdingLocation>WEST</holdingLocation>
+              <shelvingLocation>WEST-STACKS</shelvingLocation>
+              <shelvingDesignation scheme="LIBRARY_OF_CONGRESS">
+                <information>PR9199.4.J336 K55 2009</information>
+              </shelvingDesignation>
+              <holding category="BASIC">
+                <pieceDesignation>3456789988</pieceDesignation>
+                <note type="STAFF">This is a test note.</note>
+                <note type="PUBLIC">This is a public change note</note>
+              </holding>
+            </copy>
+          </content>
+        </entry>      
+    read-monograph-copy-atom-json:
+      summary: "Example of Atom JSON response monograph copy"
+      value: {
+        "title": "",
+        "content": {
+          "institution": "http://www.worldcat.org/webservices/registry/content/Institutions/128807",
+          "bib": "/bibs/319501305",
+          "lastUpdateDate": "2019-07-23T17:33:12.700-04:00",
+          "recordType": "SINGLE_PART",
+          "receiptStatus": "UNKNOWN",
+          "copyNumber": "2",
+          "note": [],
+          "holdingLocation": "WEST",
+          "shelvingLocation": "WEST-STACKS",
+          "previousShelvingLocation": [],
+          "shelvingDesignation": {
+            "prefix": [],
+            "information": "PR9199.4.J336 K55 2009",
+            "itemPart": [],
+            "suffix": [],
+            "scheme": "LIBRARY_OF_CONGRESS"
+          },
+          "holding": [
+            {
+              "pieceDesignation": [
+                "3456789988"
+              ],
+              "note": [
+                {
+                  "value": "This is a test note.",
+                  "type": "STAFF"
+                },
+                {
+                  "value": "This is a public change note",
+                  "type": "PUBLIC"
+                }
+              ],
+              "useRestriction": [],
+              "cost": [],
+              "temporaryLocation": [],
+              "category": "BASIC"
+            }
+          ],
+          "id": "https://circ.sd00.worldcat.org/LHR/206730955?inst=128807"
+        },
+        "updated": "2019-07-23T21:33:12.700Z",
+        "links": [
+          {
+            "href": "https://circ.sd00.worldcat.org/LHR/206730955?inst=128807"
+          }
+        ]
+      }
     read-copy-json:
-      summary: ""
-      value: ""                                                            
+      summary: "Example of JSON response monographc copy"
+      value: {
+        "institution": "http://www.worldcat.org/webservices/registry/content/Institutions/128807",
+        "bib": "/bibs/319501305",
+        "lastUpdateDate": 1563917592700,
+        "recordType": "SINGLE_PART",
+        "receiptStatus": "UNKNOWN",
+        "copyNumber": "2",
+        "note": [],
+        "holdingLocation": "WEST",
+        "shelvingLocation": "WEST-STACKS",
+        "previousShelvingLocation": [],
+        "shelvingDesignation": {
+          "prefix": [],
+          "information": "PR9199.4.J336 K55 2009",
+          "itemPart": [],
+          "suffix": [],
+          "scheme": "LIBRARY_OF_CONGRESS"
+        },
+        "holding": [
+          {
+            "pieceDesignation": [
+              "3456789988"
+            ],
+            "note": [
+              {
+                "value": "This is a test note.",
+                "type": "STAFF"
+              },
+              {
+                "value": "This is a public change note",
+                "type": "PUBLIC"
+              }
+            ],
+            "useRestriction": [],
+            "cost": [],
+            "temporaryLocation": [],
+            "category": "BASIC"
+          }
+        ],
+        "id": "https://circ.sd00.worldcat.org/LHR/206730955?inst=128807"
+      }                                                            
+    read-serial-copy-atom:
+      summary: "Example of Atom response serial copy"
+      value: >
+        <?xml version="1.0" encoding="UTF-8"?><entry xmlns="http://www.w3.org/2005/Atom">
+          <title type="text"/>
+          <link href="https://circ.sd00.worldcat.org/LHR/84243463?inst=128807"/>
+          <updated>2019-06-13T18:14:34.700Z</updated>
+          <content type="application/xml">
+            <copy xmlns="http://worldcat.org/xmlschemas/Copy-1.0" id="https://circ.sd00.worldcat.org/LHR/84243463?inst=128807">
+              <institution>http://www.worldcat.org/webservices/registry/content/Institutions/128807</institution>
+              <bib>/bibs/2351916</bib>
+              <lastUpdateDate>2019-06-13T14:14:34.700-04:00</lastUpdateDate>
+              <recordType>SERIAL</recordType>
+              <receiptStatus>UNKNOWN</receiptStatus>
+              <copyNumber>1</copyNumber>
+              <holdingLocation>MAIN</holdingLocation>
+              <shelvingLocation>MAIN-Periodicals</shelvingLocation>
+              <shelvingDesignation scheme="DEWEY_DECIMAL">
+                <information>020.5</information>
+                <itemPart>O688465</itemPart>
+              </shelvingDesignation>
+              <holding category="BASIC">
+                <pieceDesignation>22547-361001</pieceDesignation>
+                <caption id="1" sequence="1">
+                  <enumeration label="v.">133</enumeration>
+                  <enumeration label="no.">1</enumeration>
+                  <chronology label="(year)">2008</chronology>
+                  <chronology label="(month)">01</chronology>
+                  <chronology label="(day)">01</chronology>
+                </caption>
+              </holding>
+              <holding category="BASIC">
+                <pieceDesignation>22547-361002</pieceDesignation>
+                <caption id="1" sequence="2">
+                  <enumeration label="v.">133</enumeration>
+                  <enumeration label="no.">2</enumeration>
+                  <chronology label="(year)">2008</chronology>
+                  <chronology label="(month)">01</chronology>
+                  <chronology label="(day)">16</chronology>
+                </caption>
+              </holding>
+              <holding category="BASIC">
+                <pieceDesignation>22547-361003</pieceDesignation>
+                <caption id="1" sequence="3">
+                  <enumeration label="v.">133</enumeration>
+                  <enumeration label="no.">3</enumeration>
+                  <chronology label="(year)">2008</chronology>
+                  <chronology label="(month)">02</chronology>
+                  <chronology label="(day)">01</chronology>
+                </caption>
+              </holding>
+              <holding category="BASIC">
+                <pieceDesignation>22547-361004</pieceDesignation>
+                <caption id="1" sequence="4">
+                  <enumeration label="v.">133</enumeration>
+                  <enumeration label="no.">4</enumeration>
+                  <chronology label="(year)">2008</chronology>
+                  <chronology label="(month)">02</chronology>
+                  <chronology label="(day)">16</chronology>
+                </caption>
+              </holding>
+              <holding category="BASIC">
+                <pieceDesignation>22547-361005</pieceDesignation>
+                <caption id="1" sequence="5">
+                  <enumeration label="v.">133</enumeration>
+                  <enumeration label="no.">5</enumeration>
+                  <chronology label="(year)">2008</chronology>
+                  <chronology label="(month)">03</chronology>
+                  <chronology label="(day)">01</chronology>
+                </caption>
+              </holding>
+              <holding category="BASIC">
+                <pieceDesignation>22547-361006</pieceDesignation>
+                <caption id="1" sequence="6">
+                  <enumeration label="v.">133</enumeration>
+                  <enumeration label="no.">6</enumeration>
+                  <chronology label="(year)">2008</chronology>
+                  <chronology label="(month)">03</chronology>
+                  <chronology label="(day)">16</chronology>
+                </caption>
+              </holding>
+              <holding category="BASIC">
+                <pieceDesignation>22547-361007</pieceDesignation>
+                <caption id="1" sequence="7">
+                  <enumeration label="v.">133</enumeration>
+                  <enumeration label="no.">7</enumeration>
+                  <chronology label="(year)">2008</chronology>
+                  <chronology label="(month)">04</chronology>
+                  <chronology label="(day)">01</chronology>
+                </caption>
+              </holding>
+              <holding category="BASIC">
+                <pieceDesignation>22547-361008</pieceDesignation>
+                <caption id="1" sequence="8">
+                  <enumeration label="v.">133</enumeration>
+                  <enumeration label="no.">8</enumeration>
+                  <chronology label="(year)">2008</chronology>
+                  <chronology label="(month)">04</chronology>
+                  <chronology label="(day)">16</chronology>
+                </caption>
+              </holding>
+              <holding category="BASIC">
+                <pieceDesignation>22547-361009</pieceDesignation>
+                <caption id="1" sequence="9">
+                  <enumeration label="v.">133</enumeration>
+                  <enumeration label="no.">9</enumeration>
+                  <chronology label="(year)">2008</chronology>
+                  <chronology label="(month)">05</chronology>
+                  <chronology label="(day)">01</chronology>
+                </caption>
+              </holding>
+              <holding category="BASIC">
+                <pieceDesignation>22547-361010</pieceDesignation>
+                <caption id="1" sequence="10">
+                  <enumeration label="v.">133</enumeration>
+                  <enumeration label="no.">10</enumeration>
+                  <chronology label="(year)">2008</chronology>
+                  <chronology label="(month)">05</chronology>
+                  <chronology label="(day)">16</chronology>
+                </caption>
+              </holding>
+              <holding category="BASIC">
+                <pieceDesignation>22547-361011</pieceDesignation>
+                <caption id="1" sequence="11">
+                  <enumeration label="v.">133</enumeration>
+                  <enumeration label="no.">11</enumeration>
+                  <chronology label="(year)">2008</chronology>
+                  <chronology label="(month)">06</chronology>
+                  <chronology label="(day)">01</chronology>
+                </caption>
+              </holding>
+              <holding category="BASIC">
+                <pieceDesignation>22547-361012</pieceDesignation>
+                <caption id="1" sequence="12">
+                  <enumeration label="v.">133</enumeration>
+                  <enumeration label="no.">12</enumeration>
+                  <chronology label="(year)">2008</chronology>
+                  <chronology label="(month)">06</chronology>
+                  <chronology label="(day)">16</chronology>
+                </caption>
+              </holding>
+              <holding category="BASIC">
+                <pieceDesignation>22547-361013</pieceDesignation>
+                <caption id="1" sequence="13">
+                  <enumeration label="v.">133</enumeration>
+                  <enumeration label="no.">13</enumeration>
+                  <chronology label="(year)">2008</chronology>
+                  <chronology label="(month)">07</chronology>
+                  <chronology label="(day)">01</chronology>
+                </caption>
+              </holding>
+              <holding category="BASIC">
+                <pieceDesignation>22547-361014</pieceDesignation>
+                <caption id="1" sequence="14">
+                  <enumeration label="v.">133</enumeration>
+                  <enumeration label="no.">14</enumeration>
+                  <chronology label="(year)">2008</chronology>
+                  <chronology label="(month)">07</chronology>
+                  <chronology label="(day)">16</chronology>
+                </caption>
+              </holding>
+              <holding category="BASIC">
+                <pieceDesignation>22547-361015</pieceDesignation>
+                <caption id="1" sequence="15">
+                  <enumeration label="v.">133</enumeration>
+                  <enumeration label="no.">15</enumeration>
+                  <chronology label="(year)">2008</chronology>
+                  <chronology label="(month)">08</chronology>
+                  <chronology label="(day)">01</chronology>
+                </caption>
+              </holding>
+              <holding category="BASIC">
+                <pieceDesignation>22547-361016</pieceDesignation>
+                <caption id="1" sequence="16">
+                  <enumeration label="v.">133</enumeration>
+                  <enumeration label="no.">16</enumeration>
+                  <chronology label="(year)">2008</chronology>
+                  <chronology label="(month)">08</chronology>
+                  <chronology label="(day)">16</chronology>
+                </caption>
+              </holding>
+              <holding category="BASIC">
+                <pieceDesignation>22547-361017</pieceDesignation>
+                <caption id="1" sequence="17">
+                  <enumeration label="v.">133</enumeration>
+                  <enumeration label="no.">17</enumeration>
+                  <chronology label="(year)">2008</chronology>
+                  <chronology label="(month)">09</chronology>
+                  <chronology label="(day)">01</chronology>
+                </caption>
+              </holding>
+              <holding category="BASIC">
+                <pieceDesignation>22547-361018</pieceDesignation>
+                <caption id="1" sequence="18">
+                  <enumeration label="v.">133</enumeration>
+                  <enumeration label="no.">18</enumeration>
+                  <chronology label="(year)">2008</chronology>
+                  <chronology label="(month)">09</chronology>
+                  <chronology label="(day)">16</chronology>
+                </caption>
+              </holding>
+              <holding category="BASIC">
+                <pieceDesignation>22547-361019</pieceDesignation>
+                <caption id="1" sequence="19">
+                  <enumeration label="v.">133</enumeration>
+                  <enumeration label="no.">19</enumeration>
+                  <chronology label="(year)">2008</chronology>
+                  <chronology label="(month)">10</chronology>
+                  <chronology label="(day)">01</chronology>
+                </caption>
+              </holding>
+              <holding category="BASIC">
+                <pieceDesignation>22547-361020</pieceDesignation>
+                <caption id="1" sequence="20">
+                  <enumeration label="v.">133</enumeration>
+                  <enumeration label="no.">20</enumeration>
+                  <chronology label="(year)">2008</chronology>
+                  <chronology label="(month)">10</chronology>
+                  <chronology label="(day)">16</chronology>
+                </caption>
+              </holding>
+              <holding category="BASIC">
+                <pieceDesignation>22547-361021</pieceDesignation>
+                <caption id="1" sequence="21">
+                  <enumeration label="v.">133</enumeration>
+                  <enumeration label="no.">21</enumeration>
+                  <chronology label="(year)">2008</chronology>
+                  <chronology label="(month)">11</chronology>
+                  <chronology label="(day)">01</chronology>
+                </caption>
+              </holding>
+              <holding category="BASIC">
+                <pieceDesignation>22547-361022</pieceDesignation>
+                <caption id="1" sequence="22">
+                  <enumeration label="v.">133</enumeration>
+                  <enumeration label="no.">22</enumeration>
+                  <chronology label="(year)">2008</chronology>
+                  <chronology label="(month)">11</chronology>
+                  <chronology label="(day)">16</chronology>
+                </caption>
+              </holding>
+              <holding category="BASIC">
+                <pieceDesignation>22547-361023</pieceDesignation>
+                <caption id="1" sequence="23">
+                  <enumeration label="v.">133</enumeration>
+                  <enumeration label="no.">23</enumeration>
+                  <chronology label="(year)">2008</chronology>
+                  <chronology label="(month)">12</chronology>
+                  <chronology label="(day)">01</chronology>
+                </caption>
+              </holding>
+              <holding category="BASIC">
+                <pieceDesignation>22547-361024</pieceDesignation>
+                <caption id="1" sequence="24">
+                  <enumeration label="v.">133</enumeration>
+                  <enumeration label="no.">24</enumeration>
+                  <chronology label="(year)">2008</chronology>
+                  <chronology label="(month)">12</chronology>
+                  <chronology label="(day)">16</chronology>
+                </caption>
+              </holding>
+              <holding category="BASIC">
+                <pieceDesignation>22547-361025</pieceDesignation>
+                <caption id="1" sequence="25">
+                  <enumeration label="v.">134</enumeration>
+                  <enumeration label="no.">1</enumeration>
+                  <chronology label="(year)">2009</chronology>
+                  <chronology label="(month)">01</chronology>
+                  <chronology label="(day)">01</chronology>
+                </caption>
+              </holding>
+              <holding category="BASIC">
+                <pieceDesignation>22547-361026</pieceDesignation>
+                <caption id="1" sequence="26">
+                  <enumeration label="v.">134</enumeration>
+                  <enumeration label="no.">2</enumeration>
+                  <chronology label="(year)">2009</chronology>
+                  <chronology label="(month)">01</chronology>
+                  <chronology label="(day)">16</chronology>
+                </caption>
+              </holding>
+              <holding category="BASIC">
+                <pieceDesignation>22547-361027</pieceDesignation>
+                <caption id="1" sequence="27">
+                  <enumeration label="v.">134</enumeration>
+                  <enumeration label="no.">3</enumeration>
+                  <chronology label="(year)">2009</chronology>
+                  <chronology label="(month)">02</chronology>
+                  <chronology label="(day)">01</chronology>
+                </caption>
+              </holding>
+              <holding category="BASIC">
+                <pieceDesignation>22547-361028</pieceDesignation>
+                <caption id="1" sequence="28">
+                  <enumeration label="v.">134</enumeration>
+                  <enumeration label="no.">4</enumeration>
+                  <chronology label="(year)">2009</chronology>
+                  <chronology label="(month)">02</chronology>
+                  <chronology label="(day)">16</chronology>
+                </caption>
+              </holding>
+              <holding category="BASIC">
+                <pieceDesignation>22547-361029</pieceDesignation>
+                <caption id="1" sequence="29">
+                  <enumeration label="v.">134</enumeration>
+                  <enumeration label="no.">5</enumeration>
+                  <chronology label="(year)">2009</chronology>
+                  <chronology label="(month)">03</chronology>
+                  <chronology label="(day)">01</chronology>
+                </caption>
+              </holding>
+              <holding category="BASIC">
+                <pieceDesignation>22547-361030</pieceDesignation>
+                <caption id="1" sequence="30">
+                  <enumeration label="v.">134</enumeration>
+                  <enumeration label="no.">6</enumeration>
+                  <chronology label="(year)">2009</chronology>
+                  <chronology label="(month)">03</chronology>
+                  <chronology label="(day)">16</chronology>
+                </caption>
+              </holding>
+              <holding category="BASIC">
+                <pieceDesignation>22547-361031</pieceDesignation>
+                <caption id="1" sequence="31">
+                  <enumeration label="v.">134</enumeration>
+                  <enumeration label="no.">7</enumeration>
+                  <chronology label="(year)">2009</chronology>
+                  <chronology label="(month)">04</chronology>
+                  <chronology label="(day)">01</chronology>
+                </caption>
+              </holding>
+              <holding category="BASIC">
+                <pieceDesignation>22547-361032</pieceDesignation>
+                <caption id="1" sequence="32">
+                  <enumeration label="v.">134</enumeration>
+                  <enumeration label="no.">8</enumeration>
+                  <chronology label="(year)">2009</chronology>
+                  <chronology label="(month)">04</chronology>
+                  <chronology label="(day)">16</chronology>
+                </caption>
+              </holding>
+              <holding category="BASIC">
+                <pieceDesignation>22547-361033</pieceDesignation>
+                <caption id="1" sequence="33">
+                  <enumeration label="v.">134</enumeration>
+                  <enumeration label="no.">9</enumeration>
+                  <chronology label="(year)">2009</chronology>
+                  <chronology label="(month)">05</chronology>
+                  <chronology label="(day)">01</chronology>
+                </caption>
+              </holding>
+              <holding category="BASIC">
+                <pieceDesignation>22547-361034</pieceDesignation>
+                <caption id="1" sequence="34">
+                  <enumeration label="v.">134</enumeration>
+                  <enumeration label="no.">10</enumeration>
+                  <chronology label="(year)">2009</chronology>
+                  <chronology label="(month)">05</chronology>
+                  <chronology label="(day)">16</chronology>
+                </caption>
+              </holding>
+              <holding category="BASIC">
+                <pieceDesignation>22547-361035</pieceDesignation>
+                <caption id="1" sequence="35">
+                  <enumeration label="v.">134</enumeration>
+                  <enumeration label="no.">11</enumeration>
+                  <chronology label="(year)">2009</chronology>
+                  <chronology label="(month)">06</chronology>
+                  <chronology label="(day)">01</chronology>
+                </caption>
+              </holding>
+              <holding category="BASIC">
+                <pieceDesignation>22547-361036</pieceDesignation>
+                <caption id="1" sequence="36">
+                  <enumeration label="v.">134</enumeration>
+                  <enumeration label="no.">12</enumeration>
+                  <chronology label="(year)">2009</chronology>
+                  <chronology label="(month)">06</chronology>
+                  <chronology label="(day)">16</chronology>
+                </caption>
+              </holding>
+              <holding category="BASIC">
+                <pieceDesignation>22547-361037</pieceDesignation>
+                <caption id="1" sequence="37">
+                  <enumeration label="v.">134</enumeration>
+                  <enumeration label="no.">13</enumeration>
+                  <chronology label="(year)">2009</chronology>
+                  <chronology label="(month)">07</chronology>
+                  <chronology label="(day)">01</chronology>
+                </caption>
+              </holding>
+              <holding category="BASIC">
+                <pieceDesignation>22547-361038</pieceDesignation>
+                <caption id="1" sequence="38">
+                  <enumeration label="v.">134</enumeration>
+                  <enumeration label="no.">14</enumeration>
+                  <chronology label="(year)">2009</chronology>
+                  <chronology label="(month)">07</chronology>
+                  <chronology label="(day)">16</chronology>
+                </caption>
+              </holding>
+              <holding category="BASIC">
+                <pieceDesignation>22547-361039</pieceDesignation>
+                <caption id="1" sequence="39">
+                  <enumeration label="v.">134</enumeration>
+                  <enumeration label="no.">15</enumeration>
+                  <chronology label="(year)">2009</chronology>
+                  <chronology label="(month)">08</chronology>
+                  <chronology label="(day)">01</chronology>
+                </caption>
+              </holding>
+              <holding category="BASIC">
+                <pieceDesignation>22547-361040</pieceDesignation>
+                <caption id="1" sequence="40">
+                  <enumeration label="v.">134</enumeration>
+                  <enumeration label="no.">16</enumeration>
+                  <chronology label="(year)">2009</chronology>
+                  <chronology label="(month)">08</chronology>
+                  <chronology label="(day)">16</chronology>
+                </caption>
+              </holding>
+              <holding category="BASIC">
+                <pieceDesignation>22547-361041</pieceDesignation>
+                <caption id="1" sequence="41">
+                  <enumeration label="v.">134</enumeration>
+                  <enumeration label="no.">17</enumeration>
+                  <chronology label="(year)">2009</chronology>
+                  <chronology label="(month)">09</chronology>
+                  <chronology label="(day)">01</chronology>
+                </caption>
+              </holding>
+              <holding category="BASIC">
+                <pieceDesignation>22547-361042</pieceDesignation>
+                <caption id="1" sequence="42">
+                  <enumeration label="v.">134</enumeration>
+                  <enumeration label="no.">18</enumeration>
+                  <chronology label="(year)">2009</chronology>
+                  <chronology label="(month)">09</chronology>
+                  <chronology label="(day)">16</chronology>
+                </caption>
+              </holding>
+              <holding category="BASIC">
+                <pieceDesignation>22547-361043</pieceDesignation>
+                <caption id="1" sequence="43">
+                  <enumeration label="v.">134</enumeration>
+                  <enumeration label="no.">19</enumeration>
+                  <chronology label="(year)">2009</chronology>
+                  <chronology label="(month)">10</chronology>
+                  <chronology label="(day)">01</chronology>
+                </caption>
+              </holding>
+              <holding category="BASIC">
+                <pieceDesignation>22547-361044</pieceDesignation>
+                <caption id="1" sequence="44">
+                  <enumeration label="v.">134</enumeration>
+                  <enumeration label="no.">20</enumeration>
+                  <chronology label="(year)">2009</chronology>
+                  <chronology label="(month)">10</chronology>
+                  <chronology label="(day)">16</chronology>
+                </caption>
+              </holding>
+              <holding category="BASIC">
+                <pieceDesignation>22547-361045</pieceDesignation>
+                <caption id="1" sequence="45">
+                  <enumeration label="v.">134</enumeration>
+                  <enumeration label="no.">21</enumeration>
+                  <chronology label="(year)">2009</chronology>
+                  <chronology label="(month)">11</chronology>
+                  <chronology label="(day)">01</chronology>
+                </caption>
+              </holding>
+              <holding category="BASIC">
+                <pieceDesignation>22547-361046</pieceDesignation>
+                <caption id="1" sequence="46">
+                  <enumeration label="v.">134</enumeration>
+                  <enumeration label="no.">22</enumeration>
+                  <chronology label="(year)">2009</chronology>
+                  <chronology label="(month)">11</chronology>
+                  <chronology label="(day)">16</chronology>
+                </caption>
+              </holding>
+              <holding category="BASIC">
+                <pieceDesignation>22547-361047</pieceDesignation>
+                <caption id="1" sequence="47">
+                  <enumeration label="v.">134</enumeration>
+                  <enumeration label="no.">23</enumeration>
+                  <chronology label="(year)">2009</chronology>
+                  <chronology label="(month)">12</chronology>
+                  <chronology label="(day)">01</chronology>
+                </caption>
+              </holding>
+              <holding category="BASIC">
+                <pieceDesignation>22547-361048</pieceDesignation>
+                <caption id="1" sequence="48">
+                  <enumeration label="v.">134</enumeration>
+                  <enumeration label="no.">24</enumeration>
+                  <chronology label="(year)">2009</chronology>
+                  <chronology label="(month)">12</chronology>
+                  <chronology label="(day)">16</chronology>
+                </caption>
+              </holding>
+              <holding category="BASIC">
+                <pieceDesignation>22547-361049</pieceDesignation>
+                <caption id="1" sequence="49">
+                  <enumeration label="v.">135</enumeration>
+                  <enumeration label="no.">1</enumeration>
+                  <chronology label="(year)">2010</chronology>
+                  <chronology label="(month)">01</chronology>
+                  <chronology label="(day)">01</chronology>
+                </caption>
+              </holding>
+              <holding category="BASIC">
+                <pieceDesignation>FakeBarcode</pieceDesignation>
+                <caption sequence="1">
+                  <description>test textual holdings</description>
+                </caption>
+              </holding>
+              <holding category="BASIC">
+                <caption id="3" sequence="1">
+                  <enumeration label="v.">test 2</enumeration>
+                  <chronology label="(year)">test 2</chronology>
+                </caption>
+              </holding>
+              <holding category="BASIC">
+                <caption sequence="2">
+                  <description>v.133 - 135 i. 1 (2008-2010)</description>
+                </caption>
+              </holding>
+            </copy>
+          </content>
+        </entry>     
+    read-serial-copy-atom-json:
+      summary: "Example of Atom JSON response serial copy"
+      value: {
+      "title": "",
+      "content": {
+        "institution": "http://www.worldcat.org/webservices/registry/content/Institutions/128807",
+        "bib": "/bibs/2351916",
+        "lastUpdateDate": "2019-06-13T14:14:34.700-04:00",
+        "recordType": "SERIAL",
+        "receiptStatus": "UNKNOWN",
+        "copyNumber": "1",
+        "note": [],
+        "holdingLocation": "MAIN",
+        "shelvingLocation": "MAIN-Periodicals",
+        "previousShelvingLocation": [],
+        "shelvingDesignation": {
+          "prefix": [],
+          "information": "020.5",
+          "itemPart": [
+            "O688465"
+          ],
+          "suffix": [],
+          "scheme": "DEWEY_DECIMAL"
+        },
+        "holding": [
+          {
+            "pieceDesignation": [
+              "22547-361001"
+            ],
+            "note": [],
+            "useRestriction": [],
+            "cost": [],
+            "temporaryLocation": [],
+            "caption": {
+              "enumeration": [
+                {
+                  "value": "133",
+                  "label": "v."
+                },
+                {
+                  "value": "1",
+                  "label": "no."
+                }
+              ],
+              "chronology": [
+                {
+                  "value": "2008",
+                  "label": "(year)"
+                },
+                {
+                  "value": "01",
+                  "label": "(month)"
+                },
+                {
+                  "value": "01",
+                  "label": "(day)"
+                }
+              ],
+              "id": 1,
+              "sequence": 1
+            },
+            "category": "BASIC"
+          },
+          {
+            "pieceDesignation": [
+              "22547-361002"
+            ],
+            "note": [],
+            "useRestriction": [],
+            "cost": [],
+            "temporaryLocation": [],
+            "caption": {
+              "enumeration": [
+                {
+                  "value": "133",
+                  "label": "v."
+                },
+                {
+                  "value": "2",
+                  "label": "no."
+                }
+              ],
+              "chronology": [
+                {
+                  "value": "2008",
+                  "label": "(year)"
+                },
+                {
+                  "value": "01",
+                  "label": "(month)"
+                },
+                {
+                  "value": "16",
+                  "label": "(day)"
+                }
+              ],
+              "id": 1,
+              "sequence": 2
+            },
+            "category": "BASIC"
+          },
+          {
+            "pieceDesignation": [
+              "22547-361003"
+            ],
+            "note": [],
+            "useRestriction": [],
+            "cost": [],
+            "temporaryLocation": [],
+            "caption": {
+              "enumeration": [
+                {
+                  "value": "133",
+                  "label": "v."
+                },
+                {
+                  "value": "3",
+                  "label": "no."
+                }
+              ],
+              "chronology": [
+                {
+                  "value": "2008",
+                  "label": "(year)"
+                },
+                {
+                  "value": "02",
+                  "label": "(month)"
+                },
+                {
+                  "value": "01",
+                  "label": "(day)"
+                }
+              ],
+              "id": 1,
+              "sequence": 3
+            },
+            "category": "BASIC"
+          },
+          {
+            "pieceDesignation": [
+              "22547-361004"
+            ],
+            "note": [],
+            "useRestriction": [],
+            "cost": [],
+            "temporaryLocation": [],
+            "caption": {
+              "enumeration": [
+                {
+                  "value": "133",
+                  "label": "v."
+                },
+                {
+                  "value": "4",
+                  "label": "no."
+                }
+              ],
+              "chronology": [
+                {
+                  "value": "2008",
+                  "label": "(year)"
+                },
+                {
+                  "value": "02",
+                  "label": "(month)"
+                },
+                {
+                  "value": "16",
+                  "label": "(day)"
+                }
+              ],
+              "id": 1,
+              "sequence": 4
+            },
+            "category": "BASIC"
+          },
+          {
+            "pieceDesignation": [
+              "22547-361005"
+            ],
+            "note": [],
+            "useRestriction": [],
+            "cost": [],
+            "temporaryLocation": [],
+            "caption": {
+              "enumeration": [
+                {
+                  "value": "133",
+                  "label": "v."
+                },
+                {
+                  "value": "5",
+                  "label": "no."
+                }
+              ],
+              "chronology": [
+                {
+                  "value": "2008",
+                  "label": "(year)"
+                },
+                {
+                  "value": "03",
+                  "label": "(month)"
+                },
+                {
+                  "value": "01",
+                  "label": "(day)"
+                }
+              ],
+              "id": 1,
+              "sequence": 5
+            },
+            "category": "BASIC"
+          },
+          {
+            "pieceDesignation": [
+              "22547-361006"
+            ],
+            "note": [],
+            "useRestriction": [],
+            "cost": [],
+            "temporaryLocation": [],
+            "caption": {
+              "enumeration": [
+                {
+                  "value": "133",
+                  "label": "v."
+                },
+                {
+                  "value": "6",
+                  "label": "no."
+                }
+              ],
+              "chronology": [
+                {
+                  "value": "2008",
+                  "label": "(year)"
+                },
+                {
+                  "value": "03",
+                  "label": "(month)"
+                },
+                {
+                  "value": "16",
+                  "label": "(day)"
+                }
+              ],
+              "id": 1,
+              "sequence": 6
+            },
+            "category": "BASIC"
+          },
+          {
+            "pieceDesignation": [
+              "22547-361007"
+            ],
+            "note": [],
+            "useRestriction": [],
+            "cost": [],
+            "temporaryLocation": [],
+            "caption": {
+              "enumeration": [
+                {
+                  "value": "133",
+                  "label": "v."
+                },
+                {
+                  "value": "7",
+                  "label": "no."
+                }
+              ],
+              "chronology": [
+                {
+                  "value": "2008",
+                  "label": "(year)"
+                },
+                {
+                  "value": "04",
+                  "label": "(month)"
+                },
+                {
+                  "value": "01",
+                  "label": "(day)"
+                }
+              ],
+              "id": 1,
+              "sequence": 7
+            },
+            "category": "BASIC"
+          },
+          {
+            "pieceDesignation": [
+              "22547-361008"
+            ],
+            "note": [],
+            "useRestriction": [],
+            "cost": [],
+            "temporaryLocation": [],
+            "caption": {
+              "enumeration": [
+                {
+                  "value": "133",
+                  "label": "v."
+                },
+                {
+                  "value": "8",
+                  "label": "no."
+                }
+              ],
+              "chronology": [
+                {
+                  "value": "2008",
+                  "label": "(year)"
+                },
+                {
+                  "value": "04",
+                  "label": "(month)"
+                },
+                {
+                  "value": "16",
+                  "label": "(day)"
+                }
+              ],
+              "id": 1,
+              "sequence": 8
+            },
+            "category": "BASIC"
+          },
+          {
+            "pieceDesignation": [
+              "22547-361009"
+            ],
+            "note": [],
+            "useRestriction": [],
+            "cost": [],
+            "temporaryLocation": [],
+            "caption": {
+              "enumeration": [
+                {
+                  "value": "133",
+                  "label": "v."
+                },
+                {
+                  "value": "9",
+                  "label": "no."
+                }
+              ],
+              "chronology": [
+                {
+                  "value": "2008",
+                  "label": "(year)"
+                },
+                {
+                  "value": "05",
+                  "label": "(month)"
+                },
+                {
+                  "value": "01",
+                  "label": "(day)"
+                }
+              ],
+              "id": 1,
+              "sequence": 9
+            },
+            "category": "BASIC"
+          },
+          {
+            "pieceDesignation": [
+              "22547-361010"
+            ],
+            "note": [],
+            "useRestriction": [],
+            "cost": [],
+            "temporaryLocation": [],
+            "caption": {
+              "enumeration": [
+                {
+                  "value": "133",
+                  "label": "v."
+                },
+                {
+                  "value": "10",
+                  "label": "no."
+                }
+              ],
+              "chronology": [
+                {
+                  "value": "2008",
+                  "label": "(year)"
+                },
+                {
+                  "value": "05",
+                  "label": "(month)"
+                },
+                {
+                  "value": "16",
+                  "label": "(day)"
+                }
+              ],
+              "id": 1,
+              "sequence": 10
+            },
+            "category": "BASIC"
+          },
+          {
+            "pieceDesignation": [
+              "22547-361011"
+            ],
+            "note": [],
+            "useRestriction": [],
+            "cost": [],
+            "temporaryLocation": [],
+            "caption": {
+              "enumeration": [
+                {
+                  "value": "133",
+                  "label": "v."
+                },
+                {
+                  "value": "11",
+                  "label": "no."
+                }
+              ],
+              "chronology": [
+                {
+                  "value": "2008",
+                  "label": "(year)"
+                },
+                {
+                  "value": "06",
+                  "label": "(month)"
+                },
+                {
+                  "value": "01",
+                  "label": "(day)"
+                }
+              ],
+              "id": 1,
+              "sequence": 11
+            },
+            "category": "BASIC"
+          },
+          {
+            "pieceDesignation": [
+              "22547-361012"
+            ],
+            "note": [],
+            "useRestriction": [],
+            "cost": [],
+            "temporaryLocation": [],
+            "caption": {
+              "enumeration": [
+                {
+                  "value": "133",
+                  "label": "v."
+                },
+                {
+                  "value": "12",
+                  "label": "no."
+                }
+              ],
+              "chronology": [
+                {
+                  "value": "2008",
+                  "label": "(year)"
+                },
+                {
+                  "value": "06",
+                  "label": "(month)"
+                },
+                {
+                  "value": "16",
+                  "label": "(day)"
+                }
+              ],
+              "id": 1,
+              "sequence": 12
+            },
+            "category": "BASIC"
+          },
+          {
+            "pieceDesignation": [
+              "22547-361013"
+            ],
+            "note": [],
+            "useRestriction": [],
+            "cost": [],
+            "temporaryLocation": [],
+            "caption": {
+              "enumeration": [
+                {
+                  "value": "133",
+                  "label": "v."
+                },
+                {
+                  "value": "13",
+                  "label": "no."
+                }
+              ],
+              "chronology": [
+                {
+                  "value": "2008",
+                  "label": "(year)"
+                },
+                {
+                  "value": "07",
+                  "label": "(month)"
+                },
+                {
+                  "value": "01",
+                  "label": "(day)"
+                }
+              ],
+              "id": 1,
+              "sequence": 13
+          },
+          "category": "BASIC"
+        },
+        {
+          "pieceDesignation": [
+            "22547-361014"
+          ],
+          "note": [],
+          "useRestriction": [],
+          "cost": [],
+          "temporaryLocation": [],
+          "caption": {
+            "enumeration": [
+              {
+                "value": "133",
+                "label": "v."
+              },
+              {
+                "value": "14",
+                "label": "no."
+              }
+            ],
+            "chronology": [
+              {
+                "value": "2008",
+                "label": "(year)"
+              },
+              {
+                "value": "07",
+                "label": "(month)"
+              },
+              {
+                "value": "16",
+                "label": "(day)"
+              }
+            ],
+            "id": 1,
+            "sequence": 14
+          },
+          "category": "BASIC"
+        },
+        {
+          "pieceDesignation": [
+            "22547-361015"
+          ],
+          "note": [],
+          "useRestriction": [],
+          "cost": [],
+          "temporaryLocation": [],
+          "caption": {
+            "enumeration": [
+              {
+                "value": "133",
+                "label": "v."
+              },
+              {
+                "value": "15",
+                "label": "no."
+              }
+            ],
+            "chronology": [
+              {
+                "value": "2008",
+                "label": "(year)"
+              },
+              {
+                "value": "08",
+                "label": "(month)"
+              },
+              {
+                "value": "01",
+                "label": "(day)"
+              }
+            ],
+            "id": 1,
+            "sequence": 15
+          },
+          "category": "BASIC"
+        },
+        {
+          "pieceDesignation": [
+            "22547-361016"
+          ],
+          "note": [],
+          "useRestriction": [],
+          "cost": [],
+          "temporaryLocation": [],
+          "caption": {
+            "enumeration": [
+              {
+                "value": "133",
+                "label": "v."
+              },
+              {
+                "value": "16",
+                "label": "no."
+              }
+            ],
+            "chronology": [
+              {
+                "value": "2008",
+                "label": "(year)"
+              },
+              {
+                "value": "08",
+                "label": "(month)"
+              },
+              {
+                "value": "16",
+                "label": "(day)"
+              }
+            ],
+            "id": 1,
+            "sequence": 16
+          },
+          "category": "BASIC"
+        },
+        {
+          "pieceDesignation": [
+            "22547-361017"
+          ],
+          "note": [],
+          "useRestriction": [],
+          "cost": [],
+          "temporaryLocation": [],
+          "caption": {
+            "enumeration": [
+              {
+                "value": "133",
+                "label": "v."
+              },
+              {
+                "value": "17",
+                "label": "no."
+              }
+            ],
+            "chronology": [
+              {
+                "value": "2008",
+                "label": "(year)"
+              },
+              {
+                "value": "09",
+                "label": "(month)"
+              },
+              {
+                "value": "01",
+                "label": "(day)"
+              }
+            ],
+            "id": 1,
+            "sequence": 17
+          },
+          "category": "BASIC"
+        },
+        {
+          "pieceDesignation": [
+            "22547-361018"
+          ],
+          "note": [],
+          "useRestriction": [],
+          "cost": [],
+          "temporaryLocation": [],
+          "caption": {
+            "enumeration": [
+              {
+                "value": "133",
+                "label": "v."
+              },
+              {
+                "value": "18",
+                "label": "no."
+              }
+            ],
+            "chronology": [
+              {
+                "value": "2008",
+                "label": "(year)"
+              },
+              {
+                "value": "09",
+                "label": "(month)"
+              },
+              {
+                "value": "16",
+                "label": "(day)"
+              }
+            ],
+            "id": 1,
+            "sequence": 18
+          },
+          "category": "BASIC"
+        },
+        {
+          "pieceDesignation": [
+            "22547-361019"
+          ],
+          "note": [],
+          "useRestriction": [],
+          "cost": [],
+          "temporaryLocation": [],
+          "caption": {
+            "enumeration": [
+              {
+                "value": "133",
+                "label": "v."
+              },
+              {
+                "value": "19",
+                "label": "no."
+              }
+            ],
+            "chronology": [
+              {
+                "value": "2008",
+                "label": "(year)"
+              },
+              {
+                "value": "10",
+                "label": "(month)"
+              },
+              {
+                "value": "01",
+                "label": "(day)"
+              }
+            ],
+            "id": 1,
+            "sequence": 19
+          },
+          "category": "BASIC"
+        },
+        {
+          "pieceDesignation": [
+            "22547-361020"
+          ],
+          "note": [],
+          "useRestriction": [],
+          "cost": [],
+          "temporaryLocation": [],
+          "caption": {
+            "enumeration": [
+              {
+                "value": "133",
+                "label": "v."
+              },
+              {
+                "value": "20",
+                "label": "no."
+              }
+            ],
+            "chronology": [
+              {
+                "value": "2008",
+                "label": "(year)"
+              },
+              {
+                "value": "10",
+                "label": "(month)"
+              },
+              {
+                "value": "16",
+                "label": "(day)"
+              }
+            ],
+            "id": 1,
+            "sequence": 20
+          },
+          "category": "BASIC"
+        },
+        {
+          "pieceDesignation": [
+            "22547-361021"
+          ],
+          "note": [],
+          "useRestriction": [],
+          "cost": [],
+          "temporaryLocation": [],
+          "caption": {
+            "enumeration": [
+              {
+                "value": "133",
+                "label": "v."
+              },
+              {
+                "value": "21",
+                "label": "no."
+              }
+            ],
+            "chronology": [
+              {
+                "value": "2008",
+                "label": "(year)"
+              },
+              {
+                "value": "11",
+                "label": "(month)"
+              },
+              {
+                "value": "01",
+                "label": "(day)"
+              }
+            ],
+            "id": 1,
+            "sequence": 21
+          },
+          "category": "BASIC"
+        },
+        {
+          "pieceDesignation": [
+            "22547-361022"
+          ],
+          "note": [],
+          "useRestriction": [],
+          "cost": [],
+          "temporaryLocation": [],
+          "caption": {
+            "enumeration": [
+              {
+                "value": "133",
+                "label": "v."
+              },
+              {
+                "value": "22",
+                "label": "no."
+              }
+            ],
+            "chronology": [
+              {
+                "value": "2008",
+                "label": "(year)"
+              },
+              {
+                "value": "11",
+                "label": "(month)"
+              },
+              {
+                "value": "16",
+                "label": "(day)"
+              }
+            ],
+            "id": 1,
+            "sequence": 22
+          },
+          "category": "BASIC"
+        },
+        {
+          "pieceDesignation": [
+            "22547-361023"
+          ],
+          "note": [],
+          "useRestriction": [],
+          "cost": [],
+          "temporaryLocation": [],
+          "caption": {
+            "enumeration": [
+              {
+                "value": "133",
+                "label": "v."
+              },
+              {
+                "value": "23",
+                "label": "no."
+              }
+            ],
+            "chronology": [
+              {
+                "value": "2008",
+                "label": "(year)"
+              },
+              {
+                "value": "12",
+                "label": "(month)"
+              },
+              {
+                "value": "01",
+                "label": "(day)"
+              }
+            ],
+            "id": 1,
+            "sequence": 23
+          },
+          "category": "BASIC"
+        },
+        {
+          "pieceDesignation": [
+            "22547-361024"
+          ],
+          "note": [],
+          "useRestriction": [],
+          "cost": [],
+          "temporaryLocation": [],
+          "caption": {
+            "enumeration": [
+              {
+                "value": "133",
+                "label": "v."
+              },
+              {
+                "value": "24",
+                "label": "no."
+              }
+            ],
+            "chronology": [
+              {
+                "value": "2008",
+                "label": "(year)"
+              },
+              {
+                "value": "12",
+                "label": "(month)"
+              },
+              {
+                "value": "16",
+                "label": "(day)"
+              }
+            ],
+            "id": 1,
+            "sequence": 24
+          },
+          "category": "BASIC"
+        },
+        {
+          "pieceDesignation": [
+            "22547-361025"
+          ],
+          "note": [],
+          "useRestriction": [],
+          "cost": [],
+          "temporaryLocation": [],
+          "caption": {
+            "enumeration": [
+              {
+                "value": "134",
+                "label": "v."
+              },
+              {
+                "value": "1",
+                "label": "no."
+              }
+            ],
+            "chronology": [
+              {
+                "value": "2009",
+                "label": "(year)"
+              },
+              {
+                "value": "01",
+                "label": "(month)"
+              },
+              {
+                "value": "01",
+                "label": "(day)"
+              }
+            ],
+            "id": 1,
+            "sequence": 25
+          },
+          "category": "BASIC"
+        },
+        {
+          "pieceDesignation": [
+            "22547-361026"
+          ],
+          "note": [],
+          "useRestriction": [],
+          "cost": [],
+          "temporaryLocation": [],
+          "caption": {
+            "enumeration": [
+              {
+                "value": "134",
+                "label": "v."
+              },
+              {
+                "value": "2",
+                "label": "no."
+              }
+            ],
+            "chronology": [
+              {
+                "value": "2009",
+                "label": "(year)"
+              },
+              {
+                "value": "01",
+                "label": "(month)"
+              },
+              {
+                "value": "16",
+                "label": "(day)"
+              }
+            ],
+            "id": 1,
+            "sequence": 26
+          },
+          "category": "BASIC"
+        },
+        {
+          "pieceDesignation": [
+            "22547-361027"
+          ],
+          "note": [],
+          "useRestriction": [],
+          "cost": [],
+          "temporaryLocation": [],
+          "caption": {
+            "enumeration": [
+              {
+                "value": "134",
+                "label": "v."
+              },
+              {
+                "value": "3",
+                "label": "no."
+              }
+            ],
+            "chronology": [
+              {
+                "value": "2009",
+                "label": "(year)"
+              },
+              {
+                "value": "02",
+                "label": "(month)"
+              },
+              {
+                "value": "01",
+                "label": "(day)"
+              }
+            ],
+            "id": 1,
+            "sequence": 27
+          },
+          "category": "BASIC"
+        },
+        {
+          "pieceDesignation": [
+            "22547-361028"
+          ],
+          "note": [],
+          "useRestriction": [],
+          "cost": [],
+          "temporaryLocation": [],
+          "caption": {
+            "enumeration": [
+              {
+                "value": "134",
+                "label": "v."
+              },
+              {
+                "value": "4",
+                "label": "no."
+              }
+            ],
+            "chronology": [
+              {
+                "value": "2009",
+                "label": "(year)"
+              },
+              {
+                "value": "02",
+                "label": "(month)"
+              },
+              {
+                "value": "16",
+                "label": "(day)"
+              }
+            ],
+            "id": 1,
+            "sequence": 28
+          },
+          "category": "BASIC"
+        },
+        {
+          "pieceDesignation": [
+            "22547-361029"
+          ],
+          "note": [],
+          "useRestriction": [],
+          "cost": [],
+          "temporaryLocation": [],
+          "caption": {
+            "enumeration": [
+              {
+                "value": "134",
+                "label": "v."
+              },
+              {
+                "value": "5",
+                "label": "no."
+              }
+            ],
+            "chronology": [
+              {
+                "value": "2009",
+                "label": "(year)"
+              },
+              {
+                "value": "03",
+                "label": "(month)"
+              },
+              {
+                "value": "01",
+                "label": "(day)"
+              }
+            ],
+            "id": 1,
+            "sequence": 29
+          },
+          "category": "BASIC"
+        },
+        {
+          "pieceDesignation": [
+            "22547-361030"
+          ],
+          "note": [],
+          "useRestriction": [],
+          "cost": [],
+          "temporaryLocation": [],
+          "caption": {
+            "enumeration": [
+              {
+                "value": "134",
+                "label": "v."
+              },
+              {
+                "value": "6",
+                "label": "no."
+              }
+            ],
+            "chronology": [
+              {
+                "value": "2009",
+                "label": "(year)"
+              },
+              {
+                "value": "03",
+                "label": "(month)"
+              },
+              {
+                "value": "16",
+                "label": "(day)"
+              }
+            ],
+            "id": 1,
+            "sequence": 30
+          },
+          "category": "BASIC"
+        },
+        {
+          "pieceDesignation": [
+            "22547-361031"
+          ],
+          "note": [],
+          "useRestriction": [],
+          "cost": [],
+          "temporaryLocation": [],
+          "caption": {
+            "enumeration": [
+              {
+                "value": "134",
+                "label": "v."
+              },
+              {
+                "value": "7",
+                "label": "no."
+              }
+            ],
+            "chronology": [
+              {
+                "value": "2009",
+                "label": "(year)"
+              },
+              {
+                "value": "04",
+                "label": "(month)"
+              },
+              {
+                "value": "01",
+                "label": "(day)"
+              }
+            ],
+            "id": 1,
+            "sequence": 31
+          },
+          "category": "BASIC"
+        },
+        {
+          "pieceDesignation": [
+            "22547-361032"
+          ],
+          "note": [],
+          "useRestriction": [],
+          "cost": [],
+          "temporaryLocation": [],
+          "caption": {
+            "enumeration": [
+              {
+                "value": "134",
+                "label": "v."
+              },
+              {
+                "value": "8",
+                "label": "no."
+              }
+            ],
+            "chronology": [
+              {
+                "value": "2009",
+                "label": "(year)"
+              },
+              {
+                "value": "04",
+                "label": "(month)"
+              },
+              {
+                "value": "16",
+                "label": "(day)"
+              }
+            ],
+            "id": 1,
+            "sequence": 32
+          },
+          "category": "BASIC"
+        },
+        {
+          "pieceDesignation": [
+            "22547-361033"
+          ],
+          "note": [],
+          "useRestriction": [],
+          "cost": [],
+          "temporaryLocation": [],
+          "caption": {
+            "enumeration": [
+              {
+                "value": "134",
+                "label": "v."
+              },
+              {
+                "value": "9",
+                "label": "no."
+              }
+            ],
+            "chronology": [
+              {
+                "value": "2009",
+                "label": "(year)"
+              },
+              {
+                "value": "05",
+                "label": "(month)"
+              },
+              {
+                "value": "01",
+                "label": "(day)"
+              }
+            ],
+            "id": 1,
+            "sequence": 33
+          },
+          "category": "BASIC"
+        },
+        {
+          "pieceDesignation": [
+            "22547-361034"
+          ],
+          "note": [],
+          "useRestriction": [],
+          "cost": [],
+          "temporaryLocation": [],
+          "caption": {
+            "enumeration": [
+              {
+                "value": "134",
+                "label": "v."
+              },
+              {
+                "value": "10",
+                "label": "no."
+              }
+            ],
+            "chronology": [
+              {
+                "value": "2009",
+                "label": "(year)"
+              },
+              {
+                "value": "05",
+                "label": "(month)"
+              },
+              {
+                "value": "16",
+                "label": "(day)"
+              }
+            ],
+            "id": 1,
+            "sequence": 34
+          },
+          "category": "BASIC"
+        },
+        {
+          "pieceDesignation": [
+            "22547-361035"
+          ],
+          "note": [],
+          "useRestriction": [],
+          "cost": [],
+          "temporaryLocation": [],
+          "caption": {
+            "enumeration": [
+              {
+                "value": "134",
+                "label": "v."
+              },
+              {
+                "value": "11",
+                "label": "no."
+              }
+            ],
+            "chronology": [
+              {
+                "value": "2009",
+                "label": "(year)"
+              },
+              {
+                "value": "06",
+                "label": "(month)"
+              },
+              {
+                "value": "01",
+                "label": "(day)"
+              }
+            ],
+            "id": 1,
+            "sequence": 35
+          },
+          "category": "BASIC"
+        },
+        {
+          "pieceDesignation": [
+            "22547-361036"
+          ],
+          "note": [],
+          "useRestriction": [],
+          "cost": [],
+          "temporaryLocation": [],
+          "caption": {
+            "enumeration": [
+              {
+                "value": "134",
+                "label": "v."
+              },
+              {
+                "value": "12",
+                "label": "no."
+              }
+            ],
+            "chronology": [
+              {
+                "value": "2009",
+                "label": "(year)"
+              },
+              {
+                "value": "06",
+                "label": "(month)"
+              },
+              {
+                "value": "16",
+                "label": "(day)"
+              }
+            ],
+            "id": 1,
+            "sequence": 36
+          },
+          "category": "BASIC"
+        },
+        {
+          "pieceDesignation": [
+            "22547-361037"
+          ],
+          "note": [],
+          "useRestriction": [],
+          "cost": [],
+          "temporaryLocation": [],
+          "caption": {
+            "enumeration": [
+              {
+                "value": "134",
+                "label": "v."
+              },
+              {
+                "value": "13",
+                "label": "no."
+              }
+            ],
+            "chronology": [
+              {
+                "value": "2009",
+                "label": "(year)"
+              },
+              {
+                "value": "07",
+                "label": "(month)"
+              },
+              {
+                "value": "01",
+                "label": "(day)"
+              }
+            ],
+            "id": 1,
+            "sequence": 37
+          },
+          "category": "BASIC"
+        },
+        {
+          "pieceDesignation": [
+            "22547-361038"
+          ],
+          "note": [],
+          "useRestriction": [],
+          "cost": [],
+          "temporaryLocation": [],
+          "caption": {
+            "enumeration": [
+              {
+                "value": "134",
+                "label": "v."
+              },
+              {
+                "value": "14",
+                "label": "no."
+              }
+            ],
+            "chronology": [
+              {
+                "value": "2009",
+                "label": "(year)"
+              },
+              {
+                "value": "07",
+                "label": "(month)"
+              },
+              {
+                "value": "16",
+                "label": "(day)"
+              }
+            ],
+            "id": 1,
+            "sequence": 38
+          },
+          "category": "BASIC"
+        },
+        {
+          "pieceDesignation": [
+            "22547-361039"
+          ],
+          "note": [],
+          "useRestriction": [],
+          "cost": [],
+          "temporaryLocation": [],
+          "caption": {
+            "enumeration": [
+              {
+                "value": "134",
+                "label": "v."
+              },
+              {
+                "value": "15",
+                "label": "no."
+              }
+            ],
+            "chronology": [
+              {
+                "value": "2009",
+                "label": "(year)"
+              },
+              {
+                "value": "08",
+                "label": "(month)"
+              },
+              {
+                "value": "01",
+                "label": "(day)"
+              }
+            ],
+            "id": 1,
+            "sequence": 39
+          },
+          "category": "BASIC"
+        },
+        {
+          "pieceDesignation": [
+            "22547-361040"
+          ],
+          "note": [],
+          "useRestriction": [],
+          "cost": [],
+          "temporaryLocation": [],
+          "caption": {
+            "enumeration": [
+              {
+                "value": "134",
+                "label": "v."
+              },
+              {
+                "value": "16",
+                "label": "no."
+              }
+            ],
+            "chronology": [
+              {
+                "value": "2009",
+                "label": "(year)"
+              },
+              {
+                "value": "08",
+                "label": "(month)"
+              },
+              {
+                "value": "16",
+                "label": "(day)"
+              }
+            ],
+            "id": 1,
+            "sequence": 40
+          },
+          "category": "BASIC"
+        },
+        {
+          "pieceDesignation": [
+            "22547-361041"
+          ],
+          "note": [],
+          "useRestriction": [],
+          "cost": [],
+          "temporaryLocation": [],
+          "caption": {
+            "enumeration": [
+              {
+                "value": "134",
+                "label": "v."
+              },
+              {
+                "value": "17",
+                "label": "no."
+              }
+            ],
+            "chronology": [
+              {
+                "value": "2009",
+                "label": "(year)"
+              },
+              {
+                "value": "09",
+                "label": "(month)"
+              },
+              {
+                "value": "01",
+                "label": "(day)"
+              }
+            ],
+            "id": 1,
+            "sequence": 41
+          },
+          "category": "BASIC"
+        },
+        {
+          "pieceDesignation": [
+            "22547-361042"
+          ],
+          "note": [],
+          "useRestriction": [],
+          "cost": [],
+          "temporaryLocation": [],
+          "caption": {
+            "enumeration": [
+              {
+                "value": "134",
+                "label": "v."
+              },
+              {
+                "value": "18",
+                "label": "no."
+              }
+            ],
+            "chronology": [
+              {
+                "value": "2009",
+                "label": "(year)"
+              },
+              {
+                "value": "09",
+                "label": "(month)"
+              },
+              {
+                "value": "16",
+                "label": "(day)"
+              }
+            ],
+            "id": 1,
+            "sequence": 42
+          },
+          "category": "BASIC"
+        },
+        {
+          "pieceDesignation": [
+            "22547-361043"
+          ],
+          "note": [],
+          "useRestriction": [],
+          "cost": [],
+          "temporaryLocation": [],
+          "caption": {
+            "enumeration": [
+              {
+                "value": "134",
+                "label": "v."
+              },
+              {
+                "value": "19",
+                "label": "no."
+              }
+            ],
+            "chronology": [
+              {
+                "value": "2009",
+                "label": "(year)"
+              },
+              {
+                "value": "10",
+                "label": "(month)"
+              },
+              {
+                "value": "01",
+                "label": "(day)"
+              }
+            ],
+            "id": 1,
+            "sequence": 43
+          },
+          "category": "BASIC"
+        },
+        {
+          "pieceDesignation": [
+            "22547-361044"
+          ],
+          "note": [],
+          "useRestriction": [],
+          "cost": [],
+          "temporaryLocation": [],
+          "caption": {
+            "enumeration": [
+              {
+                "value": "134",
+                "label": "v."
+              },
+              {
+                "value": "20",
+                "label": "no."
+              }
+            ],
+            "chronology": [
+              {
+                "value": "2009",
+                "label": "(year)"
+              },
+              {
+                "value": "10",
+                "label": "(month)"
+              },
+              {
+                "value": "16",
+                "label": "(day)"
+              }
+            ],
+            "id": 1,
+            "sequence": 44
+          },
+          "category": "BASIC"
+        },
+        {
+          "pieceDesignation": [
+            "22547-361045"
+          ],
+          "note": [],
+          "useRestriction": [],
+          "cost": [],
+          "temporaryLocation": [],
+          "caption": {
+            "enumeration": [
+              {
+                "value": "134",
+                "label": "v."
+              },
+              {
+                "value": "21",
+                "label": "no."
+              }
+            ],
+            "chronology": [
+              {
+                "value": "2009",
+                "label": "(year)"
+              },
+              {
+                "value": "11",
+                "label": "(month)"
+              },
+              {
+                "value": "01",
+                "label": "(day)"
+              }
+            ],
+            "id": 1,
+            "sequence": 45
+          },
+          "category": "BASIC"
+        },
+        {
+          "pieceDesignation": [
+            "22547-361046"
+          ],
+          "note": [],
+          "useRestriction": [],
+          "cost": [],
+          "temporaryLocation": [],
+          "caption": {
+            "enumeration": [
+              {
+                "value": "134",
+                "label": "v."
+              },
+              {
+                "value": "22",
+                "label": "no."
+              }
+            ],
+            "chronology": [
+              {
+                "value": "2009",
+                "label": "(year)"
+              },
+              {
+                "value": "11",
+                "label": "(month)"
+              },
+              {
+                "value": "16",
+                "label": "(day)"
+              }
+            ],
+            "id": 1,
+            "sequence": 46
+          },
+          "category": "BASIC"
+        },
+        {
+          "pieceDesignation": [
+            "22547-361047"
+          ],
+          "note": [],
+          "useRestriction": [],
+          "cost": [],
+          "temporaryLocation": [],
+          "caption": {
+            "enumeration": [
+              {
+                "value": "134",
+                "label": "v."
+              },
+              {
+                "value": "23",
+                "label": "no."
+              }
+            ],
+            "chronology": [
+              {
+                "value": "2009",
+                "label": "(year)"
+              },
+              {
+                "value": "12",
+                "label": "(month)"
+              },
+              {
+                "value": "01",
+                "label": "(day)"
+              }
+            ],
+            "id": 1,
+            "sequence": 47
+          },
+          "category": "BASIC"
+        },
+        {
+          "pieceDesignation": [
+            "22547-361048"
+          ],
+          "note": [],
+          "useRestriction": [],
+          "cost": [],
+          "temporaryLocation": [],
+          "caption": {
+            "enumeration": [
+              {
+                "value": "134",
+                "label": "v."
+              },
+              {
+                "value": "24",
+                "label": "no."
+              }
+            ],
+            "chronology": [
+              {
+                "value": "2009",
+                "label": "(year)"
+              },
+              {
+                "value": "12",
+                "label": "(month)"
+              },
+              {
+                "value": "16",
+                "label": "(day)"
+              }
+            ],
+            "id": 1,
+            "sequence": 48
+          },
+          "category": "BASIC"
+        },
+        {
+          "pieceDesignation": [
+            "22547-361049"
+          ],
+          "note": [],
+          "useRestriction": [],
+          "cost": [],
+          "temporaryLocation": [],
+          "caption": {
+            "enumeration": [
+              {
+                "value": "135",
+                "label": "v."
+              },
+              {
+                "value": "1",
+                "label": "no."
+              }
+            ],
+            "chronology": [
+              {
+                "value": "2010",
+                "label": "(year)"
+              },
+              {
+                "value": "01",
+                "label": "(month)"
+              },
+              {
+                "value": "01",
+                "label": "(day)"
+              }
+            ],
+            "id": 1,
+            "sequence": 49
+        },
+        "category": "BASIC"
+      },
+      {
+        "pieceDesignation": [
+          "FakeBarcode"
+        ],
+        "note": [],
+        "useRestriction": [],
+        "cost": [],
+        "temporaryLocation": [],
+        "caption": {
+          "description": "test textual holdings",
+          "enumeration": [],
+          "chronology": [],
+          "sequence": 1
+        },
+        "category": "BASIC"
+      },
+      {
+        "note": [],
+        "useRestriction": [],
+        "cost": [],
+        "temporaryLocation": [],
+        "caption": {
+          "enumeration": [
+            {
+              "value": "test 2",
+              "label": "v."
+            }
+          ],
+          "chronology": [
+            {
+              "value": "test 2",
+              "label": "(year)"
+            }
+          ],
+          "id": 3,
+          "sequence": 1
+        },
+        "category": "BASIC"
+      },
+      {
+        "note": [],
+        "useRestriction": [],
+        "cost": [],
+        "temporaryLocation": [],
+        "caption": {
+          "description": "v.133 - 135 i. 1 (2008-2010)",
+          "enumeration": [],
+          "chronology": [],
+          "sequence": 2
+        },
+        "category": "BASIC"
+      }
+    ],
+    "id": "https://circ.sd00.worldcat.org/LHR/84243463?inst=128807"
+  },
+  "updated": "2019-06-13T18:14:34.700Z",
+  "links": [
+    {
+      "href": "https://circ.sd00.worldcat.org/LHR/84243463?inst=128807"
+    }
+  ]
+}
+    read-serial-copy-json:
+      summary: "Example of JSON response serial copy"
+      value: {
+  "institution": "http://www.worldcat.org/webservices/registry/content/Institutions/128807",
+  "bib": "/bibs/2351916",
+  "lastUpdateDate": 1560449674700,
+  "recordType": "SERIAL",
+  "receiptStatus": "UNKNOWN",
+  "copyNumber": "1",
+  "note": [],
+  "holdingLocation": "MAIN",
+  "shelvingLocation": "MAIN-Periodicals",
+  "previousShelvingLocation": [],
+  "shelvingDesignation": {
+    "prefix": [],
+    "information": "020.5",
+    "itemPart": [
+      "O688465"
+    ],
+    "suffix": [],
+    "scheme": "DEWEY_DECIMAL"
+  },
+  "holding": [
+    {
+      "pieceDesignation": [
+        "22547-361001"
+      ],
+      "note": [],
+      "useRestriction": [],
+      "cost": [],
+      "temporaryLocation": [],
+      "caption": {
+        "enumeration": [
+          {
+            "value": "133",
+            "label": "v."
+          },
+          {
+            "value": "1",
+            "label": "no."
+          }
+        ],
+        "chronology": [
+          {
+            "value": "2008",
+            "label": "(year)"
+          },
+          {
+            "value": "01",
+            "label": "(month)"
+          },
+          {
+            "value": "01",
+            "label": "(day)"
+          }
+        ],
+        "id": 1,
+        "sequence": 1
+      },
+      "category": "BASIC"
+    },
+    {
+      "pieceDesignation": [
+        "22547-361002"
+      ],
+      "note": [],
+      "useRestriction": [],
+      "cost": [],
+      "temporaryLocation": [],
+      "caption": {
+        "enumeration": [
+          {
+            "value": "133",
+            "label": "v."
+          },
+          {
+            "value": "2",
+            "label": "no."
+          }
+        ],
+        "chronology": [
+          {
+            "value": "2008",
+            "label": "(year)"
+          },
+          {
+            "value": "01",
+            "label": "(month)"
+          },
+          {
+            "value": "16",
+            "label": "(day)"
+          }
+        ],
+        "id": 1,
+        "sequence": 2
+      },
+      "category": "BASIC"
+    },
+    {
+      "pieceDesignation": [
+        "22547-361003"
+      ],
+      "note": [],
+      "useRestriction": [],
+      "cost": [],
+      "temporaryLocation": [],
+      "caption": {
+        "enumeration": [
+          {
+            "value": "133",
+            "label": "v."
+          },
+          {
+            "value": "3",
+            "label": "no."
+          }
+        ],
+        "chronology": [
+          {
+            "value": "2008",
+            "label": "(year)"
+          },
+          {
+            "value": "02",
+            "label": "(month)"
+          },
+          {
+            "value": "01",
+            "label": "(day)"
+          }
+        ],
+        "id": 1,
+        "sequence": 3
+      },
+      "category": "BASIC"
+    },
+    {
+      "pieceDesignation": [
+        "22547-361004"
+      ],
+      "note": [],
+      "useRestriction": [],
+      "cost": [],
+      "temporaryLocation": [],
+      "caption": {
+        "enumeration": [
+          {
+            "value": "133",
+            "label": "v."
+          },
+          {
+            "value": "4",
+            "label": "no."
+          }
+        ],
+        "chronology": [
+          {
+            "value": "2008",
+            "label": "(year)"
+          },
+          {
+            "value": "02",
+            "label": "(month)"
+          },
+          {
+            "value": "16",
+            "label": "(day)"
+          }
+        ],
+        "id": 1,
+        "sequence": 4
+      },
+      "category": "BASIC"
+    },
+    {
+      "pieceDesignation": [
+        "22547-361005"
+      ],
+      "note": [],
+      "useRestriction": [],
+      "cost": [],
+      "temporaryLocation": [],
+      "caption": {
+        "enumeration": [
+          {
+            "value": "133",
+            "label": "v."
+          },
+          {
+            "value": "5",
+            "label": "no."
+          }
+        ],
+        "chronology": [
+          {
+            "value": "2008",
+            "label": "(year)"
+          },
+          {
+            "value": "03",
+            "label": "(month)"
+          },
+          {
+            "value": "01",
+            "label": "(day)"
+          }
+        ],
+        "id": 1,
+        "sequence": 5
+      },
+      "category": "BASIC"
+    },
+    {
+      "pieceDesignation": [
+        "22547-361006"
+      ],
+      "note": [],
+      "useRestriction": [],
+      "cost": [],
+      "temporaryLocation": [],
+      "caption": {
+        "enumeration": [
+          {
+            "value": "133",
+            "label": "v."
+          },
+          {
+            "value": "6",
+            "label": "no."
+          }
+        ],
+        "chronology": [
+          {
+            "value": "2008",
+            "label": "(year)"
+          },
+          {
+            "value": "03",
+            "label": "(month)"
+          },
+          {
+            "value": "16",
+            "label": "(day)"
+          }
+        ],
+        "id": 1,
+        "sequence": 6
+      },
+      "category": "BASIC"
+    },
+    {
+      "pieceDesignation": [
+        "22547-361007"
+      ],
+      "note": [],
+      "useRestriction": [],
+      "cost": [],
+      "temporaryLocation": [],
+      "caption": {
+        "enumeration": [
+          {
+            "value": "133",
+            "label": "v."
+          },
+          {
+            "value": "7",
+            "label": "no."
+          }
+        ],
+        "chronology": [
+          {
+            "value": "2008",
+            "label": "(year)"
+          },
+          {
+            "value": "04",
+            "label": "(month)"
+          },
+          {
+            "value": "01",
+            "label": "(day)"
+          }
+        ],
+        "id": 1,
+        "sequence": 7
+      },
+      "category": "BASIC"
+    },
+    {
+      "pieceDesignation": [
+        "22547-361008"
+      ],
+      "note": [],
+      "useRestriction": [],
+      "cost": [],
+      "temporaryLocation": [],
+      "caption": {
+        "enumeration": [
+          {
+            "value": "133",
+            "label": "v."
+          },
+          {
+            "value": "8",
+            "label": "no."
+          }
+        ],
+        "chronology": [
+          {
+            "value": "2008",
+            "label": "(year)"
+          },
+          {
+            "value": "04",
+            "label": "(month)"
+          },
+          {
+            "value": "16",
+            "label": "(day)"
+          }
+        ],
+        "id": 1,
+        "sequence": 8
+      },
+      "category": "BASIC"
+    },
+    {
+      "pieceDesignation": [
+        "22547-361009"
+      ],
+      "note": [],
+      "useRestriction": [],
+      "cost": [],
+      "temporaryLocation": [],
+      "caption": {
+        "enumeration": [
+          {
+            "value": "133",
+            "label": "v."
+          },
+          {
+            "value": "9",
+            "label": "no."
+          }
+        ],
+        "chronology": [
+          {
+            "value": "2008",
+            "label": "(year)"
+          },
+          {
+            "value": "05",
+            "label": "(month)"
+          },
+          {
+            "value": "01",
+            "label": "(day)"
+          }
+        ],
+        "id": 1,
+        "sequence": 9
+      },
+      "category": "BASIC"
+    },
+    {
+      "pieceDesignation": [
+        "22547-361010"
+      ],
+      "note": [],
+      "useRestriction": [],
+      "cost": [],
+      "temporaryLocation": [],
+      "caption": {
+        "enumeration": [
+          {
+            "value": "133",
+            "label": "v."
+          },
+          {
+            "value": "10",
+            "label": "no."
+          }
+        ],
+        "chronology": [
+          {
+            "value": "2008",
+            "label": "(year)"
+          },
+          {
+            "value": "05",
+            "label": "(month)"
+          },
+          {
+            "value": "16",
+            "label": "(day)"
+          }
+        ],
+        "id": 1,
+        "sequence": 10
+      },
+      "category": "BASIC"
+    },
+    {
+      "pieceDesignation": [
+        "22547-361011"
+      ],
+      "note": [],
+      "useRestriction": [],
+      "cost": [],
+      "temporaryLocation": [],
+      "caption": {
+        "enumeration": [
+          {
+            "value": "133",
+            "label": "v."
+          },
+          {
+            "value": "11",
+            "label": "no."
+          }
+        ],
+        "chronology": [
+          {
+            "value": "2008",
+            "label": "(year)"
+          },
+          {
+            "value": "06",
+            "label": "(month)"
+          },
+          {
+            "value": "01",
+            "label": "(day)"
+          }
+        ],
+        "id": 1,
+        "sequence": 11
+      },
+      "category": "BASIC"
+    },
+    {
+      "pieceDesignation": [
+        "22547-361012"
+      ],
+      "note": [],
+      "useRestriction": [],
+      "cost": [],
+      "temporaryLocation": [],
+      "caption": {
+        "enumeration": [
+          {
+            "value": "133",
+            "label": "v."
+          },
+          {
+            "value": "12",
+            "label": "no."
+          }
+        ],
+        "chronology": [
+          {
+            "value": "2008",
+            "label": "(year)"
+          },
+          {
+            "value": "06",
+            "label": "(month)"
+          },
+          {
+            "value": "16",
+            "label": "(day)"
+          }
+        ],
+        "id": 1,
+        "sequence": 12
+      },
+      "category": "BASIC"
+    },
+    {
+      "pieceDesignation": [
+        "22547-361013"
+      ],
+      "note": [],
+      "useRestriction": [],
+      "cost": [],
+      "temporaryLocation": [],
+      "caption": {
+        "enumeration": [
+          {
+            "value": "133",
+            "label": "v."
+          },
+          {
+            "value": "13",
+            "label": "no."
+          }
+        ],
+        "chronology": [
+          {
+            "value": "2008",
+            "label": "(year)"
+          },
+          {
+            "value": "07",
+            "label": "(month)"
+          },
+          {
+            "value": "01",
+            "label": "(day)"
+          }
+        ],
+        "id": 1,
+        "sequence": 13
+      },
+      "category": "BASIC"
+    },
+    {
+      "pieceDesignation": [
+        "22547-361014"
+      ],
+      "note": [],
+      "useRestriction": [],
+      "cost": [],
+      "temporaryLocation": [],
+      "caption": {
+        "enumeration": [
+          {
+            "value": "133",
+            "label": "v."
+          },
+          {
+            "value": "14",
+            "label": "no."
+          }
+        ],
+        "chronology": [
+          {
+            "value": "2008",
+            "label": "(year)"
+          },
+          {
+            "value": "07",
+            "label": "(month)"
+          },
+          {
+            "value": "16",
+            "label": "(day)"
+          }
+        ],
+        "id": 1,
+        "sequence": 14
+      },
+      "category": "BASIC"
+    },
+    {
+      "pieceDesignation": [
+        "22547-361015"
+      ],
+      "note": [],
+      "useRestriction": [],
+      "cost": [],
+      "temporaryLocation": [],
+      "caption": {
+        "enumeration": [
+          {
+            "value": "133",
+            "label": "v."
+          },
+          {
+            "value": "15",
+            "label": "no."
+          }
+        ],
+        "chronology": [
+          {
+            "value": "2008",
+            "label": "(year)"
+          },
+          {
+            "value": "08",
+            "label": "(month)"
+          },
+          {
+            "value": "01",
+            "label": "(day)"
+          }
+        ],
+        "id": 1,
+        "sequence": 15
+      },
+      "category": "BASIC"
+    },
+    {
+      "pieceDesignation": [
+        "22547-361016"
+      ],
+      "note": [],
+      "useRestriction": [],
+      "cost": [],
+      "temporaryLocation": [],
+      "caption": {
+        "enumeration": [
+          {
+            "value": "133",
+            "label": "v."
+          },
+          {
+            "value": "16",
+            "label": "no."
+          }
+        ],
+        "chronology": [
+          {
+            "value": "2008",
+            "label": "(year)"
+          },
+          {
+            "value": "08",
+            "label": "(month)"
+          },
+          {
+            "value": "16",
+            "label": "(day)"
+          }
+        ],
+        "id": 1,
+        "sequence": 16
+      },
+      "category": "BASIC"
+    },
+    {
+      "pieceDesignation": [
+        "22547-361017"
+      ],
+      "note": [],
+      "useRestriction": [],
+      "cost": [],
+      "temporaryLocation": [],
+      "caption": {
+        "enumeration": [
+          {
+            "value": "133",
+            "label": "v."
+          },
+          {
+            "value": "17",
+            "label": "no."
+          }
+        ],
+        "chronology": [
+          {
+            "value": "2008",
+            "label": "(year)"
+          },
+          {
+            "value": "09",
+            "label": "(month)"
+          },
+          {
+            "value": "01",
+            "label": "(day)"
+          }
+        ],
+        "id": 1,
+        "sequence": 17
+      },
+      "category": "BASIC"
+    },
+    {
+      "pieceDesignation": [
+        "22547-361018"
+      ],
+      "note": [],
+      "useRestriction": [],
+      "cost": [],
+      "temporaryLocation": [],
+      "caption": {
+        "enumeration": [
+          {
+            "value": "133",
+            "label": "v."
+          },
+          {
+            "value": "18",
+            "label": "no."
+          }
+        ],
+        "chronology": [
+          {
+            "value": "2008",
+            "label": "(year)"
+          },
+          {
+            "value": "09",
+            "label": "(month)"
+          },
+          {
+            "value": "16",
+            "label": "(day)"
+          }
+        ],
+        "id": 1,
+        "sequence": 18
+      },
+      "category": "BASIC"
+    },
+    {
+      "pieceDesignation": [
+        "22547-361019"
+      ],
+      "note": [],
+      "useRestriction": [],
+      "cost": [],
+      "temporaryLocation": [],
+      "caption": {
+        "enumeration": [
+          {
+            "value": "133",
+            "label": "v."
+          },
+          {
+            "value": "19",
+            "label": "no."
+          }
+        ],
+        "chronology": [
+          {
+            "value": "2008",
+            "label": "(year)"
+          },
+          {
+            "value": "10",
+            "label": "(month)"
+          },
+          {
+            "value": "01",
+            "label": "(day)"
+          }
+        ],
+        "id": 1,
+        "sequence": 19
+      },
+      "category": "BASIC"
+    },
+    {
+      "pieceDesignation": [
+        "22547-361020"
+      ],
+      "note": [],
+      "useRestriction": [],
+      "cost": [],
+      "temporaryLocation": [],
+      "caption": {
+        "enumeration": [
+          {
+            "value": "133",
+            "label": "v."
+          },
+          {
+            "value": "20",
+            "label": "no."
+          }
+        ],
+        "chronology": [
+          {
+            "value": "2008",
+            "label": "(year)"
+          },
+          {
+            "value": "10",
+            "label": "(month)"
+          },
+          {
+            "value": "16",
+            "label": "(day)"
+          }
+        ],
+        "id": 1,
+        "sequence": 20
+      },
+      "category": "BASIC"
+    },
+    {
+      "pieceDesignation": [
+        "22547-361021"
+      ],
+      "note": [],
+      "useRestriction": [],
+      "cost": [],
+      "temporaryLocation": [],
+      "caption": {
+        "enumeration": [
+          {
+            "value": "133",
+            "label": "v."
+          },
+          {
+            "value": "21",
+            "label": "no."
+          }
+        ],
+        "chronology": [
+          {
+            "value": "2008",
+            "label": "(year)"
+          },
+          {
+            "value": "11",
+            "label": "(month)"
+          },
+          {
+            "value": "01",
+            "label": "(day)"
+          }
+        ],
+        "id": 1,
+        "sequence": 21
+      },
+      "category": "BASIC"
+    },
+    {
+      "pieceDesignation": [
+        "22547-361022"
+      ],
+      "note": [],
+      "useRestriction": [],
+      "cost": [],
+      "temporaryLocation": [],
+      "caption": {
+        "enumeration": [
+          {
+            "value": "133",
+            "label": "v."
+          },
+          {
+            "value": "22",
+            "label": "no."
+          }
+        ],
+        "chronology": [
+          {
+            "value": "2008",
+            "label": "(year)"
+          },
+          {
+            "value": "11",
+            "label": "(month)"
+          },
+          {
+            "value": "16",
+            "label": "(day)"
+          }
+        ],
+        "id": 1,
+        "sequence": 22
+      },
+      "category": "BASIC"
+    },
+    {
+      "pieceDesignation": [
+        "22547-361023"
+      ],
+      "note": [],
+      "useRestriction": [],
+      "cost": [],
+      "temporaryLocation": [],
+      "caption": {
+        "enumeration": [
+          {
+            "value": "133",
+            "label": "v."
+          },
+          {
+            "value": "23",
+            "label": "no."
+          }
+        ],
+        "chronology": [
+          {
+            "value": "2008",
+            "label": "(year)"
+          },
+          {
+            "value": "12",
+            "label": "(month)"
+          },
+          {
+            "value": "01",
+            "label": "(day)"
+          }
+        ],
+        "id": 1,
+        "sequence": 23
+      },
+      "category": "BASIC"
+    },
+    {
+      "pieceDesignation": [
+        "22547-361024"
+      ],
+      "note": [],
+      "useRestriction": [],
+      "cost": [],
+      "temporaryLocation": [],
+      "caption": {
+        "enumeration": [
+          {
+            "value": "133",
+            "label": "v."
+          },
+          {
+            "value": "24",
+            "label": "no."
+          }
+        ],
+        "chronology": [
+          {
+            "value": "2008",
+            "label": "(year)"
+          },
+          {
+            "value": "12",
+            "label": "(month)"
+          },
+          {
+            "value": "16",
+            "label": "(day)"
+          }
+        ],
+        "id": 1,
+        "sequence": 24
+      },
+      "category": "BASIC"
+    },
+    {
+      "pieceDesignation": [
+        "22547-361025"
+      ],
+      "note": [],
+      "useRestriction": [],
+      "cost": [],
+      "temporaryLocation": [],
+      "caption": {
+        "enumeration": [
+          {
+            "value": "134",
+            "label": "v."
+          },
+          {
+            "value": "1",
+            "label": "no."
+          }
+        ],
+        "chronology": [
+          {
+            "value": "2009",
+            "label": "(year)"
+          },
+          {
+            "value": "01",
+            "label": "(month)"
+          },
+          {
+            "value": "01",
+            "label": "(day)"
+          }
+        ],
+        "id": 1,
+        "sequence": 25
+      },
+      "category": "BASIC"
+    },
+    {
+      "pieceDesignation": [
+        "22547-361026"
+      ],
+      "note": [],
+      "useRestriction": [],
+      "cost": [],
+      "temporaryLocation": [],
+      "caption": {
+        "enumeration": [
+          {
+            "value": "134",
+            "label": "v."
+          },
+          {
+            "value": "2",
+            "label": "no."
+          }
+        ],
+        "chronology": [
+          {
+            "value": "2009",
+            "label": "(year)"
+          },
+          {
+            "value": "01",
+            "label": "(month)"
+          },
+          {
+            "value": "16",
+            "label": "(day)"
+          }
+        ],
+        "id": 1,
+        "sequence": 26
+      },
+      "category": "BASIC"
+    },
+    {
+      "pieceDesignation": [
+        "22547-361027"
+      ],
+      "note": [],
+      "useRestriction": [],
+      "cost": [],
+      "temporaryLocation": [],
+      "caption": {
+        "enumeration": [
+          {
+            "value": "134",
+            "label": "v."
+          },
+          {
+            "value": "3",
+            "label": "no."
+          }
+        ],
+        "chronology": [
+          {
+            "value": "2009",
+            "label": "(year)"
+          },
+          {
+            "value": "02",
+            "label": "(month)"
+          },
+          {
+            "value": "01",
+            "label": "(day)"
+          }
+        ],
+        "id": 1,
+        "sequence": 27
+      },
+      "category": "BASIC"
+    },
+    {
+      "pieceDesignation": [
+        "22547-361028"
+      ],
+      "note": [],
+      "useRestriction": [],
+      "cost": [],
+      "temporaryLocation": [],
+      "caption": {
+        "enumeration": [
+          {
+            "value": "134",
+            "label": "v."
+          },
+          {
+            "value": "4",
+            "label": "no."
+          }
+        ],
+        "chronology": [
+          {
+            "value": "2009",
+            "label": "(year)"
+          },
+          {
+            "value": "02",
+            "label": "(month)"
+          },
+          {
+            "value": "16",
+            "label": "(day)"
+          }
+        ],
+        "id": 1,
+        "sequence": 28
+      },
+      "category": "BASIC"
+    },
+    {
+      "pieceDesignation": [
+        "22547-361029"
+      ],
+      "note": [],
+      "useRestriction": [],
+      "cost": [],
+      "temporaryLocation": [],
+      "caption": {
+        "enumeration": [
+          {
+            "value": "134",
+            "label": "v."
+          },
+          {
+            "value": "5",
+            "label": "no."
+          }
+        ],
+        "chronology": [
+          {
+            "value": "2009",
+            "label": "(year)"
+          },
+          {
+            "value": "03",
+            "label": "(month)"
+          },
+          {
+            "value": "01",
+            "label": "(day)"
+          }
+        ],
+        "id": 1,
+        "sequence": 29
+      },
+      "category": "BASIC"
+    },
+    {
+      "pieceDesignation": [
+        "22547-361030"
+      ],
+      "note": [],
+      "useRestriction": [],
+      "cost": [],
+      "temporaryLocation": [],
+      "caption": {
+        "enumeration": [
+          {
+            "value": "134",
+            "label": "v."
+          },
+          {
+            "value": "6",
+            "label": "no."
+          }
+        ],
+        "chronology": [
+          {
+            "value": "2009",
+            "label": "(year)"
+          },
+          {
+            "value": "03",
+            "label": "(month)"
+          },
+          {
+            "value": "16",
+            "label": "(day)"
+          }
+        ],
+        "id": 1,
+        "sequence": 30
+      },
+      "category": "BASIC"
+    },
+    {
+      "pieceDesignation": [
+        "22547-361031"
+      ],
+      "note": [],
+      "useRestriction": [],
+      "cost": [],
+      "temporaryLocation": [],
+      "caption": {
+        "enumeration": [
+          {
+            "value": "134",
+            "label": "v."
+          },
+          {
+            "value": "7",
+            "label": "no."
+          }
+        ],
+        "chronology": [
+          {
+            "value": "2009",
+            "label": "(year)"
+          },
+          {
+            "value": "04",
+            "label": "(month)"
+          },
+          {
+            "value": "01",
+            "label": "(day)"
+          }
+        ],
+        "id": 1,
+        "sequence": 31
+      },
+      "category": "BASIC"
+    },
+    {
+      "pieceDesignation": [
+        "22547-361032"
+      ],
+      "note": [],
+      "useRestriction": [],
+      "cost": [],
+      "temporaryLocation": [],
+      "caption": {
+        "enumeration": [
+          {
+            "value": "134",
+            "label": "v."
+          },
+          {
+            "value": "8",
+            "label": "no."
+          }
+        ],
+        "chronology": [
+          {
+            "value": "2009",
+            "label": "(year)"
+          },
+          {
+            "value": "04",
+            "label": "(month)"
+          },
+          {
+            "value": "16",
+            "label": "(day)"
+          }
+        ],
+        "id": 1,
+        "sequence": 32
+      },
+      "category": "BASIC"
+    },
+    {
+      "pieceDesignation": [
+        "22547-361033"
+      ],
+      "note": [],
+      "useRestriction": [],
+      "cost": [],
+      "temporaryLocation": [],
+      "caption": {
+        "enumeration": [
+          {
+            "value": "134",
+            "label": "v."
+          },
+          {
+            "value": "9",
+            "label": "no."
+          }
+        ],
+        "chronology": [
+          {
+            "value": "2009",
+            "label": "(year)"
+          },
+          {
+            "value": "05",
+            "label": "(month)"
+          },
+          {
+            "value": "01",
+            "label": "(day)"
+          }
+        ],
+        "id": 1,
+        "sequence": 33
+      },
+      "category": "BASIC"
+    },
+    {
+      "pieceDesignation": [
+        "22547-361034"
+      ],
+      "note": [],
+      "useRestriction": [],
+      "cost": [],
+      "temporaryLocation": [],
+      "caption": {
+        "enumeration": [
+          {
+            "value": "134",
+            "label": "v."
+          },
+          {
+            "value": "10",
+            "label": "no."
+          }
+        ],
+        "chronology": [
+          {
+            "value": "2009",
+            "label": "(year)"
+          },
+          {
+            "value": "05",
+            "label": "(month)"
+          },
+          {
+            "value": "16",
+            "label": "(day)"
+          }
+        ],
+        "id": 1,
+        "sequence": 34
+      },
+      "category": "BASIC"
+    },
+    {
+      "pieceDesignation": [
+        "22547-361035"
+      ],
+      "note": [],
+      "useRestriction": [],
+      "cost": [],
+      "temporaryLocation": [],
+      "caption": {
+        "enumeration": [
+          {
+            "value": "134",
+            "label": "v."
+          },
+          {
+            "value": "11",
+            "label": "no."
+          }
+        ],
+        "chronology": [
+          {
+            "value": "2009",
+            "label": "(year)"
+          },
+          {
+            "value": "06",
+            "label": "(month)"
+          },
+          {
+            "value": "01",
+            "label": "(day)"
+          }
+        ],
+        "id": 1,
+        "sequence": 35
+      },
+      "category": "BASIC"
+    },
+    {
+      "pieceDesignation": [
+        "22547-361036"
+      ],
+      "note": [],
+      "useRestriction": [],
+      "cost": [],
+      "temporaryLocation": [],
+      "caption": {
+        "enumeration": [
+          {
+            "value": "134",
+            "label": "v."
+          },
+          {
+            "value": "12",
+            "label": "no."
+          }
+        ],
+        "chronology": [
+          {
+            "value": "2009",
+            "label": "(year)"
+          },
+          {
+            "value": "06",
+            "label": "(month)"
+          },
+          {
+            "value": "16",
+            "label": "(day)"
+          }
+        ],
+        "id": 1,
+        "sequence": 36
+      },
+      "category": "BASIC"
+    },
+    {
+      "pieceDesignation": [
+        "22547-361037"
+      ],
+      "note": [],
+      "useRestriction": [],
+      "cost": [],
+      "temporaryLocation": [],
+      "caption": {
+        "enumeration": [
+          {
+            "value": "134",
+            "label": "v."
+          },
+          {
+            "value": "13",
+            "label": "no."
+          }
+        ],
+        "chronology": [
+          {
+            "value": "2009",
+            "label": "(year)"
+          },
+          {
+            "value": "07",
+            "label": "(month)"
+          },
+          {
+            "value": "01",
+            "label": "(day)"
+          }
+        ],
+        "id": 1,
+        "sequence": 37
+      },
+      "category": "BASIC"
+    },
+    {
+      "pieceDesignation": [
+        "22547-361038"
+      ],
+      "note": [],
+      "useRestriction": [],
+      "cost": [],
+      "temporaryLocation": [],
+      "caption": {
+        "enumeration": [
+          {
+            "value": "134",
+            "label": "v."
+          },
+          {
+            "value": "14",
+            "label": "no."
+          }
+        ],
+        "chronology": [
+          {
+            "value": "2009",
+            "label": "(year)"
+          },
+          {
+            "value": "07",
+            "label": "(month)"
+          },
+          {
+            "value": "16",
+            "label": "(day)"
+          }
+        ],
+        "id": 1,
+        "sequence": 38
+      },
+      "category": "BASIC"
+    },
+    {
+      "pieceDesignation": [
+        "22547-361039"
+      ],
+      "note": [],
+      "useRestriction": [],
+      "cost": [],
+      "temporaryLocation": [],
+      "caption": {
+        "enumeration": [
+          {
+            "value": "134",
+            "label": "v."
+          },
+          {
+            "value": "15",
+            "label": "no."
+          }
+        ],
+        "chronology": [
+          {
+            "value": "2009",
+            "label": "(year)"
+          },
+          {
+            "value": "08",
+            "label": "(month)"
+          },
+          {
+            "value": "01",
+            "label": "(day)"
+          }
+        ],
+        "id": 1,
+        "sequence": 39
+      },
+      "category": "BASIC"
+    },
+    {
+      "pieceDesignation": [
+        "22547-361040"
+      ],
+      "note": [],
+      "useRestriction": [],
+      "cost": [],
+      "temporaryLocation": [],
+      "caption": {
+        "enumeration": [
+          {
+            "value": "134",
+            "label": "v."
+          },
+          {
+            "value": "16",
+            "label": "no."
+          }
+        ],
+        "chronology": [
+          {
+            "value": "2009",
+            "label": "(year)"
+          },
+          {
+            "value": "08",
+            "label": "(month)"
+          },
+          {
+            "value": "16",
+            "label": "(day)"
+          }
+        ],
+        "id": 1,
+        "sequence": 40
+      },
+      "category": "BASIC"
+    },
+    {
+      "pieceDesignation": [
+        "22547-361041"
+      ],
+      "note": [],
+      "useRestriction": [],
+      "cost": [],
+      "temporaryLocation": [],
+      "caption": {
+        "enumeration": [
+          {
+            "value": "134",
+            "label": "v."
+          },
+          {
+            "value": "17",
+            "label": "no."
+          }
+        ],
+        "chronology": [
+          {
+            "value": "2009",
+            "label": "(year)"
+          },
+          {
+            "value": "09",
+            "label": "(month)"
+          },
+          {
+            "value": "01",
+            "label": "(day)"
+          }
+        ],
+        "id": 1,
+        "sequence": 41
+      },
+      "category": "BASIC"
+    },
+    {
+      "pieceDesignation": [
+        "22547-361042"
+      ],
+      "note": [],
+      "useRestriction": [],
+      "cost": [],
+      "temporaryLocation": [],
+      "caption": {
+        "enumeration": [
+          {
+            "value": "134",
+            "label": "v."
+          },
+          {
+            "value": "18",
+            "label": "no."
+          }
+        ],
+        "chronology": [
+          {
+            "value": "2009",
+            "label": "(year)"
+          },
+          {
+            "value": "09",
+            "label": "(month)"
+          },
+          {
+            "value": "16",
+            "label": "(day)"
+          }
+        ],
+        "id": 1,
+        "sequence": 42
+      },
+      "category": "BASIC"
+    },
+    {
+      "pieceDesignation": [
+        "22547-361043"
+      ],
+      "note": [],
+      "useRestriction": [],
+      "cost": [],
+      "temporaryLocation": [],
+      "caption": {
+        "enumeration": [
+          {
+            "value": "134",
+            "label": "v."
+          },
+          {
+            "value": "19",
+            "label": "no."
+          }
+        ],
+        "chronology": [
+          {
+            "value": "2009",
+            "label": "(year)"
+          },
+          {
+            "value": "10",
+            "label": "(month)"
+          },
+          {
+            "value": "01",
+            "label": "(day)"
+          }
+        ],
+        "id": 1,
+        "sequence": 43
+      },
+      "category": "BASIC"
+    },
+    {
+      "pieceDesignation": [
+        "22547-361044"
+      ],
+      "note": [],
+      "useRestriction": [],
+      "cost": [],
+      "temporaryLocation": [],
+      "caption": {
+        "enumeration": [
+          {
+            "value": "134",
+            "label": "v."
+          },
+          {
+            "value": "20",
+            "label": "no."
+          }
+        ],
+        "chronology": [
+          {
+            "value": "2009",
+            "label": "(year)"
+          },
+          {
+            "value": "10",
+            "label": "(month)"
+          },
+          {
+            "value": "16",
+            "label": "(day)"
+          }
+        ],
+        "id": 1,
+        "sequence": 44
+      },
+      "category": "BASIC"
+    },
+    {
+      "pieceDesignation": [
+        "22547-361045"
+      ],
+      "note": [],
+      "useRestriction": [],
+      "cost": [],
+      "temporaryLocation": [],
+      "caption": {
+        "enumeration": [
+          {
+            "value": "134",
+            "label": "v."
+          },
+          {
+            "value": "21",
+            "label": "no."
+          }
+        ],
+        "chronology": [
+          {
+            "value": "2009",
+            "label": "(year)"
+          },
+          {
+            "value": "11",
+            "label": "(month)"
+          },
+          {
+            "value": "01",
+            "label": "(day)"
+          }
+        ],
+        "id": 1,
+        "sequence": 45
+      },
+      "category": "BASIC"
+    },
+    {
+      "pieceDesignation": [
+        "22547-361046"
+      ],
+      "note": [],
+      "useRestriction": [],
+      "cost": [],
+      "temporaryLocation": [],
+      "caption": {
+        "enumeration": [
+          {
+            "value": "134",
+            "label": "v."
+          },
+          {
+            "value": "22",
+            "label": "no."
+          }
+        ],
+        "chronology": [
+          {
+            "value": "2009",
+            "label": "(year)"
+          },
+          {
+            "value": "11",
+            "label": "(month)"
+          },
+          {
+            "value": "16",
+            "label": "(day)"
+          }
+        ],
+        "id": 1,
+        "sequence": 46
+      },
+      "category": "BASIC"
+    },
+    {
+      "pieceDesignation": [
+        "22547-361047"
+      ],
+      "note": [],
+      "useRestriction": [],
+      "cost": [],
+      "temporaryLocation": [],
+      "caption": {
+        "enumeration": [
+          {
+            "value": "134",
+            "label": "v."
+          },
+          {
+            "value": "23",
+            "label": "no."
+          }
+        ],
+        "chronology": [
+          {
+            "value": "2009",
+            "label": "(year)"
+          },
+          {
+            "value": "12",
+            "label": "(month)"
+          },
+          {
+            "value": "01",
+            "label": "(day)"
+          }
+        ],
+        "id": 1,
+        "sequence": 47
+      },
+      "category": "BASIC"
+    },
+    {
+      "pieceDesignation": [
+        "22547-361048"
+      ],
+      "note": [],
+      "useRestriction": [],
+      "cost": [],
+      "temporaryLocation": [],
+      "caption": {
+        "enumeration": [
+          {
+            "value": "134",
+            "label": "v."
+          },
+          {
+            "value": "24",
+            "label": "no."
+          }
+        ],
+        "chronology": [
+          {
+            "value": "2009",
+            "label": "(year)"
+          },
+          {
+            "value": "12",
+            "label": "(month)"
+          },
+          {
+            "value": "16",
+            "label": "(day)"
+          }
+        ],
+        "id": 1,
+        "sequence": 48
+      },
+      "category": "BASIC"
+    },
+    {
+      "pieceDesignation": [
+        "22547-361049"
+      ],
+      "note": [],
+      "useRestriction": [],
+      "cost": [],
+      "temporaryLocation": [],
+      "caption": {
+        "enumeration": [
+          {
+            "value": "135",
+            "label": "v."
+          },
+          {
+            "value": "1",
+            "label": "no."
+          }
+        ],
+        "chronology": [
+          {
+            "value": "2010",
+            "label": "(year)"
+          },
+          {
+            "value": "01",
+            "label": "(month)"
+          },
+          {
+            "value": "01",
+            "label": "(day)"
+          }
+        ],
+        "id": 1,
+        "sequence": 49
+      },
+      "category": "BASIC"
+    },
+    {
+      "pieceDesignation": [
+        "FakeBarcode"
+      ],
+      "note": [],
+      "useRestriction": [],
+      "cost": [],
+      "temporaryLocation": [],
+      "caption": {
+        "description": "test textual holdings",
+        "enumeration": [],
+        "chronology": [],
+        "sequence": 1
+      },
+      "category": "BASIC"
+    },
+    {
+      "pieceDesignation": [],
+      "note": [],
+      "useRestriction": [],
+      "cost": [],
+      "temporaryLocation": [],
+      "caption": {
+        "enumeration": [
+          {
+            "value": "test 2",
+            "label": "v."
+          }
+        ],
+        "chronology": [
+          {
+            "value": "test 2",
+            "label": "(year)"
+          }
+        ],
+        "id": 3,
+        "sequence": 1
+      },
+      "category": "BASIC"
+    },
+    {
+      "pieceDesignation": [],
+      "note": [],
+      "useRestriction": [],
+      "cost": [],
+      "temporaryLocation": [],
+      "caption": {
+        "description": "v.133 - 135 i. 1 (2008-2010)",
+        "enumeration": [],
+        "chronology": [],
+        "sequence": 2
+      },
+      "category": "BASIC"
+    }
+  ],
+  "id": "https://circ.sd00.worldcat.org/LHR/84243463?inst=128807"
+}                    
     unauthorized:
       summary: Error returned when valid API credentials not sent or invalid
       value: {"message": "Unauthorized"}
