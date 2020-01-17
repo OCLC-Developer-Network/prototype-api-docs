@@ -67,10 +67,10 @@ paths:
               schema:
                 type: object            
               examples:
-                success-search-copies-json: 
-                  $ref: '#/components/examples/success-search-copies-json'
-                success-search-copies-json-by-barcode: 
-                  $ref: '#/components/examples/success-search-copies-json-by-barcode'                                      
+                success-search-copies-atom-json: 
+                  $ref: '#/components/examples/success-search-copies-atom-json'
+                success-search-copies-atom-json-by-barcode: 
+                  $ref: '#/components/examples/success-search-copies-atom-json-by-barcode'                                      
         '400':
           description: Invalid query. The request was unacceptable, often due to missing a required parameter.
           content:
@@ -388,23 +388,382 @@ components:
             WMS_COLLECTION_MANAGEMENT: perform all the operations in the Collection management API
   examples:
     success-search-copies-atom:
-      summary: ""
-      value: ""
+      summary: Search results for oclcNumber query in Atom format
+      value: >
+        <?xml version="1.0" encoding="UTF-8"?><feed xmlns="http://www.w3.org/2005/Atom" xmlns:os="http://a9.com/-/spec/opensearch/1.1/">
+          <id>urn:oclc:collectionmanagement/LHR/128807</id>
+          <title type="text">Copies</title>
+          <updated>2020-01-17T21:21:07.828Z</updated>
+          <os:totalResults>2</os:totalResults>
+          <os:startIndex>1</os:startIndex>
+          <os:itemsPerPage>10</os:itemsPerPage>
+          <entry>
+            <title type="text"/>
+            <link href="https://circ.sd00.worldcat.org/LHR/206732470?inst=128807"/>
+            <updated>2017-10-31T16:03:45.300Z</updated>
+            <content type="application/xml">
+              <copy xmlns="http://worldcat.org/xmlschemas/Copy-1.0" id="https://circ.sd00.worldcat.org/LHR/206732470?inst=128807">
+                <institution>http://www.worldcat.org/webservices/registry/content/Institutions/128807</institution>
+                <bib>/bibs/6692485</bib>
+                <lastUpdateDate>2017-10-31T12:03:45.300-04:00</lastUpdateDate>
+                <recordType>SINGLE_PART</recordType>
+                <receiptStatus>CURRENTLY_RECEIVED</receiptStatus>
+                <copyNumber>1</copyNumber>
+                <holdingLocation>WEST</holdingLocation>
+                <shelvingLocation>WEST-STACKS</shelvingLocation>
+                <shelvingDesignation scheme="LIBRARY_OF_CONGRESS">
+                  <information>PR9199.4.J336 K55 2012</information>
+                </shelvingDesignation>
+                <holding category="BASIC">
+                  <pieceDesignation>99887766112299</pieceDesignation>
+                  <temporaryLocation>WEST-Reference</temporaryLocation>
+                </holding>
+              </copy>
+            </content>
+          </entry>
+          <entry>
+            <title type="text"/>
+            <link href="https://circ.sd00.worldcat.org/LHR/84297032?inst=128807"/>
+            <updated>2013-09-12T01:14:40.316Z</updated>
+            <content type="application/xml">
+              <copy xmlns="http://worldcat.org/xmlschemas/Copy-1.0" id="https://circ.sd00.worldcat.org/LHR/84297032?inst=128807">
+                <institution>http://www.worldcat.org/webservices/registry/content/Institutions/128807</institution>
+                <bib>/bibs/6692485</bib>
+                <lastUpdateDate>2013-09-11T21:14:40.316-04:00</lastUpdateDate>
+                <recordType>SERIAL</recordType>
+                <receiptStatus>UNKNOWN</receiptStatus>
+                <holdingLocation>MAIN</holdingLocation>
+                <shelvingLocation>MAIN-STACKS</shelvingLocation>
+                <previousShelvingLocation>MAIN-Periodicals</previousShelvingLocation>
+                <shelvingDesignation scheme="LIBRARY_OF_CONGRESS">
+                  <prefix>prefix</prefix>
+                  <information>call</information>
+                  <itemPart>number</itemPart>
+                  <suffix>suffix</suffix>
+                </shelvingDesignation>
+                <holding category="BASIC">
+                  <pieceDesignation>64849398475859</pieceDesignation>
+                  <caption id="1" sequence="1">
+                    <enumeration label="v.">1</enumeration>
+                    <enumeration label="no.">1</enumeration>
+                    <chronology label="(year)">2010</chronology>
+                    <chronology label="(month)">8</chronology>
+                  </caption>
+                </holding>
+                <holding category="BASIC">
+                  <pieceDesignation>8741298741209</pieceDesignation>
+                  <caption id="1" sequence="2">
+                    <enumeration label="v.">1</enumeration>
+                    <enumeration label="no.">2</enumeration>
+                    <chronology label="(year)">2010</chronology>
+                    <chronology label="(month)">9</chronology>
+                  </caption>
+                </holding>
+                <holding category="BASIC">
+                  <pieceDesignation>8654323456543</pieceDesignation>
+                  <caption id="2" sequence="1">
+                    <enumeration label="no.">10</enumeration>
+                  </caption>
+                </holding>
+              </copy>
+            </content>
+          </entry>
+        </feed>      
     success-search-copies-atom-by-barcode:
-      summary: ""
-      value: ""
+      summary: Search results for barcode query in Atom format
+      value: >
+        <?xml version="1.0" encoding="UTF-8"?><feed xmlns="http://www.w3.org/2005/Atom" xmlns:os="http://a9.com/-/spec/opensearch/1.1/">
+          <id>urn:oclc:collectionmanagement/LHR/128807</id>
+          <title type="text">Copies</title>
+          <updated>2020-01-17T21:23:13.397Z</updated>
+          <os:totalResults>1</os:totalResults>
+          <os:startIndex>1</os:startIndex>
+          <os:itemsPerPage>10</os:itemsPerPage>
+          <entry>
+            <title type="text"/>
+            <link href="https://circ.sd00.worldcat.org/LHR/238374600?inst=128807"/>
+            <updated>2019-06-17T18:59:41.700Z</updated>
+            <content type="application/xml">
+              <copy xmlns="http://worldcat.org/xmlschemas/Copy-1.0" id="https://circ.sd00.worldcat.org/LHR/238374600?inst=128807">
+                <institution>http://www.worldcat.org/webservices/registry/content/Institutions/128807</institution>
+                <bib>/bibs/318877925</bib>
+                <lastUpdateDate>2019-06-17T14:59:41.700-04:00</lastUpdateDate>
+                <recordType>SINGLE_PART</recordType>
+                <receiptStatus>RECEIVED_AND_COMPLETE_OR_CEASED</receiptStatus>
+                <copyNumber>1</copyNumber>
+                <holdingLocation>MAIN</holdingLocation>
+                <shelvingLocation>MAIN-STACKS</shelvingLocation>
+                <shelvingDesignation scheme="LIBRARY_OF_CONGRESS">
+                  <prefix>prefix</prefix>
+                  <information>PN6738</information>
+                  <itemPart>.S56</itemPart>
+                  <suffix>test</suffix>
+                </shelvingDesignation>
+                <holding category="BASIC">
+                  <pieceDesignation>K123456789</pieceDesignation>
+                </holding>
+              </copy>
+            </content>
+          </entry>
+        </feed>      
     success-search-copies-atom-json:
-      summary: ""
-      value: ""     
+      summary: Search results for oclcNumber query in Atom JSON format
+      value: {
+      "entry": [
+        {
+          "institution": "http://www.worldcat.org/webservices/registry/content/Institutions/128807",
+          "bib": "/bibs/6692485",
+          "lastUpdateDate": 1509465825300,
+          "recordType": "SINGLE_PART",
+          "receiptStatus": "CURRENTLY_RECEIVED",
+          "copyNumber": "1",
+          "note": [],
+          "holdingLocation": "WEST",
+          "shelvingLocation": "WEST-STACKS",
+          "previousShelvingLocation": [],
+          "shelvingDesignation": {
+            "prefix": [],
+            "information": "PR9199.4.J336 K55 2012",
+            "itemPart": [],
+            "suffix": [],
+            "scheme": "LIBRARY_OF_CONGRESS"
+          },
+          "holding": [
+            {
+              "pieceDesignation": [
+                "99887766112299"
+              ],
+              "note": [],
+              "useRestriction": [],
+              "cost": [],
+            "temporaryLocation": [
+              "WEST-Reference"
+            ],
+            "category": "BASIC"
+          }
+        ],
+        "id": "https://circ.sd00.worldcat.org/LHR/206732470?inst=128807"
+      },
+      {
+        "institution": "http://www.worldcat.org/webservices/registry/content/Institutions/128807",
+        "bib": "/bibs/6692485",
+        "lastUpdateDate": 1378948480316,
+        "recordType": "SERIAL",
+        "receiptStatus": "UNKNOWN",
+        "note": [],
+        "holdingLocation": "MAIN",
+        "shelvingLocation": "MAIN-STACKS",
+        "previousShelvingLocation": [
+          "MAIN-Periodicals"
+        ],
+        "shelvingDesignation": {
+          "prefix": [
+            "prefix"
+          ],
+          "information": "call",
+          "itemPart": [
+            "number"
+          ],
+          "suffix": [
+            "suffix"
+          ],
+          "scheme": "LIBRARY_OF_CONGRESS"
+        },
+        "holding": [
+          {
+            "pieceDesignation": [
+              "64849398475859"
+            ],
+            "note": [],
+            "useRestriction": [],
+            "cost": [],
+            "temporaryLocation": [],
+            "caption": {
+              "enumeration": [
+                {
+                  "value": "1",
+                  "label": "v."
+                },
+                {
+                  "value": "1",
+                  "label": "no."
+                }
+              ],
+              "chronology": [
+                {
+                  "value": "2010",
+                  "label": "(year)"
+                },
+                {
+                  "value": "8",
+                  "label": "(month)"
+                }
+              ],
+              "id": 1,
+              "sequence": 1
+            },
+            "category": "BASIC"
+          },
+          {
+            "pieceDesignation": [
+              "8741298741209"
+            ],
+            "note": [],
+            "useRestriction": [],
+            "cost": [],
+            "temporaryLocation": [],
+            "caption": {
+              "enumeration": [
+                {
+                  "value": "1",
+                  "label": "v."
+                },
+                {
+                  "value": "2",
+                  "label": "no."
+                }
+              ],
+              "chronology": [
+                {
+                  "value": "2010",
+                  "label": "(year)"
+                },
+                {
+                  "value": "9",
+                  "label": "(month)"
+                }
+              ],
+              "id": 1,
+              "sequence": 2
+            },
+            "category": "BASIC"
+          },
+          {
+            "pieceDesignation": [
+              "8654323456543"
+            ],
+            "note": [],
+            "useRestriction": [],
+            "cost": [],
+            "temporaryLocation": [],
+            "caption": {
+              "enumeration": [
+                {
+                  "value": "10",
+                  "label": "no."
+                }
+              ],
+              "chronology": [],
+              "id": 2,
+              "sequence": 1
+            },
+            "category": "BASIC"
+          }
+        ],
+        "id": "https://circ.sd00.worldcat.org/LHR/84297032?inst=128807"
+      }
+    ],
+    "startIndex": 1,
+    "totalResults": 2,
+    "itemsPerPage": 10,
+    "id": "urn:oclc:collectionmanagement/LHR/128807",
+    "title": "Copies",
+    "links": [],
+    "updated": {
+      "offset": {
+        "id": "Z",
+        "amountSeconds": 0,
+        "secondsField": 0,
+        "hoursField": 0,
+        "minutesField": 0
+      },
+      "chronology": {
+        "name": "ISO"
+      },
+      "monthOfYear": "JANUARY",
+      "hourOfDay": 21,
+      "minuteOfHour": 27,
+      "secondOfMinute": 8,
+      "nanoOfSecond": 82000000,
+      "year": 2020,
+      "dayOfMonth": 17,
+      "dayOfWeek": "FRIDAY",
+      "dayOfYear": 17
+    },
+    "errors": {}
+  }          
     success-search-copies-atom-json-by-barcode:
-      summary: ""
-      value: ""
-    success-search-copies-json: 
-      summary: ""
-      value: ""
-    success-search-copies-json-by-barcode:      
-      summary: ""
-      value: ""
+      summary: Search results for barcode query in Atom JSON format
+      value: {
+      "entry": [
+        {
+          "institution": "http://www.worldcat.org/webservices/registry/content/Institutions/128807",
+          "bib": "/bibs/318877925",
+          "lastUpdateDate": 1560797981700,
+          "recordType": "SINGLE_PART",
+          "receiptStatus": "RECEIVED_AND_COMPLETE_OR_CEASED",
+          "copyNumber": "1",
+          "note": [],
+          "holdingLocation": "MAIN",
+          "shelvingLocation": "MAIN-STACKS",
+          "previousShelvingLocation": [],
+          "shelvingDesignation": {
+            "prefix": [
+              "prefix"
+            ],
+            "information": "PN6738",
+            "itemPart": [
+              ".S56"
+            ],
+            "suffix": [
+              "test"
+            ],
+            "scheme": "LIBRARY_OF_CONGRESS"
+          },
+          "holding": [
+            {
+              "pieceDesignation": [
+                "K123456789"
+              ],
+              "note": [],
+              "useRestriction": [],
+              "cost": [],
+              "temporaryLocation": [],
+              "category": "BASIC"
+            }
+          ],
+          "id": "https://circ.sd00.worldcat.org/LHR/238374600?inst=128807"
+        }
+      ],
+      "startIndex": 1,
+      "totalResults": 1,
+      "itemsPerPage": 10,
+      "id": "urn:oclc:collectionmanagement/LHR/128807",
+      "title": "Copies",
+      "links": [],
+      "updated": {
+        "offset": {
+          "id": "Z",
+          "amountSeconds": 0,
+          "secondsField": 0,
+          "hoursField": 0,
+          "minutesField": 0
+        },
+        "chronology": {
+          "name": "ISO"
+        },
+        "monthOfYear": "JANUARY",
+        "hourOfDay": 21,
+        "minuteOfHour": 24,
+        "secondOfMinute": 36,
+        "nanoOfSecond": 226000000,
+        "year": 2020,
+        "dayOfMonth": 17,
+        "dayOfWeek": "FRIDAY",
+        "dayOfYear": 17
+      },
+      "errors": {}
+    }
     read-monograph-copy-atom:
       summary: "Example of Atom response monograph copy"
       value: >
