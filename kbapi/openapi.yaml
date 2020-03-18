@@ -1301,5 +1301,5 @@ components:
             - enclosure
             - via                                                    
 externalDocs:
-  description: Find out more about OCLC
-  url: 'https://www.oclc.org'
+  description: Find out more about WorldCat Knowledge Base API
+  url: 'https://www.oclc.org/developer/develop/web-services/worldcat-knowledge-base-api.en.html'

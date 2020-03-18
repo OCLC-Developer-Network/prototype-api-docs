@@ -1062,5 +1062,5 @@ components:
         
         </html>                                 
 externalDocs:
-  description: Find out more about OCLC
-  url: 'https://www.oclc.org'
+  description: Find out more about WorldShare Management Services Availability API
+  url: 'https://www.oclc.org/developer/develop/web-services/wms-availability-api.en.html'
