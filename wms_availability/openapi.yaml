@@ -1,0 +1,1068 @@
+openapi: 3.0.0
+info:
+  description: WMS Availability information
+  version: 1.0.0
+  title: WMS Availability API
+  license:
+    name: Licensing TBD
+servers:
+  - url: 'https://worldcat.org/circ/availability/sru'
+security:
+  - availability_auth:
+    - WMS_Availability
+paths:
+  /service:
+    get:
+      tags:
+        - availability
+      summary: 'Find shelf availability by OCLC Number'
+      description: 'Given an OCLC Number find availability on related items'
+      operationId: wms-availability
+      parameters:
+        - name: x-registryId
+          in: query
+          description: Institution registry Id for availability
+          schema:
+            type: integer
+            format: int32
+          required: true
+          example: 128807
+        - name: query
+          in: query
+          description: OCLC Number query
+          required: true
+          schema:
+            type: string
+          example: no:15703846                 
+        - name: x-return-group-availability
+          in: query
+          description: Whether or not to return group availability information.
+          required: false          
+          schema:
+            type: boolean
+            default: false
+          example: true
+      responses:
+        '200':
+          description: Successful search
+          content:
+            '*/*':
+              schema:
+                type: object            
+              examples:
+                success: 
+                  $ref: '#/components/examples/success'
+                success-serial: 
+                  $ref: '#/components/examples/success-serial'                  
+                success-group-response: 
+                  $ref: '#/components/examples/success-group-response'                                      
+                success-no-holdings: 
+                  $ref: '#/components/examples/success-no-holdings'
+                failure-not-part-of-holding-group:
+                  $ref: '#/components/examples/holding-group-error'
+        '400':
+          description: Invalid query. The request was unacceptable, often due to missing a required parameter.
+          content:
+            '*/*':
+              schema:
+                type: object            
+              examples:
+                missing-query-parameter:
+                  $ref: '#/components/examples/missing-query-parameter'
+        '403':
+          description: Unauthorized
+          content:
+            '*/*':
+              schema:
+                type: object            
+              examples:
+                missing-query-parameter:
+                  $ref: '#/components/examples/invalid-context-error'              
+        
+        '405':
+          description: 'Method not supported, see response Allow header'
+          content:
+            '*/*':
+              schema:
+                type: object            
+              example:
+                $ref: '#/components/examples/method-not-allowed-error'               
+        '500':
+          description: 'Something went wrong (hopfully rare) - please try again'
+          content:
+            '*/*':
+              schema:
+                type: object                                              
+components:
+  securitySchemes:
+    availability_auth:
+      type: oauth2
+      flows:
+        clientCredentials:
+          tokenUrl: https://oauth.oclc.org/token
+          scopes:
+            WMS_Availability: perform all the operation in the WMS Availability API
+        authorizationCode:
+          authorizationUrl: https://oauth.oclc.org/auth
+          tokenUrl: https://oauth.oclc.org/token
+          scopes:
+            WMS_Availability: perform all the operation in the WMS Availability API                      
+  examples:
+    success:
+      summary: successful request for monograph
+      value: >
+        <?xml version="1.0" encoding="UTF-8"?>
+        <searchRetrieveResponse xmlns="http://www.loc.gov/zing/srw/" xmlns:ns2="http://www.loc.gov/zing/srw/update/" xmlns:ns4="http://www.loc.gov/zing/srw/diagnostic/" xmlns:ns3="http://www.loc.gov/zing/cql/xcql/">
+          <numberOfRecords>1</numberOfRecords>
+          <resultSetId>default</resultSetId>
+          <records>
+            <record>
+              <recordSchema>OPACXML</recordSchema>
+              <recordPacking>xml</recordPacking>
+              <recordData>
+                <opacRecord xmlns="" xmlns:ns5="http://www.loc.gov/zing/srw/">
+                  <bibliographicRecord>
+                    <record type="Bibliographic">
+                      <leader>cas   a </leader>
+                      <controlfield tag="001">15703846</controlfield>
+                      <controlfield tag="008">870518c19899999wiuar        s0   a0eng c</controlfield>
+                      <datafield ind1=" " ind2=" " tag="010">
+                        <subfield code="a">   96655081 </subfield>
+                      </datafield>
+                      <datafield ind1=" " ind2=" " tag="040">
+                        <subfield code="a">GZQ</subfield>
+                        <subfield code="b">eng</subfield>
+                        <subfield code="c">GZQ</subfield>
+                        <subfield code="d">OCL</subfield>
+                        <subfield code="d">DLC</subfield>
+                        <subfield code="d">OCLCQ</subfield>
+                        <subfield code="d">OCLCF</subfield>
+                        <subfield code="d">OCLCO</subfield>
+                        <subfield code="d">OCLCA</subfield>
+                      </datafield>
+                      <datafield ind1=" " ind2=" " tag="012">
+                        <subfield code="i">9611</subfield>
+                      </datafield>
+                      <datafield ind1="1" ind2=" " tag="029">
+                        <subfield code="a">AU@</subfield>
+                        <subfield code="b">000012673379</subfield>
+                      </datafield>
+                      <datafield ind1=" " ind2=" " tag="042">
+                        <subfield code="a">pcc</subfield>
+                      </datafield>
+                      <datafield ind1=" " ind2=" " tag="043">
+                        <subfield code="a">n-us-wi</subfield>
+                      </datafield>
+                      <datafield ind1="0" ind2="0" tag="050">
+                        <subfield code="a">L216</subfield>
+                        <subfield code="b">.B36 subser.</subfield>
+                        <subfield code="a">Z678.4.W6</subfield>
+                      </datafield>
+                      <datafield ind1="0" ind2="0" tag="082">
+                        <subfield code="a">027.0775</subfield>
+                        <subfield code="2">20</subfield>
+                      </datafield>
+                      <datafield ind1=" " ind2=" " tag="086">
+                        <subfield code="a">LIb.1/6:1989-</subfield>
+                        <subfield code="2">widocs</subfield>
+                      </datafield>
+                      <datafield ind1="0" ind2="0" tag="245">
+                        <subfield code="a">Long-range plan for library services in Wisconsin.</subfield>
+                      </datafield>
+                      <datafield ind1=" " ind2=" " tag="260">
+                        <subfield code="a">Madison, Wis. :</subfield>
+                        <subfield code="b">Division for Library Services, Wisconsin Dept. of Public Instruction,</subfield>
+                        <subfield code="c">[1984]-</subfield>
+                      </datafield>
+                      <datafield ind1=" " ind2=" " tag="300">
+                        <subfield code="a">volumes ;</subfield>
+                        <subfield code="c">28 cm.</subfield>
+                      </datafield>
+                      <datafield ind1=" " ind2=" " tag="310">
+                        <subfield code="a">Annual</subfield>
+                      </datafield>
+                      <datafield ind1=" " ind2=" " tag="336">
+                        <subfield code="a">text</subfield>
+                        <subfield code="b">txt</subfield>
+                        <subfield code="2">rdacontent</subfield>
+                      </datafield>
+                      <datafield ind1=" " ind2=" " tag="337">
+                        <subfield code="a">unmediated</subfield>
+                        <subfield code="b">n</subfield>
+                        <subfield code="2">rdamedia</subfield>
+                      </datafield>
+                      <datafield ind1=" " ind2=" " tag="338">
+                        <subfield code="a">volume</subfield>
+                        <subfield code="b">nc</subfield>
+                        <subfield code="2">rdacarrier</subfield>
+                      </datafield>
+                      <datafield ind1="0" ind2=" " tag="362">
+                        <subfield code="a">1984-1989-</subfield>
+                      </datafield>
+                      <datafield ind1="1" ind2=" " tag="490">
+                        <subfield code="a">Bulletin</subfield>
+                      </datafield>
+                      <datafield ind1=" " ind2=" " tag="550">
+                        <subfield code="a">Issued by: Wisconsin Dept. of Public Instruction, 1985/90-&lt;1986-91&gt;; &lt;'93-98&gt;: Division for Library Services; &lt;1995-2000-&gt; Division for Libraries and Community Learning.</subfield>
+                      </datafield>
+                      <datafield ind1=" " ind2=" " tag="580">
+                        <subfield code="a">Plan for 1984/89 issued as Wisconsin library bulletin, summer 1984.</subfield>
+                      </datafield>
+                      <datafield ind1=" " ind2=" " tag="580">
+                        <subfield code="a">Companion publication: LSCA information and guidelines for Wisconsin.</subfield>
+                      </datafield>
+                      <datafield ind1=" " ind2=" " tag="588">
+                        <subfield code="a">Latest issue consulted: 1995-2000.</subfield>
+                      </datafield>
+                      <datafield ind1=" " ind2="0" tag="650">
+                        <subfield code="a">Libraries and state</subfield>
+                        <subfield code="z">Wisconsin</subfield>
+                        <subfield code="v">Periodicals.</subfield>
+                      </datafield>
+                      <datafield ind1=" " ind2="7" tag="655">
+                        <subfield code="a">Periodicals.</subfield>
+                        <subfield code="2">fast</subfield>
+                        <subfield code="0">(OCoLC)fst01411641</subfield>
+                      </datafield>
+                      <datafield ind1=" " ind2="7" tag="650">
+                        <subfield code="a">Libraries and state.</subfield>
+                        <subfield code="2">fast</subfield>
+                        <subfield code="0">(OCoLC)fst00997572</subfield>
+                      </datafield>
+                      <datafield ind1=" " ind2="7" tag="651">
+                        <subfield code="a">Wisconsin.</subfield>
+                        <subfield code="2">fast</subfield>
+                        <subfield code="0">(OCoLC)fst01204595</subfield>
+                      </datafield>
+                      <datafield ind1="1" ind2=" " tag="710">
+                        <subfield code="a">Wisconsin.</subfield>
+                        <subfield code="b">Department of Public Instruction.</subfield>
+                      </datafield>
+                      <datafield ind1="1" ind2=" " tag="710">
+                        <subfield code="a">Wisconsin.</subfield>
+                        <subfield code="b">Division for Library Services.</subfield>
+                      </datafield>
+                      <datafield ind1="1" ind2=" " tag="710">
+                        <subfield code="a">Wisconsin.</subfield>
+                        <subfield code="b">Division for Libraries and Community Learning.</subfield>
+                      </datafield>
+                      <datafield ind1="0" ind2=" " tag="730">
+                        <subfield code="a">Wisconsin library bulletin.</subfield>
+                      </datafield>
+                      <datafield ind1="1" ind2=" " tag="772">
+                        <subfield code="t">Wisconsin library bulletin</subfield>
+                        <subfield code="x">0043-6526</subfield>
+                        <subfield code="w">(DLC)   07008285</subfield>
+                        <subfield code="w">(OCoLC)1770033</subfield>
+                        <subfield code="g">summer 1984</subfield>
+                      </datafield>
+                      <datafield ind1="0" ind2="0" tag="780">
+                        <subfield code="t">Comprehensive long-range program for library services in Wisconsin</subfield>
+                        <subfield code="w">(OCoLC)8287731</subfield>
+                      </datafield>
+                      <datafield ind1="1" ind2=" " tag="787">
+                        <subfield code="t">LSCA information and guidelines for Wisconsin</subfield>
+                        <subfield code="w">(DLC)   96655082</subfield>
+                        <subfield code="w">(OCoLC)18803942</subfield>
+                      </datafield>
+                      <datafield ind1="0" ind2="8" tag="776">
+                        <subfield code="i">Online version:</subfield>
+                        <subfield code="t">Long-range plan for library services in Wisconsin</subfield>
+                        <subfield code="w">(OCoLC)1021850938</subfield>
+                      </datafield>
+                      <datafield ind1=" " ind2="0" tag="830">
+                        <subfield code="a">Bulletin (Wisconsin. Department of Public Instruction)</subfield>
+                      </datafield>
+                      <datafield ind1=" " ind2=" " tag="850">
+                        <subfield code="a">DLC</subfield>
+                      </datafield>
+                    </record>
+                  </bibliographicRecord>
+                  <holdings>
+                    <holding>
+                      <typeOfRecord>x</typeOfRecord>
+                      <encodingLevel>z</encodingLevel>
+                      <format>zu</format>
+                      <receiptAcqStatus>0</receiptAcqStatus>
+                      <generalRetention>8</generalRetention>
+                      <completeness>4</completeness>
+                      <dateOfReport>091231</dateOfReport>
+                      <nucCode>OCPSB</nucCode>
+                      <localLocation>NORT</localLocation>
+                      <shelvingLocation>STACKS</shelvingLocation>
+                      <callNumber>708.7 S418</callNumber>
+                      <copyNumber>1</copyNumber>
+                      <volumes>
+                        <volume/>
+                      </volumes>
+                      <circulations>
+                        <circulation>
+                          <availableNow value="1"/>
+                          <itemId>311186000841448</itemId>
+                          <renewable value="0"/>
+                          <onHold value="0"/>
+                        </circulation>
+                      </circulations>
+                    </holding>
+                    <holding>
+                      <typeOfRecord>x</typeOfRecord>
+                      <encodingLevel>z</encodingLevel>
+                      <format>zu</format>
+                      <receiptAcqStatus>0</receiptAcqStatus>
+                      <generalRetention>8</generalRetention>
+                      <completeness>4</completeness>
+                      <dateOfReport>091231</dateOfReport>
+                      <nucCode>OCPSB</nucCode>
+                      <localLocation>MAIN</localLocation>
+                      <shelvingLocation>STACKS</shelvingLocation>
+                      <callNumber>708.7 S418</callNumber>
+                      <copyNumber>1</copyNumber>
+                      <volumes>
+                        <volume/>
+                      </volumes>
+                      <circulations>
+                        <circulation>
+                          <availableNow value="1"/>
+                          <itemId>311186000804817</itemId>
+                          <renewable value="0"/>
+                          <onHold value="0"/>
+                        </circulation>
+                      </circulations>
+                    </holding>
+                  </holdings>
+                  <holdQueueSize>0</holdQueueSize>
+                </opacRecord>
+              </recordData>
+            </record>
+          </records>
+          <nextRecordPosition>1</nextRecordPosition>
+        </searchRetrieveResponse>      
+    success-serial:
+      summary: successful request for serial
+      value: >
+        <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+        <searchRetrieveResponse xmlns="http://www.loc.gov/zing/srw/" xmlns:ns2="http://www.loc.gov/zing/cql/xcql/" xmlns:ns4="http://www.loc.gov/zing/srw/update/" xmlns:ns3="http://www.loc.gov/zing/srw/diagnostic/">
+            <numberOfRecords>1</numberOfRecords>
+            <resultSetId>default</resultSetId>
+            <records>
+                <record>
+                    <recordSchema>OPACXML</recordSchema>
+                    <recordPacking>xml</recordPacking>
+                    <recordData>
+                        <opacRecord xmlns="" xmlns:ns5="http://www.loc.gov/zing/srw/">
+                            <bibliographicRecord>
+                                <record type="Bibliographic">
+                                    <leader>cas     </leader>
+                                    <controlfield tag="001">2243594</controlfield>
+                                    <controlfield tag="008">751230c19759999nyubr p       0   a0eng  </controlfield>
+                                    <datafield ind1=" " ind2=" " tag="010">
+                                        <subfield code="a">   75647252 </subfield>
+                                    </datafield>
+                                    <datafield ind1=" " ind2=" " tag="040">
+                                        <subfield code="a">DLC</subfield>
+                                        <subfield code="b">eng</subfield>
+                                        <subfield code="c">DLC</subfield>
+                                        <subfield code="d">OCL</subfield>
+                                        <subfield code="d">NSD</subfield>
+                                        <subfield code="d">RCS</subfield>
+                                        <subfield code="d">NST</subfield>
+                                        <subfield code="d">AIP</subfield>
+                                        <subfield code="d">NSD</subfield>
+                                        <subfield code="d">NST</subfield>
+                                        <subfield code="d">OCL</subfield>
+                                        <subfield code="d">IUL</subfield>
+                                        <subfield code="d">NST</subfield>
+                                        <subfield code="d">NSD</subfield>
+                                        <subfield code="d">NST</subfield>
+                                        <subfield code="d">NSD</subfield>
+                                        <subfield code="d">DLC</subfield>
+                                        <subfield code="d">NST</subfield>
+                                        <subfield code="d">MXC</subfield>
+                                        <subfield code="d">CUS</subfield>
+                                        <subfield code="d">SYS</subfield>
+                                        <subfield code="d">NLM</subfield>
+                                        <subfield code="d">OCLCQ</subfield>
+                                        <subfield code="d">GUA</subfield>
+                                        <subfield code="d">OCLCQ</subfield>
+                                        <subfield code="d">UKMGB</subfield>
+                                        <subfield code="d">WAU</subfield>
+                                        <subfield code="d">DLC</subfield>
+                                        <subfield code="d">OCLCQ</subfield>
+                                        <subfield code="d">KMS</subfield>
+                                        <subfield code="d">OCLCF</subfield>
+                                        <subfield code="d">P4I</subfield>
+                                        <subfield code="d">OCLCO</subfield>
+                                        <subfield code="d">OCLCQ</subfield>
+                                        <subfield code="d">OCLCO</subfield>
+                                        <subfield code="d">MUO</subfield>
+                                        <subfield code="d">OCLCO</subfield>
+                                        <subfield code="d">OCLCQ</subfield>
+                                        <subfield code="d">OCLCA</subfield>
+                                    </datafield>
+                                    <datafield ind1=" " ind2=" " tag="012">
+                                        <subfield code="a">2</subfield>
+                                        <subfield code="b">3</subfield>
+                                        <subfield code="d">7</subfield>
+                                        <subfield code="e">-</subfield>
+                                        <subfield code="f">-</subfield>
+                                        <subfield code="g">p</subfield>
+                                        <subfield code="h">-</subfield>
+                                        <subfield code="j">1</subfield>
+                                        <subfield code="k">1</subfield>
+                                        <subfield code="m">1</subfield>
+                                    </datafield>
+                                    <datafield ind1="7" ind2=" " tag="016">
+                                        <subfield code="a">9877864</subfield>
+                                        <subfield code="2">DNLM</subfield>
+                                    </datafield>
+                                    <datafield ind1="7" ind2=" " tag="016">
+                                        <subfield code="a">J10420000</subfield>
+                                        <subfield code="2">DNLM</subfield>
+                                    </datafield>
+                                    <datafield ind1="7" ind2=" " tag="016">
+                                        <subfield code="a">012433621</subfield>
+                                        <subfield code="2">Uk</subfield>
+                                    </datafield>
+                                    <datafield ind1=" " ind2=" " tag="019">
+                                        <subfield code="a">1318612</subfield>
+                                        <subfield code="a">535292225</subfield>
+                                    </datafield>
+                                    <datafield ind1="0" ind2=" " tag="022">
+                                        <subfield code="a">0099-1333</subfield>
+                                        <subfield code="l">0099-1333</subfield>
+                                        <subfield code="z">0898-1752</subfield>
+                                        <subfield code="2">j</subfield>
+                                    </datafield>
+                                    <datafield ind1=" " ind2=" " tag="032">
+                                        <subfield code="a">083950</subfield>
+                                        <subfield code="b">USPS</subfield>
+                                    </datafield>
+                                    <datafield ind1=" " ind2=" " tag="037">
+                                        <subfield code="b">Business Office, Journal of Academic Librarianship, P.O. Box 8330, Ann Arbor, MI 48107</subfield>
+                                    </datafield>
+                                    <datafield ind1=" " ind2=" " tag="042">
+                                        <subfield code="a">pcc</subfield>
+                                    </datafield>
+                                    <datafield ind1="0" ind2="0" tag="050">
+                                        <subfield code="a">Z671</subfield>
+                                        <subfield code="b">.J58</subfield>
+                                    </datafield>
+                                    <datafield ind1="0" ind2="4" tag="082">
+                                        <subfield code="a">020/.5</subfield>
+                                    </datafield>
+                                    <datafield ind1="0" ind2=" " tag="210">
+                                        <subfield code="a">J. acad. librariansh.</subfield>
+                                    </datafield>
+                                    <datafield ind1=" " ind2="4" tag="222">
+                                        <subfield code="a">The Journal of academic librarianship</subfield>
+                                    </datafield>
+                                    <datafield ind1="0" ind2="0" tag="245">
+                                        <subfield code="a">Journal of academic librarianship.</subfield>
+                                    </datafield>
+                                    <datafield ind1=" " ind2=" " tag="260">
+                                        <subfield code="a">[New York, etc.]</subfield>
+                                        <subfield code="b">[Elsevier Inc., etc.]</subfield>
+                                    </datafield>
+                                    <datafield ind1=" " ind2=" " tag="300">
+                                        <subfield code="a">volumes</subfield>
+                                        <subfield code="b">illustrations</subfield>
+                                        <subfield code="c">28 cm</subfield>
+                                    </datafield>
+                                    <datafield ind1=" " ind2=" " tag="310">
+                                        <subfield code="a">Bimonthly</subfield>
+                                    </datafield>
+                                    <datafield ind1=" " ind2=" " tag="336">
+                                        <subfield code="a">text</subfield>
+                                        <subfield code="b">txt</subfield>
+                                        <subfield code="2">rdacontent</subfield>
+                                    </datafield>
+                                    <datafield ind1=" " ind2=" " tag="337">
+                                        <subfield code="a">unmediated</subfield>
+                                        <subfield code="b">n</subfield>
+                                        <subfield code="2">rdamedia</subfield>
+                                    </datafield>
+                                    <datafield ind1=" " ind2=" " tag="338">
+                                        <subfield code="a">volume</subfield>
+                                        <subfield code="b">nc</subfield>
+                                        <subfield code="2">rdacarrier</subfield>
+                                    </datafield>
+                                    <datafield ind1="0" ind2=" " tag="362">
+                                        <subfield code="a">v. 1- Mar. 1975-</subfield>
+                                    </datafield>
+                                    <datafield ind1=" " ind2=" " tag="500">
+                                        <subfield code="a">Volumes for Mar. 1987- include insert: Libraries &amp; computing centers.</subfield>
+                                    </datafield>
+                                    <datafield ind1=" " ind2="0" tag="650">
+                                        <subfield code="a">Library science</subfield>
+                                        <subfield code="v">Periodicals.</subfield>
+                                    </datafield>
+                                    <datafield ind1=" " ind2="0" tag="650">
+                                        <subfield code="a">Academic libraries</subfield>
+                                        <subfield code="v">Periodicals.</subfield>
+                                    </datafield>
+                                    <datafield ind1=" " ind2="2" tag="650">
+                                        <subfield code="a">Libraries.</subfield>
+                                    </datafield>
+                                    <datafield ind1=" " ind2="2" tag="650">
+                                        <subfield code="a">Information Science.</subfield>
+                                    </datafield>
+                                    <datafield ind1=" " ind2="7" tag="650">
+                                        <subfield code="a">Academic libraries.</subfield>
+                                        <subfield code="2">fast</subfield>
+                                        <subfield code="0">(OCoLC)fst00794997</subfield>
+                                    </datafield>
+                                    <datafield ind1=" " ind2="7" tag="650">
+                                        <subfield code="a">Library science.</subfield>
+                                        <subfield code="2">fast</subfield>
+                                        <subfield code="0">(OCoLC)fst00997916</subfield>
+                                    </datafield>
+                                    <datafield ind1=" " ind2="2" tag="655">
+                                        <subfield code="a">Periodical.</subfield>
+                                    </datafield>
+                                    <datafield ind1=" " ind2="7" tag="655">
+                                        <subfield code="a">Periodicals.</subfield>
+                                        <subfield code="2">fast</subfield>
+                                        <subfield code="0">(OCoLC)fst01411641</subfield>
+                                    </datafield>
+                                    <datafield ind1=" " ind2="7" tag="655">
+                                        <subfield code="a">Electronic journals.</subfield>
+                                        <subfield code="2">lcgft</subfield>
+                                    </datafield>
+                                    <datafield ind1="0" ind2=" " tag="730">
+                                        <subfield code="a">Libraries &amp; computing centers.</subfield>
+                                    </datafield>
+                                    <datafield ind1="0" ind2=" " tag="770">
+                                        <subfield code="t">Library issues</subfield>
+                                        <subfield code="x">0734-3035</subfield>
+                                        <subfield code="w">(DLC)   84647898</subfield>
+                                        <subfield code="w">(OCoLC)7251238</subfield>
+                                    </datafield>
+                                    <datafield ind1="0" ind2="8" tag="776">
+                                        <subfield code="i">Online version:</subfield>
+                                        <subfield code="t">Journal of academic librarianship (Online)</subfield>
+                                        <subfield code="x">1879-1999</subfield>
+                                        <subfield code="w">(DLC)  2003233970</subfield>
+                                        <subfield code="w">(OCoLC)45835833</subfield>
+                                    </datafield>
+                                    <datafield ind1=" " ind2=" " tag="850">
+                                        <subfield code="a">CaMBC</subfield>
+                                        <subfield code="a">CaNBSU</subfield>
+                                        <subfield code="a">CaNBSaM</subfield>
+                                        <subfield code="a">CaOTU</subfield>
+                                        <subfield code="a">CtY-D</subfield>
+                                        <subfield code="a">DLC</subfield>
+                                        <subfield code="a">DeU</subfield>
+                                        <subfield code="a">FU</subfield>
+                                        <subfield code="a">ICL</subfield>
+                                        <subfield code="a">In</subfield>
+                                        <subfield code="a">InU</subfield>
+                                        <subfield code="a">MiDW-M</subfield>
+                                        <subfield code="a">NIC</subfield>
+                                        <subfield code="a">NcD-L</subfield>
+                                        <subfield code="a">NcRS</subfield>
+                                        <subfield code="a">PU-Med</subfield>
+                                        <subfield code="a">TNJ-M</subfield>
+                                        <subfield code="a">TxDaM</subfield>
+                                        <subfield code="a">ViBlbV</subfield>
+                                        <subfield code="a">WHi</subfield>
+                                    </datafield>
+                                    <datafield ind1="4" ind2="1" tag="856">
+                                        <subfield code="u">http://www.sciencedirect.com/science/journal/00991333</subfield>
+                                    </datafield>
+                                    <datafield ind1="3" ind2="3" tag="891">
+                                        <subfield code="9">853</subfield>
+                                        <subfield code="8">1</subfield>
+                                        <subfield code="a">v.</subfield>
+                                        <subfield code="b">no.</subfield>
+                                        <subfield code="i">(year)</subfield>
+                                        <subfield code="j">(month)</subfield>
+                                    </datafield>
+                                    <datafield ind1="4" ind2="0" tag="891">
+                                        <subfield code="9">863</subfield>
+                                        <subfield code="8">1</subfield>
+                                        <subfield code="a">&lt;5&gt;-</subfield>
+                                        <subfield code="i">&lt;1979/1980&gt;-</subfield>
+                                        <subfield code="x">provisional</subfield>
+                                    </datafield>
+                                    <datafield ind1=" " ind2=" " tag="936">
+                                        <subfield code="a">Sept. 1978</subfield>
+                                        <subfield code="a">Vol. 29, no. 5 (Sept. 2003)</subfield>
+                                    </datafield>
+                                    <datafield ind1="1" ind2=" " tag="029">
+                                        <subfield code="a">NLM</subfield>
+                                        <subfield code="b">9877864</subfield>
+                                    </datafield>
+                                    <datafield ind1="1" ind2=" " tag="029">
+                                        <subfield code="a">NZ1</subfield>
+                                        <subfield code="b">4874216</subfield>
+                                    </datafield>
+                                </record>
+                            </bibliographicRecord>
+                            <holdings>
+                                <holding>
+                                    <typeOfRecord>y</typeOfRecord>
+                                    <encodingLevel>z</encodingLevel>
+                                    <format>zu</format>
+                                    <receiptAcqStatus>0</receiptAcqStatus>
+                                    <generalRetention>8</generalRetention>
+                                    <completeness>|</completeness>
+                                    <dateOfReport>190716</dateOfReport>
+                                    <nucCode>OCPSB</nucCode>
+                                    <localLocation>MAIN</localLocation>
+                                    <shelvingLocation>MAIN-STACKS</shelvingLocation>
+                                    <callNumber>020.5 O688465</callNumber>
+                                    <copyNumber>1</copyNumber>
+                                    <enumAndChron>v. 133 no. 1 - 2 (Jan - Apr 2008)</enumAndChron>
+                                    <volumes>
+                                        <volume>
+                                            <enumeration>v.133:no.1</enumeration>
+                                            <chronology>2008:01:01</chronology>
+                                            <enumAndChron>v.133:no.1(2008:01:01)</enumAndChron>
+                                        </volume>
+                                        <volume>
+                                            <enumeration>v.133:no.2</enumeration>
+                                            <chronology>2008:01:02</chronology>
+                                            <enumAndChron>v.133:no.2(2008:01:02)</enumAndChron>
+                                        </volume>
+                                    </volumes>
+                                    <circulations>
+                                        <circulation>
+                                            <availableNow value="1"/>
+                                            <itemId>testBarcode</itemId>
+                                            <renewable value="0"/>
+                                            <onHold value="0"/>
+                                            <enumAndChron xsi:type="xs:string" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">v.133:no.1(2008:01:01)</enumAndChron>
+                                            <temporaryLocation xsi:type="xs:string" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">MAIN-Reference</temporaryLocation>
+                                        </circulation>
+                                        <circulation>
+                                            <availableNow value="1"/>
+                                            <itemId>testBarcode2</itemId>
+                                            <renewable value="0"/>
+                                            <onHold value="0"/>
+                                            <enumAndChron xsi:type="xs:string" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">v.133:no.2(2008:01:02)</enumAndChron>
+                                        </circulation>
+                                    </circulations>
+                                </holding>
+                            </holdings>
+                            <holdQueueSize>0</holdQueueSize>
+                        </opacRecord>
+                    </recordData>
+                </record>
+            </records>
+            <nextRecordPosition>1</nextRecordPosition>
+        </searchRetrieveResponse>      
+    success-group-response:
+      summary: successful request with group holdings/availability information
+      value: ""    
+    success-no-holdings:
+      summary: successful request no holdings returned
+      value: >
+        <?xml version="1.0" encoding="UTF-8"?>
+        <searchRetrieveResponse xmlns="http://www.loc.gov/zing/srw/" xmlns:ns2="http://www.loc.gov/zing/srw/update/" xmlns:ns4="http://www.loc.gov/zing/srw/diagnostic/" xmlns:ns3="http://www.loc.gov/zing/cql/xcql/">
+          <numberOfRecords>1</numberOfRecords>
+          <resultSetId>default</resultSetId>
+          <records>
+            <record>
+              <recordSchema>OPACXML</recordSchema>
+              <recordPacking>xml</recordPacking>
+              <recordData>
+                <opacRecord xmlns="" xmlns:ns5="http://www.loc.gov/zing/srw/">
+                  <bibliographicRecord>
+                    <record type="Bibliographic">
+                      <leader>cam   a </leader>
+                      <controlfield tag="001">1</controlfield>
+                      <controlfield tag="008">690526s1963    ilua   j      000 j eng  </controlfield>
+                      <datafield ind1=" " ind2=" " tag="010">
+                        <subfield code="a">   63011276 </subfield>
+                      </datafield>
+                      <datafield ind1=" " ind2=" " tag="040">
+                        <subfield code="a">DLC</subfield>
+                        <subfield code="b">eng</subfield>
+                        <subfield code="c">DLC</subfield>
+                        <subfield code="d">IUL</subfield>
+                        <subfield code="d">BTCTA</subfield>
+                        <subfield code="d">BMU</subfield>
+                        <subfield code="d">AAA</subfield>
+                        <subfield code="d">BNM</subfield>
+                        <subfield code="d">CUS</subfield>
+                        <subfield code="d">REC</subfield>
+                        <subfield code="d">WAU</subfield>
+                        <subfield code="d">OCC</subfield>
+                        <subfield code="d">OCWMS</subfield>
+                        <subfield code="d">RBN</subfield>
+                        <subfield code="d">OCL</subfield>
+                        <subfield code="d">OCWMS</subfield>
+                        <subfield code="d">OCL</subfield>
+                        <subfield code="d">CUS</subfield>
+                        <subfield code="d">OCLCQ</subfield>
+                        <subfield code="d">OCWMS</subfield>
+                        <subfield code="d">OCL</subfield>
+                        <subfield code="d">OCWMS</subfield>
+                        <subfield code="d">OCL</subfield>
+                        <subfield code="d">OCLCF</subfield>
+                        <subfield code="d">OCL</subfield>
+                        <subfield code="d">TS249</subfield>
+                        <subfield code="d">CRU</subfield>
+                        <subfield code="d">OCLCQ</subfield>
+                        <subfield code="d">OCLCO</subfield>
+                        <subfield code="d">OCWMS</subfield>
+                        <subfield code="d">PG2</subfield>
+                        <subfield code="d">IHI</subfield>
+                        <subfield code="d">OCLCQ</subfield>
+                        <subfield code="d">OCWMS</subfield>
+                        <subfield code="d">ZMY</subfield>
+                        <subfield code="d">FQR</subfield>
+                        <subfield code="d">DLC</subfield>
+                        <subfield code="d">OCL</subfield>
+                        <subfield code="d">OCLCQ</subfield>
+                        <subfield code="d">GSL</subfield>
+                      </datafield>
+                      <datafield ind1="7" ind2=" " tag="016">
+                        <subfield code="a">bimoBNE19931205873</subfield>
+                        <subfield code="2">SpMaBN</subfield>
+                      </datafield>
+                      <datafield ind1=" " ind2=" " tag="019">
+                        <subfield code="a">6567842</subfield>
+                        <subfield code="a">9987701</subfield>
+                        <subfield code="a">53095235</subfield>
+                        <subfield code="a">433981287</subfield>
+                      </datafield>
+                      <datafield ind1=" " ind2=" " tag="042">
+                        <subfield code="a">lcac</subfield>
+                      </datafield>
+                      <datafield ind1="0" ind2="0" tag="050">
+                        <subfield code="a">PZ5</subfield>
+                        <subfield code="b">.R1924</subfield>
+                      </datafield>
+                      <datafield ind1=" " ind2=" " tag="080">
+                        <subfield code="a">821.111(73)-34"19"(082.2)</subfield>
+                      </datafield>
+                      <datafield ind1="0" ind2="0" tag="082">
+                        <subfield code="a">934</subfield>
+                      </datafield>
+                      <datafield ind1="0" ind2=" " tag="086">
+                        <subfield code="a">C 55.8:R 24</subfield>
+                      </datafield>
+                      <datafield ind1="0" ind2=" " tag="086">
+                        <subfield code="a">NS 1.2:P 27</subfield>
+                      </datafield>
+                      <datafield ind1="0" ind2="4" tag="245">
+                        <subfield code="a">The Rand McNally book of favorite pastimes /</subfield>
+                        <subfield code="c">illustrated by Dorothy Grider.</subfield>
+                      </datafield>
+                      <datafield ind1="3" ind2="0" tag="246">
+                        <subfield code="a">Favorite pastimes</subfield>
+                      </datafield>
+                      <datafield ind1=" " ind2=" " tag="260">
+                        <subfield code="a">Chicago :</subfield>
+                        <subfield code="b">Rand McNally,</subfield>
+                        <subfield code="c">[1963]</subfield>
+                      </datafield>
+                      <datafield ind1=" " ind2=" " tag="300">
+                        <subfield code="a">110 pages :</subfield>
+                        <subfield code="b">color illustrations ;</subfield>
+                        <subfield code="c">33 cm</subfield>
+                      </datafield>
+                      <datafield ind1=" " ind2=" " tag="336">
+                        <subfield code="a">text</subfield>
+                        <subfield code="b">txt</subfield>
+                        <subfield code="2">rdacontent</subfield>
+                      </datafield>
+                      <datafield ind1=" " ind2=" " tag="337">
+                        <subfield code="a">unmediated</subfield>
+                        <subfield code="b">n</subfield>
+                        <subfield code="2">rdamedia</subfield>
+                      </datafield>
+                      <datafield ind1=" " ind2=" " tag="338">
+                        <subfield code="a">volume</subfield>
+                        <subfield code="b">nc</subfield>
+                        <subfield code="2">rdacarrier</subfield>
+                      </datafield>
+                      <datafield ind1="0" ind2="0" tag="505">
+                        <subfield code="t">Little ballerina /</subfield>
+                        <subfield code="r">by D. Grider --</subfield>
+                        <subfield code="t">Little horseman /</subfield>
+                        <subfield code="r">by M. Watts --</subfield>
+                        <subfield code="t">Little majorette /</subfield>
+                        <subfield code="r">by D. Grider --</subfield>
+                        <subfield code="t">Little swimmers /</subfield>
+                        <subfield code="r">by V. Hunter.</subfield>
+                      </datafield>
+                      <datafield ind1=" " ind2=" " tag="520">
+                        <subfield code="a">Boys and girls in these four stories work hard to master ballet dancing, riding, baton twirling, and swimming.</subfield>
+                      </datafield>
+                      <datafield ind1=" " ind2="0" tag="650">
+                        <subfield code="a">Amusements</subfield>
+                        <subfield code="v">Juvenile fiction.</subfield>
+                      </datafield>
+                      <datafield ind1=" " ind2="0" tag="650">
+                        <subfield code="a">Ballet dancing</subfield>
+                        <subfield code="v">Juvenile fiction.</subfield>
+                      </datafield>
+                      <datafield ind1=" " ind2="0" tag="650">
+                        <subfield code="a">Horsemanship</subfield>
+                        <subfield code="v">Juvenile fiction.</subfield>
+                      </datafield>
+                      <datafield ind1=" " ind2="0" tag="650">
+                        <subfield code="a">Baton twirling</subfield>
+                        <subfield code="v">Juvenile fiction.</subfield>
+                      </datafield>
+                      <datafield ind1=" " ind2="0" tag="650">
+                        <subfield code="a">Swimming</subfield>
+                        <subfield code="v">Juvenile fiction.</subfield>
+                      </datafield>
+                      <datafield ind1=" " ind2="0" tag="650">
+                        <subfield code="a">Children's stories.</subfield>
+                      </datafield>
+                      <datafield ind1=" " ind2="1" tag="650">
+                        <subfield code="a">Short stories.</subfield>
+                      </datafield>
+                      <datafield ind1=" " ind2="7" tag="650">
+                        <subfield code="a">Cuentos norteamericanos</subfield>
+                        <subfield code="y">S. XX.</subfield>
+                        <subfield code="2">embne</subfield>
+                      </datafield>
+                      <datafield ind1=" " ind2="7" tag="650">
+                        <subfield code="a">Amusements.</subfield>
+                        <subfield code="2">fast</subfield>
+                        <subfield code="0">(OCoLC)fst00808105</subfield>
+                      </datafield>
+                      <datafield ind1=" " ind2="7" tag="650">
+                        <subfield code="a">Ballet dancing.</subfield>
+                        <subfield code="2">fast</subfield>
+                        <subfield code="0">(OCoLC)fst00826049</subfield>
+                      </datafield>
+                      <datafield ind1=" " ind2="7" tag="650">
+                        <subfield code="a">Baton twirling.</subfield>
+                        <subfield code="2">fast</subfield>
+                        <subfield code="0">(OCoLC)fst00828812</subfield>
+                      </datafield>
+                      <datafield ind1=" " ind2="7" tag="650">
+                        <subfield code="a">Children's stories.</subfield>
+                        <subfield code="2">fast</subfield>
+                        <subfield code="0">(OCoLC)fst00856632</subfield>
+                      </datafield>
+                      <datafield ind1=" " ind2="7" tag="650">
+                        <subfield code="a">Horsemanship.</subfield>
+                        <subfield code="2">fast</subfield>
+                        <subfield code="0">(OCoLC)fst00960561</subfield>
+                      </datafield>
+                      <datafield ind1=" " ind2="7" tag="650">
+                        <subfield code="a">Swimming.</subfield>
+                        <subfield code="2">fast</subfield>
+                        <subfield code="0">(OCoLC)fst01140328</subfield>
+                      </datafield>
+                      <datafield ind1=" " ind2="7" tag="655">
+                        <subfield code="a">Fiction.</subfield>
+                        <subfield code="2">fast</subfield>
+                        <subfield code="0">(OCoLC)fst01423787</subfield>
+                      </datafield>
+                      <datafield ind1=" " ind2="7" tag="655">
+                        <subfield code="a">Juvenile works.</subfield>
+                        <subfield code="2">fast</subfield>
+                        <subfield code="0">(OCoLC)fst01411637</subfield>
+                      </datafield>
+                      <datafield ind1=" " ind2="7" tag="655">
+                        <subfield code="a">Short stories.</subfield>
+                        <subfield code="2">fast</subfield>
+                        <subfield code="0">(OCoLC)fst01726740</subfield>
+                      </datafield>
+                      <datafield ind1=" " ind2="7" tag="655">
+                        <subfield code="a">Short stories.</subfield>
+                        <subfield code="2">lcgft</subfield>
+                      </datafield>
+                      <datafield ind1="1" ind2=" " tag="700">
+                        <subfield code="a">Grider, Dorothy.</subfield>
+                        <subfield code="t">Little ballerina.</subfield>
+                      </datafield>
+                      <datafield ind1="1" ind2=" " tag="700">
+                        <subfield code="a">Watts, Mabel.</subfield>
+                        <subfield code="t">Little horseman.</subfield>
+                      </datafield>
+                      <datafield ind1="1" ind2=" " tag="700">
+                        <subfield code="a">Grider, Dorothy.</subfield>
+                        <subfield code="t">Little majorette.</subfield>
+                      </datafield>
+                      <datafield ind1="1" ind2=" " tag="700">
+                        <subfield code="a">Hunter, Virginia,</subfield>
+                        <subfield code="d">1921-2011.</subfield>
+                        <subfield code="t">Little swimmers.</subfield>
+                      </datafield>
+                      <datafield ind1="4" ind2="1" tag="856">
+                        <subfield code="3">View Online</subfield>
+                        <subfield code="u">http://worldcat.org/oclc/1/viewonline</subfield>
+                      </datafield>
+                      <datafield ind1=" " ind2=" " tag="938">
+                        <subfield code="a">Baker and Taylor</subfield>
+                        <subfield code="b">BTCP</subfield>
+                        <subfield code="n">63011276</subfield>
+                      </datafield>
+                      <datafield ind1="1" ind2=" " tag="029">
+                        <subfield code="a">IHI</subfield>
+                        <subfield code="c">/p114401coll4</subfield>
+                        <subfield code="t">CNTNT</subfield>
+                      </datafield>
+                      <datafield ind1="1" ind2=" " tag="029">
+                        <subfield code="a">OCL</subfield>
+                        <subfield code="c">/p104301coll10</subfield>
+                        <subfield code="t">CNTNT</subfield>
+                      </datafield>
+                      <datafield ind1="1" ind2=" " tag="029">
+                        <subfield code="a">OCL</subfield>
+                        <subfield code="c">/p16243coll3</subfield>
+                        <subfield code="t">CNTNT</subfield>
+                      </datafield>
+                    </record>
+                  </bibliographicRecord>
+                  <holdings>
+                    <holding>
+                      <typeOfRecord>x</typeOfRecord>
+                      <encodingLevel>z</encodingLevel>
+                      <format>zu</format>
+                      <receiptAcqStatus>0</receiptAcqStatus>
+                      <generalRetention>8</generalRetention>
+                      <completeness>4</completeness>
+                      <dateOfReport>101130</dateOfReport>
+                      <nucCode>OCPSB</nucCode>
+                      <localLocation>MAIN</localLocation>
+                      <shelvingLocation>MAIN-STACKS</shelvingLocation>
+                      <callNumber>HH22.G35001 L37 2008</callNumber>
+                      <volumes>
+                        <volume/>
+                      </volumes>
+                      <circulations>
+                        <circulation>
+                          <availableNow value="1"/>
+                          <itemId>777444</itemId>
+                          <renewable value="0"/>
+                          <onHold value="0"/>
+                        </circulation>
+                      </circulations>
+                    </holding>
+                  </holdings>
+                  <holdQueueSize>0</holdQueueSize>
+                </opacRecord>
+              </recordData>
+            </record>
+          </records>
+          <nextRecordPosition>1</nextRecordPosition>
+        </searchRetrieveResponse>
+    missing-query-parameter:
+      summary: Error returned when required query parameter not sent
+      value: >
+        <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+        <searchRetrieveResponse xmlns="http://www.loc.gov/zing/srw/" xmlns:ns2="http://www.loc.gov/zing/cql/xcql/" xmlns:ns3="http://www.loc.gov/zing/srw/diagnostic/" xmlns:ns4="http://www.loc.gov/zing/srw/update/">
+            <diagnostics>
+                <ns3:diagnostic>
+                    <ns3:uri>info:srw/diagnostic/1/7</ns3:uri>
+                    <ns3:details>x-registryId</ns3:details>
+                    <ns3:message>Required parameter is missing or invalid</ns3:message>
+                </ns3:diagnostic>
+            </diagnostics>
+        </searchRetrieveResponse>         
+    invalid-context-error:
+      summary: Error returned when context of access token doesn't match the x-registryId parameter
+      value: >
+        <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+        <searchRetrieveResponse xmlns="http://www.loc.gov/zing/srw/" xmlns:ns2="http://www.loc.gov/zing/cql/xcql/" xmlns:ns3="http://www.loc.gov/zing/srw/diagnostic/" xmlns:ns4="http://www.loc.gov/zing/srw/update/">
+            <diagnostics>
+                <ns3:diagnostic>
+                    <ns3:uri>info:srw/diagnostic/1/68</ns3:uri>
+                    <ns3:message>Request parameter institution id 91475 does not match authenticating context institution 128807</ns3:message>
+                </ns3:diagnostic>
+            </diagnostics>
+        </searchRetrieveResponse>      
+    holding-group-error:
+      summary: Error returned when group availability requested and institution not part of a group
+      value: >
+        <?xml version="1.0" encoding="UTF-8"?>
+        <searchRetrieveResponse xmlns="http://www.loc.gov/zing/srw/" xmlns:ns2="http://www.loc.gov/zing/cql/xcql/" xmlns:ns4="http://www.loc.gov/zing/srw/update/" xmlns:ns3="http://www.loc.gov/zing/srw/diagnostic/">
+           <numberOfRecords>0</numberOfRecords>
+           <nextRecordPosition>0</nextRecordPosition>
+           <diagnostics>
+              <ns3:diagnostic>
+                 <ns3:uri>info:srw/diagnostic/1/2</ns3:uri>
+                 <ns3:message>Requested Group holdings for a non-grouped Institution</ns3:message>
+              </ns3:diagnostic>
+           </diagnostics>
+        </searchRetrieveResponse>      
+    method-not-allowed-error:
+      summary: HTTP method not supported by the service
+      value: >
+        <!doctype html>
+        <html lang="en">
+        
+        <head>
+          <title>HTTP Status 405 – Method Not Allowed</title>
+          <style type="text/css">
+            h1 {
+              font-family: Tahoma, Arial, sans-serif;
+              color: white;
+              background-color: #525D76;
+              font-size: 22px;
+            }
+        
+            h2 {
+              font-family: Tahoma, Arial, sans-serif;
+              color: white;
+              background-color: #525D76;
+              font-size: 16px;
+            }
+        
+            h3 {
+              font-family: Tahoma, Arial, sans-serif;
+              color: white;
+              background-color: #525D76;
+              font-size: 14px;
+            }
+        
+            body {
+              font-family: Tahoma, Arial, sans-serif;
+              color: black;
+              background-color: white;
+            }
+        
+            b {
+              font-family: Tahoma, Arial, sans-serif;
+              color: white;
+              background-color: #525D76;
+            }
+        
+            p {
+              font-family: Tahoma, Arial, sans-serif;
+              background: white;
+              color: black;
+              font-size: 12px;
+            }
+        
+            a {
+              color: black;
+            }
+        
+            a.name {
+              color: black;
+            }
+        
+            .line {
+              height: 1px;
+              background-color: #525D76;
+              border: none;
+            }
+          </style>
+        </head>
+        
+        <body>
+          <h1>HTTP Status 405 – Method Not Allowed</h1>
+          <hr class="line" />
+          <p><b>Type</b> Status Report</p>
+          <p><b>Message</b> Request method &#39;POST&#39; not supported</p>
+          <p><b>Description</b> The method received in the request-line is known by the origin server but not supported by the
+            target resource.</p>
+          <hr class="line" />
+          <h3>Apache Tomcat/8.5.42</h3>
+        </body>
+        
+        </html>                                 
+externalDocs:
+  description: Find out more about OCLC
+  url: 'https://www.oclc.org'
