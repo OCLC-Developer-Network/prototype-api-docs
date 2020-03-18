@@ -3,8 +3,6 @@ info:
   description: WMS Availability information
   version: 1.0.0
   title: WMS Availability API
-  license:
-    name: Licensing TBD
 servers:
   - url: 'https://worldcat.org/circ/availability/sru'
 security:

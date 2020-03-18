@@ -3,8 +3,6 @@ info:
   description: WorldCat Search API
   version: 1.0.0
   title: WorldCat Search API
-  license:
-    name: Licensing TBD
 servers:
   - url: 'https://worldcat.org/webservices/catalog'
 security:
