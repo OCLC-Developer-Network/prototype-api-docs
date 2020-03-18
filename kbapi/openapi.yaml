@@ -1242,50 +1242,50 @@ components:
           description: WorldCat Registry ID of Institution
           type: integer
         download_ip:
-          description: something
+          description: IP range for downloading files
           type: string
         preferred_oclc_symbol:
-          description: something
+          description: Preferred OCLC Symbol
           type: string
         holdingcode:
-          description: something
+          description: Holding Code for e-resources
           type: string                                                                                                   
         google_scholar_enabled:
-          description: something
+          description: Google Scholar enabled
           type: boolean
         wcsync_enabled:
-          description: something
+          description: Holdings sync with WorldCat enabled
           type: boolean
         marc_delivery_enabled:
-          description: something
+          description: Marc record delivery enabled
           type: boolean
         marc_delivery_no_delete:
-          description: something
+          description: Marc delivery don't delete records
           type: boolean
         eswitch_enabled:
-          description: something
+          description: Eswitch enabled
           type: boolean
         eswitch_eligible:
-          description: something
+          description: Eligible for eswitch
           type: boolean 
         article_filter_enabled:
           description: something
           type: boolean
         oclc_symbols:
-          description: something
+          description: OCLC Symbols
           type: string
         openaccess_in_resolver:
-          description: something
+          description: Show open access resources in resolver
           type: string  
         oclcnum_opac_url:
           description: URL to link to catalog by OCLC Number
           type: string
         selected_collections:
-          description: something
+          description: Collections selected
           type: integer
           format: int32
         galesiteid:
-          description: something
+          description: Site ID for Gale
           type: string                                                                                                   
     Link:
       type: object
