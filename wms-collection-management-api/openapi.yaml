@@ -398,22 +398,33 @@ components:
         institution:
           type: string
           format: URL
+        lastUpdateDate:
+          type: string
+          format: date-time
         bib:
           type: string
         recordType:
           type: string
           enum:
+            - SINGLE_PART
+            - MULTI_PART
             - SERIAL
+            - UKNOWN
         receiptStatus:
           type: string
           enum:
+            - ON_ORDER
+            - CURRENTLY_RECEIVED
+            - NOT_CURRENTLY_RECEIVED
+            - RECEIVED_AND_COMPLETE_OR_CEASED
+            - OTHER_RECEIPT_OR_ACQUISITIONS_STATUS
             - UNKNOWN
         copyNumber:
           type: integer
         note:
           type: array
           items:
-            type: string
+            $ref: '#/components/schemas/Note'
         holdingLocation:
           type: string
         shelvingLocation:
@@ -446,7 +457,10 @@ components:
         holding:
           type: array
           items:
-            $ref: '#/components/schemas/Holding'                                                    
+            $ref: '#/components/schemas/Holding'
+        id:
+          type: string
+          format: URI                                                        
     Holding:
       type: object
       properties:
@@ -457,7 +471,7 @@ components:
         note:
           type: array
           items:
-            type: string
+            $ref: '#/components/schemas/Note'
         useRestriction: 
           type: array
           items:
@@ -465,7 +479,7 @@ components:
         cost:
           type: array
           items:
-            type: string
+            $ref: '#/components/schemas/Cost'
         temporaryLocation:
           type: array
           items:
@@ -473,6 +487,8 @@ components:
         caption:
           type: object
           properties:
+            description:
+              type: string
             enumeration:
               type: array
               items:
@@ -489,13 +505,34 @@ components:
           type: string
           enum:
             - BASIC
+            - SUPPLEMENTARY_MATERIAL
+            - INDEX
     LabelValuePair:
       type: object
       properties:
         value:
           type: string
         label:
-          type: string                                                                       
+          type: string
+    Cost:
+      type: object
+      properties:
+        currency:
+          type: string
+        amount:
+          type: integer
+        qualifier:
+          type: string            
+    Note:
+      type: object
+      properties:
+        value:
+          type: string
+        type:
+          type: string
+          enum:
+            - PUBLIC
+            - STAFF                                                                             
   examples:
     success-search-copies-atom:
       summary: Search results for oclcNumber query in Atom format
