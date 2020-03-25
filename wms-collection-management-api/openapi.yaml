@@ -113,7 +113,12 @@ paths:
         content:
           'application/json':
             schema:
-              type: object       
+              type: object
+            examples:
+              monograph-copy:
+                $ref: '#/components/examples/create-monograph-copy-json'
+              serial-copy:
+                $ref: '#/components/examples/create-serial-copy-json'                         
       responses:
         '200':
           description: Successful create
@@ -386,6 +391,49 @@ components:
           tokenUrl: https://oauth.oclc.org/token
           scopes:
             WMS_COLLECTION_MANAGEMENT: perform all the operations in the Collection management API
+  schemas:
+    Holding:
+      type: object
+      properties:
+        pieceDesignation:
+          type: array
+          items:
+            type: string
+        note:
+          type: array
+          items:
+            type: string
+        useRestriction: 
+          type: array
+          items:
+            type: string
+        cost:
+          type: array
+          items:
+            type: string
+        temporaryLocation:
+          type: array
+          items:
+            type: string
+        caption:
+          type: object
+          properties:
+            enumeration:
+              type: array
+              items:
+                $ref: ''
+            chronology:
+              type: array
+              items:
+                $ref: ''
+            id:
+              type: integer
+            sequence:
+              type: integer
+        category:
+          type: string
+          enum:
+            - BASIC                                                                 
   examples:
     success-search-copies-atom:
       summary: Search results for oclcNumber query in Atom format
@@ -5308,7 +5356,146 @@ components:
     }
   ],
   "id": "https://circ.sd00.worldcat.org/LHR/84243463?inst=128807"
-}                    
+}
+    create-monograph-copy-json:
+      summary: JSON used to create a basic monograph copy
+      value: {
+      "institution": "http://www.worldcat.org/webservices/registry/content/Institutions/128807",
+      "bib": "/bibs/319501305",
+      "recordType": "SINGLE_PART",
+      "receiptStatus": "UNKNOWN",
+      "holdingLocation": "EAST",
+      "shelvingLocation": "EAST-STACKS",
+      "previousShelvingLocation": [],
+      "shelvingDesignation": {
+      "prefix": [],
+      "information": "PR9199.4.J336 K55 2009",
+      "itemPart": [],
+      "suffix": [],
+      "scheme": "LIBRARY_OF_CONGRESS"
+      },
+      "holding": [
+          {
+          "pieceDesignation": [
+          "3456789999"
+          ],
+          "note": [
+          {
+          "value": "This is a test note.",
+          "type": "STAFF"
+          },
+          {
+          "value": "This is a public note",
+          "type": "PUBLIC"
+          }
+          ],
+          "useRestriction": [],
+          "cost": [],
+          "temporaryLocation": [],
+          "category": "BASIC"
+          }
+      ]
+      }
+    create-serial-copy-json:
+      summary: JSON used to create a basic monograph copy
+      value: {
+      "institution": "http://www.worldcat.org/webservices/registry/content/Institutions/128807",
+      "bib": "/bibs/2351916",
+      "recordType": "SERIAL",
+      "receiptStatus": "UNKNOWN",
+      "copyNumber": "1",
+      "note": [],
+      "holdingLocation": "WEST",
+      "shelvingLocation": "WEST-General",
+      "previousShelvingLocation": [],
+      "shelvingDesignation": {
+        "prefix": [],
+        "information": "020.5",
+        "itemPart": [
+          "O688465"
+        ],
+        "suffix": [],
+        "scheme": "DEWEY_DECIMAL"
+      },
+      "holding": [
+        {
+          "pieceDesignation": [
+            "2008-133-1"
+          ],
+          "note": [],
+          "useRestriction": [],
+          "cost": [],
+          "temporaryLocation": [],
+          "caption": {
+            "enumeration": [
+              {
+                "value": "133",
+                "label": "v."
+              },
+              {
+                "value": "1",
+                "label": "no."
+              }
+            ],
+            "chronology": [
+              {
+                "value": "2008",
+                "label": "(year)"
+              },
+              {
+                "value": "01",
+                "label": "(month)"
+              },
+              {
+                "value": "01",
+                "label": "(day)"
+              }
+            ],
+            "id": 1,
+            "sequence": 1
+          },
+          "category": "BASIC"
+        },
+        {
+          "pieceDesignation": [
+            "2008-133-2"
+          ],
+          "note": [],
+          "useRestriction": [],
+          "cost": [],
+          "temporaryLocation": [],
+          "caption": {
+            "enumeration": [
+              {
+                "value": "133",
+                "label": "v."
+              },
+              {
+                "value": "2",
+                "label": "no."
+              }
+            ],
+            "chronology": [
+              {
+                "value": "2008",
+                "label": "(year)"
+              },
+              {
+                "value": "01",
+                "label": "(month)"
+              },
+              {
+                "value": "16",
+                "label": "(day)"
+              }
+            ],
+            "id": 1,
+            "sequence": 2
+          },
+          "category": "BASIC"
+        }
+      ]
+    }                          
     unauthorized:
       summary: Error returned when valid API credentials not sent or invalid
       value: {"message": "Unauthorized"}
@@ -5337,5 +5524,5 @@ components:
       summary: Error returned when required query parameter not sent
       value: {"type": "MISSING_QUERY_PARAMETER", "title": "Validation Failure", "detail": "Required String parameter 'q' is not present"}       
 externalDocs:
-  description: Find out more about OCLC
-  url: 'https://www.oclc.org'
+  description: Find out more about WMS Collection Management API
+  url: 'https://www.oclc.org/developer/develop/web-services/wms-collection-management-api.en.html'
