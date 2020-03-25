@@ -392,6 +392,61 @@ components:
           scopes:
             WMS_COLLECTION_MANAGEMENT: perform all the operations in the Collection management API
   schemas:
+    Copy:
+      type: object
+      properties:
+        institution:
+          type: string
+          format: URL
+        bib:
+          type: string
+        recordType:
+          type: string
+          enum:
+            - SERIAL
+        receiptStatus:
+          type: string
+          enum:
+            - UNKNOWN
+        copyNumber:
+          type: integer
+        note:
+          type: array
+          items:
+            type: string
+        holdingLocation:
+          type: string
+        shelvingLocation:
+          type: string
+        previousShelvingLocation:
+          type: array
+          items:
+            type: string
+        shelvingDesignation:
+          type: object
+          properties:
+            prefix:
+              type: array
+              items:
+                type: string
+            information: 
+              type: string
+            itemPart:
+              type: array
+              items:
+                type: string
+            suffix:
+              type: array
+              items:
+                type: string
+            scheme:
+              type: string
+              enum:
+                - DEWEY_DECIMAL
+        holding:
+          type: array
+          items:
+            $ref: '#/components/schemas/Holding'                                                    
     Holding:
       type: object
       properties:
@@ -421,11 +476,11 @@ components:
             enumeration:
               type: array
               items:
-                $ref: ''
+                $ref: '#/components/schemas/LabelValuePair'
             chronology:
               type: array
               items:
-                $ref: ''
+                $ref: '#/components/schemas/LabelValuePair'
             id:
               type: integer
             sequence:
@@ -433,7 +488,14 @@ components:
         category:
           type: string
           enum:
-            - BASIC                                                                 
+            - BASIC
+    LabelValuePair:
+      type: object
+      properties:
+        value:
+          type: string
+        label:
+          type: string                                                                       
   examples:
     success-search-copies-atom:
       summary: Search results for oclcNumber query in Atom format
