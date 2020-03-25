@@ -113,7 +113,7 @@ paths:
         content:
           'application/json':
             schema:
-              type: object
+              $ref: '#/components/schemas/Copy' 
             examples:
               monograph-copy:
                 $ref: '#/components/examples/create-monograph-copy-json'
@@ -141,7 +141,7 @@ paths:
                   $ref: '#/components/examples/read-serial-copy-atom-json'                  
             application/json:
               schema:
-                type: object            
+                $ref: '#/components/schemas/Copy'             
               examples:
                 read-monograph-copy-json: 
                   $ref: '#/components/examples/read-copy-json'
@@ -216,7 +216,7 @@ paths:
                   $ref: '#/components/examples/read-serial-copy-atom-json'                  
             application/json:
               schema:
-                type: object            
+                $ref: '#/components/schemas/Copy'            
               examples:
                 read-monograph-copy-json: 
                   $ref: '#/components/examples/read-copy-json'
@@ -272,10 +272,10 @@ paths:
         content:
           'application/json':
             schema:
-              type: object      
+              $ref: '#/components/schemas/Copy'       
       responses:
         '200':
-          description: Successful search
+          description: Successful Update
           content:
             application/atom-xml:
               schema:
@@ -295,7 +295,7 @@ paths:
                   $ref: '#/components/examples/read-serial-copy-atom-json'                  
             application/json:
               schema:
-                type: object            
+                $ref: '#/components/schemas/Copy'             
               examples:
                 read-monograph-copy-json: 
                   $ref: '#/components/examples/read-copy-json'
