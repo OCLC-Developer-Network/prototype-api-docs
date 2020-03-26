@@ -1,0 +1,87 @@
+openapi: 3.0.3
+info:
+  description: WMS Circulation API
+  version: 1.0.0
+  title: WMS Circulation API
+servers:
+  - url: 'https://{registryID}.share.worldcat.org/circ'
+security:
+  - api_key: []
+paths:
+  /pulllist/{branchId}:
+    get:
+      tags:
+        - Pull list
+      summary: 'Retrieve a pull list for a specific branch'
+      description: 'Retrieve a pull list for a specific branch'
+      operationId: get-pulllist
+      parameters:
+        - name: branchId
+          in: path
+          description: WorldCat Registry Id of branch to get a pull list for
+          schema:
+            type: integer
+          required: true                  
+      responses:
+        '200':
+          description: Successful read of pulllist
+          content:
+            application/json:
+              schema:
+                type: object            
+              examples:
+                success-read-pull-list: 
+                  $ref: '#/components/examples/success-read-pull-list'                    
+        '400':
+          description: Invalid query. The request was unacceptable, often due to missing a required parameter.
+          content:
+            application/json:
+              schema:
+                type: object            
+              examples:
+                missing-query-parameter:
+                  $ref: '#/components/examples/missing-query-parameter'
+                missing-query-parameter-value:
+                  $ref: '#/components/examples/missing-query-parameter-value'
+              
+        '405':
+          description: 'Method not supported, see response Allow header'
+          content:
+            application/json:
+              schema:
+                type: object            
+              example:
+                $ref: '#/components/examples/method-not-allowed-error'               
+        '500':
+          description: 'Something went wrong (hopfully rare) - please try again'
+          content:
+            application/json:
+              schema:
+                type: object
+      security:
+        - api_key: []                               
+components:
+  securitySchemes:
+    api_key:
+      type: apiKey
+      name: wskey
+      in: query
+  examples:               
+    unauthorized:
+      summary: Error returned when valid API credentials not sent or invalid
+      value: {"message": "Unauthorized"}
+    forbidden:
+      summary: Error returned when API credentials not for resource
+      value: {"message": "Forbidden"}
+    method-not-allowed-error:
+      summary: Error when invalid HTTP method used
+      value: {"title": "NOT_ALLOWED", "detail": "POST method not allowed"}
+    not-acceptable-error:
+      summary: Error when media type in Accept header not supported
+      value: {"title": "NOT_ACCEPTABLE", "detail": "Media type application/xml not supported. Supported media types: application/json"}
+    missing-query-parameter:
+      summary: Error returned when required query parameter not sent
+      value: {"type": "MISSING_QUERY_PARAMETER", "title": "Validation Failure", "detail": "Required String parameter 'q' is not present"}      
+externalDocs:
+  description: Find out more about WMS Circulation API
+  url: 'https://www.oclc.org/developer/develop/web-services/wms-circulation-api.en.html'
