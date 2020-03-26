@@ -388,27 +388,77 @@ components:
         callNumber:
           type: object
           properties:
-            description:
+            shelvingScheme:
+              type: string              
+            shelvingInformation:
               type: string
+            itemParts:
+              type: string
+            prefixes:
+              type: string
+            suffixes:
+              type: string          
+            description:
+              type: string              
         recordType:
           $ref: '#/components/schemas/ItemRecordType'
+        holdingInformation:
+          type: object
+          properties:
+            captionId:
+              type: integer
+            enumeration:
+              type: string
+            chronology:
+              type: string
+            description:  
+              type: string        
         numberOfPieces:
           type: integer
+        physicalDescription:
+          type: string
         homeHoldingLocation: 
           type: string
         permanentShelvingLocation:
           type: object
           properties:
             element:
-              type: object
-              properties:
-                0:
-                  type: string
+              type: array
+              items:
+                type: string
+        previousShelvingLocation:
+          type: string          
+        publicNotes:
+          type: array
+          items:
+            $ref: '#/components/schemas/Note'          
+        staffNote:
+          type: array
+          items:
+            $ref: '#/components/schemas/Note'
+        useRestriction:
+          type: array
+          items:
+            type: string    
         requestDate:
           type: string
           format: date-time
         patronName:
           type: string
+        patronIdentifier:
+          type: object
+          properties:
+            institution:
+              type: integer
+            relyingPartyId:
+              type: string
+            ppid:
+              type: string
+              format: uuid      
+        enumeration:
+          type: string
+        freeText:
+          type: string  
         requestId:
           type: string
           format: uuid
@@ -417,16 +467,39 @@ components:
           enum:
             - HOLD
             - SCHEDULE
+        lastPrintedDate:
+          type: string
+          format: date-time
+        forward:
+          type: string
+          format: URI  
         scheduleStartDate:
           type: string
           format: date-time
         scheduleEndDate:
           type: string
           format: date-time
-        pickupLocatioName:
+        pickupBranch:
+          type: object
+          properties:
+            id:
+              type: integer
+            name:
+              type: string  
+        pickupLocation:
+          type: string        
+        pickupLocationName:
           type: string
         ownerInstitutionId:
-          type: integer                                        
+          type: integer
+        restrictedLocations:
+          type: string
+        itemType:
+          type: string
+          enum:
+            - LHR
+        requestSource:
+          type: string                                                          
     ItemRoute:
       type: object
       properties:
@@ -532,7 +605,18 @@ components:
         - SINGLE_PART
         - MULTI_PART
         - SERIAL
-        - UNKNOWN   
+        - UNKNOWN
+    Note:
+      description: A user defined note
+      type: object
+      properties:
+        value:
+          type: string
+        type:
+          type: string
+          enum:
+            - PUBLIC
+            - STAFF       
   examples:               
     unauthorized:
       summary: Error returned when valid API credentials not sent or invalid
