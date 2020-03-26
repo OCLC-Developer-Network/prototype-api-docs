@@ -1,10 +1,8 @@
-openapi: 3.0.0
+openapi: 3.0.1
 info:
   description: WMS Collection Management API
   version: 1.0.0
   title: WMS Collection Management API
-  license:
-    name: Licensing TBD
 servers:
   - url: 'https://circ.{datacenter}.worldcat.org'
     description: Dublin datacenter
@@ -383,7 +381,7 @@ components:
       type: oauth2
       flows:
         clientCredentials:
-          authorizationUrl: https://oauth.oclc.org/token
+          tokenUrl: https://oauth.oclc.org/token
           scopes:
             WMS_COLLECTION_MANAGEMENT: perform all the operations in the Collection management API
         authorizationCode:
@@ -393,17 +391,21 @@ components:
             WMS_COLLECTION_MANAGEMENT: perform all the operations in the Collection management API
   schemas:
     Copy:
+      description: A specific instance within a library collection of a bibliographic description. May consist of multiple items in the case of multi-volume sets and seri
       type: object
-      properties:
+      properties:  
         institution:
           type: string
           format: URL
         lastUpdateDate:
           type: string
           format: date-time
+          readOnly: true
         bib:
           type: string
+          pattern: "^/bib/[1-9]+$"
         recordType:
+          description: The characteristics and definitions of the components of the record.
           type: string
           enum:
             - SINGLE_PART
@@ -411,6 +413,7 @@ components:
             - SERIAL
             - UKNOWN
         receiptStatus:
+          description: Indicates the current receipt or acquisitions status of a copy (008/06).
           type: string
           enum:
             - ON_ORDER
@@ -421,12 +424,15 @@ components:
             - UNKNOWN
         copyNumber:
           type: integer
+          format: int32
         note:
           type: array
           items:
             $ref: '#/components/schemas/Note'
         holdingLocation:
+          description: Represents a holding location. OCLC cataloguing rules require that the holding location is a single 4-character code. Corresponds to 852$b.
           type: string
+          pattern: "^[A-Z]{4}$"
         shelvingLocation:
           type: string
         previousShelvingLocation:
@@ -460,14 +466,27 @@ components:
             $ref: '#/components/schemas/Holding'
         id:
           type: string
-          format: URI                                                        
+          format: URL
+          readOnly: true 
+      required:
+        - institution
+        - bib
+        - id
+        - recordType
+        - receiptStatus
+        - copyNumber
+        - holdingLocation
+        - shelvingLocation                                                        
     Holding:
+      description: The information relating to a particular holding associated with a copy.
       type: object
       properties:
         pieceDesignation:
+          description: Represents the institution-defined piece designation for an item. This is the "barcode". It should not start with either a capital 'B' or 'U'.
           type: array
           items:
             type: string
+            pattern: "^[^BU].*$"
         note:
           type: array
           items:
@@ -477,6 +496,7 @@ components:
           items:
             type: string
         cost:
+          description: A cost associated with an item, such as the original purchase price, or the amount to bill a patron if the item is lost.
           type: array
           items:
             $ref: '#/components/schemas/Cost'
@@ -485,6 +505,7 @@ components:
           items:
             type: string
         caption:
+          description: A set of alphanumeric or date labels (i.e. enumeration and chronology) for an item. Also includes free-text version when standard enumeration and chronology cannot be used to adequately describe the item.
           type: object
           properties:
             description:
@@ -499,15 +520,19 @@ components:
                 $ref: '#/components/schemas/LabelValuePair'
             id:
               type: integer
+              format: int32
             sequence:
               type: integer
+              format: int32
         category:
+          description: The category of material for item.
           type: string
           enum:
             - BASIC
             - SUPPLEMENTARY_MATERIAL
             - INDEX
     LabelValuePair:
+      description: The label and value pair for a caption describing a numeric, alphabetic, and/or date designation for an item. The label is defined as an attribute on the element and the value for the label is defined by the element contents.
       type: object
       properties:
         value:
@@ -518,12 +543,15 @@ components:
       type: object
       properties:
         currency:
+          description: The ISO 4217 currency code for representing the currency of a monetary amount. Categorised by 3 capital letters. The current valid 3-letter codes can be found at http://www.bsi-global.com
           type: string
+          pattern: "^[A-B]{3}$"
         amount:
           type: integer
         qualifier:
           type: string            
     Note:
+      description: A user defined note
       type: object
       properties:
         value:
