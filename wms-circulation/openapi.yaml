@@ -349,6 +349,84 @@ components:
           scopes:
             WMS_Circulation: perform all the operation in the WMS Circulation API
   schemas:
+    PullList:
+      type: object
+      properties:
+        id:
+          type: string          
+        title:
+          type: string
+        updated:
+          type: string
+          format: date-time
+        entries:
+          type: array
+          items:
+            type: object
+            properties:
+              title:
+                type: string
+              content:
+                $ref: '#/components/schemas/PullListItem'
+              updated:
+                type: string
+                format: date-time
+              authors:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    name:
+                      type: string                      
+    PullListItem:
+      type: object
+      properties:
+        bibliographicItem:
+          $ref: '#/components/schemas/BibliographicSummary'
+        pieceDesignation:
+          type: string
+        callNumber:
+          type: object
+          properties:
+            description:
+              type: string
+        recordType:
+          $ref: '#/components/schemas/ItemRecordType'
+        numberOfPieces:
+          type: integer
+        homeHoldingLocation: 
+          type: string
+        permanentShelvingLocation:
+          type: object
+          properties:
+            element:
+              type: object
+              properties:
+                0:
+                  type: string
+        requestDate:
+          type: string
+          format: date-time
+        patronName:
+          type: string
+        requestId:
+          type: string
+          format: uuid
+        pullReason:
+          type: string
+          enum:
+            - HOLD
+            - SCHEDULE
+        scheduleStartDate:
+          type: string
+          format: date-time
+        scheduleEndDate:
+          type: string
+          format: date-time
+        pickupLocatioName:
+          type: string
+        ownerInstitutionId:
+          type: integer                                        
     ItemRoute:
       type: object
       properties:
@@ -398,12 +476,7 @@ components:
         callNumber:
           type: string
         itemRecordType:
-          type: string
-          enum:
-            - SINGLE_PART
-            - MULTI_PART
-            - SERIAL
-            - UNKNOWN    
+          $ref: '#/components/schemas/ItemRecordType'   
         numberOfPieces:
           type: integer
         homeLocation:
@@ -453,6 +526,13 @@ components:
           type: string
         edition:
           type: string                                                        
+    ItemRecordType:
+      type: string
+      enum:
+        - SINGLE_PART
+        - MULTI_PART
+        - SERIAL
+        - UNKNOWN   
   examples:               
     unauthorized:
       summary: Error returned when valid API credentials not sent or invalid
