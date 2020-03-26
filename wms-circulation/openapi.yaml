@@ -623,22 +623,287 @@ components:
       }   
     success-reshelve:
       summary: Response returned when an item should be reshelved
-      value: {}
+      value: {
+        "reason":
+        { "reasonCode": "RESHELVE" }
+        
+        ,
+        "dateRouted": "2017-02-10T19:47:42Z",
+        "destination": {
+        "ref": "https://circ.sd00.worldcat.orgcirc/branches/129058",
+        "branchId": 129058,
+        "branchName": "COP Sandbox - West Branch",
+        "institution":
+        { "institutionId": 128807, "institutionName": "OCLC WorldShare Platform Sandbox Institution" }
+        
+        },
+        "item": {
+        "ref": "https://circ.sd00.worldcat.orgcirc/items/cf57451b-ba8f-4730-b100-0480b503f1cb",
+        "ownerInstitution":
+        { "institutionId": 128807, "institutionName": "OCLC WorldShare Platform Sandbox Institution" }
+        
+        ,
+        "pieceDesignation": "1976191919",
+        "callNumber": "PZ120 87387",
+        "itemRecordType": "SINGLE_PART",
+        "numberOfPieces": 1,
+        "homeLocation": {
+        "shelvingLocationCode": "WEST-General",
+        "holdingLocation": {
+        "holdingLocationCode": "WEST",
+        "location": {
+        "ref": "https://circ.sd00.worldcat.orgcirc/branches/129058",
+        "branchId": 129058,
+        "branchName": "COP Sandbox - West Branch",
+        "institution":
+        { "institutionId": 128807, "institutionName": "OCLC WorldShare Platform Sandbox Institution" }
+        
+        }
+        }
+        },
+        "bibliographicSummary":
+        { "oclcNumber": 76863877, "title": "Little Blue Truck /", "materialType": "Book", "author": "Schertle, Alice.", "publisher": "Orlando : Harcourt,", "publicationYear": "2008", "language": "eng", "edition": "1st ed." }
+        
+        }
+        }
     success-reshelve-route-different-branch: 
       summary: Response returned when an item should be reshelved at a different branched
-      value: {}
+      value: {
+        "reason":
+        { "reasonCode": "RESHELVE" }
+        
+        ,
+        "dateRouted": "2017-02-10T19:47:42Z",
+        "destination": {
+        "ref": "https://circ.sd00.worldcat.orgcirc/branches/129058",
+        "branchId": 129058,
+        "branchName": "COP Sandbox - West Branch",
+        "institution":
+        { "institutionId": 128807, "institutionName": "OCLC WorldShare Platform Sandbox Institution" }
+        
+        },
+        "item": {
+        "ref": "https://circ.sd00.worldcat.orgcirc/items/cf57451b-ba8f-4730-b100-0480b503f1cb",
+        "ownerInstitution":
+        { "institutionId": 128807, "institutionName": "OCLC WorldShare Platform Sandbox Institution" }
+        
+        ,
+        "pieceDesignation": "1976191919",
+        "callNumber": "PZ120 87387",
+        "itemRecordType": "SINGLE_PART",
+        "numberOfPieces": 1,
+        "homeLocation": {
+        "shelvingLocationCode": "WEST-General",
+        "holdingLocation": {
+        "holdingLocationCode": "WEST",
+        "location": {
+        "ref": "https://circ.sd00.worldcat.orgcirc/branches/129058",
+        "branchId": 129058,
+        "branchName": "COP Sandbox - West Branch",
+        "institution":
+        { "institutionId": 128807, "institutionName": "OCLC WorldShare Platform Sandbox Institution" }
+        
+        }
+        }
+        },
+        "bibliographicSummary":
+        { "oclcNumber": 76863877, "title": "Little Blue Truck /", "materialType": "Book", "author": "Schertle, Alice.", "publisher": "Orlando : Harcourt,", "publicationYear": "2008", "language": "eng", "edition": "1st ed." }
+        
+        }
+        }
     success-reshelve-route-different-institution: 
       summary: Response returned when an item should be returned to a different institution
-      value: {}                  
+      value: {
+       "reason": {
+           "reasonCode": "HOLD"
+       },
+       "dateRouted": "2017-04-24T17:41:09Z",
+       "destination": {
+           "ref": "https://circ.sd00.worldcat.org/circ/branches/128383",
+           "branchId": 128383,
+           "branchName": "Orion",
+           "institution": {
+               "institutionId": 128367,
+               "institutionName": "Constellations"
+           }
+       },
+       "item": {
+           "ref": "https://circ.sd00.worldcat.org/circ/items/ced53347-4acb-4419-b7d1-271b6e76d8a4",
+           "ownerInstitution": {
+               "institutionId": 128366,
+               "institutionName": "Explorers"
+           },
+           "pieceDesignation": "7766552",
+           "callNumber": "NN234",
+           "itemRecordType": "UNKNOWN",
+           "numberOfPieces": 1,
+           "homeLocation": {
+               "shelvingLocationCode": "Christopher Columbus",
+               "holdingLocation": {
+                   "holdingLocationCode": "MAIN",
+                   "location": {
+                       "ref": "https://circ.sd00.worldcat.org/circ/branches/128382",
+                       "branchId": 128382,
+                       "branchName": "Christopher Columbus",
+                       "institution": {
+                           "institutionId": 128366,
+                           "institutionName": "Explorers"
+                       }
+                   }
+               }
+           },
+           "bibliographicSummary": {
+               "oclcNumber": 297225775,
+               "title": "Polycrystalline thin-film solar cell technologies : preprint /",
+               "materialType": "Book_Digital",
+               "author": "Ullal, Harin S.",
+               "publisher": "Golden, Colo. : National Renewable Energy Laboratory,",
+               "publicationYear": "2008",
+               "language": "eng"
+           }
+       }
+    }                  
     success-pull-item: 
       summary: Response returned when an item should be placed on the hold shelf at current branch
-      value: {}
+      value: {
+        "reason": {
+          "reasonCode": "HOLD"
+        },
+        "dateRouted": "2017-04-14T16:04:44Z",
+        "item": {
+          "ref": "https://circ.sd00.worldcat.org/circ/items/cfd4931f-d617-4007-bf01-0035d12b4a4a",
+          "ownerInstitution": {
+            "institutionId": 128807,
+            "institutionName": "OCLC WorldShare Platform Sandbox Institution"
+          },
+          "pieceDesignation": "568475964",
+          "callNumber": "RA1000 .D67 2010",
+          "itemRecordType": "SINGLE_PART",
+          "numberOfPieces": 1,
+          "homeLocation": {
+            "shelvingLocationCode": "MAIN-STACKS",
+            "holdingLocation": {
+              "holdingLocationCode": "MAIN",
+              "location": {
+                "ref": "https://circ.sd00.worldcat.org/circ/branches/129479",
+                "branchId": 129479,
+                "branchName": "COP Sandbox - Main Branch",
+                "institution": {
+                  "institutionId": 128807,
+                  "institutionName": "OCLC WorldShare Platform Sandbox Institution"
+                }
+              }
+            }
+          },
+          "bibliographicSummary": {
+            "oclcNumber": 262886383,
+            "title": "Making rounds with Oscar : the extraordinary gift of an ordinary cat /",
+            "materialType": "Book",
+            "author": "Dosa, David.",
+            "publisher": "New York : Hyperion,",
+            "publicationYear": "2010",
+            "language": "eng",
+            "edition": "1st ed."
+          }
+        }
+      }
     success-pull-item-route: 
       summary: Response returned when an item should be placed on the hold shelf at different branch
-      value: {}
+      value: {
+        "reason": {
+          "reasonCode": "HOLD"
+        },
+        "dateRouted": "2017-04-14T16:00:26Z",
+        "destination": {
+          "ref": "https://circ.sd00.worldcat.org/circ/branches/129479",
+          "branchId": 129479,
+          "branchName": "COP Sandbox - Main Branch",
+          "institution": {
+            "institutionId": 128807,
+            "institutionName": "OCLC WorldShare Platform Sandbox Institution"
+          }
+        },
+        "item": {
+          "ref": "https://circ.sd00.worldcat.org/circ/items/bff043b3-405b-4e18-975b-9f08b96686a7",
+          "ownerInstitution": {
+            "institutionId": 128807,
+            "institutionName": "OCLC WorldShare Platform Sandbox Institution"
+          },
+          "pieceDesignation": "A123456789",
+          "callNumber": "1323456",
+          "itemRecordType": "SINGLE_PART",
+          "numberOfPieces": 1,
+          "homeLocation": {
+            "shelvingLocationCode": "NORT-STACKS",
+            "holdingLocation": {
+              "holdingLocationCode": "NORT",
+              "location": {
+                "ref": "https://circ.sd00.worldcat.org/circ/branches/129055",
+                "branchId": 129055,
+                "branchName": "COP Sandbox - South Branch",
+                "institution": {
+                  "institutionId": 128807,
+                  "institutionName": "OCLC WorldShare Platform Sandbox Institution"
+                }
+              }
+            }
+          },
+          "bibliographicSummary": {
+            "oclcNumber": 191865523,
+            "title": "Dewey : a small-town library cat who touched the world /",
+            "materialType": "Book",
+            "author": "Myron, Vicki,",
+            "publisher": "New York : Grand Central Pub.,",
+            "publicationYear": "2008",
+            "language": "eng",
+            "edition": "1st ed."
+          }
+        }
+      }
     success-pull-item-scheduled: 
       summary: Response returned when an item should be placed on the hold shelf because it is scheduled
-      value: {}                
+      value: {
+        "reason": {
+          "reasonCode": "SCHEDULED"
+        },
+        "dateRouted": "2017-04-14T16:09:15Z",
+        "item": {
+          "ref": "https://circ.sd00.worldcat.org/circ/items/ad49f6f9-65a8-440f-b537-7b68ef99be02",
+          "ownerInstitution": {
+            "institutionId": 128807,
+            "institutionName": "OCLC WorldShare Platform Sandbox Institution"
+          },
+          "pieceDesignation": "jeff1031",
+          "callNumber": "FIC SCH",
+          "itemRecordType": "SINGLE_PART",
+          "numberOfPieces": 1,
+          "homeLocation": {
+            "shelvingLocationCode": "MAIN-STACKS",
+            "holdingLocation": {
+              "holdingLocationCode": "MAIN",
+              "location": {
+                "ref": "https://circ.sd00.worldcat.org/circ/branches/129479",
+                "branchId": 129479,
+                "branchName": "COP Sandbox - Main Branch",
+                "institution": {
+                  "institutionId": 128807,
+                  "institutionName": "OCLC WorldShare Platform Sandbox Institution"
+                }
+              }
+            }
+          },
+          "bibliographicSummary": {
+            "oclcNumber": 64207971,
+            "title": "Skippyjon Jones in mummy trouble /",
+            "materialType": "Book",
+            "author": "Schachner, Judith Byron.",
+            "publisher": "New York : Dutton Children's Books,",
+            "publicationYear": "2006",
+            "language": "eng",
+            "edition": "1st ed."
+          }
+        }
+      }                
     success-forward-hold:
       summary: response returned when hold is successful forwarded
       value: {}
