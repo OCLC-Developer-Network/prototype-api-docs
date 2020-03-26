@@ -80,7 +80,157 @@ paths:
           content:
             application/json:
               schema:
-                type: object                               
+                type: object
+  /items/{itemIdentifier}/routing/pull:
+    post:
+      tags:
+        - Items
+      summary: 'Mark a specific Item as pulled'
+      description: 'Mark a specific Item as pulled'
+      operationId: mark-item-pulled
+      parameters:
+        - name: itemIdentifier
+          in: path
+          description: The piece designation or item id for the item
+          schema:
+            type: string
+          required: true                  
+      responses:
+        '200':
+          description: Successful Pull item
+          content:          
+            application/json:
+              schema:
+                type: object            
+              examples:
+                success-read-pull-list: 
+                  $ref: '#/components/examples/success-pull-item'                    
+        '400':
+          description: Invalid query. The request was unacceptable, often due to missing a required parameter.
+          content:
+            application/json:
+              schema:
+                type: object            
+              examples:
+                missing-query-parameter:
+                  $ref: '#/components/examples/missing-query-parameter'
+                missing-query-parameter-value:
+                  $ref: '#/components/examples/missing-query-parameter-value'
+              
+        '405':
+          description: 'Method not supported, see response Allow header'
+          content:
+            application/json:
+              schema:
+                type: object            
+              example:
+                $ref: '#/components/examples/method-not-allowed-error'               
+        '500':
+          description: 'Something went wrong (hopfully rare) - please try again'
+          content:
+            application/json:
+              schema:
+                type: object  
+  /items/{itemIdentifier}/routing/inventories:
+    post:
+      tags:
+        - Items
+      summary: 'Retrieve a pull list for a specific branch'
+      description: 'Retrieve a pull list for a specific branch'
+      operationId: get-pulllist
+      parameters:
+        - name: itemIdentifier
+          in: path
+          description: The piece designation or item id for the item
+          schema:
+            type: string
+          required: true                  
+      responses:
+        '200':
+          description: Successful inventory item
+          content:                     
+            application/json:
+              schema:
+                type: object            
+              examples:
+                success-read-pull-list: 
+                  $ref: '#/components/examples/success-inventory-item'                    
+        '400':
+          description: Invalid query. The request was unacceptable, often due to missing a required parameter.
+          content:
+            application/json:
+              schema:
+                type: object            
+              examples:
+                missing-query-parameter:
+                  $ref: '#/components/examples/missing-query-parameter'
+                missing-query-parameter-value:
+                  $ref: '#/components/examples/missing-query-parameter-value'
+              
+        '405':
+          description: 'Method not supported, see response Allow header'
+          content:
+            application/json:
+              schema:
+                type: object            
+              example:
+                $ref: '#/components/examples/method-not-allowed-error'               
+        '500':
+          description: 'Something went wrong (hopfully rare) - please try again'
+          content:
+            application/json:
+              schema:
+                type: object  
+  /items/{itemIdentifier/routing/usages:
+    post:
+      tags:
+        - Items
+      summary: 'Retrieve a pull list for a specific branch'
+      description: 'Retrieve a pull list for a specific branch'
+      operationId: get-pulllist
+      parameters:
+        - name: itemIdentifier
+          in: path
+          description: The piece designation or item id for the item
+          schema:
+            type: string
+          required: true                   
+      responses:
+        '200':
+          description: Successful Non-Loan Return of Item
+          content:                    
+            application/json:
+              schema:
+                type: object            
+              examples:
+                success-read-pull-list: 
+                  $ref: '#/components/examples/success-non-loan-item'                    
+        '400':
+          description: Invalid query. The request was unacceptable, often due to missing a required parameter.
+          content:
+            application/json:
+              schema:
+                type: object            
+              examples:
+                missing-query-parameter:
+                  $ref: '#/components/examples/missing-query-parameter'
+                missing-query-parameter-value:
+                  $ref: '#/components/examples/missing-query-parameter-value'
+              
+        '405':
+          description: 'Method not supported, see response Allow header'
+          content:
+            application/json:
+              schema:
+                type: object            
+              example:
+                $ref: '#/components/examples/method-not-allowed-error'               
+        '500':
+          description: 'Something went wrong (hopfully rare) - please try again'
+          content:
+            application/json:
+              schema:
+                type: object                                                       
 components:
   securitySchemes:
     wms_circulation_auth:
