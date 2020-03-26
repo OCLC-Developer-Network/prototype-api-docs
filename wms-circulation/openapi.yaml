@@ -26,7 +26,15 @@ paths:
           description: WorldCat Registry Id of branch to get a pull list for
           schema:
             type: integer
-          required: true                  
+          required: true  
+        - name: startIndex
+          in: query
+          description: Index item to start the collection at
+          schema:
+            type: integer
+        - name: itemsPerPage
+          in: query
+          description: Number of items to return in request                  
       responses:
         '200':
           description: Successful read of pulllist
