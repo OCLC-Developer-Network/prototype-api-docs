@@ -5,8 +5,13 @@ info:
   title: WMS Circulation API
 servers:
   - url: 'https://{registryID}.share.worldcat.org/circ'
+    variables:
+      registryId:
+        default: sd00
+        description: WorldCat Registry ID for institution whose data is being accessed.    
 security:
-  - api_key: []
+  - wms_circulation_auth:
+    - WMS_Circulation
 paths:
   /pulllist/{branchId}:
     get:
@@ -26,6 +31,24 @@ paths:
         '200':
           description: Successful read of pulllist
           content:
+            application/atom+xml:
+              schema:
+                type: object            
+              examples:
+                success-read-pull-list-atom-xml: 
+                  $ref: '#/components/examples/success-read-pull-list-atom-xml'          
+            application/xml:
+              schema:
+                type: object            
+              examples:
+                success-read-pull-list-xml: 
+                  $ref: '#/components/examples/success-read-pull-list-xml'            
+            application/atom+json:
+              schema:
+                type: object            
+              examples:
+                success-read-pull-list-atom-json: 
+                  $ref: '#/components/examples/success-read-pull-list-atom-json'          
             application/json:
               schema:
                 type: object            
@@ -57,15 +80,21 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-      security:
-        - api_key: []                               
+                type: object                               
 components:
   securitySchemes:
-    api_key:
-      type: apiKey
-      name: wskey
-      in: query
+    wms_circulation_auth:
+      type: oauth2
+      flows:
+        clientCredentials:
+          tokenUrl: https://oauth.oclc.org/token
+          scopes:
+            WMS_Circulation: perform all the operation in the WMS Circulation API
+        authorizationCode:
+          authorizationUrl: https://oauth.oclc.org/auth
+          tokenUrl: https://oauth.oclc.org/token
+          scopes:
+            WMS_Circulation: perform all the operation in the WMS Circulation API
   examples:               
     unauthorized:
       summary: Error returned when valid API credentials not sent or invalid
