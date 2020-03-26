@@ -30,25 +30,7 @@ paths:
       responses:
         '200':
           description: Successful read of pulllist
-          content:
-            application/atom+xml:
-              schema:
-                type: object            
-              examples:
-                success-read-pull-list-atom-xml: 
-                  $ref: '#/components/examples/success-read-pull-list-atom-xml'          
-            application/xml:
-              schema:
-                type: object            
-              examples:
-                success-read-pull-list-xml: 
-                  $ref: '#/components/examples/success-read-pull-list-xml'            
-            application/atom+json:
-              schema:
-                type: object            
-              examples:
-                success-read-pull-list-atom-json: 
-                  $ref: '#/components/examples/success-read-pull-list-atom-json'          
+          content:          
             application/json:
               schema:
                 type: object            
@@ -61,11 +43,6 @@ paths:
             application/json:
               schema:
                 type: object            
-              examples:
-                missing-query-parameter:
-                  $ref: '#/components/examples/missing-query-parameter'
-                missing-query-parameter-value:
-                  $ref: '#/components/examples/missing-query-parameter-value'
               
         '405':
           description: 'Method not supported, see response Allow header'
@@ -427,7 +404,9 @@ components:
               items:
                 type: string
         previousShelvingLocation:
-          type: string          
+          type: array
+          items:
+            type: string            
         publicNotes:
           type: array
           items:
@@ -617,7 +596,52 @@ components:
           enum:
             - PUBLIC
             - STAFF       
-  examples:               
+    RouteItem:
+      type: object
+      properties:
+        location:
+          type: string
+          format: URI
+        temporaryBarcode:
+          type: string
+      required:
+        - location    
+  examples:
+    success-read-pull-list:
+      summary: successful response to reading a pull list
+      value: {}
+    pull-item:
+      summary: Request body to route an item
+      value: {
+        "location": "https://128807.share.worldcat.org/circ/branches/129479"
+      }
+    pull-freetext-hold:
+      summary: Request body to mark an item as pulled for a freetext hold
+      value: {
+        "location": "https://128807.share.worldcat.org/circ/branches/129479",
+        "temporaryItemBarcode": "g-$cbda16b2$"
+      }   
+    success-reshelve:
+      summary: Response returned when an item should be reshelved
+      value: {}
+    success-reshelve-route-different-branch: 
+      summary: Response returned when an item should be reshelved at a different branched
+      value: {}
+    success-reshelve-route-different-institution: 
+      summary: Response returned when an item should be returned to a different institution
+      value: {}                  
+    success-pull-item: 
+      summary: Response returned when an item should be placed on the hold shelf at current branch
+      value: {}
+    success-pull-item-route: 
+      summary: Response returned when an item should be placed on the hold shelf at different branch
+      value: {}
+    success-pull-item-scheduled: 
+      summary: Response returned when an item should be placed on the hold shelf because it is scheduled
+      value: {}                
+    success-forward-hold:
+      summary: response returned when hold is successful forwarded
+      value: {}
     unauthorized:
       summary: Error returned when valid API credentials not sent or invalid
       value: {"message": "Unauthorized"}
@@ -630,9 +654,24 @@ components:
     not-acceptable-error:
       summary: Error when media type in Accept header not supported
       value: {"title": "NOT_ACCEPTABLE", "detail": "Media type application/xml not supported. Supported media types: application/json"}
-    missing-query-parameter:
-      summary: Error returned when required query parameter not sent
-      value: {"type": "MISSING_QUERY_PARAMETER", "title": "Validation Failure", "detail": "Required String parameter 'q' is not present"}      
+    missing-item:
+      summary: error returned when trying to route a missing item
+      value: {}
+    withdrawn-item:
+      summary: error returned when trying to route an item marked as withdrawn
+      value: {}
+    checkedout-item:
+      summary: error returned when trying to route an item which is checked out
+      value: {}
+    lost-item:
+      summary: error returned when trying to route an item marked as lost
+      value: {}
+    unknown-item:
+      summary: error returned when trying to route an item using an unknown identifier
+      value: {}
+    invalid-branch:
+      summary: error returned when trying to route using an invalid branch URI
+      value: {}    
 externalDocs:
   description: Find out more about WMS Circulation API
   url: 'https://www.oclc.org/developer/develop/web-services/wms-circulation-api.en.html'
