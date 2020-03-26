@@ -609,7 +609,118 @@ components:
   examples:
     success-read-pull-list:
       summary: successful response to reading a pull list
-      value: {}
+      value: {
+        "id": "urn:oclc:circulation/pulllist/128807/129479",
+        "title": "Pull List",
+        "updated": "2020-03-26T18:09:45.864Z",
+        "entries": [
+          {
+            "title": "Charmed life /",
+            "content": {
+              "bibliographicItem": {
+                "oclcNumber": "3543563",
+                "title": "Charmed life /",
+                "author": "Jones, Diana Wynne",
+                "materialFormat": "BOOK",
+                "publisher": "New York : Greenwillow Books,",
+                "publicationYear": "1977",
+                "language": "eng",
+                "edition": "1st ed."
+              },
+              "pieceDesignation": "chrestomanci2",
+              "callNumber": {
+                "shelvingScheme": null,
+                "shelvingInformation": null,
+                "itemParts": null,
+                "prefixes": null,
+                "suffixes": null,
+                "description": "PZ7.J684 Ch"
+              },
+              "recordType": "SINGLE_PART",
+              "holdingInformation": {
+                "captionId": null,
+                "enumeration": "",
+                "chronology": "",
+                "description": null
+              },
+              "numberOfPieces": 1,
+              "physicalDescription": null,
+              "cost": null,
+              "homeHoldingLocation": "MAIN",
+              "permanentShelvingLocation": {
+                "element": [
+                  "MAIN-STACKS"
+                ]
+              },
+              "previousShelvingLocation": null,
+              "temporaryShelvingLocation": null,
+              "publicNotes": null,
+              "staffNotes": null,
+              "useRestrictions": null,
+              "requestDate": "2020-01-21T15:23:05.000-05:00",
+              "patronName": "Schlueter, Elizabeth",
+              "patronIdentifier": {
+                "institution": "128807",
+                "relyingPartyId": "urn:oclc:platform:128807",
+                "ppid": "42312c9a-5186-4ea4-a2a7-63ec75f127e1"
+              },
+              "enumeration": "",
+              "freeText": null,
+              "requestId": "e8235521-9f9e-41e1-a558-6943a09f046b",
+              "pullReason": "HOLD",
+              "lastPrintedDate": null,
+              "forward": null,
+              "scheduleStartDate": null,
+              "scheduleEndDate": null,
+              "pickupBranch": {
+                "id": "129479",
+                "name": "COP Sandbox - Main Branch"
+              },
+              "pickupLocation": null,
+              "pickupLocationName": "COP Sandbox - Main Branch",
+              "ownerInstitutionId": "128807",
+              "restrictedLocations": null,
+              "itemType": "LHR",
+              "requestSource": null
+            },
+            "updated": "2020-03-26T18:09:45.864Z",
+            "authors": [
+              {
+                "name": "Jones, Diana Wynne"
+              }
+            ]
+          }
+        ],
+        "extensions": [
+          {
+            "name": "os:totalResults",
+            "attributes": {
+              "xmlns:os": "http://a9.com/-/spec/opensearch/1.1/"
+            },
+            "children": [
+              "1"
+            ]
+          },
+          {
+            "name": "os:startIndex",
+            "attributes": {
+              "xmlns:os": "http://a9.com/-/spec/opensearch/1.1/"
+            },
+            "children": [
+              "1"
+            ]
+          },
+          {
+            "name": "os:itemsPerPage",
+            "attributes": {
+              "xmlns:os": "http://a9.com/-/spec/opensearch/1.1/"
+            },
+            "children": [
+              "100"
+            ]
+          }
+        ]
+      }
     pull-item:
       summary: Request body to route an item
       value: {
