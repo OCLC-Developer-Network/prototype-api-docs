@@ -1,0 +1,1616 @@
+openapi: 3.0.0
+info:
+  description: WorldCat Search API
+  version: 1.0.0
+  title: WorldCat Search API
+servers:
+  - url: 'https://worldcat.org/webservices/catalog'
+security:
+  - api_key: []
+paths:
+  /search/worldcat/opensearch:
+    get:
+      tags:
+        - OpenSearch
+      summary: 'Search using OpenSearch standard'
+      description: 'Given metadata find matching bibliographic records'
+      operationId: search-opensearch
+      parameters:
+        - name: q
+          in: query
+          description: Query to send to the service
+          schema:
+            type: string          
+          required: true
+          examples: 
+            simple_query: 
+              value: APIs
+            search_by_ISBN: 
+              value: srw.bn+%3D+%22161775188X%22
+            search_by_title:
+              value: srw.ti+all+%22jazz+patterns%22
+        - name: format
+          in: query
+          description: Format to return the data in
+          schema:
+            type: string
+            default: atom
+            enum:
+              - atom
+              - rss                      
+          required: false
+          example: rss
+        - name: start
+          in: query
+          description: start position
+          schema:
+            type: integer
+            default: 1          
+          required: false
+          example: 10
+        - name: count
+          in: query
+          description: number of records to return
+          schema:
+            type: integer
+            default: 10          
+          required: false
+          example: 25
+        - name: servicelevel
+          in: query
+          description: amount of metadata to return
+          schema:
+            type: string
+            default: default
+            enum:
+              - default
+              - full                      
+          required: false
+          example: full
+        - name: frbrGrouping
+          in: query
+          description: whether or not to group together similar editions
+          schema:
+            type: string
+            default: on
+            enum:
+              - on
+              - off                      
+          required: false  
+          example: off                                                          
+      responses:
+        '200':
+          description: Successful search
+          content:
+            '*/*':
+              schema:
+                type: object            
+              examples:
+                success-search-atom: 
+                  $ref: '#/components/examples/success-search-atom'
+                success-search-rss: 
+                  $ref: '#/components/examples/success-search-rss'
+                limit-only:
+                  $ref: '#/components/examples/limit-only'
+                unsupported-index:
+                  $ref: '#/components/examples/unsupported-index'
+                cql-query-syntax-error:
+                  $ref: '#/components/examples/cql-query-syntax-error'                                                            
+        '401':
+          description: Invalid authentication credentials
+          content:
+            '*/*':
+              schema:
+                type: object            
+              examples:
+                no_key:
+                  $ref: '#/components/examples/unauthorized'
+                bad_key:
+                  $ref: '#/components/examples/unauthorized_bad_key'
+        '403':
+          description: Unauthorized. Typically the key is over its quota
+          content:
+            '*/*':
+              schema:
+                type: object            
+              examples:
+                overlimit:
+                  $ref: '#/components/examples/overlimit'                                                     
+              
+        '405':
+          description: 'Method not supported, see response Allow header'
+          content:
+            '*/*':
+              schema:
+                type: object            
+              example:
+                $ref: '#/components/examples/method-not-allowed-error'               
+        '500':
+          description: 'Something went wrong (hopfully rare) - please try again'
+          content:
+            '*/*':
+              schema:
+                type: object
+      security:
+        - api_key: []
+  /search/worldcat/sru:
+    get:
+      tags:
+        - SRU
+      summary: 'Search using SRU standard'
+      description: 'Given metadata find matching bibliographic records'
+      operationId: search-opensearch
+      parameters:
+        - name: query
+          in: query
+          description: Query to send to the service
+          required: true
+          examples:
+            title_author: 
+              value: srw.au+%3D+%22mann%22+and+srw.ti+%3D+%22faustus%22
+            keyword:
+              value: srw.kw%3D%22civil%20war%22
+            keyword_subjects: 
+              value: srw.kw+%3D+%22civil+war%22+and+%28srw.su+%3D+%22antietam%22+OR+srw.su+%3D+%22sharpsburg%22
+            isbn:
+              value: srw.bn+%3D%22078946988X%22
+        - name: recordSchema
+          in: query
+          description: Query to send to the service
+          schema:
+            type: string
+            default: info%3Asrw%2Fschema%2F1%2Fmarcxml
+            enum:
+              - info%3Asrw%2Fschema%2F1%2Fmarcxml
+              - info%3Asrw%2Fschema%2F1%2Fdc
+          required: false
+          example: info%3Asrw%2Fschema%2F1%2Fdc
+        - name: startRecord
+          in: query
+          description: position to start in result set
+          required: false
+        - name: maximiumRecords
+          in: query
+          description: number of records to return. 100 is the maximium supported
+          required: false
+        - name: sortKeys
+          in: query
+          description: How the result should be sorted
+          required: false          
+        - name: servicelevel
+          in: query
+          description: amount of metadata to return
+          schema:
+            type: string
+            default: default
+            enum:
+              - default
+              - full                      
+          required: false
+          example: full
+        - name: frbrGrouping
+          in: query
+          description: whether or not to group together similar editions
+          schema:
+            type: string
+            default: on
+            enum:
+              - on
+              - off                      
+          required: false  
+          example: off                     
+      responses:
+        '200':
+          description: Successful search
+          content:
+            '*/*':
+              schema:
+                type: object            
+              examples:
+                success-search-marc: 
+                  $ref: '#/components/examples/success-search-sru-marc'
+                success-search-dc: 
+                  $ref: '#/components/examples/success-search-sru-dc'
+                limit-only:
+                  $ref: '#/components/examples/limit-only'
+                unsupported-index:
+                  $ref: '#/components/examples/unsupported-index'
+                cql-query-syntax-error:
+                  $ref: '#/components/examples/cql-query-syntax-error'                     
+        '401':
+          description: Invalid authentication credentials
+          content:
+            '*/*':
+              schema:
+                type: object            
+              examples:
+                no_key:
+                  $ref: '#/components/examples/unauthorized'
+                bad_key:
+                  $ref: '#/components/examples/unauthorized_bad_key'
+        '403':
+          description: Unauthorized. Typically the key is over its quota
+          content:
+            '*/*':
+              schema:
+                type: object            
+              examples:
+                overlimit:
+                  $ref: '#/components/examples/overlimit'                               
+        '405':
+          description: 'Method not supported, see response Allow header'
+          content:
+            '*/*':
+              schema:
+                type: object            
+              example:
+                $ref: '#/components/examples/method-not-allowed-error'               
+        '500':
+          description: 'Something went wrong (hopfully rare) - please try again'
+          content:
+            '*/*':
+              schema:
+                type: object
+      security:
+        - api_key: []  
+  /catalog/content/{oclcnumber}:
+    get:
+      tags:
+        - Read
+      summary: 'Read single record'
+      description: 'Read bibliographic record by OCLC Number'
+      operationId: read-oclcnumber
+      parameters:
+        - name: oclcnumber
+          in: path
+          description: OCLC Number of record to retrieve
+          required: true
+          example: 15550774
+        - name: recordSchema
+          in: query
+          description: Query to send to the service
+          schema:
+            type: string
+            default: info%3Asrw%2Fschema%2F1%2Fmarcxml
+            enum:
+              - info%3Asrw%2Fschema%2F1%2Fmarcxml
+              - info%3Asrw%2Fschema%2F1%2Fdc
+          required: false
+          example: info%3Asrw%2Fschema%2F1%2Fdc          
+        - name: servicelevel
+          in: query
+          description: amount of metadata to return
+          schema:
+            type: string
+            default: default
+            enum:
+              - default
+              - full                  
+          required: false
+          example: full                  
+      responses:
+        '200':
+          description: Successful search
+          content:
+            '*/*':
+              schema:
+                type: object            
+              examples:
+                success-search-marc: 
+                  $ref: '#/components/examples/success-read-record'
+                success-search-dc: 
+                  $ref: '#/components/examples/success-read-record-dc'
+                fail-record-does-not-exist:
+                  $ref: '#/components/examples/record-does-not-exist'                  
+        '401':
+          description: Invalid authentication credentials
+          content:
+            '*/*':
+              schema:
+                type: object            
+              examples:
+                no_key:
+                  $ref: '#/components/examples/unauthorized'
+                bad_key:
+                  $ref: '#/components/examples/unauthorized_bad_key'                 
+        '403':
+          description: Unauthorized. Typically the key is over its quota
+          content:
+            '*/*':
+              schema:
+                type: object            
+              examples:
+                overlimit:
+                  $ref: '#/components/examples/overlimit'              
+        '405':
+          description: 'Method not supported, see response Allow header'
+          content:
+            '*/*':
+              schema:
+                type: object            
+              example:
+                $ref: '#/components/examples/method-not-allowed-error'               
+        '500':
+          description: 'Something went wrong (hopfully rare) - please try again'
+          content:
+            '*/*':
+              schema:
+                type: object
+      security:
+        - api_key: []        
+  /catalog/content/isbn/{isbn}:
+    get:
+      tags:
+        - Read
+      summary: 'Read single record by ISBN'
+      description: 'Read bibliographic record by ISBN'
+      operationId: read-isbn
+      parameters:
+        - name: isbn
+          in: path
+          description: ISBN of record to retrieve
+          required: true
+          example: 078946988X
+        - name: recordSchema
+          in: query
+          description: Query to send to the service
+          schema:
+            type: string
+            default: info%3Asrw%2Fschema%2F1%2Fmarcxml
+            enum:
+              - info%3Asrw%2Fschema%2F1%2Fmarcxml
+              - info%3Asrw%2Fschema%2F1%2Fdc
+          required: false
+          example: info%3Asrw%2Fschema%2F1%2Fdc          
+        - name: servicelevel
+          in: query
+          description: amount of metadata to return
+          schema:
+            type: string
+            default: default
+            enum:
+              - default
+              - full                  
+          required: false
+          example: full                  
+      responses:
+        '200':
+          description: Successful search
+          content:
+            '*/*':
+              schema:
+                type: object            
+              examples:
+                success-search-marc: 
+                  $ref: '#/components/examples/success-read-record'
+                success-search-dc: 
+                  $ref: '#/components/examples/success-read-record-dc'
+                fail-record-does-not-exist:
+                  $ref: '#/components/examples/record-does-not-exist'                  
+        '401':
+          description: Invalid authentication credentials
+          content:
+            '*/*':
+              schema:
+                type: object            
+              examples:
+                no_key:
+                  $ref: '#/components/examples/unauthorized'
+                bad_key:
+                  $ref: '#/components/examples/unauthorized_bad_key'             
+        '403':
+          description: Unauthorized. Typically the key is over its quota
+          content:
+            '*/*':
+              schema:
+                type: object            
+              examples:
+                overlimit:
+                  $ref: '#/components/examples/overlimit'
+        '405':
+          description: 'Method not supported, see response Allow header'
+          content:
+            '*/*':
+              schema:
+                type: object            
+              example:
+                $ref: '#/components/examples/method-not-allowed-error'               
+        '500':
+          description: 'Something went wrong (hopfully rare) - please try again'
+          content:
+            '*/*':
+              schema:
+                type: object
+      security:
+        - api_key: []
+  /catalog/content/issn/{issn}:
+    get:
+      tags:
+        - Read
+      summary: 'Read single record by ISSN'
+      description: 'Read bibliographic record by ISSN'
+      operationId: read-issn
+      parameters:
+        - name: issn
+          in: path
+          description: ISSN of record to retrieve
+          required: true
+          example: 0000-0019
+        - name: recordSchema
+          in: query
+          description: Query to send to the service
+          schema:
+            type: string
+            default: info%3Asrw%2Fschema%2F1%2Fmarcxml
+            enum:
+              - info%3Asrw%2Fschema%2F1%2Fmarcxml
+              - info%3Asrw%2Fschema%2F1%2Fdc
+          required: false
+          example: info%3Asrw%2Fschema%2F1%2Fdc          
+        - name: servicelevel
+          in: query
+          description: amount of metadata to return
+          schema:
+            type: string
+            default: default
+            enum:
+              - default
+              - full                  
+          required: false
+          example: full                  
+      responses:
+        '200':
+          description: Successful search
+          content:
+            '*/*':
+              schema:
+                type: object            
+              examples:
+                success-search-marc: 
+                  $ref: '#/components/examples/success-read-record'
+                success-search-dc: 
+                  $ref: '#/components/examples/success-read-record-dc'
+                fail-record-does-not-exist:
+                  $ref: '#/components/examples/record-does-not-exist'                  
+        '401':
+          description: Invalid authentication credentials
+          content:
+            '*/*':
+              schema:
+                type: object            
+              examples:
+                no_key:
+                  $ref: '#/components/examples/unauthorized'
+                bad_key:
+                  $ref: '#/components/examples/unauthorized_bad_key'             
+        '403':
+          description: Unauthorized. Typically the key is over its quota
+          content:
+            '*/*':
+              schema:
+                type: object            
+              examples:
+                overlimit:
+                  $ref: '#/components/examples/overlimit'
+        '405':
+          description: 'Method not supported, see response Allow header'
+          content:
+            '*/*':
+              schema:
+                type: object            
+              example:
+                $ref: '#/components/examples/method-not-allowed-error'               
+        '500':
+          description: 'Something went wrong (hopfully rare) - please try again'
+          content:
+            '*/*':
+              schema:
+                type: object
+      security:
+        - api_key: []                                
+  /catalog/content/sn/{sn}:
+    get:
+      tags:
+        - Read
+      summary: 'Read single record by Standard Number'
+      description: 'Read bibliographic record by Standard Number'
+      operationId: read-sn
+      parameters:
+        - name: sn
+          in: path
+          description: Standard number of record to retrieve
+          required: true
+          example: sn 99035013
+        - name: recordSchema
+          in: query
+          description: Query to send to the service
+          schema:
+            type: string
+            default: info%3Asrw%2Fschema%2F1%2Fmarcxml
+            enum:
+              - info%3Asrw%2Fschema%2F1%2Fmarcxml
+              - info%3Asrw%2Fschema%2F1%2Fdc
+          required: false
+          example: info%3Asrw%2Fschema%2F1%2Fdc          
+        - name: servicelevel
+          in: query
+          description: amount of metadata to return
+          schema:
+            type: string
+            default: default
+            enum:
+              - default
+              - full                  
+          required: false
+          example: full                  
+      responses:
+        '200':
+          description: Successful search
+          content:
+            '*/*':
+              schema:
+                type: object            
+              examples:
+                success-search-marc: 
+                  $ref: '#/components/examples/success-read-record'
+                success-search-dc: 
+                  $ref: '#/components/examples/success-read-record-dc'
+                fail-record-does-not-exist:
+                  $ref: '#/components/examples/record-does-not-exist'
+        '401':
+          description: Invalid authentication credentials
+          content:
+            '*/*':
+              schema:
+                type: object            
+              examples:
+                no_key:
+                  $ref: '#/components/examples/unauthorized'
+                bad_key:
+                  $ref: '#/components/examples/unauthorized_bad_key'            
+        '403':
+          description: Unauthorized. Typically the key is over its quota
+          content:
+            '*/*':
+              schema:
+                type: object            
+              examples:
+                overlimit:
+                  $ref: '#/components/examples/overlimit'
+        '405':
+          description: 'Method not supported, see response Allow header'
+          content:
+            '*/*':
+              schema:
+                type: object            
+              example:
+                $ref: '#/components/examples/method-not-allowed-error'               
+        '500':
+          description: 'Something went wrong (hopfully rare) - please try again'
+          content:
+            '*/*':
+              schema:
+                type: object
+      security:
+        - api_key: []   
+  /catalog/content/citations/{oclcnumber}:
+    get:
+      tags:
+        - Citation
+      summary: 'Get citation format for single record'
+      description: 'Get citation format for single record by OCLC Number'
+      operationId: cite-oclcnumber
+      parameters:
+        - name: oclcnumber
+          in: path
+          description: OCLC Number of record to retrieve
+          required: true
+          example: 15550774
+        - name: cformat
+          in: query
+          description: Citation format to return
+          schema:
+            type: string
+            default: mla
+            enum:
+              - apa
+              - chicago
+              - harvard
+              - mla
+              - turabian
+              - all
+          required: false
+          example: all          
+                 
+      responses:
+        '200':
+          description: Successful search
+          content:
+            '*/*':           
+              examples:
+                success-search-collection: 
+                  $ref: '#/components/examples/success-read-citation'
+        '401':
+          description: Invalid authentication credentials
+          content:
+            '*/*':
+              schema:
+                type: object            
+              examples:
+                no_key:
+                  $ref: '#/components/examples/unauthorized'
+                bad_key:
+                  $ref: '#/components/examples/unauthorized_bad_key'             
+        '403':
+          description: Unauthorized. Typically the key is over its quota
+          content:
+            '*/*':
+              schema:
+                type: object            
+              examples:
+                overlimit:
+                  $ref: '#/components/examples/overlimit'
+        '405':
+          description: 'Method not supported, see response Allow header'
+          content:
+            '*/*':
+              schema:
+                type: object            
+              example:
+                $ref: '#/components/examples/method-not-allowed-error'               
+        '500':
+          description: 'Something went wrong (hopfully rare) - please try again'
+          content:
+            '*/*':
+              schema:
+                type: object
+      security:
+        - api_key: []                                                
+  /catalog/content/libraries/{oclcnumber}:
+    get:
+      tags:
+        - Holdings
+      summary: 'Get holdings'
+      description: 'Get holdings by OCLC Number'
+      operationId: holdings-oclcnumber
+      parameters:
+        - name: oclcnumber
+          in: path
+          description: OCLC Number of record to retrieve
+          required: true
+          example: 15550774
+        - name: oclcsymbol
+          in: query
+          description: OCLC Symbol of library to check holdings for
+          schema:
+            type: string            
+          required: false
+          example: TXH
+        - name: ip
+          in: query
+          description: IP address. API will try to resolve this to geographic location
+          schema:
+            type: string            
+          required: false
+          example: 153.40.170.1          
+        - name: lat
+          in: query
+          description: Latitude
+          schema:
+            type: string            
+          required: false
+          example: 37.502508
+        - name: lon
+          in: query
+          description: Longitude
+          schema:
+            type: string            
+          required: false
+          example: -122.22702
+        - name: location
+          in: query
+          description: Location to limit to. Can be postal code, state, province, country code
+          schema:
+            type: string            
+          required: false
+          example: 94002          
+        - name: libtype
+          in: query
+          description: type of library to limit to. 1 - academic, 2 - public, 3 - government, 4 - other
+          schema:
+            type: string
+            enum:
+              - 1
+              - 2
+              - 3
+              - 4            
+          required: false
+          example: 2                                        
+        - name: servicelevel
+          in: query
+          description: amount of metadata to return
+          schema:
+            type: string
+            default: default
+            enum:
+              - default
+              - full                  
+          required: false
+          example: full
+        - name: frbrGrouping
+          in: query
+          description: whether or not to group together similar editions
+          schema:
+            type: string
+            default: on
+            enum:
+              - on
+              - off                      
+          required: false  
+          example: off
+        - name: startLibrary
+          in: query
+          description: Start position
+          schema:
+            type: integer
+            default: 1                
+          required: false  
+          example: 1
+        - name: maximiumLibraries
+          in: query
+          description: Maximium number of libraires to show
+          schema:
+            type: integer
+            default: 10                
+          required: false  
+          example: 1
+        - name: format
+          in: query
+          description: format to return response in
+          schema:
+            type: string
+            default: xml
+            enum:
+              - xml
+              - json                      
+          required: false  
+          example: json                                                
+      responses:
+        '200':
+          description: Successful search
+          content:
+            '*/*':
+              schema:
+                type: object            
+              examples:
+                success-search-holdings-oclcSymbol-xml: 
+                  $ref: '#/components/examples/success-search-holdings-oclcSymbol'
+                success-search-holdings-zipcode: 
+                  $ref: '#/components/examples/success-search-holdings-zipcode'
+                success-search-holdings-state: 
+                  $ref: '#/components/examples/success-search-holdings-state'            
+                success-search-holdings-oclcSymbol-json: 
+                  $ref: '#/components/examples/success-search-holdings-oclcSymbol-json'
+                success-search-holdings-zipcode-json: 
+                  $ref: '#/components/examples/success-search-holdings-zipcode-json'
+                success-search-holdings-state-json: 
+                  $ref: '#/components/examples/success-search-holdings-state-json'
+                no-holdings-xml:
+                  $ref: '#/components/examples/no-holdings-xml'
+                no-holdings-json:
+                  $ref: '#/components/examples/no-holdings-json'
+                fail-record-does-not-exist:
+                  $ref: '#/components/examples/record-does-not-exist'                                                                                                                          
+        '401':
+          description: Invalid authentication credentials
+          content:
+            '*/*':
+              schema:
+                type: object            
+              examples:
+                no_key:
+                  $ref: '#/components/examples/unauthorized'
+                bad_key:
+                  $ref: '#/components/examples/unauthorized_bad_key'             
+        '403':
+          description: Unauthorized. Typically the key is over its quota
+          content:
+            '*/*':
+              schema:
+                type: object            
+              examples:
+                overlimit:
+                  $ref: '#/components/examples/overlimit'
+        '405':
+          description: 'Method not supported, see response Allow header'
+          content:
+            '*/*':
+              schema:
+                type: object            
+              example:
+                $ref: '#/components/examples/method-not-allowed-error'               
+        '500':
+          description: 'Something went wrong (hopfully rare) - please try again'
+          content:
+            '*/*':
+              schema:
+                type: object
+      security:
+        - api_key: []        
+  /catalog/content/libraries/isbn/{isbn}:
+    get:
+      tags:
+        - Read
+      summary: 'Read single record by ISBN'
+      description: 'Read bibliographic record by ISBN'
+      operationId: read-isbn
+      parameters:
+        - name: isbn
+          in: path
+          description: ISBN of record to retrieve
+          required: true
+          example: 078946988X
+        - name: recordSchema
+          in: query
+          description: Query to send to the service
+          schema:
+            type: string
+            default: info%3Asrw%2Fschema%2F1%2Fmarcxml
+            enum:
+              - info%3Asrw%2Fschema%2F1%2Fmarcxml
+              - info%3Asrw%2Fschema%2F1%2Fdc
+          required: false
+          example: info%3Asrw%2Fschema%2F1%2Fdc          
+        - name: servicelevel
+          in: query
+          description: amount of metadata to return
+          schema:
+            type: string
+            default: default
+            enum:
+              - default
+              - full                  
+          required: false
+          example: full                  
+      responses:
+        '200':
+          description: Successful search
+          content:
+            '*/*':
+              schema:
+                type: object            
+              examples:
+                success-search-holdings-oclcSymbol-xml: 
+                  $ref: '#/components/examples/success-search-holdings-oclcSymbol'
+                success-search-holdings-zipcode: 
+                  $ref: '#/components/examples/success-search-holdings-zipcode'
+                success-search-holdings-state: 
+                  $ref: '#/components/examples/success-search-holdings-state'            
+                success-search-holdings-oclcSymbol-json: 
+                  $ref: '#/components/examples/success-search-holdings-oclcSymbol-json'
+                success-search-holdings-zipcode-json: 
+                  $ref: '#/components/examples/success-search-holdings-zipcode-json'
+                success-search-holdings-state-json: 
+                  $ref: '#/components/examples/success-search-holdings-state-json'
+                no-holdings-xml:
+                  $ref: '#/components/examples/no-holdings-xml'
+                no-holdings-json:
+                  $ref: '#/components/examples/no-holdings-json'
+                fail-record-does-not-exist:
+                  $ref: '#/components/examples/record-does-not-exist'                  
+        '401':
+          description: Invalid authentication credentials
+          content:
+            '*/*':
+              schema:
+                type: object            
+              examples:
+                no_key:
+                  $ref: '#/components/examples/unauthorized'
+                bad_key:
+                  $ref: '#/components/examples/unauthorized_bad_key'             
+        '403':
+          description: Unauthorized. Typically the key is over its quota
+          content:
+            '*/*':
+              schema:
+                type: object            
+              examples:
+                overlimit:
+                  $ref: '#/components/examples/overlimit'
+        '405':
+          description: 'Method not supported, see response Allow header'
+          content:
+            '*/*':
+              schema:
+                type: object            
+              example:
+                $ref: '#/components/examples/method-not-allowed-error'               
+        '500':
+          description: 'Something went wrong (hopfully rare) - please try again'
+          content:
+            '*/*':
+              schema:
+                type: object
+      security:
+        - api_key: []
+  /catalog/content/libraries/issn/{issn}:
+    get:
+      tags:
+        - Read
+      summary: 'Read single record by ISSN'
+      description: 'Read bibliographic record by ISSN'
+      operationId: read-issn
+      parameters:
+        - name: issn
+          in: path
+          description: ISSN of record to retrieve
+          required: true
+          example: 0000-0019
+        - name: recordSchema
+          in: query
+          description: Query to send to the service
+          schema:
+            type: string
+            default: info%3Asrw%2Fschema%2F1%2Fmarcxml
+            enum:
+              - info%3Asrw%2Fschema%2F1%2Fmarcxml
+              - info%3Asrw%2Fschema%2F1%2Fdc
+          required: false
+          example: info%3Asrw%2Fschema%2F1%2Fdc          
+        - name: servicelevel
+          in: query
+          description: amount of metadata to return
+          schema:
+            type: string
+            default: default
+            enum:
+              - default
+              - full                  
+          required: false
+          example: full                  
+      responses:
+        '200':
+          description: Successful search
+          content:
+            '*/*':
+              schema:
+                type: object            
+              examples:
+                success-search-holdings-oclcSymbol-xml: 
+                  $ref: '#/components/examples/success-search-holdings-oclcSymbol'
+                success-search-holdings-zipcode: 
+                  $ref: '#/components/examples/success-search-holdings-zipcode'
+                success-search-holdings-state: 
+                  $ref: '#/components/examples/success-search-holdings-state'            
+                success-search-holdings-oclcSymbol-json: 
+                  $ref: '#/components/examples/success-search-holdings-oclcSymbol-json'
+                success-search-holdings-zipcode-json: 
+                  $ref: '#/components/examples/success-search-holdings-zipcode-json'
+                success-search-holdings-state-json: 
+                  $ref: '#/components/examples/success-search-holdings-state-json'
+                no-holdings-xml:
+                  $ref: '#/components/examples/no-holdings-xml'
+                no-holdings-json:
+                  $ref: '#/components/examples/no-holdings-json'
+                fail-record-does-not-exist:
+                  $ref: '#/components/examples/record-does-not-exist'                  
+        '401':
+          description: Invalid authentication credentials
+          content:
+            '*/*':
+              schema:
+                type: object            
+              examples:
+                no_key:
+                  $ref: '#/components/examples/unauthorized'
+                bad_key:
+                  $ref: '#/components/examples/unauthorized_bad_key'          
+        '403':
+          description: Unauthorized. Typically the key is over its quota
+          content:
+            '*/*':
+              schema:
+                type: object            
+              examples:
+                overlimit:
+                  $ref: '#/components/examples/overlimit'
+        '405':
+          description: 'Method not supported, see response Allow header'
+          content:
+            '*/*':
+              schema:
+                type: object            
+              example:
+                $ref: '#/components/examples/method-not-allowed-error'               
+        '500':
+          description: 'Something went wrong (hopfully rare) - please try again'
+          content:
+            '*/*':
+              schema:
+                type: object
+      security:
+        - api_key: []                                
+  /catalog/content/libraries/sn/{sn}:
+    get:
+      tags:
+        - Read
+      summary: 'Read single record by Standard Number'
+      description: 'Read bibliographic record by Standard Number'
+      operationId: read-sn
+      parameters:
+        - name: sn
+          in: path
+          description: Standard number of record to retrieve
+          required: true
+          example: sn 99035013
+        - name: recordSchema
+          in: query
+          description: Query to send to the service
+          schema:
+            type: string
+            default: info%3Asrw%2Fschema%2F1%2Fmarcxml
+            enum:
+              - info%3Asrw%2Fschema%2F1%2Fmarcxml
+              - info%3Asrw%2Fschema%2F1%2Fdc
+          required: false
+          example: info%3Asrw%2Fschema%2F1%2Fdc          
+        - name: servicelevel
+          in: query
+          description: amount of metadata to return
+          schema:
+            type: string
+            default: default
+            enum:
+              - default
+              - full                  
+          required: false
+          example: full                  
+      responses:
+        '200':
+          description: Successful search
+          content:
+            '*/*':
+              schema:
+                type: object            
+              examples:
+                success-search-holdings-oclcSymbol-xml: 
+                  $ref: '#/components/examples/success-search-holdings-oclcSymbol'
+                success-search-holdings-zipcode: 
+                  $ref: '#/components/examples/success-search-holdings-zipcode'
+                success-search-holdings-state: 
+                  $ref: '#/components/examples/success-search-holdings-state'            
+                success-search-holdings-oclcSymbol-json: 
+                  $ref: '#/components/examples/success-search-holdings-oclcSymbol-json'
+                success-search-holdings-zipcode-json: 
+                  $ref: '#/components/examples/success-search-holdings-zipcode-json'
+                success-search-holdings-state-json: 
+                  $ref: '#/components/examples/success-search-holdings-state-json'
+                no-holdings-xml:
+                  $ref: '#/components/examples/no-holdings-xml'
+                no-holdings-json:
+                  $ref: '#/components/examples/no-holdings-json'
+                fail-record-does-not-exist:
+                  $ref: '#/components/examples/record-does-not-exist'                                
+        '401':
+          description: Invalid authentication credentials
+          content:
+            '*/*':
+              schema:
+                type: object            
+              examples:
+                no_key:
+                  $ref: '#/components/examples/unauthorized'
+                bad_key:
+                  $ref: '#/components/examples/unauthorized_bad_key'   
+        '403':
+          description: Unauthorized. Typically the key is over its quota
+          content:
+            '*/*':
+              schema:
+                type: object            
+              examples:
+                overlimit:
+                  $ref: '#/components/examples/overlimit'
+        '405':
+          description: 'Method not supported, see response Allow header'
+          content:
+            '*/*':
+              schema:
+                type: object            
+              example:
+                $ref: '#/components/examples/method-not-allowed-error'               
+        '500':
+          description: 'Something went wrong (hopfully rare) - please try again'
+          content:
+            '*/*':
+              schema:
+                type: object
+      security:
+        - api_key: []  
+components:
+  securitySchemes:
+    api_key:
+      type: apiKey
+      name: wskey
+      in: query
+  examples:
+    success-search-atom:
+      summary: successful search via OpenSearch with Atom Response
+      value: >
+        <?xml version="1.0" encoding="UTF-8" standalone="no"?>
+        <feed xmlns="http://www.w3.org/2005/Atom" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:diag="http://www.loc.gov/zing/srw/diagnostic/" xmlns:oclcterms="http://purl.org/oclc/terms/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:opensearch="http://a9.com/-/spec/opensearch/1.1/">
+            <title>OCLC Worldcat Search: srw.bn = "161775188X"</title>
+            <id>http://worldcat.org/webservices/catalog/search/worldcat/opensearch?q=srw.bn+%3D+%22161775188X%22&amp;start=1&amp;count=10&amp;format=atom&amp;wskey=key</id>
+            <updated>2020-01-08T13:48:22-05:00</updated>
+            <subtitle>Search results for srw.bn = "161775188X" at http://worldcat.org/webservices/catalog</subtitle>
+            <opensearch:totalResults>1</opensearch:totalResults>
+            <opensearch:startIndex>1</opensearch:startIndex>
+            <opensearch:itemsPerPage>10</opensearch:itemsPerPage>
+            <opensearch:Query role="request" searchTerms="srw.bn = &quot;161775188X&quot;" startPage="1"/>
+            <link rel="alternate" href="http://worldcat.org/webservices/catalog/search/worldcat/opensearch?q=srw.bn+%3D+%22161775188X%22&amp;start=1&amp;count=10&amp;wskey=key" type="text/html"/>
+            <link rel="self" href="http://worldcat.org/webservices/catalog/search/worldcat/opensearch?q=srw.bn+%3D+%22161775188X%22&amp;start=1&amp;count=10&amp;format=atom&amp;wskey=key" type="application/atom+xml"/>
+            <link rel="first" href="http://worldcat.org/webservices/catalog/search/worldcat/opensearch?q=srw.bn+%3D+%22161775188X%22&amp;start=1&amp;count=10&amp;format=atom&amp;wskey=key" type="application/atom+xml"/>
+            <link rel="last" href="http://worldcat.org/webservices/catalog/search/worldcat/opensearch?q=srw.bn+%3D+%22161775188X%22&amp;start=1&amp;count=10&amp;format=atom&amp;wskey=key" type="application/atom+xml"/>
+            <link rel="search" type="application/opensearchdescription+xml" href="http://worldcat.org/webservices/catalog/opensearch.description.xml"/>
+            <entry>
+                <author>
+                    <name>Tofield, Simon.</name>
+                </author>
+                <title>Simon's cat vs. the world</title>
+                <link href="http://worldcat.org/oclc/933464218"/>
+                <id>http://worldcat.org/oclc/933464218</id>
+                <updated>2017-04-05T22:55:37Z</updated>
+                <summary>In short, wordless cartoons, Simon's cat frustrates him by destroying his property, harassing other animals, and generally making a mess of things.</summary>
+                <dc:identifier>urn:ISBN:9781617751882</dc:identifier>
+                <dc:identifier>urn:ISBN:161775188X</dc:identifier>
+                <oclcterms:recordIdentifier>933464218</oclcterms:recordIdentifier>
+            </entry>
+        </feed>      
+    success-search-rss:
+      summary: successful search via OpenSearch with RSS Response
+      value: >
+        <?xml version="1.0" encoding="UTF-8" standalone="no"?>
+        <rss xmlns:URLEncoder="java://java.net.URLEncoder" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:oclcterms="http://purl.org/oclc/terms/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:opensearch="http://a9.com/-/spec/opensearch/1.1/" xmlns:diag="http://www.loc.gov/zing/srw/diagnostic/" xmlns:srw="http://www.loc.gov/zing/srw/" version="2.0">
+            <channel>
+                <title>OCLC Worldcat Search: srw.bn = "161775188X"</title>
+                <link>http://worldcat.org/webservices/catalog/search/worldcat/opensearch?q=srw.bn+%3D+%22161775188X%22&amp;start=1&amp;count=10&amp;format=atom&amp;wskey=key</link>
+                <description>Search results for "srw.bn = "161775188X"" at http://worldcat.org/webservices/catalog</description>
+                <opensearch:totalResults>1</opensearch:totalResults>
+                <opensearch:startIndex>1</opensearch:startIndex>
+                <opensearch:itemsPerPage>10</opensearch:itemsPerPage>
+                <atom:link rel="search" type="application/opensearchdescription+xml" href="http://worldcat.org/webservices/catalog/opensearch.description.xml"/>
+                <opensearch:Query role="request" searchTerms="srw.bn = &quot;161775188X&quot;" startPage="1"/>
+                <item>
+                    <title>Simon's cat vs. the world</title>
+                    <author>
+                        <name>Tofield, Simon.</name>
+                    </author>
+                    <link>http://worldcat.org/oclc/933464218</link>
+                    <description>In short, wordless cartoons, Simon's cat frustrates him by destroying his property, harassing other animals, and generally making a mess of things.</description>
+                    <guid>http://worldcat.org/oclc/933464218</guid>
+                    <dc:identifier>urn:ISBN:9781617751882</dc:identifier>
+                    <dc:identifier>urn:ISBN:161775188X</dc:identifier>
+                    <oclcterms:recordIdentifier>933464218</oclcterms:recordIdentifier>
+                </item>
+            </channel>
+        </rss>            
+    success-search-sru-marc:
+      summary: successful search for records in MARC format
+      value: >
+        <?xml version="1.0" encoding="UTF-8" standalone="no"?>
+        <?xml-stylesheet type='text/xsl' href='/webservices/catalog/xsl/searchRetrieveResponse.xsl'?>
+        <searchRetrieveResponse xmlns="http://www.loc.gov/zing/srw/" xmlns:oclcterms="http://purl.org/oclc/terms/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:diag="http://www.loc.gov/zing/srw/diagnostic/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+            <version>1.1</version>
+            <numberOfRecords>1</numberOfRecords>
+            <records>
+                <record>
+                    <recordSchema>marcxml</recordSchema>
+                    <recordPacking>xml</recordPacking>
+                    <recordData>
+                        <record xmlns="http://www.loc.gov/MARC21/slim">
+                            <leader>00000cam a2200000Mi 4500</leader>
+                            <controlfield tag="001">933464218</controlfield>
+                            <controlfield tag="008">130321s2013    xx a     6    000 0 eng d</controlfield>
+                            <datafield ind1=" " ind2=" " tag="020">
+                                <subfield code="a">9781617751882 : HRD</subfield>
+                            </datafield>
+                            <datafield ind1=" " ind2=" " tag="020">
+                                <subfield code="a">161775188X : HRD</subfield>
+                            </datafield>
+                            <datafield ind1="1" ind2=" " tag="100">
+                                <subfield code="a">Tofield, Simon.</subfield>
+                            </datafield>
+                            <datafield ind1="1" ind2="0" tag="245">
+                                <subfield code="a">Simon's cat vs. the world /</subfield>
+                                <subfield code="c">Simon Tolfield.</subfield>
+                            </datafield>
+                            <datafield ind1="3" ind2=" " tag="246">
+                                <subfield code="a">Simon's cat versus the world</subfield>
+                            </datafield>
+                            <datafield ind1=" " ind2=" " tag="260">
+                                <subfield code="b">Consortium Book Sales &amp; Dist</subfield>
+                                <subfield code="c">2013.</subfield>
+                            </datafield>
+                            <datafield ind1=" " ind2=" " tag="300">
+                                <subfield code="a">96 pages :</subfield>
+                                <subfield code="b">illustrations</subfield>
+                            </datafield>
+                            <datafield ind1=" " ind2=" " tag="520">
+                                <subfield code="a">In short, wordless cartoons, Simon's cat frustrates him by destroying his property, harassing other animals, and generally making a mess of things.</subfield>
+                            </datafield>
+                            <datafield ind1=" " ind2="0" tag="650">
+                                <subfield code="a">Cats</subfield>
+                                <subfield code="v">Comic books, strips, etc.</subfield>
+                            </datafield>
+                            <datafield ind1=" " ind2="0" tag="650">
+                                <subfield code="a">Human-animal relationships</subfield>
+                                <subfield code="v">Comic books, strips, etc.</subfield>
+                            </datafield>
+                            <datafield ind1=" " ind2="0" tag="650">
+                                <subfield code="a">English wit and humor, Pictorial.</subfield>
+                            </datafield>
+                            <datafield ind1=" " ind2="7" tag="650">
+                                <subfield code="a">Cats.</subfield>
+                                <subfield code="2">fast</subfield>
+                                <subfield code="0">(OCoLC)fst00849374</subfield>
+                            </datafield>
+                            <datafield ind1=" " ind2="7" tag="650">
+                                <subfield code="a">English wit and humor, Pictorial.</subfield>
+                                <subfield code="2">fast</subfield>
+                                <subfield code="0">(OCoLC)fst00912418</subfield>
+                            </datafield>
+                            <datafield ind1=" " ind2="7" tag="650">
+                                <subfield code="a">Human-animal relationships.</subfield>
+                                <subfield code="2">fast</subfield>
+                                <subfield code="0">(OCoLC)fst00963482</subfield>
+                            </datafield>
+                            <datafield ind1=" " ind2="7" tag="655">
+                                <subfield code="a">Comic books, strips, etc.</subfield>
+                                <subfield code="2">fast</subfield>
+                                <subfield code="0">(OCoLC)fst01423722</subfield>
+                            </datafield>
+                        </record>
+                    </recordData>
+                </record>
+            </records>
+            <nextRecordPosition/>
+            <resultSetIdleTime/>
+            <echoedSearchRetrieveRequest xmlns:srw="http://www.loc.gov/zing/srw/">
+                <version>1.1</version>
+                <query>srw.bn = "161775188X"</query>
+                <maximumRecords>10</maximumRecords>
+                <recordPacking>xml</recordPacking>
+                <startRecord>1</startRecord>
+                <sortKeys>relevance</sortKeys>
+                <wskey>key</wskey>
+            </echoedSearchRetrieveRequest>
+        </searchRetrieveResponse>      
+    success-search-sru-dc:
+      summary: successful search for records in Dublin Core format
+      value: >
+        <?xml version="1.0" encoding="UTF-8" standalone="no"?>
+        <?xml-stylesheet type='text/xsl' href='/webservices/catalog/xsl/searchRetrieveResponse.xsl'?>
+        <searchRetrieveResponse xmlns="http://www.loc.gov/zing/srw/" xmlns:oclcterms="http://purl.org/oclc/terms/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:diag="http://www.loc.gov/zing/srw/diagnostic/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+            <version>1.1</version>
+            <numberOfRecords>1</numberOfRecords>
+            <records>
+                <record>
+                    <recordSchema>info:srw/schema/1/dc</recordSchema>
+                    <recordPacking>xml</recordPacking>
+                    <recordData>
+                        <oclcdcs>
+                            <dc:creator>Tofield, Simon.</dc:creator>
+                            <dc:date>2013</dc:date>
+                            <dc:description>In short, wordless cartoons, Simon's cat frustrates him by destroying his property, harassing other animals, and generally making a mess of things.</dc:description>
+                            <dc:format>96 pages : illustrations</dc:format>
+                            <dc:identifier>9781617751882 : HRD</dc:identifier>
+                            <dc:identifier>161775188X : HRD</dc:identifier>
+                            <dc:language xsi:type="http://purl.org/dc/terms/ISO639-2">eng</dc:language>
+                            <dc:publisher>Consortium Book Sales &amp; Dist</dc:publisher>
+                            <dc:subject xsi:type="http://purl.org/dc/terms/LCSH">Cats--Comic books, strips, etc.</dc:subject>
+                            <dc:subject xsi:type="http://purl.org/dc/terms/LCSH">Human-animal relationships--Comic books, strips, etc.</dc:subject>
+                            <dc:subject xsi:type="http://purl.org/dc/terms/LCSH">English wit and humor, Pictorial.</dc:subject>
+                            <dc:title>Simon's cat vs. the world </dc:title>
+                            <dc:title>Simon's cat versus the world</dc:title>
+                            <dc:type>Text</dc:type>
+                            <oclcterms:recordCreationDate xsi:type="http://purl.org/oclc/terms/marc008date">130321</oclcterms:recordCreationDate>
+                            <oclcterms:recordIdentifier>933464218</oclcterms:recordIdentifier>
+                        </oclcdcs>
+                    </recordData>
+                </record>
+            </records>
+            <nextRecordPosition/>
+            <resultSetIdleTime/>
+            <echoedSearchRetrieveRequest xmlns:srw="http://www.loc.gov/zing/srw/">
+                <version>1.1</version>
+                <query>srw.bn = "161775188X"</query>
+                <maximumRecords>10</maximumRecords>
+                <recordSchema>info:srw/schema/1/dc</recordSchema>
+                <recordPacking>xml</recordPacking>
+                <startRecord>1</startRecord>
+                <sortKeys>relevance</sortKeys>
+                <wskey>key</wskey>
+            </echoedSearchRetrieveRequest>
+        </searchRetrieveResponse>                                  
+    success-read-record:
+      summary: successful read of a single record in MARC
+      value: >
+        <?xml version="1.0" encoding="UTF-8" standalone="no"?>
+        <record xmlns="http://www.loc.gov/MARC21/slim">
+            <leader>00000cam a22000007i 4500</leader>
+            <controlfield tag="001">82671871</controlfield>
+            <controlfield tag="008">071012s2007    enka          001 0 eng  </controlfield>
+            <datafield ind1=" " ind2=" " tag="010">
+                <subfield code="a">  2007278140</subfield>
+            </datafield>
+            <datafield ind1=" " ind2=" " tag="020">
+                <subfield code="a">9780596529260</subfield>
+                <subfield code="q">(pbk.)</subfield>
+            </datafield>
+            <datafield ind1=" " ind2=" " tag="020">
+                <subfield code="a">0596529260</subfield>
+                <subfield code="q">(pbk.)</subfield>
+            </datafield>
+            <datafield ind1=" " ind2=" " tag="041">
+                <subfield code="a">eng</subfield>
+            </datafield>
+            <datafield ind1="1" ind2=" " tag="100">
+                <subfield code="a">Richardson, Leonard,</subfield>
+                <subfield code="d">1979-</subfield>
+            </datafield>
+            <datafield ind1="1" ind2="0" tag="245">
+                <subfield code="a">RESTful web services /</subfield>
+                <subfield code="c">Leonard Richardson and Sam Ruby.</subfield>
+            </datafield>
+            <datafield ind1=" " ind2="1" tag="264">
+                <subfield code="a">Farnham :</subfield>
+                <subfield code="b">O'Reilly,</subfield>
+                <subfield code="c">2007.</subfield>
+            </datafield>
+            <datafield ind1=" " ind2=" " tag="300">
+                <subfield code="a">xxiv, 419 pages :</subfield>
+                <subfield code="b">illustrations ;</subfield>
+                <subfield code="c">24 cm</subfield>
+            </datafield>
+            <datafield ind1=" " ind2=" " tag="500">
+                <subfield code="a">Includes index.</subfield>
+            </datafield>
+            <datafield ind1="0" ind2=" " tag="505">
+                <subfield code="a">The Programmable Web and Its Inhabitants -- Writing Web Service Clients -- What Makes RESTful Services Different? -- The Resource-Oriented Architecture -- Designing Read-Only Resource-Oriented Services -- Designing Read/Write Resource-Oriented Services -- A Service Implementation -- REST and ROA Best Practices -- The Building Blocks of Services -- The Resource-Oriented Architecture Versus Big Web Services -- Ajax Applications as REST Clients -- Frameworks for RESTful Services -- Some Resources for REST and Some RESTful Resources -- The HTTP Response Code Top 42 -- The HTTP Header Top Infinity.</subfield>
+            </datafield>
+            <datafield ind1=" " ind2=" " tag="520">
+                <subfield code="a">Shows how to use the REST architectural style to create web sites that can be used by computers as well as machines, providing basic rules for using REST and real-life examples of such Web services.</subfield>
+            </datafield>
+            <datafield ind1=" " ind2="0" tag="650">
+                <subfield code="a">Web services.</subfield>
+            </datafield>
+            <datafield ind1=" " ind2="7" tag="650">
+                <subfield code="a">Web services.</subfield>
+                <subfield code="2">fast</subfield>
+                <subfield code="0">(OCoLC)fst01173242</subfield>
+            </datafield>
+            <datafield ind1="1" ind2=" " tag="700">
+                <subfield code="a">Ruby, Sam.</subfield>
+            </datafield>
+        </record>      
+    success-read-record-dc:
+      summary: successful read of a single record in Dublin Core
+      value: >
+        <?xml version="1.0" encoding="UTF-8" standalone="no"?>
+        <oclcdcs xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:oclcterms="http://purl.org/oclc/terms/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+            <dc:creator>McPherson, James M.</dc:creator>
+            <dc:date>1988</dc:date>
+            <dc:description>Includes bibliographical references (p. 865-882) and index.</dc:description>
+            <dc:description>Awards: Pulitzer Prize, History, 1989.</dc:description>
+            <dc:description>Pulitzer Prize, History, 1989.</dc:description>
+            <dc:description>Filled with fresh interpretations and information, puncturing old myths and challenging new ones, this fast-paced narrative fully integrates the political, social, and military events that crowded the two decades from the outbreak of one war in Mexico to the ending of another at Appomattox. Packed with drama and analytical insight, the book vividly recounts the momentous episodes that preceded the Civil War: the Dred Scott decision, the Lincoln-Douglas debates, John Brown's raid on Harper's Ferry. It then moves into a chronicle of the war itself, the battles, the strategic maneuvering on both sides, the politics, and the personalities. Particularly notable are new views on such matters as the slavery expansion issue in the 1850s, the origins of the Republican Party, the causes of secession, internal dissent and anti-war opposition in the North and the South, and the reasons for the Union's victory. The book's title refers to the sentiments that informed both the Northern and Southern views of the conflict: the South seceded in the name of that freedom of self-determination and self-government for which their fathers had fought in 1776, while the North stood fast in defense of the Union founded by those fathers as the bulwark of American liberty. Eventually, the North had to grapple with the underlying cause of the war, slavery, and adopt a policy of emancipation as a second war aim. This "new birth of freedom," as Lincoln called it, constitutes the proudest legacy of America's bloodiest conflict. This volume makes sense of that vast and confusing "second American Revolution" we call the Civil War, a war that transformed a nation and expanded our heritage of liberty.</dc:description>
+            <dc:description>From the Halls of Montezuma -- The United States at midcentury -- Mexico will poison us -- An empire for slavery -- Slavery, rum, and Romanism -- The crime against Kansas -- Mudsills and greasy mechanics for A. Lincoln -- The Revolution of 1860 -- The counterrevolution of 1861 -- Facing both ways: the upper south's dilemma -- Amateurs go to war -- Farewell to the Ninety Days' War -- Blockade and beachhead: the Salt-water War, 1861-1862 -- The River War in 1862 -- The sinews of war -- Billy Yank's chickahominy blues -- We must free the slaves or be ourselves subdued -- Carry me back to old Virginny -- John Bull's Virginia reel -- Three rivers in winter, 1862-1863 -- Fire in the rear -- Long remember: the summer of '63 -- Johnny Reb's Chattanooga blues -- When this cruel war is over -- If it takes all summer -- After four years of failure -- We are going to be wiped off the earth -- South Carolina must be destroyed -- We are all Americans -- To the shoals of victory</dc:description>
+            <dc:format>xix, 909 p., [16] p. of plates : ill., maps, ports. ; 25 cm.</dc:format>
+            <dc:identifier>0195038630 (alk. paper)</dc:identifier>
+            <dc:identifier>9780195038637 (alk. paper)</dc:identifier>
+            <dc:identifier>9780195168952</dc:identifier>
+            <dc:identifier>019516895X</dc:identifier>
+            <dc:language xsi:type="http://purl.org/dc/terms/ISO639-2">eng</dc:language>
+            <dc:publisher>Oxford University Press</dc:publisher>
+            <dc:relation xsi:type="http://purl.org/dc/terms/URI">http://catdir.loc.gov/catdir/enhancements/fy0725/87011045-b.html</dc:relation>
+            <dc:relation xsi:type="http://purl.org/dc/terms/URI">http://catdir.loc.gov/catdir/enhancements/fy0603/87011045-d.html</dc:relation>
+            <dc:relation xsi:type="http://purl.org/dc/terms/URI">http://www.gbv.de/dms/bowker/toc/9780195038637.pdf</dc:relation>
+            <dc:relation>The Oxford history of the United States ; v. 6</dc:relation>
+            <dc:relation>Oxford history of the United States ; v. 6.</dc:relation>
+            <dc:subject>United States--History--1861-1865, Civil War.</dc:subject>
+            <dc:subject>United States--History--1861-1865, Civil War--Campaigns.</dc:subject>
+            <dc:subject>American Civil War</dc:subject>
+            <dc:subject xsi:type="http://purl.org/dc/terms/DDC">973.7/3</dc:subject>
+            <dc:subject xsi:type="http://purl.org/dc/terms/LCC">E173 .O94 vol. 6</dc:subject>
+            <dc:subject xsi:type="http://purl.org/dc/terms/LCC">E470 .M23 1988</dc:subject>
+            <dc:subject xsi:type="http://purl.org/dc/terms/LCSH">United States--History--Civil War, 1861-1865--Campaigns.</dc:subject>
+            <dc:subject xsi:type="http://purl.org/dc/terms/LCSH">United States--History--Civil War, 1861-1865.</dc:subject>
+            <dc:title>Battle cry of freedom : the Civil War era </dc:title>
+            <dc:type>Text</dc:type>
+            <oclcterms:recordContentSource>DLC</oclcterms:recordContentSource>
+            <oclcterms:recordCreationDate xsi:type="http://purl.org/oclc/terms/marc008date">870402</oclcterms:recordCreationDate>
+            <oclcterms:recordIdentifier xsi:type="http://purl.org/oclc/terms/lccn">   87011045 </oclcterms:recordIdentifier>
+            <oclcterms:recordIdentifier>15550774</oclcterms:recordIdentifier>
+            <oclcterms:languageOfCataloging xsi:type="http://purl.org/oclc/terms/iso639-2b">eng</oclcterms:languageOfCataloging>
+            <oclcterms:recordOCLCControlNumberCross-Reference xsi:type="http://purl.org/oclc/terms/oclcmarc019">18960948</oclcterms:recordOCLCControlNumberCross-Reference>
+            <oclcterms:recordOCLCControlNumberCross-Reference xsi:type="http://purl.org/oclc/terms/oclcmarc019">731388883</oclcterms:recordOCLCControlNumberCross-Reference>
+            <oclcterms:recordTranscribingAgency>DLC</oclcterms:recordTranscribingAgency>
+        </oclcdcs>              
+    success-read-citation:
+      summary: successful read of a single record citation
+      value: '<p class="citation_style_APA">Richardson, L., &amp; Ruby, S. (2007). <i>RESTful web services</i>. </p><p class="citation_style_MLA">Richardson, Leonard, and Sam Ruby. <i>Restful Web Services</i>. , 2007. Print. </p><p class="citation_style_CHICAGO">Richardson, Leonard, and Sam Ruby. 2007. <i>RESTful web services</i>. </p><p class="citation_style_HARVARD">RICHARDSON, L., &amp; RUBY, S. (2007). <i>RESTful web services</i>. </p><p class="citation_style_TURABIAN">Richardson, Leonard, and Sam Ruby. <i>RESTful Web Services</i>. 2007. </p>'  
+    success-search-holdings-oclcSymbol:
+      summary: successful search holdings by OCLC Symbol
+      value: >
+        <?xml version="1.0" encoding="UTF-8" standalone="no"?>
+        <holdings xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:noNamespaceSchemaLocation="http://www.loc.gov/standards/iso20775/N121_ISOholdings_v4.xsd">
+            <holding>
+                <institutionIdentifier>
+                    <value>OCO</value>
+                    <typeOrSource>
+                        <pointer>http://worldcat.org/registry/institutions/</pointer>
+                    </typeOrSource>
+                </institutionIdentifier>
+                <physicalLocation>Columbus Metropolitan Library</physicalLocation>
+                <physicalAddress>
+                    <text>Columbus, OH 43215 United States</text>
+                </physicalAddress>
+                <electronicAddress>
+                    <text>https://www.worldcat.org/wcpa/oclc/82671871?page=frame&amp;url=https%3A%2F%2Fcml.bibliocommons.com%2Fsearch%3Fcustom_query%3Didentifier%3A9780596529260%26checksum%3Df6c5d1891bede16b5e082c3de85b2d70&amp;title=Columbus+Metropolitan+Library&amp;linktype=opac&amp;detail=OCO%3AColumbus+Metropolitan+Library%3APublic Library&amp;app=wcapi&amp;id=</text>
+                </electronicAddress>
+                <holdingSimple>
+                    <copiesSummary>
+                        <copiesCount>1</copiesCount>
+                    </copiesSummary>
+                </holdingSimple>
+            </holding>
+        </holdings>      
+    success-search-holdings-zipcode:
+      summary: successful search holdings by zip code
+      value: >
+        <?xml version="1.0" encoding="UTF-8" standalone="no"?>
+        <holdings xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://www.loc.gov/standards/iso20775/N121_ISOholdings_v4.xsd">
+            <holding>
+                <institutionIdentifier>
+                    <value>NHM</value>
+                    <typeOrSource>
+                        <pointer>http://worldcat.org/registry/institutions/</pointer>
+                    </typeOrSource>
+                </institutionIdentifier>
+                <physicalLocation>UNH Durham</physicalLocation>
+                <physicalAddress>
+                    <text>Durham, NH 03824 United States</text>
+                </physicalAddress>
+                <electronicAddress>
+                    <text>https://www.worldcat.org/wcpa/oclc/82671871?page=frame&amp;url=https%3A%2F%2Funh.primo.exlibrisgroup.com%2Fdiscovery%2Fsearch%3F%26tab%3DLibraryCatalog%26search_scope%3DMyInstitution%26vid%3D01USNH_UNH%3AMAIN%26mode%3Dadvanced%26offset%3D0%2C%26query%3Disbn%2Ccontains%2C9780596515218%26checksum%3D13e4df98fdacb0c288db5c973382decc&amp;title=UNH+Durham&amp;linktype=opac&amp;detail=NHM%3AUNH+Durham%3AAcademic Library&amp;app=wcapi&amp;id=OCPSB-</text>
+                </electronicAddress>
+                <holdingSimple>
+                    <copiesSummary>
+                        <copiesCount>1</copiesCount>
+                    </copiesSummary>
+                </holdingSimple>
+            </holding>
+        </holdings>          
+    success-search-holdings-state: 
+      summary: successful search holdings by state
+      value: >
+        <?xml version="1.0" encoding="UTF-8" standalone="no"?>
+        <holdings xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://www.loc.gov/standards/iso20775/N121_ISOholdings_v4.xsd">
+        <holding>
+            <institutionIdentifier>
+                <value>UAF</value>
+                <typeOrSource>
+                    <pointer>http://worldcat.org/registry/institutions/</pointer>
+                </typeOrSource>
+            </institutionIdentifier>
+            <physicalLocation>University of Alaska Fairbanks</physicalLocation>
+            <physicalAddress>
+                <text>Fairbanks, AK 99775 United States</text>
+            </physicalAddress>
+            <electronicAddress>
+                <text>https://www.worldcat.org/wcpa/oclc/82671871?page=frame&amp;url=https%3A%2F%2Fjlc-web.uaa.alaska.edu%2Fclient%2Fen_US%2Fuaf%2Fsearch%2Fresults%3Fqu%3DISBN%3D9780596515218%26checksum%3D316c7bd3e1094d158402cd5ad07b95ac&amp;title=University+of+Alaska+Fairbanks&amp;linktype=opac&amp;detail=UAF%3AUniversity+of+Alaska+Fairbanks%3AAcademic Library&amp;app=wcapi&amp;id=OCPSB-</text>
+            </electronicAddress>
+            <holdingSimple>
+                <copiesSummary>
+                    <copiesCount>1</copiesCount>
+                </copiesSummary>
+            </holdingSimple>
+        </holding>
+        </holdings>
+    success-search-holdings-oclcSymbol-json:
+      summary: successful search holdings by OCLC Symbol
+      value: {"title":"RESTful web services","author":"Richardson, Leonard, 1979-","publisher":"O'Reilly","date":"2007.","ISBN":["9780596529260","0596529260"],"OCLCnumber":"82671871","totalLibCount":1,"library":[{"institutionName":"Columbus Metropolitan Library","streetAddress1":"96 South Grant Avenue","streetAddress2":"","city":"Columbus","state":"OH","country":"United States","postalCode":"43215","opacUrl":"https://www.worldcat.org/wcpa/oclc/82671871?page=frame&url=https%3A%2F%2Fcml.bibliocommons.com%2Fsearch%3Fcustom_query%3Didentifier%3A9780596529260%26checksum%3Df6c5d1891bede16b5e082c3de85b2d70&title=Columbus+Metropolitan+Library&linktype=opac&detail=OCO%3AColumbus+Metropolitan+Library%3APublic Library&app=wcapi&id=","oclcSymbol":"OCO","distance":"0"}]}
+    success-search-holdings-zipcode-json:
+      summary: successful search holdings by zip code
+      value: {"title":"RESTful web services","author":"Richardson, Leonard, 1979-","publisher":"O'Reilly","date":"2007.","ISBN":["9780596529260","0596529260"],"OCLCnumber":"82671871","library":[{"institutionName":"OCLC Library, Archives & Museum","streetAddress1":"6565 Kilgour Place","streetAddress2":"","city":"Dublin","state":"OH","country":"United States","postalCode":"43017","opacUrl":"https://www.worldcat.org/wcpa/oclc/82671871?page=frame&url=https%3A%2F%2Foclclibrary.on.worldcat.org%2Fsearch%3FdatabaseList%3D%26queryString%3Dno%253A154684429%26checksum%3De2237d4b563d9c2f693a08e9a6a4013e&title=OCLC+Library%2C+Archives+%26+Museum&linktype=opac&detail=OCC%3AOCLC+Library%2C+Archives+%26+Museum%3A&app=wcapi&id=OCPSB-","oclcSymbol":"OCC","distance":"0"},{"institutionName":"State Library of Ohio","streetAddress1":"Jeffrey Mining Corporate Center","streetAddress2":"274 East 1st Avenue, Suite 100","city":"Columbus","state":"OH","country":"United States","postalCode":"43201","opacUrl":"https://www.worldcat.org/wcpa/oclc/82671871?page=frame&url=https%3A%2F%2Fcatalog.library.ohio.gov%2Fsearch%2Fi%3FSEARCH%3D9780596515218%26checksum%3D9c9952b1d73594d05f180c02efa91b3a&title=State+Library+of+Ohio&linktype=opac&detail=OHI%3AState+Library+of+Ohio%3AState or National Library&app=wcapi&id=OCPSB-","oclcSymbol":"OHI","distance":"9.74"},{"institutionName":"Columbus Metropolitan Library","streetAddress1":"96 South Grant Avenue","streetAddress2":"","city":"Columbus","state":"OH","country":"United States","postalCode":"43215","opacUrl":"https://www.worldcat.org/wcpa/oclc/82671871?page=frame&url=https%3A%2F%2Fcml.bibliocommons.com%2Fsearch%3Fcustom_query%3Didentifier%3A9780596529260%26checksum%3Df6c5d1891bede16b5e082c3de85b2d70&title=Columbus+Metropolitan+Library&linktype=opac&detail=OCO%3AColumbus+Metropolitan+Library%3APublic Library&app=wcapi&id=OCPSB-","oclcSymbol":"OCO","distance":"11.16"},{"institutionName":"Antioch University Library","streetAddress1":"900 Dayton Street","streetAddress2":"","city":"Yellow Springs","state":"OH","country":"United States","postalCode":"45387","opacUrl":"https://www.worldcat.org/wcpa/oclc/82671871?page=frame&url=https%3A%2F%2Fantioch.on.worldcat.org%2Fsearch%3FdatabaseList%3D%26queryString%3Dbn%253A9780596515218%26checksum%3D0c2e861b44186e97ef0aec8ddbcc4047&title=Antioch+University+Library&linktype=opac&detail=ANTCH%3AAntioch+University+Library%3AAcademic Library&app=wcapi&id=OCPSB-","oclcSymbol":"ANTCH","distance":"46.42"},{"institutionName":"University of Dayton","streetAddress1":"300 College Park Avenue","streetAddress2":"","city":"Dayton","state":"OH","country":"United States","postalCode":"45469","opacUrl":"https://www.worldcat.org/wcpa/oclc/82671871?page=frame&url=http%3A%2F%2Fflyers.udayton.edu%2Fsearch%2F%7E%3Fsearchtype%3Di%26searcharg%3D9780596515218%26checksum%3Dbfd8891edb2b42b55ed59a6006af6f7e&title=University+of+Dayton&linktype=opac&detail=DAY%3AUniversity+of+Dayton%3AAcademic Library&app=wcapi&id=OCPSB-","oclcSymbol":"DAY","distance":"62.74"},{"institutionName":"Ohio University","streetAddress1":"Park Place","streetAddress2":"30 Park Pl","city":"Athens","state":"OH","country":"United States","postalCode":"45701","opacUrl":"https://www.worldcat.org/wcpa/oclc/82671871?page=frame&url=http%3A%2F%2Falice.library.ohio.edu%2Fsearch%2Fi9780596515218%26checksum%3D546d5248fc4063dfbe1d96ca12978314&title=Ohio+University&linktype=opac&detail=OUN%3AOhio+University%3AAcademic Library&app=wcapi&id=OCPSB-","oclcSymbol":"OUN","distance":"76.68"},{"institutionName":"Xavier University","streetAddress1":"Resource Sharing","streetAddress2":"1535 Musketeer Dr","city":"Cincinnati","state":"OH","country":"United States","postalCode":"45207","opacUrl":"https://www.worldcat.org/wcpa/oclc/82671871?page=frame&url=http%3A%2F%2Fxplore.xavier.edu%2Fsearch%2Fi9780596515218%26checksum%3D0af675e3dfa04314e2f91b19ac4d8427&title=Xavier+University&linktype=opac&detail=XAV%3AXavier+University%3AAcademic Library&app=wcapi&id=OCPSB-","oclcSymbol":"XAV","distance":"98.01"},{"institutionName":"University of Cincinnati - Main Campus","streetAddress1":"2911 Woodside Drive","streetAddress2":"","city":"Cincinnati","state":"OH","country":"United States","postalCode":"45221","opacUrl":"https://www.worldcat.org/wcpa/oclc/82671871?page=frame&url=http%3A%2F%2Fuclid.uc.edu%2Fsearch%2Fi9780596515218%26checksum%3D9c1cc95f5f0d0cf59c2bbba5e771228b&title=University+of+Cincinnati+-+Main+Campus&linktype=opac&detail=CIN%3AUniversity+of+Cincinnati+-+Main+Campus%3AARL Library&app=wcapi&id=OCPSB-","oclcSymbol":"CIN","distance":"100.3"},{"institutionName":"West Virginia University at Parkersburg","streetAddress1":"300 Campus Dr","streetAddress2":"","city":"Parkersburg","state":"WV","country":"United States","postalCode":"26104","opacUrl":"https://www.worldcat.org/wcpa/oclc/82671871?page=frame&url=http%3A%2F%2F157.182.203.197%3A12108%2Fvwebv%2Fsearch%3FsearchCode1%3DISBN%26searchType%3D2%26argType1%3Dany%26searchArg1%3D9780596515218%26checksum%3D8b1826c0b59ab9140bd8e879f0257f96&title=West+Virginia+University+at+Parkersburg&linktype=opac&detail=WV3%3AWest+Virginia+University+at+Parkersburg%3AAcademic Library&app=wcapi&id=OCPSB-","oclcSymbol":"WV3","distance":"101.55"},{"institutionName":"Northern Kentucky University","streetAddress1":"W. Frank Steely Library","streetAddress2":"Nunn Drive","city":"Highland Heights","state":"KY","country":"United States","postalCode":"41099","opacUrl":"https://www.worldcat.org/wcpa/oclc/82671871?page=frame&url=https%3A%2F%2Fnorthernkentuckyuniversity.on.worldcat.org%2Fsearch%3FqueryString%3Dbn%3A9780596529260%26checksum%3Dbefff54efd9c6676b904e28c2d12088c&title=Northern+Kentucky+University&linktype=opac&detail=KHN%3ANorthern+Kentucky+University%3AAcademic Library&app=wcapi&id=OCPSB-","oclcSymbol":"KHN","distance":"103.01"}]}    
+    success-search-holdings-state-json: 
+      summary: successful search holdings by state
+      value: {"title":"RESTful web services","author":"Richardson, Leonard, 1979-","publisher":"O'Reilly","date":"2007.","ISBN":["9780596529260","0596529260"],"OCLCnumber":"82671871","library":[{"institutionName":"University of Alaska Fairbanks","streetAddress1":"1732 Tanana Loop","streetAddress2":"PO Box 756800","city":"Fairbanks","state":"AK","country":"United States","postalCode":"99775","opacUrl":"https://www.worldcat.org/wcpa/oclc/82671871?page=frame&url=https%3A%2F%2Fjlc-web.uaa.alaska.edu%2Fclient%2Fen_US%2Fuaf%2Fsearch%2Fresults%3Fqu%3DISBN%3D9780596515218%26checksum%3D316c7bd3e1094d158402cd5ad07b95ac&title=University+of+Alaska+Fairbanks&linktype=opac&detail=UAF%3AUniversity+of+Alaska+Fairbanks%3AAcademic Library&app=wcapi&id=OCPSB-","oclcSymbol":"UAF","distance":"0"}]}          
+    unauthorized:
+      summary: Error returned when valid API credentials not sent or invalid
+      value: '<error> <code type="http">401</code> <message>No valid authentication credentials found in request</message> </error>'
+    unauthorized_bad_key:
+      summary: Error returned when API credentials not for resource
+      value: '<!DOCTYPE html><html><head><title>Apache Tomcat/8.0.33 - Error report</title><style type="text/css"> H1 { font-family: Tahoma, Arial, sans-serif; color: white; background-color: #525D76; font-size: 22px; } H2 { font-family: Tahoma, Arial, sans-serif; color: white; background-color: #525D76; font-size: 16px; } H3 { font-family: Tahoma, Arial, sans-serif; color: white; background-color: #525D76; font-size: 14px; } BODY { font-family: Tahoma, Arial, sans-serif; color: black; background-color: white; } B { font-family: Tahoma, Arial, sans-serif; color: white; background-color: #525D76; } P { font-family: Tahoma, Arial, sans-serif; background: white; color: black; font-size: 12px; } A { color: black; } A.name { color: black; } .line { height: 1px; background-color: #525D76; border: none; } </style></head><body><h1>HTTP Status 401 - org.oclc.wskey.api.WSKeyException: WSKeyAuthorize Failed</h1><div class="line"></div><p><b>type</b> Status report</p><p><b>message</b><u>org.oclc.wskey.api.WSKeyException: WSKeyAuthorize Failed</u></p><p><b>description</b><u>This request requires HTTP authentication.</u></p><hr class="line"><h3>Apache Tomcat/8.0.33</h3></body></html>'
+    method-not-allowed-error:
+      summary: Error when invalid HTTP method used
+      value: '<!DOCTYPE html> <html> <head> <title>Apache Tomcat/8.0.33 - Error report</title> <style type="text/css"> H1 { font-family: Tahoma, Arial, sans-serif; color: white; background-color: #525D76; font-size: 22px; } H2 { font-family: Tahoma, Arial, sans-serif; color: white; background-color: #525D76; font-size: 16px; } H3 { font-family: Tahoma, Arial, sans-serif; color: white; background-color: #525D76; font-size: 14px; } BODY { font-family: Tahoma, Arial, sans-serif; color: black; background-color: white; } B { font-family: Tahoma, Arial, sans-serif; color: white; background-color: #525D76; } P { font-family: Tahoma, Arial, sans-serif; background: white; color: black; font-size: 12px; } A { color: black; } A.name { color: black; } .line { height: 1px; background-color: #525D76; border: none; } </style> </head> <body> <h1>HTTP Status 405 - HTTP method PUT is not supported by this URL</h1> <div class="line"></div> <p><b>type</b> Status report</p> <p><b>message</b> <u>HTTP method PUT is not supported by this URL</u></p> <p><b>description</b> <u>The specified HTTP method is not allowed for the requested resource.</u></p> <hr class="line"> <h3>Apache Tomcat/8.0.33</h3> </body> </html>'
+    overlimit:
+      summary: Error returned when request is over key's daily quota
+      value: ""    
+    cql-query-syntax-error:
+      summary: Error in the CQL query syntax specified in the request
+      value: >
+        <?xml version="1.0" encoding="UTF-8" standalone="no"?>
+        <?xml-stylesheet type='text/xsl' href='/webservices/catalog/xsl/searchRetrieveResponse.xsl'?>
+        <searchRetrieveResponse xmlns="http://www.loc.gov/zing/srw/" xmlns:oclcterms="http://purl.org/oclc/terms/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:diag="http://www.loc.gov/zing/srw/diagnostic/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+            <version>1.1</version>
+            <numberOfRecords>0</numberOfRecords>
+            <diagnostics xmlns:srw="http://www.loc.gov/zing/srw/" xmlns:srw8="info:srw/extension/8/spelling" xmlns:srw2="http://www.loc.gov/zing/srw/update/" xmlns:srw3="http://www.loc.gov/zing/srw/diagnostic/" xmlns:srw6="info:srw/extension/6/facetSummary" xmlns:srw7="info:srw/extension/7/componentpostings" xmlns:srw4="http://www.loc.gov/zing/cql/xcql/" xmlns:srw5="info:srw/extension/5/restrictorSummary">
+                <srw3:diagnostic>
+                    <srw3:uri>info:srw/diagnostic/1/108</srw3:uri>
+                    <srw3:details>1</srw3:details>
+                    <srw3:message>CQL Malformed Query</srw3:message>
+                </srw3:diagnostic>
+            </diagnostics>
+            <echoedSearchRetrieveRequest xmlns:srw="http://www.loc.gov/zing/srw/">
+                <version>1.1</version>
+                <query>bn = "161775188X"</query>
+                <maximumRecords>10</maximumRecords>
+                <recordSchema>info:srw/schema/1/dc</recordSchema>
+                <recordPacking>xml</recordPacking>
+                <startRecord>1</startRecord>
+                <sortKeys>relevance</sortKeys>
+                <wskey>zVUdo28RoSsc9k35iLYB3rgLzibYQeMXtfX4gQnmqL0rK2UGcizxGt2pGes95XTmoBwvD92WbSPIuxP2</wskey>
+            </echoedSearchRetrieveRequest>
+        </searchRetrieveResponse>      
+    limit-only:
+      summary: Error returned search performed using limit only
+      value: >
+        <?xml version="1.0" ?>
+        <diagnostics>
+            <diagnostic xmlns="http://www.loc.gov/zing/srw/diagnostic/">
+                <uri>info:srw/diagnostic/1/18</uri>
+                <details>srw.li </details>
+                <message>Limit index, can only be used to narrow a result for a non-limit index</message>
+            </diagnostic>
+        </diagnostics>      
+    unsupported-index:
+      summary: Error returned search uses unsupported index
+      value: >
+        <?xml version="1.0" ?>
+        <diagnostics>
+            <diagnostic xmlns="http://www.loc.gov/zing/srw/diagnostic/">
+                <uri>info:srw/diagnostic/1/16</uri>
+                <details>srw.lc</details>
+                <message>Unsupported index</message>
+            </diagnostic>
+        </diagnostics>
+    record-does-not-exist:
+      summary: Error returned when record does not exist in the system
+      value: >
+        <?xml version="1.0" encoding="UTF-8" standalone="no"?>
+        <diagnostics xmlns:oclcterms="http://purl.org/oclc/terms/" xmlns:dc="http://purl.org/dc/elements/1.1/">
+            <diagnostic xmlns="http://www.loc.gov/zing/srw/diagnostic/">
+                <uri>info:srw/diagnostic/1/65</uri>
+                <message>Record does not exist</message>
+            </diagnostic>
+        </diagnostics>      
+    no-holdings-xml:
+      summary: Error returned when searching holdings and none found
+      value: >
+        <?xml version="1.0" encoding="UTF-8" standalone="no"?>
+        <diagnostics>
+            <diagnostic xmlns="http://www.loc.gov/zing/srw/diagnostic/">
+                <uri>info:srw/diagnostic/1/65</uri>
+                <message>Holding not found</message>
+            </diagnostic>
+        </diagnostics>
+    no-holdings-json:
+      summary: Error returned when searching holdings and none found
+      value: {"title":"Simon's cat","author":"Tofield, Simon.","publisher":"Grand Central Pub.","date":"2009.","ISBN":["9780446560061","0446560065"],"OCLCnumber":"318877925","library":[{"diagnostic":{"uri":"info:srw/diagnostic/1/65","details":"","message":"Holding not found"}}]}                                                                                                                                                                                                     
+externalDocs:
+  description: Find out more about WorldCat Search API
+  url: 'https://www.oclc.org/developer/develop/web-services/worldcat-search-api.en.html'
