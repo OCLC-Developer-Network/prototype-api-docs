@@ -34,7 +34,9 @@ paths:
             type: integer
         - name: itemsPerPage
           in: query
-          description: Number of items to return in request                  
+          description: Number of items to return in request
+          schema:
+            type: integer                  
       responses:
         '200':
           description: Successful read of pulllist
