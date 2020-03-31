@@ -3,9 +3,6 @@ info:
   description: WorldCat Knowledge base API
   version: 1.0.0
   title: WorldCat Knowledge Base
-  license:
-    name: Licensing TBD
-    url: 'https://www.oclc.org/DiscoveryAPI'
 servers:
   - url: 'https://worldcat.org/webservices/kb'
 security:
@@ -106,7 +103,7 @@ paths:
           content:
             application/json:
               schema:
-                type: object            
+                $ref: '#/components/schemas/CollectionSearchResults'           
               examples:
                 success-search-collection: 
                   $ref: '#/components/examples/success-search-collection'                    
@@ -119,8 +116,6 @@ paths:
               examples:
                 missing-query-parameter:
                   $ref: '#/components/examples/missing-query-parameter'
-                missing-query-parameter-value:
-                  $ref: '#/components/examples/missing-query-parameter-value'
               
         '405':
           description: 'Method not supported, see response Allow header'
@@ -169,7 +164,7 @@ paths:
           content:
             application/json:
               schema:
-                type: object            
+                $ref: '#/components/schemas/Collection'            
               examples:
                 success-read-collection: 
                   $ref: '#/components/examples/success-read-collection'                    
@@ -182,8 +177,6 @@ paths:
               examples:
                 missing-query-parameter:
                   $ref: '#/components/examples/missing-query-parameter'
-                missing-query-parameter-value:
-                  $ref: '#/components/examples/missing-query-parameter-value'
               
         '405':
           description: 'Method not supported, see response Allow header'
@@ -331,7 +324,7 @@ paths:
           content:
             application/json:
               schema:
-                type: object            
+                $ref: '#/components/schemas/TitleSearchResults'            
               examples:
                 success-search-collection: 
                   $ref: '#/components/examples/success-search-collection'                    
@@ -344,8 +337,6 @@ paths:
               examples:
                 missing-query-parameter:
                   $ref: '#/components/examples/missing-query-parameter'
-                missing-query-parameter-value:
-                  $ref: '#/components/examples/missing-query-parameter-value'
               
         '405':
           description: 'Method not supported, see response Allow header'
@@ -394,7 +385,7 @@ paths:
           content:
             application/json:
               schema:
-                type: object            
+                $ref: '#/components/schemas/Title'            
               examples:
                 success-read-collection: 
                   $ref: '#/components/examples/success-read-entry'                    
@@ -407,8 +398,6 @@ paths:
               examples:
                 missing-query-parameter:
                   $ref: '#/components/examples/missing-query-parameter'
-                missing-query-parameter-value:
-                  $ref: '#/components/examples/missing-query-parameter-value'
               
         '405':
           description: 'Method not supported, see response Allow header'
@@ -503,7 +492,7 @@ paths:
           content:
             application/json:
               schema:
-                type: object            
+                $ref: '#/components/schemas/ProviderSearchResults'            
               examples:
                 success-search-collection: 
                   $ref: '#/components/examples/success-search-provider'                    
@@ -516,8 +505,6 @@ paths:
               examples:
                 missing-query-parameter:
                   $ref: '#/components/examples/missing-query-parameter'
-                missing-query-parameter-value:
-                  $ref: '#/components/examples/missing-query-parameter-value'
               
         '405':
           description: 'Method not supported, see response Allow header'
@@ -566,7 +553,7 @@ paths:
           content:
             application/json:
               schema:
-                type: object            
+                $ref: '#/components/schemas/Provider'            
               examples:
                 success-read-collection: 
                   $ref: '#/components/examples/success-read-provider'                    
@@ -578,10 +565,7 @@ paths:
                 type: object            
               examples:
                 missing-query-parameter:
-                  $ref: '#/components/examples/missing-query-parameter'
-                missing-query-parameter-value:
-                  $ref: '#/components/examples/missing-query-parameter-value'
-              
+                  $ref: '#/components/examples/missing-query-parameter'              
         '405':
           description: 'Method not supported, see response Allow header'
           content:
@@ -799,7 +783,9 @@ paths:
           content:
             application/json:
               schema:
-                type: object            
+                type: array
+                items:
+                  $ref: '#/components/schemas/Title'            
               examples:
                 success-read-collection: 
                   $ref: '#/components/examples/success-openurl-single'                    
@@ -811,10 +797,7 @@ paths:
                 type: object            
               examples:
                 missing-query-parameter:
-                  $ref: '#/components/examples/missing-query-parameter'
-                missing-query-parameter-value:
-                  $ref: '#/components/examples/missing-query-parameter-value'
-              
+                  $ref: '#/components/examples/missing-query-parameter'              
         '405':
           description: 'Method not supported, see response Allow header'
           content:
@@ -862,7 +845,7 @@ paths:
           content:
             application/json:
               schema:
-                type: object            
+                type: object                             
               examples:
                 success-read-collection: 
                   $ref: '#/components/examples/success-openurl-multiple'                    
@@ -875,8 +858,6 @@ paths:
               examples:
                 missing-query-parameter:
                   $ref: '#/components/examples/missing-query-parameter'
-                missing-query-parameter-value:
-                  $ref: '#/components/examples/missing-query-parameter-value'
               
         '405':
           description: 'Method not supported, see response Allow header'
@@ -918,7 +899,7 @@ components:
       value: {"title": "Nature Publishing Group", "id": "http://worldcat.org/webservices/kb/rest/providers/NPG", "links": [ { "href": "http://worldcat.org/webservices/kb/rest/providers/NPG", "rel": "self" }, { "href": "http://www.nature.com", "rel": "via" }, { "href": "http://worldcat.org/webservices/kb/rest/providers/NPG.html", "rel": "alternate" } ], "provider_uid": "NPG", "vic_id": "572cde9e-0a1d-40ce-9f54-ad3ffcf42aa6", "provider_name": "Nature Publishing Group", "available_collections": "22", "selected_collections": "22", "available_entries": "1115", "selected_entries": "1115"}
     success-search-provider:
       summary: successful search of providers
-      value: {}
+      value: { "title": "WorldCat KnowledgeBase Search: Nature", "updated": "2020-01-07T21:36:44.887Z", "id": "urn:uuid:ca4e882b66bd43d6cc0c885337971941", "author": "OCLC", "links": [ { "href": "http://worldcat.org/webservices/kb/rest/providers/search?q=Nature&startIndex=1&search-type=search&itemsPerPage=10&scope=my&orderBy=title+asc&institution_id=128807", "rel": "self" } ], "os:totalResults": "1", "os:startIndex": "1", "os:itemsPerPage": "10", "os:Query": "q=Nature&startIndex=1&search-type=search&itemsPerPage=10&scope=my&orderBy=title+asc&institution_id=128807", "entries": [ { "title": "Nature Publishing Group", "id": "http://worldcat.org/webservices/kb/rest/providers/NPG,128807", "links": [ { "href": "http://worldcat.org/webservices/kb/rest/providers/NPG,128807", "rel": "self" }, { "href": "http://www.nature.com", "rel": "via" }, { "href": "http://worldcat.org/webservices/kb/rest/providers/NPG,128807.html", "rel": "alternate" } ], "kb:provider_uid": "NPG", "kb:vic_id": "572cde9e-0a1d-40ce-9f54-ad3ffcf42aa6", "kb:provider_name": "Nature Publishing Group", "kb:available_collections": "19", "kb:selected_collections": "1", "kb:available_entries": "980", "kb:selected_entries": "105" } ] }
     success-openurl-single:
       summary: successful openurl request
       value: [ { "coverage": "ebook@2005-09-26", "collection_url": "http://my.safaribooksonline.com", "collection_uid": "safari.tech", "oclcnums": "65183407 61260129 878406930 861529762 847462570 61849699 270992543", "isbn": "9780596007652", "provider_uid": "safari", "source": "holdings", "title": "Ambient Findability", "collection_type": "browsable", "content": "ebook", "url": "http://linker2.worldcat.org/?jHome=http%3A%2F%2Fmy.safaribooksonline.com%2F0596007655%3Ftocview%3Dtrue&linktype=best", "institution_id": [ "128807" ], "uid": "1883656", "bkey": "0596007655", "publisher": "O'Reilly Media, Inc. - O'Reilly Media", "openaccess": "no", "id": "d6edd1064311b081e77051faf19e687e", "provider_name": "Safari Books Online", "collection_name": "Safari Tech Books Online", "oclcnum": "61849699" } ]
@@ -941,6 +922,44 @@ components:
       summary: Error returned when required query parameter not sent
       value: {"type": "MISSING_QUERY_PARAMETER", "title": "Validation Failure", "detail": "Required String parameter 'q' is not present"}
   schemas:
+    TitleSearchResults:
+      type: object
+      properties:
+        title:
+          description: name of the results
+          type: string
+        updated:
+          description: date query run
+          type: string        
+        id:
+          description: ID for result set
+          type: string        
+        author:
+          description: who created the result set
+          type: string        
+        links:
+          description: Link to the results
+          type: string        
+        totalResults:
+          description: Total number of results
+          type: integer
+          format: int32        
+        startIndex:
+          description: start position of the results
+          type: integer
+          format: int32        
+        itemsPerPage:
+          description: number of items per page
+          type: integer
+          format: int32        
+        Query:
+          description: query sent to API
+          type: string        
+        entries:      
+          description: actual results
+          type: array
+          items:
+            $ref: '#/components/schemas/Title'            
     Title:
       type: object
       properties:
@@ -1020,6 +1039,44 @@ components:
         coverage_notes:
           description: notes about coverage
           type: string
+    CollectionSearchResults:
+      type: object
+      properties:
+        title:
+          description: name of the results
+          type: string
+        updated:
+          description: date query run
+          type: string        
+        id:
+          description: ID for result set
+          type: string        
+        author:
+          description: who created the result set
+          type: string        
+        links:
+          description: Link to the results
+          type: string        
+        totalResults:
+          description: Total number of results
+          type: integer
+          format: int32        
+        startIndex:
+          description: start position of the results
+          type: integer
+          format: int32        
+        itemsPerPage:
+          description: number of items per page
+          type: integer
+          format: int32        
+        Query:
+          description: query sent to API
+          type: string        
+        entries:      
+          description: actual results
+          type: array
+          items:
+            $ref: '#/components/schemas/Collection'    
     Collection:
       type: object
       properties:
@@ -1086,6 +1143,44 @@ components:
         localstem:  
           description: something
           type: boolean    
+    ProviderSearchResults:
+      type: object
+      properties:
+        title:
+          description: name of the results
+          type: string
+        updated:
+          description: date query run
+          type: string        
+        id:
+          description: ID for result set
+          type: string        
+        author:
+          description: who created the result set
+          type: string        
+        links:
+          description: Link to the results
+          type: string        
+        totalResults:
+          description: Total number of results
+          type: integer
+          format: int32        
+        startIndex:
+          description: start position of the results
+          type: integer
+          format: int32        
+        itemsPerPage:
+          description: number of items per page
+          type: integer
+          format: int32        
+        Query:
+          description: query sent to API
+          type: string        
+        entries:      
+          description: actual results
+          type: array
+          items:
+            $ref: '#/components/schemas/Provider'    
     Provider:
       type: object
       properties:
@@ -1127,7 +1222,7 @@ components:
           format: int32                    
     Settings:
       type: object
-      description: something
+      description: Institution settings
       properties:
         title:
           description: Name of Institution
@@ -1147,50 +1242,50 @@ components:
           description: WorldCat Registry ID of Institution
           type: integer
         download_ip:
-          description: something
+          description: IP range for downloading files
           type: string
         preferred_oclc_symbol:
-          description: something
+          description: Preferred OCLC Symbol
           type: string
         holdingcode:
-          description: something
+          description: Holding Code for e-resources
           type: string                                                                                                   
         google_scholar_enabled:
-          description: something
+          description: Google Scholar enabled
           type: boolean
         wcsync_enabled:
-          description: something
+          description: Holdings sync with WorldCat enabled
           type: boolean
         marc_delivery_enabled:
-          description: something
+          description: Marc record delivery enabled
           type: boolean
         marc_delivery_no_delete:
-          description: something
+          description: Marc delivery don't delete records
           type: boolean
         eswitch_enabled:
-          description: something
+          description: Eswitch enabled
           type: boolean
         eswitch_eligible:
-          description: something
+          description: Eligible for eswitch
           type: boolean 
         article_filter_enabled:
           description: something
           type: boolean
         oclc_symbols:
-          description: something
+          description: OCLC Symbols
           type: string
         openaccess_in_resolver:
-          description: something
+          description: Show open access resources in resolver
           type: string  
         oclcnum_opac_url:
           description: URL to link to catalog by OCLC Number
           type: string
         selected_collections:
-          description: something
+          description: Collections selected
           type: integer
           format: int32
         galesiteid:
-          description: something
+          description: Site ID for Gale
           type: string                                                                                                   
     Link:
       type: object
@@ -1204,9 +1299,7 @@ components:
             - alternate
             - parent
             - enclosure
-            - via                  
-                  
-                
+            - via                                                    
 externalDocs:
-  description: Find out more about OCLC
-  url: 'https://www.oclc.org'
+  description: Find out more about WorldCat Knowledge Base API
+  url: 'https://www.oclc.org/developer/develop/web-services/worldcat-knowledge-base-api.en.html'
