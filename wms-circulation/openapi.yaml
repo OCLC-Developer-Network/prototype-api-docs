@@ -11,7 +11,7 @@ servers:
         description: WorldCat Registry ID for institution whose data is being accessed.    
 security:
   - wms_circulation_auth:
-    - WMS_Circulation
+    - WMS_CIRCULATION
 paths:
   /pulllist/{branchId}:
     get:
@@ -46,13 +46,7 @@ paths:
                 type: object            
               examples:
                 success-read-pull-list: 
-                  $ref: '#/components/examples/success-read-pull-list'                    
-        '400':
-          description: Invalid query. The request was unacceptable, often due to missing a required parameter.
-          content:
-            application/json:
-              schema:
-                type: object            
+                  $ref: '#/components/examples/success-read-pull-list'         
               
         '405':
           description: 'Method not supported, see response Allow header'
@@ -64,11 +58,22 @@ paths:
                 not-allowed:
                   $ref: '#/components/examples/method-not-allowed-error'               
         '500':
-          description: 'Something went wrong (hopfully rare) - please try again'
+          description: 'Something went wrong - please try again'
           content:
             application/json:
               schema:
                 type: object
+              examples:
+                invalid_branch:
+                  summary: Error returned when an invalid branch ID is passed
+                  value: {
+                    "code": {
+                        "value": "500",
+                        "type": null
+                    },
+                    "message": "Internal server error",
+                    "detail": "org.oclc.circ.business.institution.InstitutionFactoryImpl.createBranch[InstitutionFactoryImpl.java:89] threw org.oclc.circ.business.institution.InvalidBranchesException (INVALID_BRANCH: [1])"
+                }  
   /items/{itemIdentifier}/routing/pull:
     post:
       tags:
@@ -91,7 +96,7 @@ paths:
               $ref: '#/components/schemas/ItemRoute' 
             examples:
               pull-item:
-                $ref: '#/components/examples/pull-item'
+                $ref: '#/components/examples/route-item'
               pull-freetext-hold:
                 $ref: '#/components/examples/pull-freetext-hold'                             
       responses:
@@ -123,11 +128,18 @@ paths:
                   $ref: '#/components/examples/checkedout-item'
                 lost-item:
                   $ref: '#/components/examples/lost-item'
-                unknown-item:
-                  $ref: '#/components/examples/unknown-item'
                 invalid-branch:
                   $ref: '#/components/examples/invalid-branch'                                                                        
-              
+        '404':
+          description: 'Unknown Item'
+          content:
+            application/json:
+              schema:
+                type: object
+              examples:
+                unknown-item:
+                  $ref: '#/components/examples/unknown-item-pull'             
+ 
         '405':
           description: 'Method not supported, see response Allow header'
           content:
@@ -156,7 +168,16 @@ paths:
           description: The piece designation or item id for the item
           schema:
             type: string
-          required: true                  
+          required: true
+      requestBody:
+        description: Inventory item
+        content:
+          'application/json':
+            schema:
+              $ref: '#/components/schemas/ItemRoute' 
+            examples:
+              route-item:
+                $ref: '#/components/examples/route-item'                           
       responses:
         '200':
           description: Successful inventory item
@@ -192,11 +213,18 @@ paths:
                   $ref: '#/components/examples/checkedout-item'
                 lost-item:
                   $ref: '#/components/examples/lost-item'
-                unknown-item:
-                  $ref: '#/components/examples/unknown-item'
+
                 invalid-branch:
-                  $ref: '#/components/examples/invalid-branch' 
-              
+                  $ref: '#/components/examples/invalid-branch'               
+        '404':
+          description: 'Unknown Item'
+          content:
+            application/json:
+              schema:
+                type: object
+              examples:
+                unknown-item:
+                  $ref: '#/components/examples/unknown-item-inventory'
         '405':
           description: 'Method not supported, see response Allow header'
           content:
@@ -261,11 +289,17 @@ paths:
                   $ref: '#/components/examples/checkedout-item'
                 lost-item:
                   $ref: '#/components/examples/lost-item'
-                unknown-item:
-                  $ref: '#/components/examples/unknown-item'
                 invalid-branch:
                   $ref: '#/components/examples/invalid-branch' 
-              
+        '404':
+          description: 'Unknown Item'
+          content:
+            application/json:
+              schema:
+                type: object
+              examples:
+                unknown-item:
+                  $ref: '#/components/examples/unknown-item-inventory'                      
         '405':
           description: 'Method not supported, see response Allow header'
           content:
@@ -334,12 +368,12 @@ components:
         clientCredentials:
           tokenUrl: https://oauth.oclc.org/token
           scopes:
-            WMS_Circulation: perform all the operation in the WMS Circulation API
+            WMS_CIRCULATION: perform all the operation in the WMS Circulation API
         authorizationCode:
           authorizationUrl: https://oauth.oclc.org/auth
           tokenUrl: https://oauth.oclc.org/token
           scopes:
-            WMS_Circulation: perform all the operation in the WMS Circulation API
+            WMS_CIRCULATION: perform all the operation in the WMS Circulation API
   schemas:
     PullList:
       type: object
@@ -736,7 +770,7 @@ components:
           }
         ]
       }
-    pull-item:
+    route-item:
       summary: Request body to route an item
       value: {
         "location": "https://128807.share.worldcat.org/circ/branches/129479"
@@ -1047,22 +1081,67 @@ components:
       value: {"title": "NOT_ACCEPTABLE", "detail": "Media type application/xml not supported. Supported media types: application/json"}
     missing-item:
       summary: error returned when trying to route a missing item
-      value: {}
+      value: {
+        "errorCode": "BAD_STATUS",
+        "message": "Unable to check in item as it is not currently available",
+        "detail": {
+            "status": "MISSING"
+        }
+      }
     withdrawn-item:
       summary: error returned when trying to route an item marked as withdrawn
-      value: {}
+      value: {
+        "errorCode": "BAD_STATUS",
+        "message": "Unable to check in item as it is not currently available",
+        "detail": {
+            "status": "WITHDRAWN"
+        }
+      }
     checkedout-item:
       summary: error returned when trying to route an item which is checked out
-      value: {}
+      value: {
+        "errorCode": "BAD_STATUS",
+        "message": "Unable to check in item as it is not currently available",
+        "detail": {
+            "status": "ON_LOAN"
+        }
+      }
     lost-item:
       summary: error returned when trying to route an item marked as lost
-      value: {}
-    unknown-item:
+      value: {
+        "errorCode": "BAD_STATUS",
+        "message": "Unable to check in item as it is not currently available",
+        "detail": {
+            "status": "LOST"
+        }
+      }
+    unknown-item-pull:
       summary: error returned when trying to route an item using an unknown identifier
-      value: {}
+      value: {
+        "timestamp": "2020-03-31T15:34:40.028+0000",
+        "status": 404,
+        "error": "Not Found",
+        "message": "No message available",
+        "path": "/circ/items/boo/routings/pull"
+        }
+    unknown-item-inventory:
+      summary: error returned when trying to route an item using an unknown identifier
+      value: {
+          "errorCode": "UNKNOWN_ITEM",
+          "message": "Unknown item",
+          "detail": {
+              "item": "boo"
+          }
+      }             
     invalid-branch:
       summary: error returned when trying to route using an invalid branch URI
-      value: {}    
+      value: {
+        "errorCode": "UNKNOWN_LOCATION",
+        "message": "Unknown location",
+        "detail": {
+            "location": "https://128807.share.worldcat.org/circ/branches/1"
+        }
+      }    
 externalDocs:
   description: Find out more about WMS Circulation API
   url: 'https://www.oclc.org/developer/develop/web-services/wms-circulation-api.en.html'
