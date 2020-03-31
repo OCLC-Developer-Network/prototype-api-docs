@@ -60,8 +60,9 @@ paths:
             application/json:
               schema:
                 type: object            
-              example:
-                $ref: '#/components/examples/method-not-allowed-error'               
+              examples:
+                not-allowed:
+                  $ref: '#/components/examples/method-not-allowed-error'               
         '500':
           description: 'Something went wrong (hopfully rare) - please try again'
           content:
@@ -133,8 +134,9 @@ paths:
             application/json:
               schema:
                 type: object            
-              example:
-                $ref: '#/components/examples/method-not-allowed-error'               
+              examples:
+                not-allowed:
+                  $ref: '#/components/examples/method-not-allowed-error'              
         '500':
           description: 'Something went wrong (hopfully rare) - please try again'
           content:
@@ -201,8 +203,9 @@ paths:
             application/json:
               schema:
                 type: object            
-              example:
-                $ref: '#/components/examples/method-not-allowed-error'               
+              examples:
+                not-allowed:
+                  $ref: '#/components/examples/method-not-allowed-error'              
         '500':
           description: 'Something went wrong (hopfully rare) - please try again'
           content:
@@ -269,8 +272,9 @@ paths:
             application/json:
               schema:
                 type: object            
-              example:
-                $ref: '#/components/examples/method-not-allowed-error'               
+              examples:
+                not-allowed:
+                  $ref: '#/components/examples/method-not-allowed-error'               
         '500':
           description: 'Something went wrong (hopfully rare) - please try again'
           content:
@@ -313,8 +317,9 @@ paths:
             application/json:
               schema:
                 type: object            
-              example:
-                $ref: '#/components/examples/method-not-allowed-error'               
+              examples:
+                not-allowed:
+                  $ref: '#/components/examples/method-not-allowed-error'              
         '500':
           description: 'Something went wrong (hopfully rare) - please try again'
           content:
