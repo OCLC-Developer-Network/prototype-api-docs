@@ -148,9 +148,18 @@ paths:
                 type: object            
               examples:
                 not-allowed:
-                  $ref: '#/components/examples/method-not-allowed-error'              
+                  $ref: '#/components/examples/method-not-allowed-error'
+        '409':
+          description: 'Conflict'
+          content:
+            application/json:
+              schema:
+                type: object            
+              examples:
+                acknowledgement-required:
+                  $ref: '#/components/examples/acknowledgement-required'                                
         '500':
-          description: 'Something went wrong (hopfully rare) - please try again'
+          description: 'Something went wrong - please try again'
           content:
             application/json:
               schema:
@@ -234,8 +243,17 @@ paths:
               examples:
                 not-allowed:
                   $ref: '#/components/examples/method-not-allowed-error'              
+        '409':
+          description: 'Conflict'
+          content:
+            application/json:
+              schema:
+                type: object            
+              examples:
+                acknowledgement-required:
+                  $ref: '#/components/examples/acknowledgement-required'
         '500':
-          description: 'Something went wrong (hopfully rare) - please try again'
+          description: 'Something went wrong - please try again'
           content:
             application/json:
               schema:
@@ -308,7 +326,16 @@ paths:
                 type: object            
               examples:
                 not-allowed:
-                  $ref: '#/components/examples/method-not-allowed-error'               
+                  $ref: '#/components/examples/method-not-allowed-error'  
+        '409':
+          description: 'Conflict'
+          content:
+            application/json:
+              schema:
+                type: object            
+              examples:
+                acknowledgement-required:
+                  $ref: '#/components/examples/acknowledgement-required'                                 
         '500':
           description: 'Something went wrong (hopfully rare) - please try again'
           content:
@@ -339,8 +366,8 @@ paths:
               examples:
                 success-forward-hold: 
                   $ref: '#/components/examples/success-forward-hold'                    
-        '400':
-          description: Invalid query. The request was unacceptable.
+        '404':
+          description: Unknown hold identifier
           content:
             application/json:
               schema:
@@ -653,6 +680,12 @@ components:
           format: URI
         temporaryBarcode:
           type: string
+        acknowledgements:
+          type: object
+          properties:
+            staffNotes:
+              type: boolean
+              default: false  
       required:
         - location    
   examples:
@@ -774,6 +807,14 @@ components:
       summary: Request body to route an item
       value: {
         "location": "https://128807.share.worldcat.org/circ/branches/129479"
+      }
+    route-item-acknowledgement:
+      summary: Request body to route and item when there is a note which must be acknowledged
+      value: {
+        "location": "https://128807.share.worldcat.org/circ/branches/129479",
+        "acknowledgements": {
+          "staffNotes": true
+        }
       }
     pull-freetext-hold:
       summary: Request body to mark an item as pulled for a freetext hold
@@ -1079,6 +1120,19 @@ components:
     not-acceptable-error:
       summary: Error when media type in Accept header not supported
       value: {"title": "NOT_ACCEPTABLE", "detail": "Media type application/xml not supported. Supported media types: application/json"}
+    acknowledgement-required:
+      summary: Item being routed requires acknowledgement of alert
+      value: {
+        "errorCode": "ACKNOWLEDGEMENTS_REQUIRED",
+        "message": "There are outstanding issues that must be acknowledged for this operation",
+        "detail": {
+            "missing": {
+                "staffNotes": [
+                    "acknowledge me"
+                ]
+            }
+        }
+      }
     missing-item:
       summary: error returned when trying to route a missing item
       value: {
