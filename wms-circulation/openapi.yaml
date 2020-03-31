@@ -7,7 +7,7 @@ servers:
   - url: 'https://{registryID}.share.worldcat.org/circ'
     variables:
       registryId:
-        default: sd00
+        default: '128807'
         description: WorldCat Registry ID for institution whose data is being accessed.    
 security:
   - wms_circulation_auth:
@@ -49,14 +49,7 @@ paths:
                   $ref: '#/components/examples/success-read-pull-list'         
               
         '405':
-          description: 'Method not supported, see response Allow header'
-          content:
-            application/json:
-              schema:
-                type: object            
-              examples:
-                not-allowed:
-                  $ref: '#/components/examples/method-not-allowed-error'               
+          $ref: '#/components/responses/method-not-supported'              
         '500':
           description: 'Something went wrong - please try again'
           content:
@@ -89,75 +82,18 @@ paths:
             type: string
           required: true
       requestBody:
-        description: Pull item
-        content:
-          'application/json':
-            schema:
-              $ref: '#/components/schemas/ItemRoute' 
-            examples:
-              pull-item:
-                $ref: '#/components/examples/route-item'
-              pull-freetext-hold:
-                $ref: '#/components/examples/pull-freetext-hold'                             
+        $ref: '#/components/requestBodies/route-item'      
       responses:
         '200':
-          description: Successful Pull item
-          content:          
-            application/json:
-              schema:
-                type: object            
-              examples:
-                success-pull-item: 
-                  $ref: '#/components/examples/success-pull-item'
-                success-pull-item-route: 
-                  $ref: '#/components/examples/success-pull-item-route'
-                success-pull-item-scheduled: 
-                  $ref: '#/components/examples/success-pull-item-scheduled'                                                        
+          $ref: '#/components/responses/successful-route'                                                        
         '400':
-          description: Invalid query. The request was unacceptable, often due to missing a required parameter.
-          content:
-            application/json:
-              schema:
-                type: object            
-              examples:
-                missing-item:
-                  $ref: '#/components/examples/missing-item'
-                withdrawn-item:
-                  $ref: '#/components/examples/withdrawn-item'
-                checkedout-item:
-                  $ref: '#/components/examples/checkedout-item'
-                lost-item:
-                  $ref: '#/components/examples/lost-item'
-                invalid-branch:
-                  $ref: '#/components/examples/invalid-branch'                                                                        
+          $ref: '#/components/responses/failed-route'                                                                        
         '404':
-          description: 'Unknown Item'
-          content:
-            application/json:
-              schema:
-                type: object
-              examples:
-                unknown-item:
-                  $ref: '#/components/examples/unknown-item-pull'             
- 
+          $ref: '#/components/responses/unknown-item-route'
         '405':
-          description: 'Method not supported, see response Allow header'
-          content:
-            application/json:
-              schema:
-                type: object            
-              examples:
-                not-allowed:
-                  $ref: '#/components/examples/method-not-allowed-error'
+          $ref: '#/components/responses/method-not-supported'
         '409':
-          description: 'Conflict'
-          content:
-            application/json:
-              schema:
-                type: object            
-              examples:
-                acknowledgement-required:
-                  $ref: '#/components/examples/acknowledgement-required'                                
+          $ref: '#/components/responses/failed-route-conflict'                               
         '500':
           description: 'Something went wrong - please try again'
           content:
@@ -168,8 +104,8 @@ paths:
     post:
       tags:
         - Items
-      summary: 'Retrieve a pull list for a specific branch'
-      description: 'Retrieve a pull list for a specific branch'
+      summary: 'Mark a specific Item as inventoried'
+      description: 'Mark a specific Item as inventoried'
       operationId: mark-item-inventoried
       parameters:
         - name: itemIdentifier
@@ -179,79 +115,18 @@ paths:
             type: string
           required: true
       requestBody:
-        description: Inventory item
-        content:
-          'application/json':
-            schema:
-              $ref: '#/components/schemas/ItemRoute' 
-            examples:
-              route-item:
-                $ref: '#/components/examples/route-item'                           
+        $ref: '#/components/requestBodies/route-item' 
       responses:
         '200':
-          description: Successful inventory item
-          content:                     
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Item'            
-              examples:
-                success-reshelve: 
-                  $ref: '#/components/examples/success-reshelve'
-                success-reshelve-route-different-branch: 
-                  $ref: '#/components/examples/success-reshelve-route-different-branch' 
-                success-reshelve-route-different-institution: 
-                  $ref: '#/components/examples/success-reshelve-route-different-institution'                  
-                success-pull-item: 
-                  $ref: '#/components/examples/success-pull-item'
-                success-pull-item-route: 
-                  $ref: '#/components/examples/success-pull-item-route'
-                success-pull-item-scheduled: 
-                  $ref: '#/components/examples/success-pull-item-scheduled'                                      
+          '$ref': '#/components/responses/successful-route'                                      
         '400':
-          description: Invalid query. The request was unacceptable, often due to missing a required parameter.
-          content:
-            application/json:
-              schema:
-                type: object            
-              examples:
-                missing-item:
-                  $ref: '#/components/examples/missing-item'
-                withdrawn-item:
-                  $ref: '#/components/examples/withdrawn-item'
-                checkedout-item:
-                  $ref: '#/components/examples/checkedout-item'
-                lost-item:
-                  $ref: '#/components/examples/lost-item'
-
-                invalid-branch:
-                  $ref: '#/components/examples/invalid-branch'               
+          $ref: '#/components/responses/failed-route'               
         '404':
-          description: 'Unknown Item'
-          content:
-            application/json:
-              schema:
-                type: object
-              examples:
-                unknown-item:
-                  $ref: '#/components/examples/unknown-item-inventory'
+          $ref: '#/components/responses/unknown-item-route'
         '405':
-          description: 'Method not supported, see response Allow header'
-          content:
-            application/json:
-              schema:
-                type: object            
-              examples:
-                not-allowed:
-                  $ref: '#/components/examples/method-not-allowed-error'              
+          $ref: '#/components/responses/method-not-supported'              
         '409':
-          description: 'Conflict'
-          content:
-            application/json:
-              schema:
-                type: object            
-              examples:
-                acknowledgement-required:
-                  $ref: '#/components/examples/acknowledgement-required'
+          $ref: '#/components/responses/failed-route-conflict'
         '500':
           description: 'Something went wrong - please try again'
           content:
@@ -262,8 +137,8 @@ paths:
     post:
       tags:
         - Items
-      summary: 'Retrieve a pull list for a specific branch'
-      description: 'Retrieve a pull list for a specific branch'
+      summary: 'Mark a specific Item as non-loan return'
+      description: 'Mark a specific Item as non-loan return'
       operationId: mark-item-as-non-loan-return
       parameters:
         - name: itemIdentifier
@@ -271,71 +146,20 @@ paths:
           description: The piece designation or item id for the item
           schema:
             type: string
-          required: true                   
+          required: true
+      requestBody:
+        $ref: '#/components/requestBodies/route-item'                                      
       responses:
         '200':
-          description: Successful Non-Loan Return of Item
-          content:                     
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Item'            
-              examples:
-                success-reshelve: 
-                  $ref: '#/components/examples/success-reshelve'
-                success-reshelve-route-different-branch: 
-                  $ref: '#/components/examples/success-reshelve-route-different-branch' 
-                success-reshelve-route-different-institution: 
-                  $ref: '#/components/examples/success-reshelve-route-different-institution'                  
-                success-pull-item: 
-                  $ref: '#/components/examples/success-pull-item'
-                success-pull-item-route: 
-                  $ref: '#/components/examples/success-pull-item-route'
-                success-pull-item-scheduled: 
-                  $ref: '#/components/examples/success-pull-item-scheduled'                    
+          $ref: '#/components/responses/successful-route'                    
         '400':
-          description: Invalid query. The request was unacceptable, often due to missing a required parameter.
-          content:
-            application/json:
-              schema:
-                type: object            
-              examples:
-                missing-item:
-                  $ref: '#/components/examples/missing-item'
-                withdrawn-item:
-                  $ref: '#/components/examples/withdrawn-item'
-                checkedout-item:
-                  $ref: '#/components/examples/checkedout-item'
-                lost-item:
-                  $ref: '#/components/examples/lost-item'
-                invalid-branch:
-                  $ref: '#/components/examples/invalid-branch' 
+          $ref: '#/components/responses/failed-route' 
         '404':
-          description: 'Unknown Item'
-          content:
-            application/json:
-              schema:
-                type: object
-              examples:
-                unknown-item:
-                  $ref: '#/components/examples/unknown-item-inventory'                      
+          $ref: '#/components/responses/unknown-item-route'                      
         '405':
-          description: 'Method not supported, see response Allow header'
-          content:
-            application/json:
-              schema:
-                type: object            
-              examples:
-                not-allowed:
-                  $ref: '#/components/examples/method-not-allowed-error'  
+          $ref: '#/components/responses/method-not-supported'  
         '409':
-          description: 'Conflict'
-          content:
-            application/json:
-              schema:
-                type: object            
-              examples:
-                acknowledgement-required:
-                  $ref: '#/components/examples/acknowledgement-required'                                 
+          $ref: '#/components/responses/failed-route-conflict'                                 
         '500':
           description: 'Something went wrong (hopfully rare) - please try again'
           content:
@@ -373,14 +197,7 @@ paths:
               schema:
                 type: object                          
         '405':
-          description: 'Method not supported, see response Allow header'
-          content:
-            application/json:
-              schema:
-                type: object            
-              examples:
-                not-allowed:
-                  $ref: '#/components/examples/method-not-allowed-error'              
+          $ref: '#/components/responses/method-not-supported'              
         '500':
           description: 'Something went wrong (hopfully rare) - please try again'
           content:
@@ -688,6 +505,87 @@ components:
               default: false  
       required:
         - location    
+  requestBodies:
+    route-item:
+      description: Route item
+      content:
+        'application/json':
+          schema:
+            $ref: '#/components/schemas/ItemRoute' 
+          examples:
+            route-item:
+              $ref: '#/components/examples/route-item'
+            pull-freetext-hold:
+              $ref: '#/components/examples/pull-freetext-hold' 
+            route-item-acknowledgement:
+              $ref: '#/components/examples/route-item-acknowledgement'                              
+      required: true              
+  responses:
+    successful-route:
+      description: Successful inventory item
+      content:                     
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Item'            
+          examples:
+            success-reshelve: 
+              $ref: '#/components/examples/success-reshelve'
+            success-reshelve-route-different-branch: 
+              $ref: '#/components/examples/success-reshelve-route-different-branch' 
+            success-reshelve-route-different-institution: 
+              $ref: '#/components/examples/success-reshelve-route-different-institution'                  
+            success-pull-item: 
+              $ref: '#/components/examples/success-pull-item'
+            success-pull-item-route: 
+              $ref: '#/components/examples/success-pull-item-route'
+            success-pull-item-scheduled: 
+              $ref: '#/components/examples/success-pull-item-scheduled'
+    failed-route:
+      description: Invalid request. The request was unacceptable, often due to state of item.
+      content:
+        application/json:
+          schema:
+            type: object            
+          examples:
+            missing-item:
+              $ref: '#/components/examples/missing-item'
+            withdrawn-item:
+              $ref: '#/components/examples/withdrawn-item'
+            checkedout-item:
+              $ref: '#/components/examples/checkedout-item'
+            lost-item:
+              $ref: '#/components/examples/lost-item'
+            invalid-branch:
+              $ref: '#/components/examples/invalid-branch'
+    failed-route-conflict:
+      description: 'Conflict'
+      content:
+        application/json:
+          schema:
+            type: object            
+          examples:
+            acknowledgement-required:
+              $ref: '#/components/examples/acknowledgement-required'    
+    unknown-item-route:
+      description: 'Unknown Item'
+      content:
+        application/json:
+          schema:
+            type: object
+          examples:
+            unknown-item-pull:
+              $ref: '#/components/examples/unknown-item-pull'
+            unknown-item:
+              $ref: '#/components/examples/unknown-item-inventory'                   
+    method-not-supported:
+      description: 'Method not supported, see response Allow header'
+      content:
+        application/json:
+          schema:
+            type: object            
+          examples:
+            not-allowed:
+              $ref: '#/components/examples/method-not-allowed-error'                      
   examples:
     success-read-pull-list:
       summary: successful response to reading a pull list
