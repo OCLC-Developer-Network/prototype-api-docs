@@ -1,0 +1,1099 @@
+openapi: 3.0.3
+info:
+  description: WMS Circulation API
+  version: 1.0.0
+  title: WMS Circulation API
+servers:
+  - url: 'https://{registryID}.share.worldcat.org/circ'
+    variables:
+      registryId:
+        default: '128807'
+        description: WorldCat Registry ID for institution whose data is being accessed.    
+security:
+  - wms_circulation_auth:
+    - WMS_CIRCULATION
+paths:
+  /pulllist/{branchId}:
+    get:
+      tags:
+        - Pull list
+      summary: 'Retrieve a pull list for a specific branch'
+      description: 'Retrieve a pull list for a specific branch'
+      operationId: get-pulllist
+      parameters:
+        - name: branchId
+          in: path
+          description: WorldCat Registry Id of branch to get a pull list for
+          schema:
+            type: integer
+          required: true  
+        - name: startIndex
+          in: query
+          description: Index item to start the collection at
+          schema:
+            type: integer
+        - name: itemsPerPage
+          in: query
+          description: Number of items to return in request
+          schema:
+            type: integer                  
+      responses:
+        '200':
+          description: Successful read of pulllist
+          content:          
+            application/json:
+              schema:
+                type: object            
+              examples:
+                success-read-pull-list: 
+                  $ref: '#/components/examples/success-read-pull-list'         
+              
+        '405':
+          $ref: '#/components/responses/method-not-supported'              
+        '500':
+          description: 'Something went wrong - please try again'
+          content:
+            application/json:
+              schema:
+                type: object
+              examples:
+                invalid_branch:
+                  summary: Error returned when an invalid branch ID is passed
+                  value: {
+                    "code": {
+                        "value": "500",
+                        "type": null
+                    },
+                    "message": "Internal server error",
+                    "detail": "org.oclc.circ.business.institution.InstitutionFactoryImpl.createBranch[InstitutionFactoryImpl.java:89] threw org.oclc.circ.business.institution.InvalidBranchesException (INVALID_BRANCH: [1])"
+                }  
+  /items/{itemIdentifier}/routing/pull:
+    post:
+      tags:
+        - Items
+      summary: 'Mark a specific Item as pulled'
+      description: 'Mark a specific Item as pulled'
+      operationId: mark-item-pulled
+      parameters:
+        - name: itemIdentifier
+          in: path
+          description: The piece designation or item id for the item
+          schema:
+            type: string
+          required: true
+      requestBody:
+        $ref: '#/components/requestBodies/route-item'      
+      responses:
+        '200':
+          $ref: '#/components/responses/successful-route'                                                        
+        '400':
+          $ref: '#/components/responses/failed-route'                                                                        
+        '404':
+          $ref: '#/components/responses/unknown-item-route'
+        '405':
+          $ref: '#/components/responses/method-not-supported'
+        '409':
+          $ref: '#/components/responses/failed-route-conflict'                               
+        '500':
+          description: 'Something went wrong - please try again'
+          content:
+            application/json:
+              schema:
+                type: object  
+  /items/{itemIdentifier}/routing/inventories:
+    post:
+      tags:
+        - Items
+      summary: 'Mark a specific Item as inventoried'
+      description: 'Mark a specific Item as inventoried'
+      operationId: mark-item-inventoried
+      parameters:
+        - name: itemIdentifier
+          in: path
+          description: The piece designation or item id for the item
+          schema:
+            type: string
+          required: true
+      requestBody:
+        $ref: '#/components/requestBodies/route-item' 
+      responses:
+        '200':
+          '$ref': '#/components/responses/successful-route'                                      
+        '400':
+          $ref: '#/components/responses/failed-route'               
+        '404':
+          $ref: '#/components/responses/unknown-item-route'
+        '405':
+          $ref: '#/components/responses/method-not-supported'              
+        '409':
+          $ref: '#/components/responses/failed-route-conflict'
+        '500':
+          description: 'Something went wrong - please try again'
+          content:
+            application/json:
+              schema:
+                type: object  
+  /items/{itemIdentifier}/routing/usages:
+    post:
+      tags:
+        - Items
+      summary: 'Mark a specific Item as non-loan return'
+      description: 'Mark a specific Item as non-loan return'
+      operationId: mark-item-as-non-loan-return
+      parameters:
+        - name: itemIdentifier
+          in: path
+          description: The piece designation or item id for the item
+          schema:
+            type: string
+          required: true
+      requestBody:
+        $ref: '#/components/requestBodies/route-item'                                      
+      responses:
+        '200':
+          $ref: '#/components/responses/successful-route'                    
+        '400':
+          $ref: '#/components/responses/failed-route' 
+        '404':
+          $ref: '#/components/responses/unknown-item-route'                      
+        '405':
+          $ref: '#/components/responses/method-not-supported'  
+        '409':
+          $ref: '#/components/responses/failed-route-conflict'                                 
+        '500':
+          description: 'Something went wrong (hopfully rare) - please try again'
+          content:
+            application/json:
+              schema:
+                type: object                                                       
+  /holds/{identifier}/forward:
+    post:
+      tags:
+        - Holds
+      summary: 'Forward a Hold on an item'
+      description: 'Forward a Hold on an item'
+      operationId: forward-hold
+      parameters:
+        - name: identifier
+          in: path
+          description: The identifier for the hold
+          schema:
+            type: string
+          required: true                   
+      responses:
+        '200':
+          description: Successful Forward of Hold
+          content:                    
+            application/json:
+              schema:
+                type: object            
+              examples:
+                success-forward-hold: 
+                  $ref: '#/components/examples/success-forward-hold'                    
+        '404':
+          description: Unknown hold identifier
+          content:
+            application/json:
+              schema:
+                type: object                          
+        '405':
+          $ref: '#/components/responses/method-not-supported'              
+        '500':
+          description: 'Something went wrong (hopfully rare) - please try again'
+          content:
+            application/json:
+              schema:
+                type: object  
+components:
+  securitySchemes:
+    wms_circulation_auth:
+      type: oauth2
+      flows:
+        clientCredentials:
+          tokenUrl: https://oauth.oclc.org/token
+          scopes:
+            WMS_CIRCULATION: perform all the operation in the WMS Circulation API
+        authorizationCode:
+          authorizationUrl: https://oauth.oclc.org/auth
+          tokenUrl: https://oauth.oclc.org/token
+          scopes:
+            WMS_CIRCULATION: perform all the operation in the WMS Circulation API
+  schemas:
+    PullList:
+      type: object
+      properties:
+        id:
+          type: string          
+        title:
+          type: string
+        updated:
+          type: string
+          format: date-time
+        entries:
+          type: array
+          items:
+            type: object
+            properties:
+              title:
+                type: string
+              content:
+                $ref: '#/components/schemas/PullListItem'
+              updated:
+                type: string
+                format: date-time
+              authors:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    name:
+                      type: string                      
+    PullListItem:
+      type: object
+      properties:
+        bibliographicItem:
+          $ref: '#/components/schemas/BibliographicSummary'
+        pieceDesignation:
+          type: string
+        callNumber:
+          type: object
+          properties:
+            shelvingScheme:
+              type: string              
+            shelvingInformation:
+              type: string
+            itemParts:
+              type: string
+            prefixes:
+              type: string
+            suffixes:
+              type: string          
+            description:
+              type: string              
+        recordType:
+          $ref: '#/components/schemas/ItemRecordType'
+        holdingInformation:
+          type: object
+          properties:
+            captionId:
+              type: integer
+            enumeration:
+              type: string
+            chronology:
+              type: string
+            description:  
+              type: string        
+        numberOfPieces:
+          type: integer
+        physicalDescription:
+          type: string
+        homeHoldingLocation: 
+          type: string
+        permanentShelvingLocation:
+          type: object
+          properties:
+            element:
+              type: array
+              items:
+                type: string
+        previousShelvingLocation:
+          type: array
+          items:
+            type: string            
+        publicNotes:
+          type: array
+          items:
+            $ref: '#/components/schemas/Note'          
+        staffNote:
+          type: array
+          items:
+            $ref: '#/components/schemas/Note'
+        useRestriction:
+          type: array
+          items:
+            type: string    
+        requestDate:
+          type: string
+          format: date-time
+        patronName:
+          type: string
+        patronIdentifier:
+          type: object
+          properties:
+            institution:
+              type: integer
+            relyingPartyId:
+              type: string
+            ppid:
+              type: string
+              format: uuid      
+        enumeration:
+          type: string
+        freeText:
+          type: string  
+        requestId:
+          type: string
+          format: uuid
+        pullReason:
+          type: string
+          enum:
+            - HOLD
+            - SCHEDULE
+        lastPrintedDate:
+          type: string
+          format: date-time
+        forward:
+          type: string
+          format: URI  
+        scheduleStartDate:
+          type: string
+          format: date-time
+        scheduleEndDate:
+          type: string
+          format: date-time
+        pickupBranch:
+          type: object
+          properties:
+            id:
+              type: integer
+            name:
+              type: string  
+        pickupLocation:
+          type: string        
+        pickupLocationName:
+          type: string
+        ownerInstitutionId:
+          type: integer
+        restrictedLocations:
+          type: string
+        itemType:
+          type: string
+          enum:
+            - LHR
+        requestSource:
+          type: string                                                          
+    ItemRoute:
+      type: object
+      properties:
+        reason:
+          type: object
+          properties:
+            reasonCode:
+              type: string
+              enum:
+                - HOLD
+                - SCHEDULED
+                - RESHELVE
+        dateRouted:
+          type: string
+          format: date-time
+        destination:
+          $ref: '#/components/schemas/Destination'
+        item:
+          $ref: '#/components/schemas/Item'
+    Destination:
+      type: object
+      properties:
+        ref:
+          type: string
+        branchId:
+          type: integer
+        branchName:
+          type: string        
+        institutionId:
+          type: integer
+        institutionName:
+          type: string
+    Item:
+      type: object
+      properties:
+        ref:
+          type: string
+        ownerInstitution:
+          type: object
+          properties:
+            institutionId:
+              type: integer
+            institutionName:
+              type: string
+        pieceDesignation:
+          type: string
+        callNumber:
+          type: string
+        itemRecordType:
+          $ref: '#/components/schemas/ItemRecordType'   
+        numberOfPieces:
+          type: integer
+        homeLocation:
+          $ref: '#/components/schemas/HomeLocation'
+    HomeLocation:
+      type: object
+      properties:
+        shelvingLocationCode:
+          type: string
+        holdingLocation:
+          type: object
+          properties:
+            holdingLocationCode:
+              type: string
+            location:
+              type: object
+              properties:
+                ref:
+                  type: string
+                branchId:
+                  type: integer
+                branchName:
+                  type: string
+                institution:
+                  type: object
+                  properties:
+                    institutionId:
+                      type: integer
+                    institutionName:
+                      type: string                           
+    BibliographicSummary:
+      type: object
+      properties:
+        oclcNumber:
+          type: integer
+        title:
+          type: string
+        materialType:
+          type: string
+        author:
+          type: string
+        publisher:
+          type: string
+        publicationYear:
+          type: string
+        language:
+          type: string
+        edition:
+          type: string                                                        
+    ItemRecordType:
+      type: string
+      enum:
+        - SINGLE_PART
+        - MULTI_PART
+        - SERIAL
+        - UNKNOWN
+    Note:
+      description: A user defined note
+      type: object
+      properties:
+        value:
+          type: string
+        type:
+          type: string
+          enum:
+            - PUBLIC
+            - STAFF       
+    RouteItem:
+      type: object
+      properties:
+        location:
+          type: string
+          format: URI
+        temporaryBarcode:
+          type: string
+        acknowledgements:
+          type: object
+          properties:
+            staffNotes:
+              type: boolean
+              default: false  
+      required:
+        - location    
+  requestBodies:
+    route-item:
+      description: Route item
+      content:
+        'application/json':
+          schema:
+            $ref: '#/components/schemas/ItemRoute' 
+          examples:
+            route-item:
+              $ref: '#/components/examples/route-item'
+            pull-freetext-hold:
+              $ref: '#/components/examples/pull-freetext-hold' 
+            route-item-acknowledgement:
+              $ref: '#/components/examples/route-item-acknowledgement'                              
+      required: true              
+  responses:
+    successful-route:
+      description: Successful inventory item
+      content:                     
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Item'            
+          examples:
+            success-reshelve: 
+              $ref: '#/components/examples/success-reshelve'
+            success-reshelve-route-different-branch: 
+              $ref: '#/components/examples/success-reshelve-route-different-branch' 
+            success-reshelve-route-different-institution: 
+              $ref: '#/components/examples/success-reshelve-route-different-institution'                  
+            success-pull-item: 
+              $ref: '#/components/examples/success-pull-item'
+            success-pull-item-route: 
+              $ref: '#/components/examples/success-pull-item-route'
+            success-pull-item-scheduled: 
+              $ref: '#/components/examples/success-pull-item-scheduled'
+    failed-route:
+      description: Invalid request. The request was unacceptable, often due to state of item.
+      content:
+        application/json:
+          schema:
+            type: object            
+          examples:
+            missing-item:
+              $ref: '#/components/examples/missing-item'
+            withdrawn-item:
+              $ref: '#/components/examples/withdrawn-item'
+            checkedout-item:
+              $ref: '#/components/examples/checkedout-item'
+            lost-item:
+              $ref: '#/components/examples/lost-item'
+            invalid-branch:
+              $ref: '#/components/examples/invalid-branch'
+    failed-route-conflict:
+      description: 'Conflict'
+      content:
+        application/json:
+          schema:
+            type: object            
+          examples:
+            acknowledgement-required:
+              $ref: '#/components/examples/acknowledgement-required'    
+    unknown-item-route:
+      description: 'Unknown Item'
+      content:
+        application/json:
+          schema:
+            type: object
+          examples:
+            unknown-item-pull:
+              $ref: '#/components/examples/unknown-item-pull'
+            unknown-item:
+              $ref: '#/components/examples/unknown-item-inventory'                   
+    method-not-supported:
+      description: 'Method not supported, see response Allow header'
+      content:
+        application/json:
+          schema:
+            type: object            
+          examples:
+            not-allowed:
+              $ref: '#/components/examples/method-not-allowed-error'                      
+  examples:
+    success-read-pull-list:
+      summary: successful response to reading a pull list
+      value: {
+        "id": "urn:oclc:circulation/pulllist/128807/129479",
+        "title": "Pull List",
+        "updated": "2020-03-26T18:09:45.864Z",
+        "entries": [
+          {
+            "title": "Charmed life /",
+            "content": {
+              "bibliographicItem": {
+                "oclcNumber": "3543563",
+                "title": "Charmed life /",
+                "author": "Jones, Diana Wynne",
+                "materialFormat": "BOOK",
+                "publisher": "New York : Greenwillow Books,",
+                "publicationYear": "1977",
+                "language": "eng",
+                "edition": "1st ed."
+              },
+              "pieceDesignation": "chrestomanci2",
+              "callNumber": {
+                "shelvingScheme": null,
+                "shelvingInformation": null,
+                "itemParts": null,
+                "prefixes": null,
+                "suffixes": null,
+                "description": "PZ7.J684 Ch"
+              },
+              "recordType": "SINGLE_PART",
+              "holdingInformation": {
+                "captionId": null,
+                "enumeration": "",
+                "chronology": "",
+                "description": null
+              },
+              "numberOfPieces": 1,
+              "physicalDescription": null,
+              "cost": null,
+              "homeHoldingLocation": "MAIN",
+              "permanentShelvingLocation": {
+                "element": [
+                  "MAIN-STACKS"
+                ]
+              },
+              "previousShelvingLocation": null,
+              "temporaryShelvingLocation": null,
+              "publicNotes": null,
+              "staffNotes": null,
+              "useRestrictions": null,
+              "requestDate": "2020-01-21T15:23:05.000-05:00",
+              "patronName": "Schlueter, Elizabeth",
+              "patronIdentifier": {
+                "institution": "128807",
+                "relyingPartyId": "urn:oclc:platform:128807",
+                "ppid": "42312c9a-5186-4ea4-a2a7-63ec75f127e1"
+              },
+              "enumeration": "",
+              "freeText": null,
+              "requestId": "e8235521-9f9e-41e1-a558-6943a09f046b",
+              "pullReason": "HOLD",
+              "lastPrintedDate": null,
+              "forward": null,
+              "scheduleStartDate": null,
+              "scheduleEndDate": null,
+              "pickupBranch": {
+                "id": "129479",
+                "name": "COP Sandbox - Main Branch"
+              },
+              "pickupLocation": null,
+              "pickupLocationName": "COP Sandbox - Main Branch",
+              "ownerInstitutionId": "128807",
+              "restrictedLocations": null,
+              "itemType": "LHR",
+              "requestSource": null
+            },
+            "updated": "2020-03-26T18:09:45.864Z",
+            "authors": [
+              {
+                "name": "Jones, Diana Wynne"
+              }
+            ]
+          }
+        ],
+        "extensions": [
+          {
+            "name": "os:totalResults",
+            "attributes": {
+              "xmlns:os": "http://a9.com/-/spec/opensearch/1.1/"
+            },
+            "children": [
+              "1"
+            ]
+          },
+          {
+            "name": "os:startIndex",
+            "attributes": {
+              "xmlns:os": "http://a9.com/-/spec/opensearch/1.1/"
+            },
+            "children": [
+              "1"
+            ]
+          },
+          {
+            "name": "os:itemsPerPage",
+            "attributes": {
+              "xmlns:os": "http://a9.com/-/spec/opensearch/1.1/"
+            },
+            "children": [
+              "100"
+            ]
+          }
+        ]
+      }
+    route-item:
+      summary: Request body to route an item
+      value: {
+        "location": "https://128807.share.worldcat.org/circ/branches/129479"
+      }
+    route-item-acknowledgement:
+      summary: Request body to route and item when there is a note which must be acknowledged
+      value: {
+        "location": "https://128807.share.worldcat.org/circ/branches/129479",
+        "acknowledgements": {
+          "staffNotes": true
+        }
+      }
+    pull-freetext-hold:
+      summary: Request body to mark an item as pulled for a freetext hold
+      value: {
+        "location": "https://128807.share.worldcat.org/circ/branches/129479",
+        "temporaryItemBarcode": "g-$cbda16b2$"
+      }   
+    success-reshelve:
+      summary: Response returned when an item should be reshelved
+      value: {
+        "reason":
+        { "reasonCode": "RESHELVE" }
+        
+        ,
+        "dateRouted": "2017-02-10T19:47:42Z",
+        "destination": {
+        "ref": "https://circ.sd00.worldcat.orgcirc/branches/129058",
+        "branchId": 129058,
+        "branchName": "COP Sandbox - West Branch",
+        "institution":
+        { "institutionId": 128807, "institutionName": "OCLC WorldShare Platform Sandbox Institution" }
+        
+        },
+        "item": {
+        "ref": "https://circ.sd00.worldcat.orgcirc/items/cf57451b-ba8f-4730-b100-0480b503f1cb",
+        "ownerInstitution":
+        { "institutionId": 128807, "institutionName": "OCLC WorldShare Platform Sandbox Institution" }
+        
+        ,
+        "pieceDesignation": "1976191919",
+        "callNumber": "PZ120 87387",
+        "itemRecordType": "SINGLE_PART",
+        "numberOfPieces": 1,
+        "homeLocation": {
+        "shelvingLocationCode": "WEST-General",
+        "holdingLocation": {
+        "holdingLocationCode": "WEST",
+        "location": {
+        "ref": "https://circ.sd00.worldcat.orgcirc/branches/129058",
+        "branchId": 129058,
+        "branchName": "COP Sandbox - West Branch",
+        "institution":
+        { "institutionId": 128807, "institutionName": "OCLC WorldShare Platform Sandbox Institution" }
+        
+        }
+        }
+        },
+        "bibliographicSummary":
+        { "oclcNumber": 76863877, "title": "Little Blue Truck /", "materialType": "Book", "author": "Schertle, Alice.", "publisher": "Orlando : Harcourt,", "publicationYear": "2008", "language": "eng", "edition": "1st ed." }
+        
+        }
+        }
+    success-reshelve-route-different-branch: 
+      summary: Response returned when an item should be reshelved at a different branched
+      value: {
+        "reason":
+        { "reasonCode": "RESHELVE" }
+        
+        ,
+        "dateRouted": "2017-02-10T19:47:42Z",
+        "destination": {
+        "ref": "https://circ.sd00.worldcat.orgcirc/branches/129058",
+        "branchId": 129058,
+        "branchName": "COP Sandbox - West Branch",
+        "institution":
+        { "institutionId": 128807, "institutionName": "OCLC WorldShare Platform Sandbox Institution" }
+        
+        },
+        "item": {
+        "ref": "https://circ.sd00.worldcat.orgcirc/items/cf57451b-ba8f-4730-b100-0480b503f1cb",
+        "ownerInstitution":
+        { "institutionId": 128807, "institutionName": "OCLC WorldShare Platform Sandbox Institution" }
+        
+        ,
+        "pieceDesignation": "1976191919",
+        "callNumber": "PZ120 87387",
+        "itemRecordType": "SINGLE_PART",
+        "numberOfPieces": 1,
+        "homeLocation": {
+        "shelvingLocationCode": "WEST-General",
+        "holdingLocation": {
+        "holdingLocationCode": "WEST",
+        "location": {
+        "ref": "https://circ.sd00.worldcat.orgcirc/branches/129058",
+        "branchId": 129058,
+        "branchName": "COP Sandbox - West Branch",
+        "institution":
+        { "institutionId": 128807, "institutionName": "OCLC WorldShare Platform Sandbox Institution" }
+        
+        }
+        }
+        },
+        "bibliographicSummary":
+        { "oclcNumber": 76863877, "title": "Little Blue Truck /", "materialType": "Book", "author": "Schertle, Alice.", "publisher": "Orlando : Harcourt,", "publicationYear": "2008", "language": "eng", "edition": "1st ed." }
+        
+        }
+        }
+    success-reshelve-route-different-institution: 
+      summary: Response returned when an item should be returned to a different institution
+      value: {
+       "reason": {
+           "reasonCode": "HOLD"
+       },
+       "dateRouted": "2017-04-24T17:41:09Z",
+       "destination": {
+           "ref": "https://circ.sd00.worldcat.org/circ/branches/128383",
+           "branchId": 128383,
+           "branchName": "Orion",
+           "institution": {
+               "institutionId": 128367,
+               "institutionName": "Constellations"
+           }
+       },
+       "item": {
+           "ref": "https://circ.sd00.worldcat.org/circ/items/ced53347-4acb-4419-b7d1-271b6e76d8a4",
+           "ownerInstitution": {
+               "institutionId": 128366,
+               "institutionName": "Explorers"
+           },
+           "pieceDesignation": "7766552",
+           "callNumber": "NN234",
+           "itemRecordType": "UNKNOWN",
+           "numberOfPieces": 1,
+           "homeLocation": {
+               "shelvingLocationCode": "Christopher Columbus",
+               "holdingLocation": {
+                   "holdingLocationCode": "MAIN",
+                   "location": {
+                       "ref": "https://circ.sd00.worldcat.org/circ/branches/128382",
+                       "branchId": 128382,
+                       "branchName": "Christopher Columbus",
+                       "institution": {
+                           "institutionId": 128366,
+                           "institutionName": "Explorers"
+                       }
+                   }
+               }
+           },
+           "bibliographicSummary": {
+               "oclcNumber": 297225775,
+               "title": "Polycrystalline thin-film solar cell technologies : preprint /",
+               "materialType": "Book_Digital",
+               "author": "Ullal, Harin S.",
+               "publisher": "Golden, Colo. : National Renewable Energy Laboratory,",
+               "publicationYear": "2008",
+               "language": "eng"
+           }
+       }
+    }                  
+    success-pull-item: 
+      summary: Response returned when an item should be placed on the hold shelf at current branch
+      value: {
+        "reason": {
+          "reasonCode": "HOLD"
+        },
+        "dateRouted": "2017-04-14T16:04:44Z",
+        "item": {
+          "ref": "https://circ.sd00.worldcat.org/circ/items/cfd4931f-d617-4007-bf01-0035d12b4a4a",
+          "ownerInstitution": {
+            "institutionId": 128807,
+            "institutionName": "OCLC WorldShare Platform Sandbox Institution"
+          },
+          "pieceDesignation": "568475964",
+          "callNumber": "RA1000 .D67 2010",
+          "itemRecordType": "SINGLE_PART",
+          "numberOfPieces": 1,
+          "homeLocation": {
+            "shelvingLocationCode": "MAIN-STACKS",
+            "holdingLocation": {
+              "holdingLocationCode": "MAIN",
+              "location": {
+                "ref": "https://circ.sd00.worldcat.org/circ/branches/129479",
+                "branchId": 129479,
+                "branchName": "COP Sandbox - Main Branch",
+                "institution": {
+                  "institutionId": 128807,
+                  "institutionName": "OCLC WorldShare Platform Sandbox Institution"
+                }
+              }
+            }
+          },
+          "bibliographicSummary": {
+            "oclcNumber": 262886383,
+            "title": "Making rounds with Oscar : the extraordinary gift of an ordinary cat /",
+            "materialType": "Book",
+            "author": "Dosa, David.",
+            "publisher": "New York : Hyperion,",
+            "publicationYear": "2010",
+            "language": "eng",
+            "edition": "1st ed."
+          }
+        }
+      }
+    success-pull-item-route: 
+      summary: Response returned when an item should be placed on the hold shelf at different branch
+      value: {
+        "reason": {
+          "reasonCode": "HOLD"
+        },
+        "dateRouted": "2017-04-14T16:00:26Z",
+        "destination": {
+          "ref": "https://circ.sd00.worldcat.org/circ/branches/129479",
+          "branchId": 129479,
+          "branchName": "COP Sandbox - Main Branch",
+          "institution": {
+            "institutionId": 128807,
+            "institutionName": "OCLC WorldShare Platform Sandbox Institution"
+          }
+        },
+        "item": {
+          "ref": "https://circ.sd00.worldcat.org/circ/items/bff043b3-405b-4e18-975b-9f08b96686a7",
+          "ownerInstitution": {
+            "institutionId": 128807,
+            "institutionName": "OCLC WorldShare Platform Sandbox Institution"
+          },
+          "pieceDesignation": "A123456789",
+          "callNumber": "1323456",
+          "itemRecordType": "SINGLE_PART",
+          "numberOfPieces": 1,
+          "homeLocation": {
+            "shelvingLocationCode": "NORT-STACKS",
+            "holdingLocation": {
+              "holdingLocationCode": "NORT",
+              "location": {
+                "ref": "https://circ.sd00.worldcat.org/circ/branches/129055",
+                "branchId": 129055,
+                "branchName": "COP Sandbox - South Branch",
+                "institution": {
+                  "institutionId": 128807,
+                  "institutionName": "OCLC WorldShare Platform Sandbox Institution"
+                }
+              }
+            }
+          },
+          "bibliographicSummary": {
+            "oclcNumber": 191865523,
+            "title": "Dewey : a small-town library cat who touched the world /",
+            "materialType": "Book",
+            "author": "Myron, Vicki,",
+            "publisher": "New York : Grand Central Pub.,",
+            "publicationYear": "2008",
+            "language": "eng",
+            "edition": "1st ed."
+          }
+        }
+      }
+    success-pull-item-scheduled: 
+      summary: Response returned when an item should be placed on the hold shelf because it is scheduled
+      value: {
+        "reason": {
+          "reasonCode": "SCHEDULED"
+        },
+        "dateRouted": "2017-04-14T16:09:15Z",
+        "item": {
+          "ref": "https://circ.sd00.worldcat.org/circ/items/ad49f6f9-65a8-440f-b537-7b68ef99be02",
+          "ownerInstitution": {
+            "institutionId": 128807,
+            "institutionName": "OCLC WorldShare Platform Sandbox Institution"
+          },
+          "pieceDesignation": "jeff1031",
+          "callNumber": "FIC SCH",
+          "itemRecordType": "SINGLE_PART",
+          "numberOfPieces": 1,
+          "homeLocation": {
+            "shelvingLocationCode": "MAIN-STACKS",
+            "holdingLocation": {
+              "holdingLocationCode": "MAIN",
+              "location": {
+                "ref": "https://circ.sd00.worldcat.org/circ/branches/129479",
+                "branchId": 129479,
+                "branchName": "COP Sandbox - Main Branch",
+                "institution": {
+                  "institutionId": 128807,
+                  "institutionName": "OCLC WorldShare Platform Sandbox Institution"
+                }
+              }
+            }
+          },
+          "bibliographicSummary": {
+            "oclcNumber": 64207971,
+            "title": "Skippyjon Jones in mummy trouble /",
+            "materialType": "Book",
+            "author": "Schachner, Judith Byron.",
+            "publisher": "New York : Dutton Children's Books,",
+            "publicationYear": "2006",
+            "language": "eng",
+            "edition": "1st ed."
+          }
+        }
+      }                
+    success-forward-hold:
+      summary: response returned when hold is successful forwarded
+      value: {}
+    unauthorized:
+      summary: Error returned when valid API credentials not sent or invalid
+      value: {"message": "Unauthorized"}
+    forbidden:
+      summary: Error returned when API credentials not for resource
+      value: {"message": "Forbidden"}
+    method-not-allowed-error:
+      summary: Error when invalid HTTP method used
+      value: {"title": "NOT_ALLOWED", "detail": "POST method not allowed"}
+    not-acceptable-error:
+      summary: Error when media type in Accept header not supported
+      value: {"title": "NOT_ACCEPTABLE", "detail": "Media type application/xml not supported. Supported media types: application/json"}
+    acknowledgement-required:
+      summary: Item being routed requires acknowledgement of alert
+      value: {
+        "errorCode": "ACKNOWLEDGEMENTS_REQUIRED",
+        "message": "There are outstanding issues that must be acknowledged for this operation",
+        "detail": {
+            "missing": {
+                "staffNotes": [
+                    "acknowledge me"
+                ]
+            }
+        }
+      }
+    missing-item:
+      summary: error returned when trying to route a missing item
+      value: {
+        "errorCode": "BAD_STATUS",
+        "message": "Unable to check in item as it is not currently available",
+        "detail": {
+            "status": "MISSING"
+        }
+      }
+    withdrawn-item:
+      summary: error returned when trying to route an item marked as withdrawn
+      value: {
+        "errorCode": "BAD_STATUS",
+        "message": "Unable to check in item as it is not currently available",
+        "detail": {
+            "status": "WITHDRAWN"
+        }
+      }
+    checkedout-item:
+      summary: error returned when trying to route an item which is checked out
+      value: {
+        "errorCode": "BAD_STATUS",
+        "message": "Unable to check in item as it is not currently available",
+        "detail": {
+            "status": "ON_LOAN"
+        }
+      }
+    lost-item:
+      summary: error returned when trying to route an item marked as lost
+      value: {
+        "errorCode": "BAD_STATUS",
+        "message": "Unable to check in item as it is not currently available",
+        "detail": {
+            "status": "LOST"
+        }
+      }
+    unknown-item-pull:
+      summary: error returned when trying to route an item using an unknown identifier
+      value: {
+        "timestamp": "2020-03-31T15:34:40.028+0000",
+        "status": 404,
+        "error": "Not Found",
+        "message": "No message available",
+        "path": "/circ/items/boo/routings/pull"
+        }
+    unknown-item-inventory:
+      summary: error returned when trying to route an item using an unknown identifier
+      value: {
+          "errorCode": "UNKNOWN_ITEM",
+          "message": "Unknown item",
+          "detail": {
+              "item": "boo"
+          }
+      }             
+    invalid-branch:
+      summary: error returned when trying to route using an invalid branch URI
+      value: {
+        "errorCode": "UNKNOWN_LOCATION",
+        "message": "Unknown location",
+        "detail": {
+            "location": "https://128807.share.worldcat.org/circ/branches/1"
+        }
+      }    
+externalDocs:
+  description: Find out more about WMS Circulation API
+  url: 'https://www.oclc.org/developer/develop/web-services/wms-circulation-api.en.html'
