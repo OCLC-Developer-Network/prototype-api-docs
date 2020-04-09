@@ -1113,6 +1113,390 @@ paths:
             '*/*':
               schema:
                 type: object                                                 
+  /lbd/data:
+    post:
+      tags:
+        - Local Bibliographic Data
+      summary: 'Create Local Bibliographic Data'
+      description: 'Create Local Bibliographic Data'
+      operationId: lbd-create    
+      parameters:
+        - name: inst
+          in: query
+          description: Registry ID of the institution whose holdings are being set on the record
+          required: false
+          schema:
+            type: string
+          example: 128807
+        - name: instSymbol
+          in: query
+          description: OCLC Symbol of the institution whose holdings are being set on the record
+          required: false
+          schema:
+            type: string
+          example: OCPSB                  
+        - name: holdingLibraryCode
+          in: query
+          description: Four letter holding code to set the holding on.
+          required: false
+          schema:
+            type: string
+          example: MAIN
+      responses:
+        '200':
+          description: Successful search
+          content:
+            '*/*':
+              schema:
+                type: object            
+              examples:
+                success: 
+                  $ref: '#/components/examples/success'
+                success-serial: 
+                  $ref: '#/components/examples/success-serial'                  
+                success-group-response: 
+                  $ref: '#/components/examples/success-group-response'                                      
+                success-no-holdings: 
+                  $ref: '#/components/examples/success-no-holdings'
+                failure-not-part-of-holding-group:
+                  $ref: '#/components/examples/holding-group-error'
+        '400':
+          description: Invalid query. The request was unacceptable, often due to missing a required parameter.
+          content:
+            '*/*':
+              schema:
+                type: object            
+              examples:
+                missing-query-parameter:
+                  $ref: '#/components/examples/missing-query-parameter'
+        '403':
+          description: Unauthorized
+          content:
+            '*/*':
+              schema:
+                type: object            
+              examples:
+                missing-query-parameter:
+                  $ref: '#/components/examples/invalid-context-error'              
+        
+        '405':
+          description: 'Method not supported, see response Allow header'
+          content:
+            '*/*':
+              schema:
+                type: object            
+              example:
+                $ref: '#/components/examples/method-not-allowed-error'               
+        '500':
+          description: 'Something went wrong (hopfully rare) - please try again'
+          content:
+            '*/*':
+              schema:
+                type: object
+  /lbd/data/{accessionNumber}:
+    get:
+      tags:
+        - Local Bibliographic Data
+      summary: 'Read Local Bibliographic Data'
+      description: 'Read Local Bibliographic Data'
+      operationId: lbd-read    
+      parameters:
+        - name: inst
+          in: query
+          description: Registry ID of the institution whose holdings are being set on the record
+          required: false
+          schema:
+            type: string
+          example: 128807
+        - name: instSymbol
+          in: query
+          description: OCLC Symbol of the institution whose holdings are being set on the record
+          required: false
+          schema:
+            type: string
+          example: OCPSB                  
+        - name: holdingLibraryCode
+          in: query
+          description: Four letter holding code to set the holding on.
+          required: false
+          schema:
+            type: string
+          example: MAIN
+      responses:
+        '200':
+          description: Successful search
+          content:
+            '*/*':
+              schema:
+                type: object            
+              examples:
+                success: 
+                  $ref: '#/components/examples/success'
+                success-serial: 
+                  $ref: '#/components/examples/success-serial'                  
+                success-group-response: 
+                  $ref: '#/components/examples/success-group-response'                                      
+                success-no-holdings: 
+                  $ref: '#/components/examples/success-no-holdings'
+                failure-not-part-of-holding-group:
+                  $ref: '#/components/examples/holding-group-error'
+        '400':
+          description: Invalid query. The request was unacceptable, often due to missing a required parameter.
+          content:
+            '*/*':
+              schema:
+                type: object            
+              examples:
+                missing-query-parameter:
+                  $ref: '#/components/examples/missing-query-parameter'
+        '403':
+          description: Unauthorized
+          content:
+            '*/*':
+              schema:
+                type: object            
+              examples:
+                missing-query-parameter:
+                  $ref: '#/components/examples/invalid-context-error'              
+        
+        '405':
+          description: 'Method not supported, see response Allow header'
+          content:
+            '*/*':
+              schema:
+                type: object            
+              example:
+                $ref: '#/components/examples/method-not-allowed-error'               
+        '500':
+          description: 'Something went wrong (hopfully rare) - please try again'
+          content:
+            '*/*':
+              schema:
+                type: object  
+    put:
+      tags:
+        - Local Bibliographic Data
+      summary: 'Update Local Bibliographic Data'
+      description: 'Update Local Bibliographic Data'
+      operationId: lbd-update    
+      parameters:
+        - name: inst
+          in: query
+          description: Registry ID of the institution whose holdings are being set on the record
+          required: false
+          schema:
+            type: string
+          example: 128807
+        - name: instSymbol
+          in: query
+          description: OCLC Symbol of the institution whose holdings are being set on the record
+          required: false
+          schema:
+            type: string
+          example: OCPSB                  
+        - name: holdingLibraryCode
+          in: query
+          description: Four letter holding code to set the holding on.
+          required: false
+          schema:
+            type: string
+          example: MAIN
+      responses:
+        '200':
+          description: Successful search
+          content:
+            '*/*':
+              schema:
+                type: object            
+              examples:
+                success: 
+                  $ref: '#/components/examples/success'
+                success-serial: 
+                  $ref: '#/components/examples/success-serial'                  
+                success-group-response: 
+                  $ref: '#/components/examples/success-group-response'                                      
+                success-no-holdings: 
+                  $ref: '#/components/examples/success-no-holdings'
+                failure-not-part-of-holding-group:
+                  $ref: '#/components/examples/holding-group-error'
+        '400':
+          description: Invalid query. The request was unacceptable, often due to missing a required parameter.
+          content:
+            '*/*':
+              schema:
+                type: object            
+              examples:
+                missing-query-parameter:
+                  $ref: '#/components/examples/missing-query-parameter'
+        '403':
+          description: Unauthorized
+          content:
+            '*/*':
+              schema:
+                type: object            
+              examples:
+                missing-query-parameter:
+                  $ref: '#/components/examples/invalid-context-error'              
+        
+        '405':
+          description: 'Method not supported, see response Allow header'
+          content:
+            '*/*':
+              schema:
+                type: object            
+              example:
+                $ref: '#/components/examples/method-not-allowed-error'               
+        '500':
+          description: 'Something went wrong (hopfully rare) - please try again'
+          content:
+            '*/*':
+              schema:
+                type: object   
+    delete:
+      tags:
+        - Local Bibliographic Data
+      summary: 'Delete Local Bibliographic Data'
+      description: 'Delete Local Bibliographic Data'
+      operationId: lbd-delete    
+      parameters:
+        - name: inst
+          in: query
+          description: Registry ID of the institution whose holdings are being set on the record
+          required: false
+          schema:
+            type: string
+          example: 128807
+        - name: instSymbol
+          in: query
+          description: OCLC Symbol of the institution whose holdings are being set on the record
+          required: false
+          schema:
+            type: string
+          example: OCPSB                  
+        - name: holdingLibraryCode
+          in: query
+          description: Four letter holding code to set the holding on.
+          required: false
+          schema:
+            type: string
+          example: MAIN
+      responses:
+        '200':
+          description: Successful search
+          content:
+            '*/*':
+              schema:
+                type: object            
+              examples:
+                success: 
+                  $ref: '#/components/examples/success'
+                success-serial: 
+                  $ref: '#/components/examples/success-serial'                  
+                success-group-response: 
+                  $ref: '#/components/examples/success-group-response'                                      
+                success-no-holdings: 
+                  $ref: '#/components/examples/success-no-holdings'
+                failure-not-part-of-holding-group:
+                  $ref: '#/components/examples/holding-group-error'
+        '400':
+          description: Invalid query. The request was unacceptable, often due to missing a required parameter.
+          content:
+            '*/*':
+              schema:
+                type: object            
+              examples:
+                missing-query-parameter:
+                  $ref: '#/components/examples/missing-query-parameter'
+        '403':
+          description: Unauthorized
+          content:
+            '*/*':
+              schema:
+                type: object            
+              examples:
+                missing-query-parameter:
+                  $ref: '#/components/examples/invalid-context-error'              
+        
+        '405':
+          description: 'Method not supported, see response Allow header'
+          content:
+            '*/*':
+              schema:
+                type: object            
+              example:
+                $ref: '#/components/examples/method-not-allowed-error'               
+        '500':
+          description: 'Something went wrong (hopfully rare) - please try again'
+          content:
+            '*/*':
+              schema:
+                type: object  
+  /lbd/search:
+    get:
+      tags:
+        - Local Bibliographic Data
+      summary: 'Search Local Bibliographic Data'
+      description: 'Search Local Bibliographic Data'
+      operationId: lbd-search    
+      parameters:
+        - name: oclcNumber
+          in: query
+          description: OCLC Number associated with LBD you want to find
+          required: false
+          schema:
+            type: string
+          example: 1
+      responses:
+        '200':
+          description: Successful search
+          content:
+            '*/*':
+              schema:
+                type: object            
+              examples:
+                success: 
+                  $ref: '#/components/examples/success'
+                success-serial: 
+                  $ref: '#/components/examples/success-serial'                  
+                success-group-response: 
+                  $ref: '#/components/examples/success-group-response'                                      
+                success-no-holdings: 
+                  $ref: '#/components/examples/success-no-holdings'
+                failure-not-part-of-holding-group:
+                  $ref: '#/components/examples/holding-group-error'
+        '400':
+          description: Invalid query. The request was unacceptable, often due to missing a required parameter.
+          content:
+            '*/*':
+              schema:
+                type: object            
+              examples:
+                missing-query-parameter:
+                  $ref: '#/components/examples/missing-query-parameter'
+        '403':
+          description: Unauthorized
+          content:
+            '*/*':
+              schema:
+                type: object            
+              examples:
+                missing-query-parameter:
+                  $ref: '#/components/examples/invalid-context-error'              
+        
+        '405':
+          description: 'Method not supported, see response Allow header'
+          content:
+            '*/*':
+              schema:
+                type: object            
+              example:
+                $ref: '#/components/examples/method-not-allowed-error'               
+        '500':
+          description: 'Something went wrong (hopfully rare) - please try again'
+          content:
+            '*/*':
+              schema:
+                type: object                                                           
 components:
   securitySchemes:
     worldcat_metadata_auth:
