@@ -1,0 +1,1074 @@
+openapi: 3.0.0
+info:
+  description: WorldCat Metadata API
+  version: 1.0.0
+  title: WorldCat Metadata API
+servers:
+  - url: 'https://worldcat.org'
+security:
+  - worldcat_metadata_auth:
+    - WorldCatMetadataAPI
+paths:
+  /bib/data:
+    post:
+      tags:
+        - Bibliographic Records
+      summary: 'Create Bibliographic Record'
+      description: 'Create Bibliographic Record'
+      operationId: create-bib
+      parameters:
+        - name: inst
+          in: query
+          description: Registry ID of the institution who is creating record
+          required: false
+          schema:
+            type: string
+          example: 128807
+        - name: instSymbol
+          in: query
+          description: OCLC Symbol of the institution who is creating record
+          required: false
+          schema:
+            type: string
+          example: OCPSB                  
+      responses:
+        '200':
+          description: Successful search
+          content:
+            '*/*':
+              schema:
+                type: object            
+              examples:
+                success: 
+                  $ref: '#/components/examples/success'
+                success-serial: 
+                  $ref: '#/components/examples/success-serial'                  
+                success-group-response: 
+                  $ref: '#/components/examples/success-group-response'                                      
+                success-no-holdings: 
+                  $ref: '#/components/examples/success-no-holdings'
+                failure-not-part-of-holding-group:
+                  $ref: '#/components/examples/holding-group-error'
+        '400':
+          description: Invalid query. The request was unacceptable, often due to missing a required parameter.
+          content:
+            '*/*':
+              schema:
+                type: object            
+              examples:
+                missing-query-parameter:
+                  $ref: '#/components/examples/missing-query-parameter'
+        '403':
+          description: Unauthorized
+          content:
+            '*/*':
+              schema:
+                type: object            
+              examples:
+                missing-query-parameter:
+                  $ref: '#/components/examples/invalid-context-error'              
+        
+        '405':
+          description: 'Method not supported, see response Allow header'
+          content:
+            '*/*':
+              schema:
+                type: object            
+              example:
+                $ref: '#/components/examples/method-not-allowed-error'               
+        '500':
+          description: 'Something went wrong (hopfully rare) - please try again'
+          content:
+            '*/*':
+              schema:
+                type: object
+    put:
+      tags:
+        - Bibliographic Records
+      summary: 'Update Bibliographic record'
+      description: 'Update Bibliographic record'
+      operationId: update-bib
+      parameters:
+        - name: inst
+          in: query
+          description: Registry ID of the institution who is updating record
+          required: false
+          schema:
+            type: string
+          example: 128807
+        - name: instSymbol
+          in: query
+          description: OCLC Symbol of the institution who is updating record
+          required: false
+          schema:
+            type: string
+          example: OCPSB                  
+      responses:
+        '200':
+          description: Successful search
+          content:
+            '*/*':
+              schema:
+                type: object            
+              examples:
+                success: 
+                  $ref: '#/components/examples/success'
+                success-serial: 
+                  $ref: '#/components/examples/success-serial'                  
+                success-group-response: 
+                  $ref: '#/components/examples/success-group-response'                                      
+                success-no-holdings: 
+                  $ref: '#/components/examples/success-no-holdings'
+                failure-not-part-of-holding-group:
+                  $ref: '#/components/examples/holding-group-error'
+        '400':
+          description: Invalid query. The request was unacceptable, often due to missing a required parameter.
+          content:
+            '*/*':
+              schema:
+                type: object            
+              examples:
+                missing-query-parameter:
+                  $ref: '#/components/examples/missing-query-parameter'
+        '403':
+          description: Unauthorized
+          content:
+            '*/*':
+              schema:
+                type: object            
+              examples:
+                missing-query-parameter:
+                  $ref: '#/components/examples/invalid-context-error'              
+        
+        '405':
+          description: 'Method not supported, see response Allow header'
+          content:
+            '*/*':
+              schema:
+                type: object            
+              example:
+                $ref: '#/components/examples/method-not-allowed-error'               
+        '500':
+          description: 'Something went wrong (hopfully rare) - please try again'
+          content:
+            '*/*':
+              schema:
+                type: object                
+  /bib/data/{oclcNumber}:
+    get:
+      tags:
+        - Bibliographic Records
+      summary: 'Read Bibliographic data'
+      description: 'Read Bibliographic data'
+      operationId: read-bib
+      parameters:
+        - name: oclcNumber
+          in: path
+          description: OCLC number to be retrieved
+          schema:
+            type: integer
+            format: int32
+          required: true      
+      responses:
+        '200':
+          description: Successful search
+          content:
+            '*/*':
+              schema:
+                type: object            
+              examples:
+                success: 
+                  $ref: '#/components/examples/success'
+                success-serial: 
+                  $ref: '#/components/examples/success-serial'                  
+                success-group-response: 
+                  $ref: '#/components/examples/success-group-response'                                      
+                success-no-holdings: 
+                  $ref: '#/components/examples/success-no-holdings'
+                failure-not-part-of-holding-group:
+                  $ref: '#/components/examples/holding-group-error'
+        '400':
+          description: Invalid query. The request was unacceptable, often due to missing a required parameter.
+          content:
+            '*/*':
+              schema:
+                type: object            
+              examples:
+                missing-query-parameter:
+                  $ref: '#/components/examples/missing-query-parameter'
+        '403':
+          description: Unauthorized
+          content:
+            '*/*':
+              schema:
+                type: object            
+              examples:
+                missing-query-parameter:
+                  $ref: '#/components/examples/invalid-context-error'              
+        
+        '405':
+          description: 'Method not supported, see response Allow header'
+          content:
+            '*/*':
+              schema:
+                type: object            
+              example:
+                $ref: '#/components/examples/method-not-allowed-error'               
+        '500':
+          description: 'Something went wrong (hopfully rare) - please try again'
+          content:
+            '*/*':
+              schema:
+                type: object  
+  /bib/checkcontrolnumbers:
+    get:
+      tags:
+        - Bibliographic Records
+      summary: 'Get Current OCLC Number'
+      description: 'Get Current OCLC Number'
+      operationId: current-oclcNumber
+      parameters:
+        - name: oclcNumbers
+          in: query
+          description: comma seperate OCLC numbers to get current OCLC Number for
+          schema:
+            type: string      
+      responses:
+        '200':
+          description: Successful search
+          content:
+            '*/*':
+              schema:
+                type: object            
+              examples:
+                success: 
+                  $ref: '#/components/examples/success'
+                success-serial: 
+                  $ref: '#/components/examples/success-serial'                  
+                success-group-response: 
+                  $ref: '#/components/examples/success-group-response'                                      
+                success-no-holdings: 
+                  $ref: '#/components/examples/success-no-holdings'
+                failure-not-part-of-holding-group:
+                  $ref: '#/components/examples/holding-group-error'
+        '400':
+          description: Invalid query. The request was unacceptable, often due to missing a required parameter.
+          content:
+            '*/*':
+              schema:
+                type: object            
+              examples:
+                missing-query-parameter:
+                  $ref: '#/components/examples/missing-query-parameter'
+        '403':
+          description: Unauthorized
+          content:
+            '*/*':
+              schema:
+                type: object            
+              examples:
+                missing-query-parameter:
+                  $ref: '#/components/examples/invalid-context-error'              
+        
+        '405':
+          description: 'Method not supported, see response Allow header'
+          content:
+            '*/*':
+              schema:
+                type: object            
+              example:
+                $ref: '#/components/examples/method-not-allowed-error'               
+        '500':
+          description: 'Something went wrong (hopfully rare) - please try again'
+          content:
+            '*/*':
+              schema:
+                type: object                                                                              
+  /bib/validateFull:
+    post:
+      tags:
+        - Bibliographic Records - Valid
+      summary: 'Full Validation of Bib Record'
+      description: 'Full Validation of Bib Record'
+      operationId: validate-full-bib     
+      responses:
+        '200':
+          description: Successful search
+          content:
+            '*/*':
+              schema:
+                type: object            
+              examples:
+                success: 
+                  $ref: '#/components/examples/success'
+                success-serial: 
+                  $ref: '#/components/examples/success-serial'                  
+                success-group-response: 
+                  $ref: '#/components/examples/success-group-response'                                      
+                success-no-holdings: 
+                  $ref: '#/components/examples/success-no-holdings'
+                failure-not-part-of-holding-group:
+                  $ref: '#/components/examples/holding-group-error'
+        '400':
+          description: Invalid query. The request was unacceptable, often due to missing a required parameter.
+          content:
+            '*/*':
+              schema:
+                type: object            
+              examples:
+                missing-query-parameter:
+                  $ref: '#/components/examples/missing-query-parameter'
+        '403':
+          description: Unauthorized
+          content:
+            '*/*':
+              schema:
+                type: object            
+              examples:
+                missing-query-parameter:
+                  $ref: '#/components/examples/invalid-context-error'              
+        
+        '405':
+          description: 'Method not supported, see response Allow header'
+          content:
+            '*/*':
+              schema:
+                type: object            
+              example:
+                $ref: '#/components/examples/method-not-allowed-error'               
+        '500':
+          description: 'Something went wrong (hopfully rare) - please try again'
+          content:
+            '*/*':
+              schema:
+                type: object
+  /bib/validateAdd:
+    post:
+      tags:
+        - Bibliographic Records - Valid
+      summary: 'Add Validation of Bib Record'
+      description: 'Add Validation of Bib Record'
+      operationId: validate-add-bib     
+      responses:
+        '200':
+          description: Successful search
+          content:
+            '*/*':
+              schema:
+                type: object            
+              examples:
+                success: 
+                  $ref: '#/components/examples/success'
+                success-serial: 
+                  $ref: '#/components/examples/success-serial'                  
+                success-group-response: 
+                  $ref: '#/components/examples/success-group-response'                                      
+                success-no-holdings: 
+                  $ref: '#/components/examples/success-no-holdings'
+                failure-not-part-of-holding-group:
+                  $ref: '#/components/examples/holding-group-error'
+        '400':
+          description: Invalid query. The request was unacceptable, often due to missing a required parameter.
+          content:
+            '*/*':
+              schema:
+                type: object            
+              examples:
+                missing-query-parameter:
+                  $ref: '#/components/examples/missing-query-parameter'
+        '403':
+          description: Unauthorized
+          content:
+            '*/*':
+              schema:
+                type: object            
+              examples:
+                missing-query-parameter:
+                  $ref: '#/components/examples/invalid-context-error'              
+        
+        '405':
+          description: 'Method not supported, see response Allow header'
+          content:
+            '*/*':
+              schema:
+                type: object            
+              example:
+                $ref: '#/components/examples/method-not-allowed-error'               
+        '500':
+          description: 'Something went wrong (hopfully rare) - please try again'
+          content:
+            '*/*':
+              schema:
+                type: object
+  /bib/validateReplace:
+    post:
+      tags:
+        - Bibliographic Records - Valid
+      summary: 'Replace Validation of Bib Record'
+      description: 'Replace Validation of Bib Record'
+      operationId: validate-replace-bib     
+      responses:
+        '200':
+          description: Successful search
+          content:
+            '*/*':
+              schema:
+                type: object            
+              examples:
+                success: 
+                  $ref: '#/components/examples/success'
+                success-serial: 
+                  $ref: '#/components/examples/success-serial'                  
+                success-group-response: 
+                  $ref: '#/components/examples/success-group-response'                                      
+                success-no-holdings: 
+                  $ref: '#/components/examples/success-no-holdings'
+                failure-not-part-of-holding-group:
+                  $ref: '#/components/examples/holding-group-error'
+        '400':
+          description: Invalid query. The request was unacceptable, often due to missing a required parameter.
+          content:
+            '*/*':
+              schema:
+                type: object            
+              examples:
+                missing-query-parameter:
+                  $ref: '#/components/examples/missing-query-parameter'
+        '403':
+          description: Unauthorized
+          content:
+            '*/*':
+              schema:
+                type: object            
+              examples:
+                missing-query-parameter:
+                  $ref: '#/components/examples/invalid-context-error'              
+        
+        '405':
+          description: 'Method not supported, see response Allow header'
+          content:
+            '*/*':
+              schema:
+                type: object            
+              example:
+                $ref: '#/components/examples/method-not-allowed-error'               
+        '500':
+          description: 'Something went wrong (hopfully rare) - please try again'
+          content:
+            '*/*':
+              schema:
+                type: object                                   
+  /ih/data:
+    post:
+      tags:
+        - Institution Holdings
+      summary: 'Create/Set Institution Holding'
+      description: 'Create/Set Institution Holding'
+      operationId: ih-create    
+      parameters:
+        - name: oclcNumber
+          in: query
+          description: OCLC number for the record holdings should be set on
+          schema:
+            type: integer
+            format: int32
+          required: true
+          example: 128807
+        - name: inst
+          in: query
+          description: Registry ID of the institution whose holdings are being set on the record
+          required: false
+          schema:
+            type: string
+          example: 128807
+        - name: instSymbol
+          in: query
+          description: OCLC Symbol of the institution whose holdings are being set on the record
+          required: false
+          schema:
+            type: string
+          example: OCPSB                  
+        - name: holdingLibraryCode
+          in: query
+          description: Four letter holding code to set the holding on.
+          required: false
+          schema:
+            type: string
+          example: MAIN                 
+        - name: classificationScheme
+          in: query
+          description: Whether or not to return group availability information.
+          required: false          
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful search
+          content:
+            '*/*':
+              schema:
+                type: object            
+              examples:
+                success: 
+                  $ref: '#/components/examples/success'
+                success-serial: 
+                  $ref: '#/components/examples/success-serial'                  
+                success-group-response: 
+                  $ref: '#/components/examples/success-group-response'                                      
+                success-no-holdings: 
+                  $ref: '#/components/examples/success-no-holdings'
+                failure-not-part-of-holding-group:
+                  $ref: '#/components/examples/holding-group-error'
+        '400':
+          description: Invalid query. The request was unacceptable, often due to missing a required parameter.
+          content:
+            '*/*':
+              schema:
+                type: object            
+              examples:
+                missing-query-parameter:
+                  $ref: '#/components/examples/missing-query-parameter'
+        '403':
+          description: Unauthorized
+          content:
+            '*/*':
+              schema:
+                type: object            
+              examples:
+                missing-query-parameter:
+                  $ref: '#/components/examples/invalid-context-error'              
+        
+        '405':
+          description: 'Method not supported, see response Allow header'
+          content:
+            '*/*':
+              schema:
+                type: object            
+              example:
+                $ref: '#/components/examples/method-not-allowed-error'               
+        '500':
+          description: 'Something went wrong (hopfully rare) - please try again'
+          content:
+            '*/*':
+              schema:
+                type: object
+    delete:
+      tags:
+        - Institution Holdings
+      summary: 'Delete/Unset Institution Holding'
+      description: 'Delete/Unset Institution Holding'
+      operationId: delete-ih    
+      parameters:
+        - name: oclcNumber
+          in: query
+          description: OCLC number for the record holdings should be set on
+          schema:
+            type: integer
+            format: int32
+          required: true
+          example: 128807  
+        - name: cascade
+          in: query
+          description: Whether or not to execute the operation if a local holdings record, or local biblliographic record exists. 0 - don't remove holdings if local holding record or local bibliographic record exists 1 - yes remove holdings and delete local holdings record or local bibliographic record exists
+          required: true
+          schema:
+            type: boolean
+          example: 1
+        - name: inst
+          in: query
+          description: Registry ID of the institution whose holdings are being set on the record
+          required: false
+          schema:
+            type: string
+          example: 128807
+        - name: instSymbol
+          in: query
+          description: OCLC Symbol of the institution whose holdings are being set on the record
+          required: false
+          schema:
+            type: string
+          example: OCPSB                  
+        - name: holdingLibraryCode
+          in: query
+          description: Four letter holding code to set the holding on.
+          required: false
+          schema:
+            type: string
+          example: MAIN                 
+        - name: classificationScheme
+          in: query
+          description: Whether or not to return group availability information.
+          required: false          
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful search
+          content:
+            '*/*':
+              schema:
+                type: object            
+              examples:
+                success: 
+                  $ref: '#/components/examples/success'
+                success-serial: 
+                  $ref: '#/components/examples/success-serial'                  
+                success-group-response: 
+                  $ref: '#/components/examples/success-group-response'                                      
+                success-no-holdings: 
+                  $ref: '#/components/examples/success-no-holdings'
+                failure-not-part-of-holding-group:
+                  $ref: '#/components/examples/holding-group-error'
+        '400':
+          description: Invalid query. The request was unacceptable, often due to missing a required parameter.
+          content:
+            '*/*':
+              schema:
+                type: object            
+              examples:
+                missing-query-parameter:
+                  $ref: '#/components/examples/missing-query-parameter'
+        '403':
+          description: Unauthorized
+          content:
+            '*/*':
+              schema:
+                type: object            
+              examples:
+                missing-query-parameter:
+                  $ref: '#/components/examples/invalid-context-error'              
+        
+        '405':
+          description: 'Method not supported, see response Allow header'
+          content:
+            '*/*':
+              schema:
+                type: object            
+              example:
+                $ref: '#/components/examples/method-not-allowed-error'               
+        '500':
+          description: 'Something went wrong (hopfully rare) - please try again'
+          content:
+            '*/*':
+              schema:
+                type: object                        
+  /ih/checkholdings:
+    post:
+      tags:
+        - Institution Holdings
+      summary: 'Retrieve Status Institution Holding'
+      description: 'Retrieve Status Institution Holding'
+      operationId: ih-status    
+      parameters:
+        - name: oclcNumber
+          in: query
+          description: OCLC number for the record holdings should be checked on
+          schema:
+            type: integer
+            format: int32
+          required: true
+          example: 128807
+        - name: inst
+          in: query
+          description: Registry ID of the institution whose holdings checked on the record
+          required: false
+          schema:
+            type: string
+          example: 128807
+        - name: instSymbol
+          in: query
+          description: OCLC Symbol of the institution whose holdings are being checked on the record
+          required: false
+          schema:
+            type: string
+          example: OCPSB                  
+      responses:
+        '200':
+          description: Successful search
+          content:
+            '*/*':
+              schema:
+                type: object            
+              examples:
+                success: 
+                  $ref: '#/components/examples/success'
+                success-serial: 
+                  $ref: '#/components/examples/success-serial'                  
+                success-group-response: 
+                  $ref: '#/components/examples/success-group-response'                                      
+                success-no-holdings: 
+                  $ref: '#/components/examples/success-no-holdings'
+                failure-not-part-of-holding-group:
+                  $ref: '#/components/examples/holding-group-error'
+        '400':
+          description: Invalid query. The request was unacceptable, often due to missing a required parameter.
+          content:
+            '*/*':
+              schema:
+                type: object            
+              examples:
+                missing-query-parameter:
+                  $ref: '#/components/examples/missing-query-parameter'
+        '403':
+          description: Unauthorized
+          content:
+            '*/*':
+              schema:
+                type: object            
+              examples:
+                missing-query-parameter:
+                  $ref: '#/components/examples/invalid-context-error'              
+        
+        '405':
+          description: 'Method not supported, see response Allow header'
+          content:
+            '*/*':
+              schema:
+                type: object            
+              example:
+                $ref: '#/components/examples/method-not-allowed-error'               
+        '500':
+          description: 'Something went wrong (hopfully rare) - please try again'
+          content:
+            '*/*':
+              schema:
+                type: object
+  /ih/datalist:
+    post:
+      tags:
+        - Institution Holdings
+      summary: 'Batch set institution holdings for multiple OCLC Numbers'
+      description: 'Batch set institution holdings for multiple OCLC Numbers'
+      operationId: batch-create-ih-oclcNumbers    
+      parameters:
+        - name: oclcNumbers
+          in: query
+          description: OCLC number for the record holdings should be checked on
+          schema:
+            type: integer
+            format: int32
+          required: true
+          example: 128807
+        - name: inst
+          in: query
+          description: Registry ID of the institution whose holdings checked on the record
+          required: false
+          schema:
+            type: string
+          example: 128807
+        - name: instSymbol
+          in: query
+          description: OCLC Symbol of the institution whose holdings are being checked on the record
+          required: false
+          schema:
+            type: string
+          example: OCPSB                  
+      responses:
+        '200':
+          description: Successful search
+          content:
+            '*/*':
+              schema:
+                type: object            
+              examples:
+                success: 
+                  $ref: '#/components/examples/success'
+                success-serial: 
+                  $ref: '#/components/examples/success-serial'                  
+                success-group-response: 
+                  $ref: '#/components/examples/success-group-response'                                      
+                success-no-holdings: 
+                  $ref: '#/components/examples/success-no-holdings'
+                failure-not-part-of-holding-group:
+                  $ref: '#/components/examples/holding-group-error'
+        '400':
+          description: Invalid query. The request was unacceptable, often due to missing a required parameter.
+          content:
+            '*/*':
+              schema:
+                type: object            
+              examples:
+                missing-query-parameter:
+                  $ref: '#/components/examples/missing-query-parameter'
+        '403':
+          description: Unauthorized
+          content:
+            '*/*':
+              schema:
+                type: object            
+              examples:
+                missing-query-parameter:
+                  $ref: '#/components/examples/invalid-context-error'              
+        
+        '405':
+          description: 'Method not supported, see response Allow header'
+          content:
+            '*/*':
+              schema:
+                type: object            
+              example:
+                $ref: '#/components/examples/method-not-allowed-error'               
+        '500':
+          description: 'Something went wrong (hopfully rare) - please try again'
+          content:
+            '*/*':
+              schema:
+                type: object
+    delete:
+      tags:
+        - Institution Holdings
+      summary: 'Batch unset institution holdings for multiple OCLC Numbers'
+      description: 'Batch unset institution holdings for multiple OCLC Numbers'
+      operationId: batch-delete-ih-oclcNumbers    
+      parameters:
+        - name: oclcNumbers
+          in: query
+          description: OCLC number for the record holdings should be checked on
+          schema:
+            type: integer
+            format: int32
+          required: true
+          example: 128807
+        - name: cascade
+          in: query
+          description: Whether or not to execute the operation if a local holdings record, or local biblliographic record exists. 0 - don't remove holdings if local holding record or local bibliographic record exists 1 - yes remove holdings and delete local holdings record or local bibliographic record exists
+          required: true
+          schema:
+            type: boolean
+          example: 1          
+        - name: inst
+          in: query
+          description: Registry ID of the institution whose holdings checked on the record
+          required: false
+          schema:
+            type: string
+          example: 128807
+        - name: instSymbol
+          in: query
+          description: OCLC Symbol of the institution whose holdings are being checked on the record
+          required: false
+          schema:
+            type: string
+          example: OCPSB                  
+      responses:
+        '200':
+          description: Successful search
+          content:
+            '*/*':
+              schema:
+                type: object            
+              examples:
+                success: 
+                  $ref: '#/components/examples/success'
+                success-serial: 
+                  $ref: '#/components/examples/success-serial'                  
+                success-group-response: 
+                  $ref: '#/components/examples/success-group-response'                                      
+                success-no-holdings: 
+                  $ref: '#/components/examples/success-no-holdings'
+                failure-not-part-of-holding-group:
+                  $ref: '#/components/examples/holding-group-error'
+        '400':
+          description: Invalid query. The request was unacceptable, often due to missing a required parameter.
+          content:
+            '*/*':
+              schema:
+                type: object            
+              examples:
+                missing-query-parameter:
+                  $ref: '#/components/examples/missing-query-parameter'
+        '403':
+          description: Unauthorized
+          content:
+            '*/*':
+              schema:
+                type: object            
+              examples:
+                missing-query-parameter:
+                  $ref: '#/components/examples/invalid-context-error'              
+        
+        '405':
+          description: 'Method not supported, see response Allow header'
+          content:
+            '*/*':
+              schema:
+                type: object            
+              example:
+                $ref: '#/components/examples/method-not-allowed-error'               
+        '500':
+          description: 'Something went wrong (hopfully rare) - please try again'
+          content:
+            '*/*':
+              schema:
+                type: object
+  /ih/institutionlist:
+    post:
+      tags:
+        - Institution Holdings
+      summary: 'Batch set institution holdings for multiple institutions'
+      description: 'Batch set institution holdings for multiple institutions'
+      operationId: batch-create-ih-institution    
+      parameters:
+        - name: oclcNumbers
+          in: query
+          description: OCLC number for the record holdings should be checked on
+          schema:
+            type: integer
+            format: int32
+          required: true
+          example: 128807
+        - name: instSymbols
+          in: query
+          description: OCLC Symbol of the institution whose holdings are being checked on the record
+          required: false
+          schema:
+            type: string
+          example: OCPSB                  
+      responses:
+        '200':
+          description: Successful search
+          content:
+            '*/*':
+              schema:
+                type: object            
+              examples:
+                success: 
+                  $ref: '#/components/examples/success'
+                success-serial: 
+                  $ref: '#/components/examples/success-serial'                  
+                success-group-response: 
+                  $ref: '#/components/examples/success-group-response'                                      
+                success-no-holdings: 
+                  $ref: '#/components/examples/success-no-holdings'
+                failure-not-part-of-holding-group:
+                  $ref: '#/components/examples/holding-group-error'
+        '400':
+          description: Invalid query. The request was unacceptable, often due to missing a required parameter.
+          content:
+            '*/*':
+              schema:
+                type: object            
+              examples:
+                missing-query-parameter:
+                  $ref: '#/components/examples/missing-query-parameter'
+        '403':
+          description: Unauthorized
+          content:
+            '*/*':
+              schema:
+                type: object            
+              examples:
+                missing-query-parameter:
+                  $ref: '#/components/examples/invalid-context-error'              
+        
+        '405':
+          description: 'Method not supported, see response Allow header'
+          content:
+            '*/*':
+              schema:
+                type: object            
+              example:
+                $ref: '#/components/examples/method-not-allowed-error'               
+        '500':
+          description: 'Something went wrong (hopfully rare) - please try again'
+          content:
+            '*/*':
+              schema:
+                type: object
+    delete:
+      tags:
+        - Institution Holdings
+      summary: 'Batch unset institution holdings for multiple institutions'
+      description: 'Batch unset institution holdings for multiple institutions'
+      operationId: batch-delete-ih-institution  
+      parameters:
+        - name: oclcNumber
+          in: query
+          description: OCLC number for the record holdings should be checked on
+          schema:
+            type: integer
+            format: int32
+          required: true
+          example: 128807
+        - name: instSymbols
+          in: query
+          description: OCLC Symbol of the institution whose holdings are being checked on the record
+          required: false
+          schema:
+            type: string
+          example: OCPSB
+        - name: cascade
+          in: query
+          description: Whether or not to execute the operation if a local holdings record, or local biblliographic record exists. 0 - don't remove holdings if local holding record or local bibliographic record exists 1 - yes remove holdings and delete local holdings record or local bibliographic record exists
+          required: true
+          schema:
+            type: boolean
+          example: 1                            
+      responses:
+        '200':
+          description: Successful search
+          content:
+            '*/*':
+              schema:
+                type: object            
+              examples:
+                success: 
+                  $ref: '#/components/examples/success'
+                success-serial: 
+                  $ref: '#/components/examples/success-serial'                  
+                success-group-response: 
+                  $ref: '#/components/examples/success-group-response'                                      
+                success-no-holdings: 
+                  $ref: '#/components/examples/success-no-holdings'
+                failure-not-part-of-holding-group:
+                  $ref: '#/components/examples/holding-group-error'
+        '400':
+          description: Invalid query. The request was unacceptable, often due to missing a required parameter.
+          content:
+            '*/*':
+              schema:
+                type: object            
+              examples:
+                missing-query-parameter:
+                  $ref: '#/components/examples/missing-query-parameter'
+        '403':
+          description: Unauthorized
+          content:
+            '*/*':
+              schema:
+                type: object            
+              examples:
+                missing-query-parameter:
+                  $ref: '#/components/examples/invalid-context-error'              
+        
+        '405':
+          description: 'Method not supported, see response Allow header'
+          content:
+            '*/*':
+              schema:
+                type: object            
+              example:
+                $ref: '#/components/examples/method-not-allowed-error'               
+        '500':
+          description: 'Something went wrong (hopfully rare) - please try again'
+          content:
+            '*/*':
+              schema:
+                type: object                                                 
+components:
+  securitySchemes:
+    worldcat_metadata_auth:
+      type: oauth2
+      flows:
+        clientCredentials:
+          tokenUrl: https://oauth.oclc.org/token
+          scopes:
+            WorldCatMetadataAPI: perform all the operation in the WorldCat Metadata API
+        authorizationCode:
+          authorizationUrl: https://oauth.oclc.org/auth
+          tokenUrl: https://oauth.oclc.org/token
+          scopes:
+            WorldCatMetadataAPI: perform all the operation in the WorldCat Metadata API                                                    
+externalDocs:
+  description: Find out more about WorldCatMetadata API
+  url: 'https://www.oclc.org/developer/develop/web-services/worldcat-metadata-api.en.html'
