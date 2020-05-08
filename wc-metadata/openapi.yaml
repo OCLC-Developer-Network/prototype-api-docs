@@ -179,14 +179,6 @@ paths:
               examples:
                 success: 
                   $ref: '#/components/examples/success'
-                success-serial: 
-                  $ref: '#/components/examples/success-serial'                  
-                success-group-response: 
-                  $ref: '#/components/examples/success-group-response'                                      
-                success-no-holdings: 
-                  $ref: '#/components/examples/success-no-holdings'
-                failure-not-part-of-holding-group:
-                  $ref: '#/components/examples/holding-group-error'
         '400':
           description: Invalid query. The request was unacceptable, often due to missing a required parameter.
           content:
@@ -243,14 +235,6 @@ paths:
               examples:
                 success: 
                   $ref: '#/components/examples/success'
-                success-serial: 
-                  $ref: '#/components/examples/success-serial'                  
-                success-group-response: 
-                  $ref: '#/components/examples/success-group-response'                                      
-                success-no-holdings: 
-                  $ref: '#/components/examples/success-no-holdings'
-                failure-not-part-of-holding-group:
-                  $ref: '#/components/examples/holding-group-error'
         '400':
           description: Invalid query. The request was unacceptable, often due to missing a required parameter.
           content:
@@ -301,14 +285,6 @@ paths:
               examples:
                 success: 
                   $ref: '#/components/examples/success'
-                success-serial: 
-                  $ref: '#/components/examples/success-serial'                  
-                success-group-response: 
-                  $ref: '#/components/examples/success-group-response'                                      
-                success-no-holdings: 
-                  $ref: '#/components/examples/success-no-holdings'
-                failure-not-part-of-holding-group:
-                  $ref: '#/components/examples/holding-group-error'
         '400':
           description: Invalid query. The request was unacceptable, often due to missing a required parameter.
           content:
@@ -359,14 +335,6 @@ paths:
               examples:
                 success: 
                   $ref: '#/components/examples/success'
-                success-serial: 
-                  $ref: '#/components/examples/success-serial'                  
-                success-group-response: 
-                  $ref: '#/components/examples/success-group-response'                                      
-                success-no-holdings: 
-                  $ref: '#/components/examples/success-no-holdings'
-                failure-not-part-of-holding-group:
-                  $ref: '#/components/examples/holding-group-error'
         '400':
           description: Invalid query. The request was unacceptable, often due to missing a required parameter.
           content:
@@ -417,14 +385,6 @@ paths:
               examples:
                 success: 
                   $ref: '#/components/examples/success'
-                success-serial: 
-                  $ref: '#/components/examples/success-serial'                  
-                success-group-response: 
-                  $ref: '#/components/examples/success-group-response'                                      
-                success-no-holdings: 
-                  $ref: '#/components/examples/success-no-holdings'
-                failure-not-part-of-holding-group:
-                  $ref: '#/components/examples/holding-group-error'
         '400':
           description: Invalid query. The request was unacceptable, often due to missing a required parameter.
           content:
@@ -475,14 +435,6 @@ paths:
               examples:
                 success: 
                   $ref: '#/components/examples/success'
-                success-serial: 
-                  $ref: '#/components/examples/success-serial'                  
-                success-group-response: 
-                  $ref: '#/components/examples/success-group-response'                                      
-                success-no-holdings: 
-                  $ref: '#/components/examples/success-no-holdings'
-                failure-not-part-of-holding-group:
-                  $ref: '#/components/examples/holding-group-error'
         '400':
           description: Invalid query. The request was unacceptable, often due to missing a required parameter.
           content:
@@ -569,14 +521,6 @@ paths:
               examples:
                 success: 
                   $ref: '#/components/examples/success'
-                success-serial: 
-                  $ref: '#/components/examples/success-serial'                  
-                success-group-response: 
-                  $ref: '#/components/examples/success-group-response'                                      
-                success-no-holdings: 
-                  $ref: '#/components/examples/success-no-holdings'
-                failure-not-part-of-holding-group:
-                  $ref: '#/components/examples/holding-group-error'
         '400':
           description: Invalid query. The request was unacceptable, often due to missing a required parameter.
           content:
@@ -669,14 +613,6 @@ paths:
               examples:
                 success: 
                   $ref: '#/components/examples/success'
-                success-serial: 
-                  $ref: '#/components/examples/success-serial'                  
-                success-group-response: 
-                  $ref: '#/components/examples/success-group-response'                                      
-                success-no-holdings: 
-                  $ref: '#/components/examples/success-no-holdings'
-                failure-not-part-of-holding-group:
-                  $ref: '#/components/examples/holding-group-error'
         '400':
           description: Invalid query. The request was unacceptable, often due to missing a required parameter.
           content:
@@ -750,14 +686,6 @@ paths:
               examples:
                 success: 
                   $ref: '#/components/examples/success'
-                success-serial: 
-                  $ref: '#/components/examples/success-serial'                  
-                success-group-response: 
-                  $ref: '#/components/examples/success-group-response'                                      
-                success-no-holdings: 
-                  $ref: '#/components/examples/success-no-holdings'
-                failure-not-part-of-holding-group:
-                  $ref: '#/components/examples/holding-group-error'
         '400':
           description: Invalid query. The request was unacceptable, often due to missing a required parameter.
           content:
@@ -831,14 +759,6 @@ paths:
               examples:
                 success: 
                   $ref: '#/components/examples/success'
-                success-serial: 
-                  $ref: '#/components/examples/success-serial'                  
-                success-group-response: 
-                  $ref: '#/components/examples/success-group-response'                                      
-                success-no-holdings: 
-                  $ref: '#/components/examples/success-no-holdings'
-                failure-not-part-of-holding-group:
-                  $ref: '#/components/examples/holding-group-error'
         '400':
           description: Invalid query. The request was unacceptable, often due to missing a required parameter.
           content:
@@ -918,14 +838,6 @@ paths:
               examples:
                 success: 
                   $ref: '#/components/examples/success'
-                success-serial: 
-                  $ref: '#/components/examples/success-serial'                  
-                success-group-response: 
-                  $ref: '#/components/examples/success-group-response'                                      
-                success-no-holdings: 
-                  $ref: '#/components/examples/success-no-holdings'
-                failure-not-part-of-holding-group:
-                  $ref: '#/components/examples/holding-group-error'
         '400':
           description: Invalid query. The request was unacceptable, often due to missing a required parameter.
           content:
@@ -992,14 +904,6 @@ paths:
               examples:
                 success: 
                   $ref: '#/components/examples/success'
-                success-serial: 
-                  $ref: '#/components/examples/success-serial'                  
-                success-group-response: 
-                  $ref: '#/components/examples/success-group-response'                                      
-                success-no-holdings: 
-                  $ref: '#/components/examples/success-no-holdings'
-                failure-not-part-of-holding-group:
-                  $ref: '#/components/examples/holding-group-error'
         '400':
           description: Invalid query. The request was unacceptable, often due to missing a required parameter.
           content:
@@ -1072,14 +976,6 @@ paths:
               examples:
                 success: 
                   $ref: '#/components/examples/success'
-                success-serial: 
-                  $ref: '#/components/examples/success-serial'                  
-                success-group-response: 
-                  $ref: '#/components/examples/success-group-response'                                      
-                success-no-holdings: 
-                  $ref: '#/components/examples/success-no-holdings'
-                failure-not-part-of-holding-group:
-                  $ref: '#/components/examples/holding-group-error'
         '400':
           description: Invalid query. The request was unacceptable, often due to missing a required parameter.
           content:
@@ -1152,14 +1048,6 @@ paths:
               examples:
                 success: 
                   $ref: '#/components/examples/success'
-                success-serial: 
-                  $ref: '#/components/examples/success-serial'                  
-                success-group-response: 
-                  $ref: '#/components/examples/success-group-response'                                      
-                success-no-holdings: 
-                  $ref: '#/components/examples/success-no-holdings'
-                failure-not-part-of-holding-group:
-                  $ref: '#/components/examples/holding-group-error'
         '400':
           description: Invalid query. The request was unacceptable, often due to missing a required parameter.
           content:
@@ -1232,14 +1120,6 @@ paths:
               examples:
                 success: 
                   $ref: '#/components/examples/success'
-                success-serial: 
-                  $ref: '#/components/examples/success-serial'                  
-                success-group-response: 
-                  $ref: '#/components/examples/success-group-response'                                      
-                success-no-holdings: 
-                  $ref: '#/components/examples/success-no-holdings'
-                failure-not-part-of-holding-group:
-                  $ref: '#/components/examples/holding-group-error'
         '400':
           description: Invalid query. The request was unacceptable, often due to missing a required parameter.
           content:
@@ -1311,14 +1191,6 @@ paths:
               examples:
                 success: 
                   $ref: '#/components/examples/success'
-                success-serial: 
-                  $ref: '#/components/examples/success-serial'                  
-                success-group-response: 
-                  $ref: '#/components/examples/success-group-response'                                      
-                success-no-holdings: 
-                  $ref: '#/components/examples/success-no-holdings'
-                failure-not-part-of-holding-group:
-                  $ref: '#/components/examples/holding-group-error'
         '400':
           description: Invalid query. The request was unacceptable, often due to missing a required parameter.
           content:
@@ -1390,14 +1262,6 @@ paths:
               examples:
                 success: 
                   $ref: '#/components/examples/success'
-                success-serial: 
-                  $ref: '#/components/examples/success-serial'                  
-                success-group-response: 
-                  $ref: '#/components/examples/success-group-response'                                      
-                success-no-holdings: 
-                  $ref: '#/components/examples/success-no-holdings'
-                failure-not-part-of-holding-group:
-                  $ref: '#/components/examples/holding-group-error'
         '400':
           description: Invalid query. The request was unacceptable, often due to missing a required parameter.
           content:
@@ -1456,14 +1320,6 @@ paths:
               examples:
                 success: 
                   $ref: '#/components/examples/success'
-                success-serial: 
-                  $ref: '#/components/examples/success-serial'                  
-                success-group-response: 
-                  $ref: '#/components/examples/success-group-response'                                      
-                success-no-holdings: 
-                  $ref: '#/components/examples/success-no-holdings'
-                failure-not-part-of-holding-group:
-                  $ref: '#/components/examples/holding-group-error'
         '400':
           description: Invalid query. The request was unacceptable, often due to missing a required parameter.
           content:
@@ -1510,7 +1366,41 @@ components:
           authorizationUrl: https://oauth.oclc.org/auth
           tokenUrl: https://oauth.oclc.org/token
           scopes:
-            WorldCatMetadataAPI: perform all the operation in the WorldCat Metadata API                                                    
+            WorldCatMetadataAPI: perform all the operation in the WorldCat Metadata API
+  examples:
+    read_bib:
+      summary: Read a bibliographic record
+      value: ""
+    read_holdinglibrarycodes:
+      summary: Read a library holding codes
+      value: ""
+    validateAdd:
+      summary: Validate Add record response
+      value: ""
+    validateReplace:
+      summary: Validate replace record response
+      value: ""  
+    validateFull:
+      summary: Validate full record response
+      value: ""                                   
+    read_lbd:
+      summary: Read a local bibliographic record
+      value: ""
+    search_lbd:
+      summary: Search for local bibliographic records
+      value: ""  
+    setHolding:
+      summary: Set holdings response
+      value: ""
+    setHoldingsByOCLCNumber:
+      summary: Set multiple holdings by OCLC number response
+      value: ""
+    setHoldingsByInstitution:
+      summary: Set multiple holdings by institution response
+      value: ""
+    checkHoldings:
+      summary: check holdings response
+      value: ""                                                                                  
 externalDocs:
   description: Find out more about WorldCatMetadata API
   url: 'https://www.oclc.org/developer/develop/web-services/worldcat-metadata-api.en.html'
