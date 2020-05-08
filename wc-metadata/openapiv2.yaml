@@ -1045,7 +1045,7 @@ components:
           tokenUrl: https://oauth.oclc.org/token
           scopes:
             WorldCatMetadataAPI: perform all the operation in the WorldCat Metadata API
-            WorldCatMetadataAPI:view_brief_bib: view bibliographic data
+            WorldCatMetadataAPI:view_brief_bib: view brief bibliographic data
             WorldCatMetadataAPI:view_retained_holdings: view holdings which libraries have chosen to retain
             WorldCatMetadataAPI:view_summary_holdings: view summary information about library holdings
             WorldCatMetadataAPI:view_my_holdings: view detailed information about the authentication institution's holdings
@@ -1054,7 +1054,7 @@ components:
           tokenUrl: https://oauth.oclc.org/token
           scopes:
             WorldCatMetadataAPI: perform all the operation in the WorldCat Metadata API
-            WorldCatMetadataAPI:view_brief_bib: view bibliographic data
+            WorldCatMetadataAPI:view_brief_bib: view brief bibliographic data
             WorldCatMetadataAPI:view_retained_holdings: view holdings which libraries have chosen to retain
             WorldCatMetadataAPI:view_summary_holdings: view summary information about library holdings
             WorldCatMetadataAPI:view_my_holdings: view detailed information about the authentication institution's holdings
