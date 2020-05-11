@@ -1,4 +1,4 @@
-openapi: 3.0.0
+openapi: 3.0.2
 info:
   description: WorldCat Metadata API
   version: 1.0.0
@@ -30,10 +30,17 @@ paths:
           required: false
           schema:
             type: string
-          example: OCPSB                  
+          example: OCPSB
+      requestBody:
+        description: Create bibliographic record to the system
+        content:
+          'application/marc+xml': 
+            examples:
+              create-bib:
+                $ref: '#/components/examples/create_bib'                                                        
       responses:
         '200':
-          description: Successful search
+          description: Successful create of bibliographic record
           content:
             '*/*':
               schema:
@@ -57,8 +64,8 @@ paths:
               schema:
                 type: object            
               examples:
-                missing-query-parameter:
-                  $ref: '#/components/examples/invalid-context-error'              
+                unauthorized-error:
+                  $ref: '#/components/examples/forbidden'              
         
         '405':
           description: 'Method not supported, see response Allow header'
@@ -94,10 +101,17 @@ paths:
           required: false
           schema:
             type: string
-          example: OCPSB                  
+          example: OCPSB
+      requestBody:
+        description: Update bibliographic record to the system
+        content:
+          'application/marc+xml': 
+            examples:
+              update-bib:
+                $ref: '#/components/examples/update_bib'                            
       responses:
         '200':
-          description: Successful search
+          description: Successful update bibliographic record
           content:
             '*/*':
               schema:
@@ -121,8 +135,8 @@ paths:
               schema:
                 type: object            
               examples:
-                missing-query-parameter:
-                  $ref: '#/components/examples/invalid-context-error'              
+                unauthorized-error:
+                  $ref: '#/components/examples/forbidden'              
         
         '405':
           description: 'Method not supported, see response Allow header'
@@ -155,7 +169,7 @@ paths:
           required: true      
       responses:
         '200':
-          description: Successful search
+          description: Successful read of bibliographic data
           content:
             '*/*':
               schema:
@@ -179,8 +193,8 @@ paths:
               schema:
                 type: object            
               examples:
-                missing-query-parameter:
-                  $ref: '#/components/examples/invalid-context-error'              
+                unauthorized-error:
+                  $ref: '#/components/examples/forbidden'              
         
         '405':
           description: 'Method not supported, see response Allow header'
@@ -211,7 +225,7 @@ paths:
             type: string      
       responses:
         '200':
-          description: Successful search
+          description: Successful request for current OCLC number
           content:
             '*/*':
               schema:
@@ -235,8 +249,8 @@ paths:
               schema:
                 type: object            
               examples:
-                missing-query-parameter:
-                  $ref: '#/components/examples/invalid-context-error'              
+                unauthorized-error:
+                  $ref: '#/components/examples/forbidden'              
         
         '405':
           description: 'Method not supported, see response Allow header'
@@ -261,7 +275,7 @@ paths:
       operationId: get-holding-codes    
       responses:
         '200':
-          description: Successful search
+          description: Successful read of holding libraries
           content:
             '*/*':
               schema:
@@ -285,8 +299,8 @@ paths:
               schema:
                 type: object            
               examples:
-                missing-query-parameter:
-                  $ref: '#/components/examples/invalid-context-error'              
+                unauthorized-error:
+                  $ref: '#/components/examples/forbidden'              
         
         '405':
           description: 'Method not supported, see response Allow header'
@@ -305,13 +319,20 @@ paths:
   /bib/validateFull:
     post:
       tags:
-        - Bibliographic Records - Valid
+        - Bibliographic Records - Validate
       summary: 'Full Validation of Bib Record'
       description: 'Full Validation of Bib Record'
-      operationId: validate-full-bib     
+      operationId: validate-full-bib
+      requestBody:
+        description: Validate full bibliographic record to be updated in the system
+        content:
+          'application/marc+xml': 
+            examples:
+              update-bib:
+                $ref: '#/components/examples/update_bib'           
       responses:
         '200':
-          description: Successful search
+          description: Successful validate
           content:
             '*/*':
               schema:
@@ -335,8 +356,8 @@ paths:
               schema:
                 type: object            
               examples:
-                missing-query-parameter:
-                  $ref: '#/components/examples/invalid-context-error'              
+                unauthorized-error:
+                  $ref: '#/components/examples/forbidden'              
         
         '405':
           description: 'Method not supported, see response Allow header'
@@ -355,13 +376,20 @@ paths:
   /bib/validateAdd:
     post:
       tags:
-        - Bibliographic Records - Valid
+        - Bibliographic Records - Validate
       summary: 'Add Validation of Bib Record'
       description: 'Add Validation of Bib Record'
-      operationId: validate-add-bib     
+      operationId: validate-add-bib
+      requestBody:
+        description: Validate bibliographic record to be added to the system
+        content:
+          'application/marc+xml': 
+            examples:
+              validate-add-bib:
+                $ref: '#/components/examples/create_bib'           
       responses:
         '200':
-          description: Successful search
+          description: Successful validate
           content:
             '*/*':
               schema:
@@ -385,8 +413,8 @@ paths:
               schema:
                 type: object            
               examples:
-                missing-query-parameter:
-                  $ref: '#/components/examples/invalid-context-error'              
+                unauthorized-error:
+                  $ref: '#/components/examples/forbidden'              
         
         '405':
           description: 'Method not supported, see response Allow header'
@@ -405,13 +433,20 @@ paths:
   /bib/validateReplace:
     post:
       tags:
-        - Bibliographic Records - Valid
+        - Bibliographic Records - Validate
       summary: 'Replace Validation of Bib Record'
       description: 'Replace Validation of Bib Record'
-      operationId: validate-replace-bib     
+      operationId: validate-replace-bib 
+      requestBody:
+        description: Validate bibliographic record to be updated in to the system
+        content:
+          'application/marc+xml': 
+            examples:
+              update-bib:
+                $ref: '#/components/examples/update_bib'          
       responses:
         '200':
-          description: Successful search
+          description: Successful validate
           content:
             '*/*':
               schema:
@@ -435,8 +470,8 @@ paths:
               schema:
                 type: object            
               examples:
-                missing-query-parameter:
-                  $ref: '#/components/examples/invalid-context-error'              
+                unauthorized-error:
+                  $ref: '#/components/examples/forbidden'              
         
         '405':
           description: 'Method not supported, see response Allow header'
@@ -497,7 +532,7 @@ paths:
             type: string
       responses:
         '200':
-          description: Successful search
+          description: Successful create institution holding
           content:
             '*/*':
               schema:
@@ -521,8 +556,8 @@ paths:
               schema:
                 type: object            
               examples:
-                missing-query-parameter:
-                  $ref: '#/components/examples/invalid-context-error'              
+                unauthorized-error:
+                  $ref: '#/components/examples/forbidden'              
         
         '405':
           description: 'Method not supported, see response Allow header'
@@ -589,14 +624,11 @@ paths:
             type: string
       responses:
         '200':
-          description: Successful search
+          description: Successful delete institution holding
           content:
             '*/*':
               schema:
-                type: object            
-              examples:
-                success: 
-                  $ref: '#/components/examples/success'
+                type: object
         '400':
           description: Invalid query. The request was unacceptable, often due to missing a required parameter.
           content:
@@ -613,8 +645,8 @@ paths:
               schema:
                 type: object            
               examples:
-                missing-query-parameter:
-                  $ref: '#/components/examples/invalid-context-error'              
+                unauthorized-error:
+                  $ref: '#/components/examples/forbidden'              
         
         '405':
           description: 'Method not supported, see response Allow header'
@@ -662,7 +694,7 @@ paths:
           example: OCPSB                  
       responses:
         '200':
-          description: Successful search
+          description: Successful check status of institution holding
           content:
             '*/*':
               schema:
@@ -686,8 +718,8 @@ paths:
               schema:
                 type: object            
               examples:
-                missing-query-parameter:
-                  $ref: '#/components/examples/invalid-context-error'              
+                unauthorized-error:
+                  $ref: '#/components/examples/forbidden'              
         
         '405':
           description: 'Method not supported, see response Allow header'
@@ -735,7 +767,7 @@ paths:
           example: OCPSB                  
       responses:
         '200':
-          description: Successful search
+          description: Successful batch set institution holdings on OCLC Number
           content:
             '*/*':
               schema:
@@ -759,8 +791,8 @@ paths:
               schema:
                 type: object            
               examples:
-                missing-query-parameter:
-                  $ref: '#/components/examples/invalid-context-error'              
+                unauthorized-error:
+                  $ref: '#/components/examples/forbidden'              
         
         '405':
           description: 'Method not supported, see response Allow header'
@@ -814,14 +846,11 @@ paths:
           example: OCPSB                  
       responses:
         '200':
-          description: Successful search
+          description: Successfully batch remove institution holdings for OCLC Numbers
           content:
             '*/*':
               schema:
                 type: object            
-              examples:
-                success: 
-                  $ref: '#/components/examples/success'
         '400':
           description: Invalid query. The request was unacceptable, often due to missing a required parameter.
           content:
@@ -838,8 +867,8 @@ paths:
               schema:
                 type: object            
               examples:
-                missing-query-parameter:
-                  $ref: '#/components/examples/invalid-context-error'              
+                unauthorized-error:
+                  $ref: '#/components/examples/forbidden'              
         
         '405':
           description: 'Method not supported, see response Allow header'
@@ -880,7 +909,7 @@ paths:
           example: OCPSB                  
       responses:
         '200':
-          description: Successful search
+          description: Successfully set holdings for an institution on multiple OCLC number
           content:
             '*/*':
               schema:
@@ -904,8 +933,8 @@ paths:
               schema:
                 type: object            
               examples:
-                missing-query-parameter:
-                  $ref: '#/components/examples/invalid-context-error'              
+                unauthorized-error:
+                  $ref: '#/components/examples/forbidden'              
         
         '405':
           description: 'Method not supported, see response Allow header'
@@ -952,14 +981,11 @@ paths:
           example: 1                            
       responses:
         '200':
-          description: Successful search
+          description: Successfully unset holdings for an institution on multiple OCLC number
           content:
             '*/*':
               schema:
-                type: object            
-              examples:
-                success: 
-                  $ref: '#/components/examples/success'
+                type: object
         '400':
           description: Invalid query. The request was unacceptable, often due to missing a required parameter.
           content:
@@ -976,8 +1002,8 @@ paths:
               schema:
                 type: object            
               examples:
-                missing-query-parameter:
-                  $ref: '#/components/examples/invalid-context-error'              
+                unauthorized-error:
+                  $ref: '#/components/examples/forbidden'              
         
         '405':
           description: 'Method not supported, see response Allow header'
@@ -1022,9 +1048,16 @@ paths:
           schema:
             type: string
           example: MAIN
+      requestBody:
+        description: Add local bibliographic record to the system
+        content:
+          'application/marc+xml': 
+            examples:
+              create_lbd:
+                $ref: '#/components/examples/create_lbd'
       responses:
         '200':
-          description: Successful search
+          description: Successfully create local bibliographic record
           content:
             '*/*':
               schema:
@@ -1048,8 +1081,8 @@ paths:
               schema:
                 type: object            
               examples:
-                missing-query-parameter:
-                  $ref: '#/components/examples/invalid-context-error'              
+                unauthorized-error:
+                  $ref: '#/components/examples/forbidden'              
         
         '405':
           description: 'Method not supported, see response Allow header'
@@ -1096,7 +1129,7 @@ paths:
           example: MAIN
       responses:
         '200':
-          description: Successful search
+          description: Successfully read local bibliographic data
           content:
             '*/*':
               schema:
@@ -1120,8 +1153,8 @@ paths:
               schema:
                 type: object            
               examples:
-                missing-query-parameter:
-                  $ref: '#/components/examples/invalid-context-error'              
+                unauthorized-error:
+                  $ref: '#/components/examples/forbidden'              
         
         '405':
           description: 'Method not supported, see response Allow header'
@@ -1167,7 +1200,7 @@ paths:
           example: MAIN
       responses:
         '200':
-          description: Successful search
+          description: Successfully update local bibliographic data
           content:
             '*/*':
               schema:
@@ -1191,8 +1224,8 @@ paths:
               schema:
                 type: object            
               examples:
-                missing-query-parameter:
-                  $ref: '#/components/examples/invalid-context-error'              
+                unauthorized-error:
+                  $ref: '#/components/examples/forbidden'              
         
         '405':
           description: 'Method not supported, see response Allow header'
@@ -1238,14 +1271,11 @@ paths:
           example: MAIN
       responses:
         '200':
-          description: Successful search
+          description: Successfully delete local bibliographic data
           content:
             '*/*':
               schema:
-                type: object            
-              examples:
-                success: 
-                  $ref: '#/components/examples/success'
+                type: object
         '400':
           description: Invalid query. The request was unacceptable, often due to missing a required parameter.
           content:
@@ -1262,8 +1292,8 @@ paths:
               schema:
                 type: object            
               examples:
-                missing-query-parameter:
-                  $ref: '#/components/examples/invalid-context-error'              
+                unauthorized-error:
+                  $ref: '#/components/examples/forbidden'              
         
         '405':
           description: 'Method not supported, see response Allow header'
@@ -1296,7 +1326,7 @@ paths:
           example: 1
       responses:
         '200':
-          description: Successful search
+          description: Successfully search for local bibliographic data
           content:
             '*/*':
               schema:
@@ -1320,8 +1350,8 @@ paths:
               schema:
                 type: object            
               examples:
-                missing-query-parameter:
-                  $ref: '#/components/examples/invalid-context-error'              
+                unauthorized-error:
+                  $ref: '#/components/examples/forbidden'              
         
         '405':
           description: 'Method not supported, see response Allow header'
@@ -1352,6 +1382,9 @@ components:
           scopes:
             WorldCatMetadataAPI: perform all the operation in the WorldCat Metadata API
   examples:
+    create_bib:
+      summary: Create a bibliographic record
+      value: ""  
     read_bib:
       summary: Read a bibliographic record
       value: >
@@ -1976,6 +2009,9 @@ components:
             <id>http://worldcat.org/oclc/311684437</id>
             <link href="http://worldcat.org/oclc/311684437"></link>
         </entry>      
+    update_bib:
+      summary: Update a bibliographic record
+      value: ""
     read_holdinglibrarycodes:
       summary: Read a library holding codes
       value: >
@@ -2042,7 +2078,10 @@ components:
       value: ""  
     validateFull:
       summary: Validate full record response
-      value: ""                                   
+      value: ""
+    create_lbd:
+      summary: Create a local bibliographic record
+      value: ""                                         
     read_lbd:
       summary: Read a local bibliographic record
       value: >
@@ -2102,6 +2141,9 @@ components:
                 </content>
             </entry>
         </feed>        
+    update_lbd:
+      summary: Update a local bibliographic record
+      value: ""    
     setHolding:
       summary: Set holdings response
       value: >
@@ -2278,6 +2320,9 @@ components:
             <code type="http">406</code>
             <message>Requested media-type is not supported.  Supported types: application/atom+xml;content="application/vnd.oclc.cdf", application/atom+xml;content="application/vnd.oclc.marc21+xml", application/atom+json.</message>
         </error>                                                                                              
+    missing-query-parameter:
+      summary: Error when required query parameter is missing
+      value: ""
 externalDocs:
   description: Find out more about WorldCatMetadata API
   url: 'https://www.oclc.org/developer/develop/web-services/worldcat-metadata-api.en.html'
