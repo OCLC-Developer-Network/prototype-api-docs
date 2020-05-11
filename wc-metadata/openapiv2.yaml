@@ -582,9 +582,9 @@ paths:
                 success-brief-bibs-digital_article:
                   $ref: '#/components/examples/success-brief-bibs-digital_article'
                 success-brief-bibs-dissertation:
-                  $ref: '#/components/examples/success-brief-bibs-film'
+                  $ref: '#/components/examples/success-brief-bibs-dissertation'
                 success-brief-bibs-film:
-                  $ref: '#/components/examples/success-bibs'
+                  $ref: '#/components/examples/success-brief-bibs-film'
                 success-brief-bibs-painting:
                   $ref: '#/components/examples/success-brief-bibs-painting'
                 success-brief-bibs-photo:
