@@ -86,7 +86,13 @@ paths:
                 $ref: '#/components/schemas/BibBriefResultSet'
               examples:
                 success-bibs-retained-holdings: 
-                  $ref: '#/components/examples/success-bibs-retained-holdings'                    
+                  $ref: '#/components/examples/success-bibs-retained-holdings'
+                success-bibs-retained-holdings-monograph:
+                  $ref: '#/components/examples/success-bibs-retained-holdings-monograph'                  
+                success-bibs-retained-holdings-serial:
+                  $ref: '#/components/examples/success-bibs-retained-holdings-serial'
+                success-bibs-retained-holdings-serial-2:
+                  $ref: '#/components/examples/success-bibs-retained-holdings-serial-2'                                      
         '206':
           description: Success with partial results
           content:
@@ -989,7 +995,13 @@ paths:
                 $ref: '#/components/schemas/HoldingResultSet'
               examples:
                 success-retained-holdings:
-                  $ref: '#/components/examples/success-retained-holdings'  
+                  $ref: '#/components/examples/success-retained-holdings'
+                success-retained-holdings-monograph:
+                  $ref: '#/components/examples/success-retained-holdings-monograph'                  
+                success-retained-holdings-serial:
+                  $ref: '#/components/examples/success-retained-holdings-serial'
+                success-retained-holdings-serial-2:
+                  $ref: '#/components/examples/success-retained-holdings-serial-2'                                      
         '206':
           description: Success with partial results
           content:
@@ -1114,6 +1126,67 @@ components:
     success-bibs-retained-holdings:
       summary: successful request for bibs retained-holdings
       value: {"numberOfRecords":1,"briefRecords":[{"oclcNumber":"1752384","title":"Human biology.","creator":"Raymond Pearl","date":"1929","language":"eng","generalFormat":"Jrnl","institutionHolding":{"totalHoldingCount":716,"briefHoldings":[{"country":"US","state":"GA","oclcSymbol":"EMU","institutionNumber":"276","institutionName":"EMORY UNIV","illStatus":"S"}]}}]}
+    success-bibs-retained-holdings-monograph:
+      summary: successful request for bibs retained-holdings monograph
+      value: ""               
+    success-bibs-retained-holdings-serial:
+      summary: successful request for bibs retained-holdings serial
+      value: >
+        {
+            "numberOfRecords": 1,
+            "briefRecords": [
+                {
+                    "oclcNumber": "1588319",
+                    "title": "Review of educational research.",
+                    "creator": "Douglas E. Scates",
+                    "date": "1931",
+                    "language": "eng",
+                    "generalFormat": "Jrnl",
+                    "institutionHolding": {
+                        "totalHoldingCount": 1048,
+                        "briefHoldings": [
+                            {
+                                "country": "US",
+                                "state": "IL",
+                                "oclcSymbol": "CRL",
+                                "institutionNumber": "540",
+                                "institutionName": "CENTER FOR RES LIBR",
+                                "illStatus": "N"
+                            }
+                        ]
+                    }
+                }
+            ]
+        }           
+    success-bibs-retained-holdings-serial-2:
+      summary: successful request for bibs retained-holdings serial with enumeration/caption/summary
+      value: >
+        {
+            "numberOfRecords": 1,
+            "briefRecords": [
+                {
+                    "oclcNumber": "1696940",
+                    "title": "The Irish theological quarterly.",
+                    "creator": "St. Patrick's College (Maynooth, Ireland).",
+                    "date": "1906",
+                    "language": "eng",
+                    "generalFormat": "Jrnl",
+                    "institutionHolding": {
+                        "totalHoldingCount": 291,
+                        "briefHoldings": [
+                            {
+                                "country": "US",
+                                "state": "NY",
+                                "oclcSymbol": "VKM",
+                                "institutionNumber": "3368",
+                                "institutionName": "SIENA COL",
+                                "illStatus": "S"
+                            }
+                        ]
+                    }
+                }
+            ]
+        }                  
     success-brief-bibs-oclcnumber:
       summary: successful request a brief bib record by OCLC Number
       value: {
@@ -1368,9 +1441,7 @@ components:
         "publisher": "Penguin Canada"
         }
       ]
-    }
-
-                  
+    }                  
     success-my-holdings-accession-number:
       summary: successful request for holding by accession number
       value: >
@@ -1692,7 +1763,7 @@ components:
         ]
         }    
     success-retained-holdings-monograph:
-      summary: return retained holdings for for monograph
+      summary: return retained holdings for a monograph
       value: >
           {
             "numberOfHoldings": 1,
@@ -1731,7 +1802,271 @@ components:
                     ]
                 }
             ]
-          }      
+          }
+    success-retained-holdings-serial:
+      summary: return retained holdings for a serial
+      value: >
+        {
+            "numberOfHoldings": 1,
+            "detailedHoldings": [
+                {
+                    "lhrControlNumber": "293921067",
+                    "lhrDateEntered": "20200122",
+                    "lhrLastUpdated": "20200122",
+                    "oclcNumber": "1588319",
+                    "format": "zu",
+                    "location": {
+                        "holdingLocation": "CRL",
+                        "sublocationCollection": "JSTR"
+                    },
+                    "hasSharedPrintCommitment": "Y",
+                    "sharedPrintCommitments": [
+                        {
+                            "actionNote": "condition reviewed",
+                            "materialsSpecified": "v.1-v.80 (1931-2010)",
+                            "institution": "ICRL",
+                            "dateOfAction": "20110101",
+                            "methodOfAction": "issue-level validation",
+                            "status": "marginalia$torn",
+                            "publicNote": "marginalia v.40:590,592,594-596;v.42:396,153-159;v.44:463;v.45:211;v.46:189,196-197,199;v.49:153-166,168$torn pages v.49:pp.62-64"
+                        },
+                        {
+                            "actionNote": "committed to retain",
+                            "materialsSpecified": "v.1-v.80 (1931-2010)",
+                            "institution": "ICRL",
+                            "dateOfAction": "20110101",
+                            "commitmentExpirationDate": "20501231",
+                            "authorization": "CRLJSTOR",
+                            "siteOfAction": "CRLAA",
+                            "uri": "http://www.crl.edu/archiving-preservation/print-archives/crl-administered/jstor"
+                        }
+                    ],
+                    "summary": "Local Holdings Available."
+                }
+            ]
+        }
+    success-retained-holdings-serial-2:
+      summary: return retained holdings for a serial
+      value: >
+        {
+          "numberOfHoldings": 1,
+          "detailedHoldings": [
+              {
+                  "lhrControlNumber": "2892929",
+                  "lhrDateEntered": "20200505",
+                  "lhrLastUpdated": "20200505",
+                  "oclcNumber": "1696940",
+                  "format": "ta",
+                  "location": {
+                      "holdingLocation": "VKM",
+                      "sublocationCollection": "VKMA"
+                  },
+                  "hasSharedPrintCommitment": "Y",
+                  "sharedPrintCommitments": [
+                      {
+                          "actionNote": "completeness reviewed",
+                          "materialsSpecified": "v.1-5 (1906-1910), v.19 (1952), v.21-25 (1954-1958), v.27 (1960), v.29 (1962), v.32-42 (1965-1975), v.45-56 (1978-1990), v.58-75 (1992-2010)",
+                          "institution": "NLouvS",
+                          "dateOfAction": "20160630",
+                          "commitmentExpirationDate": "20310630",
+                          "methodOfAction": "volume-level validation"
+                      },
+                      {
+                          "actionNote": "committed to retain",
+                          "materialsSpecified": "v.1-5 (1906-1910), v.19 (1952), v.21-25 (1954-1958), v.27 (1960), v.29 (1962), v.32-42 (1965-1975), v.45-56 (1978-1990), v.58-75 (1992-2010)",
+                          "institution": "NLouvS",
+                          "dateOfAction": "20160630",
+                          "commitmentExpirationDate": "20310630",
+                          "authorization": "east",
+                          "uri": "https://eastlibraries.org/retained-materials"
+                      }
+                  ],
+                  "summary": "v.1(1906)-v.5(1910),v.19(1952),v.21(1954)-v.25(1958),v.27(1960),v.29(1962),v.32(1965)-v.42(1975),v.45(1978)-v.56(1990),v.58(1992)-v.75(2010)",
+                  "holdingParts": [
+                      {
+                          "linkingAndSequenceNumber": "1.1",
+                          "enumerations": [
+                              {
+                                  "caption": "v.",
+                                  "value": "1-5"
+                              }
+                          ],
+                          "chronologies": [
+                              {
+                                  "caption": "(year)",
+                                  "value": "1906-1910"
+                              }
+                          ],
+                          "yearRanges": [
+                              {
+                                  "from": "1906",
+                                  "to": "1910"
+                              }
+                          ],
+                          "volumeRanges": [
+                              {
+                                  "from": "1",
+                                  "to": "5"
+                              }
+                          ]
+                      },
+                      {
+                          "linkingAndSequenceNumber": "1.2",
+                          "enumerations": [
+                              {
+                                  "caption": "v.",
+                                  "value": "19"
+                              }
+                          ],
+                          "chronologies": [
+                              {
+                                  "caption": "(year)",
+                                  "value": "1952"
+                              }
+                          ]
+                      },
+                      {
+                          "linkingAndSequenceNumber": "1.3",
+                          "enumerations": [
+                              {
+                                  "caption": "v.",
+                                  "value": "21-25"
+                              }
+                          ],
+                          "chronologies": [
+                              {
+                                  "caption": "(year)",
+                                  "value": "1954-1958"
+                              }
+                          ],
+                          "yearRanges": [
+                              {
+                                  "from": "1954",
+                                  "to": "1958"
+                              }
+                          ],
+                          "volumeRanges": [
+                              {
+                                  "from": "21",
+                                  "to": "25"
+                              }
+                          ]
+                      },
+                      {
+                          "linkingAndSequenceNumber": "1.4",
+                          "enumerations": [
+                              {
+                                  "caption": "v.",
+                                  "value": "27"
+                              }
+                          ],
+                          "chronologies": [
+                              {
+                                  "caption": "(year)",
+                                  "value": "1960"
+                              }
+                          ]
+                      },
+                      {
+                          "linkingAndSequenceNumber": "1.5",
+                          "enumerations": [
+                              {
+                                  "caption": "v.",
+                                  "value": "29"
+                              }
+                          ],
+                          "chronologies": [
+                              {
+                                  "caption": "(year)",
+                                  "value": "1962"
+                              }
+                          ]
+                      },
+                      {
+                          "linkingAndSequenceNumber": "1.6",
+                          "enumerations": [
+                              {
+                                  "caption": "v.",
+                                  "value": "32-42"
+                              }
+                          ],
+                          "chronologies": [
+                              {
+                                  "caption": "(year)",
+                                  "value": "1965-1975"
+                              }
+                          ],
+                          "yearRanges": [
+                              {
+                                  "from": "1965",
+                                  "to": "1975"
+                              }
+                          ],
+                          "volumeRanges": [
+                              {
+                                  "from": "32",
+                                  "to": "42"
+                              }
+                          ]
+                      },
+                      {
+                          "linkingAndSequenceNumber": "1.7",
+                          "enumerations": [
+                              {
+                                  "caption": "v.",
+                                  "value": "45-56"
+                              }
+                          ],
+                          "chronologies": [
+                              {
+                                  "caption": "(year)",
+                                  "value": "1978-1990"
+                              }
+                          ],
+                          "yearRanges": [
+                              {
+                                  "from": "1978",
+                                  "to": "1990"
+                              }
+                          ],
+                          "volumeRanges": [
+                              {
+                                  "from": "45",
+                                  "to": "56"
+                              }
+                          ]
+                      },
+                      {
+                          "linkingAndSequenceNumber": "1.8",
+                          "enumerations": [
+                              {
+                                  "caption": "v.",
+                                  "value": "58-75"
+                              }
+                          ],
+                          "chronologies": [
+                              {
+                                  "caption": "(year)",
+                                  "value": "1992-2010"
+                              }
+                          ],
+                          "yearRanges": [
+                              {
+                                  "from": "1992",
+                                  "to": "2010"
+                              }
+                          ],
+                          "volumeRanges": [
+                              {
+                                  "from": "58",
+                                  "to": "75"
+                              }
+                          ]
+                      }
+                  ]
+              }
+          ]
+        }                           
     unauthorized:
       summary: Error returned when valid API credentials not sent or invalid
       value: {"message": "Unauthorized"}
@@ -1775,472 +2110,6 @@ components:
       summary: Error returned when accession number isn't valid
       value: {"type": "INVALID_QUERY_PARAMETER_VALUE", "title": "Validation Failure", "detail": "accession number must be a positive whole number"}      
   schemas:
-    BibRecord:
-      type: object
-      properties:
-        identifier:
-          $ref: '#/components/schemas/Identifier'
-        title:
-          $ref: '#/components/schemas/Title'
-        contributor:
-          $ref: '#/components/schemas/Contributor'
-        subjects:
-          type: array
-          items:
-            $ref: '#/components/schemas/Subject'
-        classification:
-          $ref: '#/components/schemas/Classification'
-        publishers:
-          type: array
-          items:
-            $ref: '#/components/schemas/Publisher'
-        date:
-          $ref: '#/components/schemas/DateObject'
-        language:
-          $ref: '#/components/schemas/Language'
-        edition:
-          $ref: '#/components/schemas/EditionInfo'
-        source:
-          type: array
-          items:
-            $ref: '#/components/schemas/Source'
-        note:
-          $ref: '#/components/schemas/Note'
-        format:
-          $ref: '#/components/schemas/Format'
-        musicInfo:
-          $ref: '#/components/schemas/MusicInfo'
-        digitalAccessAndLocations:
-          type: array
-          items:
-            $ref: '#/components/schemas/DigitalAccessAndLocation'
-        description:
-          $ref: '#/components/schemas/Description'
-        related:
-          $ref: '#/components/schemas/Related'
-        work:
-          $ref: '#/components/schemas/Work'
-        database:
-          $ref: '#/components/schemas/Database'
-        institutionHolding:
-          $ref: '#/components/schemas/InstitutionHolding'
-    Identifier:
-      type: object
-      properties:
-        oclcNumber:
-          description: OCLC Number [Admin/BaseOCLCNo || Admin/OCLCNo || C001]
-          type: string
-        lccn:
-          description: Library of Congress Control Number [v010sa]
-          type: string
-        isbns:
-          description: International Standard Book Number [v020sa]
-          type: array
-          items:
-            type: string
-        issns:
-          description: International Standard Serial Number [v022sa v700sx]
-          type: array
-          items:
-            type: string
-        externalIdentifiers:
-          description: External System Control Number [v029sa,b,c,t]
-          type: array
-          items:
-            $ref: '#/components/schemas/ExternalIdentifier'
-        otherStandardIdentifiers:
-          description: Other Standard Identifier [v024sa]
-          type: array
-          items:
-            $ref: '#/components/schemas/StandardIdentifier'
-        dois:
-          description: Digital Object Identifier [v901sb v024sa]
-          type: array
-          items:
-            type: string
-        mergedOclcNumbers:
-          description: Merged OCLC numbers [v019sa]
-          type: array
-          items:
-            type: string
-    Title:
-      type: object
-      properties:
-        mainTitles:
-          description: Main Titles [v245sa,b,c,f,g,k,n,p,s]
-          type: array
-          items:
-            $ref: '#/components/schemas/InternationalText'
-        seriesTitles:
-          description: Series Titles [(v490,v810,v830 - sa,v)]
-          type: array
-          items:
-            $ref: '#/components/schemas/SeriesTitle'
-        uniformTitles:
-          description: Uniform Titles [(v130,v730,v793,v799 - sa,d,f,g,k,l,m,n,o,p,r,s,t) && v240sa,d,f,g,k,l,m,n,o,p,r,s]
-          type: array
-          items:
-            type: string
-        additionalTitles:
-          description: Added Entry Uniform Titles [v730sa,d,f,g,k,l,m,n,o,p,r,s,i,t,x]
-          type: array
-          items:
-            $ref: '#/components/schemas/AdditionalRelationship'
-    Contributor:
-      type: object
-      properties:
-        creators:
-          description: Creators of work [v245sc v100sa,q,b,c,d,e,4,k v110sa,q,b,c,d,e,4,k,n v111sa,q,c,d,e,j,k,n v700sa,q,b,c,d,e,4,k v710sa,q,b,c,d,e,4,k,n v720sa v711 sa,q,c,d,e,j,k,n v790sa,q,c,d,e,j,k,n v791sa,q,b,c,d,e,4,k v792sa,b,q,c, d,e,j,k,n v796 sa,q,b,c,d,e,4,k v797sa,q,b,c,d,e,4,k,n v798sa,b,q,c, d,e,j,k,n]
-          type: array
-          items:
-            $ref: '#/components/schemas/Creator'
-        additionalCreators:
-          description: Additional creators of work [(v700,v710,v711,v790,v791,v792,v796,v797,v798) - sa,b,c,d,q,n,k,e,j,4]
-          type: array
-          items:
-            $ref: '#/components/schemas/AdditionalRelationship'
-    Subject:
-      type: object
-      description: Subjects [v600sa,b,c,d,n,v,x,y,z,e,j,4 v610sa,b,n,v,x,y,z,e,j,4 v611sa,c,d,n,v,x,y,z,e,j,4 v630sa,d,e,f,k,l,m,n,o,d,p,r,s,v,x,y,z,e,j,4 v650sa,b,x,y,z,v,e,j,4 v651sa,x,y,z,v,e,j,4 v655sa,b,c,v,x,y,z,e,j,4 v648sa,v,w,x,y,z,e,j,4 v653sa,e,j,4 v656sa,k,v,x,y,z,3,e,j,4 v657sa,v,x,y,z,3,e,j,4 (v690,v691,v695,v696,v697,v698,v699 sa,b,c,d,e,f,k,l,m,n,o,p,r,s,v,x,y,z,e,j,4)]
-      properties:
-        subjectName:
-          $ref: '#/components/schemas/InternationalText'
-        vocabulary:
-          type: string
-          description: subject authority vocabularies (MESH, FAST, LCSH, RVM)
-        relators:
-          type: array
-          items:
-            $ref: '#/components/schemas/Relator'
-        subjectType:
-          type: string
-        uri:
-          type: string
-          description: URI [6xx s1]
-    Classification:
-      type: object
-      properties:
-        dewey:
-          description: Dewey Decimal Classification Number [v082sa,b]
-          type: string
-        lc:
-          description: Library of Congress Call Number [v050sa,b]
-          type: string
-        nlm:
-          description: National Library of Medicine Call Number [v060sa,b]
-          type: string
-    Publisher:
-      description: Publisher Information [v260sa,b v264sa,b]
-      type: object
-      properties:
-        publisherName:
-          $ref: '#/components/schemas/InternationalText'
-        publicationPlace:
-          type: string
-    DateObject:
-      type: object
-      properties:
-        publicationDate:
-          description: Date of Publication [v260sc || c008(bytes 07-14) || v264sc || v362sa]
-          type: string
-        publicationSequentialDesignationDate:
-          description: Chronological issue designations [v362sa]
-          type: string
-        currentPublicationFrequency:
-          description: Frequency of Publication [v310sa]
-          type: string
-        createDate:
-          description: Date Record was Created [Admin/CreateDate]
-          type: string
-        replaceDate:
-          description: Date Record was last Updated [Admin/ReplacedDate]
-          type: string
-    Language:
-      type: object
-      properties:
-        itemLanguage:
-          description: Language of the item [v041sa,j]
-          type: string
-        catalogingLanguage:
-          description: Language record was cataloged in [v040sb]
-          type: string
-    EditionInfo:
-      type: object
-      properties:
-        statement:
-          description: Edition Statement [v250sa]
-          type: string
-    Source:
-      type: object
-      properties:
-        relatedParts:
-          description: Related Parts [v773sg]
-          type: array
-          items:
-            type: string
-        sourceTitle:
-          description: Source Title [v799st v773st]
-          type: string
-        publicationInformation:
-          description: Publication Information [v773sd]
-          type: string
-        volumes:
-          description: Volumes [v799sm v949sa]
-          type: array
-          items:
-            type: string
-        issues:
-          description: Issues [v799sp v949sb]
-          type: array
-          items:
-            type: string
-        pageRanges:
-          description: Page Range [v949sc]
-          type: array
-          items:
-            type: string
-        supplements:
-          description: Suppliments [v949sd]
-          type: array
-          items:
-            type: string
-        firstPages:
-          description: First Page [v949sf]
-          type: array
-          items:
-            type: string
-        issueDates:
-          description: Issue Dates [v949se]
-          type: array
-          items:
-            type: string
-        mainEntry:
-          description: Main Entry [v773sa]
-          type: string
-        otherPublicationData:
-          description: Other Publication Data [v799sa,d,g,o]
-          type: array
-          items:
-            type: string
-    Note:
-      type: object
-      properties:
-        generalNotes:
-          description: General Notes [v500sa, v501sa, v590sa,s3, (v59x sa-z)]
-          type: array
-          items:
-            $ref: '#/components/schemas/LocalizableText'
-        audienceNote:
-          description: Target Audience Note [v521sa]
-          type: string
-        dissertationNotes:
-          type: array
-          items:
-            $ref: '#/components/schemas/Dissertation'
-        castNotes:
-          description: Cast Notes [v511sa]
-          type: array
-          items:
-            type: string
-        performerNotes:
-          description: Performers Notes [v511sa]
-          type: array
-          items:
-            type: string
-        participantNote:
-          description: Participants Notes [v511sa]
-          type: string
-        eventNotes:
-          type: array
-          items:
-            $ref: '#/components/schemas/Event'
-        creditNotes:
-          description: Production Credits Notes [v508sa]
-          type: string
-        scaleNotes:
-          description: Scale Note for Graphic Material [v507sa,b]
-          type: array
-          items:
-            type: string
-        useAndReproductionNotes:
-          description: Terms Governing Use and Reproduction [v540s3,a,b,c,d,u]
-          type: array
-          items:
-            type: string
-        ownershipAndCustodialHistories:
-          description: Ownership and Custodial History [v561sa,3,5,u]
-          type: array
-          items:
-            type: string
-        systemDetailNote:
-          description: System Details Note [v538sa,u,i]
-          type: string
-        awardNote:
-          description: Awards Note [v586sa]
-          type: string
-    Format:
-      type: object
-      properties:
-        generalFormat:
-          description: General Format Type [Admin/OCLCDef/StdRT]
-          type: string
-        specificFormat:
-          description: Specific Format Type [Admin/OCLCDef/StdRT2]
-          type: string
-        materialTypes:
-          description: Material Types [Admin/OCLCDef/MT[@form='gen']]
-          type: array
-          items:
-            type: string
-    MusicInfo:
-      type: object
-      properties:
-        instrumentations:
-          type: array
-          items:
-            $ref: '#/components/schemas/Instrumentation'
-        musicalKey:
-          description: Musical Key [v384sa]
-          type: string
-        instrumentsCodes:
-          description: Musical Instruments [v048sa,b]
-          type: array
-          items:
-            type: string
-        numericDesignation:
-          description: Numeric Designation of Musical Work [v383sa,b,c]
-          type: string
-        musicalPresentationStatement:
-          description: Musical Presentation Statement [v254sa]
-          type: string
-    DigitalAccessAndLocation:
-      type: object
-      properties:
-        uri:
-          description: URI of resource [v856su]
-          type: string
-        materialSpecified:
-          description: Materials specified [v856s3]
-          type: string
-        instructions:
-          description: Instruction [v856si]
-          type: array
-          items:
-            type: string
-        linkText:
-          description: Link text [v856sy]
-          type: string
-        nonPublicNote:
-          description: Nonpublic note [v856sx]
-          type: string
-        publicNote:
-          description: Public note [v856sz]
-          type: string
-        accessMethod:
-          description: Access method [v856s2]
-          type: string
-    Description:
-      type: object
-      properties:
-        physicalDescription:
-          description: Physical Description [v300sa,b,c,d,e,f,g,3]
-          type: string
-        digitalGraphicRepresentation:
-          description: Digital Graphic Representation [v352sa,b,c,i,q]
-          type: string
-        genres:
-          description: Genre of work [v655sa,b,v,x,y,z v380sa, (v600,v610,v611,v630,v648, v650,v651,v654 sv) v653sa]
-          type: array
-          items:
-            type: string
-        cartographicData:
-          description: Cartographic Mathematical Data [v255sa,b,c]
-          type: array
-          items:
-            type: string
-        computerFilesCharacteristics:
-          description: Computer File Characteristics [v256sa]
-          type: array
-          items:
-            type: string
-        formOfWorks:
-          description: Form of Work [v380sa]
-          type: array
-          items:
-            type: string
-        abstracts:
-          description: Abstract [v520sa,b,c]
-          type: array
-          items:
-            $ref: '#/components/schemas/InternationalText'
-        summaries:
-          description: Summary [v520sa,b,c]
-          type: array
-          items:
-            $ref: '#/components/schemas/InternationalText'
-        contents:
-          type: array
-          items:
-            $ref: '#/components/schemas/Content'
-        bibliographies:
-          description: Bibliography [v504sa]
-          type: array
-          items:
-            $ref: '#/components/schemas/InternationalText'
-        peerReviewed:
-          description: Is this a peer reviewed work [Admin/OCLCDef/PR]
-          type: string
-          enum:
-            - Y
-            - N
-    Related:
-      description: Related [v787] Preceeding [v780] Succeeding [v785] (sa,b,c,d,g,h,i,k,m,n,o,r,s,t,u,w,x,y,z)
-      type: object
-      properties:
-        relatedItems:
-          type: array
-          items:
-            $ref: '#/components/schemas/RelatedItem'
-        precedingEntries:
-          type: array
-          items:
-            $ref: '#/components/schemas/RelatedItem'
-        succeedingEntries:
-          type: array
-          items:
-            $ref: '#/components/schemas/RelatedItem'
-        issuedWithEntries:
-          type: array
-          items:
-            $ref: '#/components/schemas/IssuedWithEntry'
-        additionalPhysicalFormEntries:
-          type: array
-          items:
-            $ref: '#/components/schemas/IssuedWithEntry'
-    Work:
-      type: object
-      properties:
-        id:
-          description: Id of the workset [Admin/Work/ID]
-          type: string
-        count:
-          description: Number of items in Workset [Admin/Work/Count]
-          type: integer
-          format: int32
-        articleCluster:
-          description: Items in Article Workset [WorkSet/NO]
-          type: array
-          items:
-            $ref: '#/components/schemas/ArticleWorkset'
-    Database:
-      type: object
-      properties:
-        source:
-          description: Source Collection [Admin/SourceCol]
-          type: string
-        collection:
-          description: Db Collection [root collection attribute]
-          type: string
     InstitutionHolding:
       type: object
       properties:
@@ -2251,7 +2120,11 @@ components:
         totalWorksHoldingCount:
           description: Number of holdings in the workset [FRBRHoldings/B]
           type: integer
-          format: int32          
+          format: int32
+        totalSharedPrintCount:
+          description: Number of retentions for this item
+          type: integer
+          format: int32            
       oneOf:          
         - $ref: '#/components/schemas/briefHoldings'
         - $ref: '#/components/schemas/detailedHoldings'
@@ -2267,7 +2140,7 @@ components:
     editionsHoldings:
       type: array
       items:
-        $ref: '#/components/schemas/Edition'    
+        $ref: '#/components/schemas/Edition'
     Edition:
       type: object
       properties:
@@ -2281,7 +2154,7 @@ components:
             oclcSymbol:
               type: string
             institutionLink:
-              type: string
+              type: string                
     Problem:
       type: object
       description: RFC 7807 description of an error.
@@ -2312,289 +2185,6 @@ components:
                 type: string
               reason:
                 type: string
-    ExternalIdentifier:
-      type: object
-      properties:
-        oclcSymbol:
-          type: string
-        systemControlNumber:
-          type: string
-        oaiSetName:
-          type: string
-        contentTypeId:
-          type: string
-    StandardIdentifier:
-      type: object
-      properties:
-        type:
-          type: string
-        id:
-          type: string
-    SeriesTitle:
-      type: object
-      properties:
-        seriesTitle:
-          type: string
-        volume:
-          type: string
-    AdditionalRelationship:
-      type: object
-      properties:
-        relationshipInfo:
-          type: string
-        titles:
-          type: array
-          items:
-            type: string
-        issns:
-          type: array
-          items:
-            type: string
-        relators:
-          type: array
-          items:
-            $ref: '#/components/schemas/Relator'
-        relatedData:
-          type: string
-        additionalRelationshipInfo:
-          type: string
-    Creator:
-      type: object
-      properties:
-        firstName:
-          $ref: '#/components/schemas/InternationalText'
-        secondName:
-          $ref: '#/components/schemas/InternationalText'
-        nonPersonName:
-          $ref: '#/components/schemas/InternationalText'
-        type:
-          type: string
-        creatorNotes:
-          type: array
-          items:
-            type: string
-        relators:
-          type: array
-          items:
-            $ref: '#/components/schemas/Relator'
-        affiliation:
-          type: string
-    Relator:
-      type: object
-      properties:
-        term:
-          type: string
-        alternateTerm:
-          type: string
-    LocalizableText:
-      type: object
-      properties:
-        text:
-          type: string
-        local:
-          type: string
-          enum:
-            - Y
-            - N
-    Dissertation:
-      description: Disseration notes [v502sa,b,c,d,g,o]
-      type: object
-      properties:
-        disserationNote:
-          type: string
-        type:
-          type: string
-        institution:
-          type: string
-        year:
-          type: string
-        id:
-          type: string
-        miscellaneousInfo:
-          type: string
-    Event:
-      description: Notes about event [v518sa,d,o,p,3]
-      type: object
-      properties:
-        compositeNote:
-          type: string
-        eventDate:
-          type: string
-        eventPlace:
-          type: string
-        eventInfo:
-          type: string
-        material:
-          type: string
-    Content:
-      description: Formatted Contents Note [v505sa,t,r,g,u]
-      type: object
-      properties:
-        contentNote:
-          $ref: '#/components/schemas/InternationalText'
-        titles:
-          type: array
-          items:
-            type: string
-        miscellaneousInfo:
-          type: array
-          items:
-            type: string
-        statementsOfResponsibility:
-          type: array
-          items:
-            type: string
-        uris:
-          type: array
-          items:
-            type: string
-    Instrumentation:
-      description: Instrumentation [v382sa,b,d,e,n,p,r,s,t,v]
-      type: object
-      properties:
-        mediumOfPerformance:
-          type: array
-          items:
-            type: string
-        soloists:
-          type: array
-          items:
-            type: string
-        doublingInstruments:
-          type: array
-          items:
-            type: string
-        numberOfEnsemblesOfSameTypes:
-          type: array
-          items:
-            type: string
-        numberOfPerformersOfSameMediums:
-          type: array
-          items:
-            type: string
-        alternativeMediumOfPerformances:
-          type: array
-          items:
-            type: string
-        numberOfIndividualsPerforming:
-          type: string
-        numberOfPerformers:
-          type: string
-        numberOfEnsembles:
-          type: string
-    RelatedItem:
-      type: object
-      properties:
-        typeOfRelationship:
-          type: string
-        relatedItemTitle:
-          type: string
-        relationshipInfo:
-          type: array
-          items:
-            type: string
-        relatedParts:
-          type: array
-          items:
-            type: string
-        mainEntryHeading:
-          type: string
-        edition:
-          type: string
-        qualifyingInfo:
-          type: string
-        publicationInfo:
-          type: string
-        physicalDescription:
-          type: string
-        seriesData:
-          type: array
-          items:
-            type: string
-        materialSpecificDetail:
-          type: string
-        relatedItemNotes:
-          type: array
-          items:
-            type: string
-        otherItemIdentifiers:
-          type: array
-          items:
-            type: string
-        reportNumbers:
-          type: array
-          items:
-            type: string
-        uniformTitle:
-          type: string
-        standardTechReportNumber:
-          type: string
-        recordControlNumbers:
-          type: array
-          items:
-            type: string
-        issns:
-          type: array
-          items:
-            type: string
-        coden:
-          type: string
-        isbns:
-          type: array
-          items:
-            type: string
-    IssuedWithEntry:
-      type: object
-      properties:
-        displayConstant:
-          type: string
-        titles:
-          type: array
-          items:
-            type: string
-        recordControlOclcNumbers:
-          type: array
-          items:
-            type: string
-        issns:
-          type: array
-          items:
-            type: string
-        isbns:
-          type: array
-          items:
-            type: string
-        mainEntryHeadings:
-          type: array
-          items:
-            type: string
-        relatedParts:
-          type: array
-          items:
-            type: string
-        uniformTitle:
-          type: string
-    InternationalText:
-      type: object
-      properties:
-        text:
-          type: string
-        romanizedText:
-          type: string
-        languageCode:
-          type: string
-        textDirection:
-          type: string
-          enum:
-            - RTL
-            - LTR
-    ArticleWorkset:
-      type: object
-      properties:
-        databaseCollection:
-          type: string
-        oclcNumber:
-          type: string
     BibRecordBrief:
       type: object
       properties:
@@ -2878,20 +2468,6 @@ components:
         count:
           type: integer
           format: int32
-    BibResultSet:
-      type: object
-      properties:
-        numberOfRecords:
-          type: integer
-          format: int32
-        bibRecords:
-          type: array
-          items:
-            $ref: '#/components/schemas/BibRecord'
-        searchFacets:
-          type: array
-          items:
-            $ref: '#/components/schemas/SearchFacet'
     BibBriefResultSet:
       type: object
       properties:
@@ -2917,5 +2493,5 @@ components:
           items:
             $ref: '#/components/schemas/HoldingDetail'
 externalDocs:
-  description: Find out more about OCLC
-  url: 'https://www.oclc.org'
+  description: Find out more about WorldCatMetadata API
+  url: 'https://www.oclc.org/developer/develop/web-services/worldcat-metadata-api.en.html'
