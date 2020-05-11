@@ -40,15 +40,7 @@ paths:
                 type: object            
               examples:
                 success: 
-                  $ref: '#/components/examples/success'
-                success-serial: 
-                  $ref: '#/components/examples/success-serial'                  
-                success-group-response: 
-                  $ref: '#/components/examples/success-group-response'                                      
-                success-no-holdings: 
-                  $ref: '#/components/examples/success-no-holdings'
-                failure-not-part-of-holding-group:
-                  $ref: '#/components/examples/holding-group-error'
+                  $ref: '#/components/examples/read_bib'
         '400':
           description: Invalid query. The request was unacceptable, often due to missing a required parameter.
           content:
@@ -112,15 +104,7 @@ paths:
                 type: object            
               examples:
                 success: 
-                  $ref: '#/components/examples/success'
-                success-serial: 
-                  $ref: '#/components/examples/success-serial'                  
-                success-group-response: 
-                  $ref: '#/components/examples/success-group-response'                                      
-                success-no-holdings: 
-                  $ref: '#/components/examples/success-no-holdings'
-                failure-not-part-of-holding-group:
-                  $ref: '#/components/examples/holding-group-error'
+                  $ref: '#/components/examples/read_bib'
         '400':
           description: Invalid query. The request was unacceptable, often due to missing a required parameter.
           content:
@@ -178,7 +162,7 @@ paths:
                 type: object            
               examples:
                 success: 
-                  $ref: '#/components/examples/success'
+                  $ref: '#/components/examples/read_bib'
         '400':
           description: Invalid query. The request was unacceptable, often due to missing a required parameter.
           content:
@@ -234,7 +218,7 @@ paths:
                 type: object            
               examples:
                 success: 
-                  $ref: '#/components/examples/success'
+                  $ref: '#/components/examples/getCurrentOCLCNumber'
         '400':
           description: Invalid query. The request was unacceptable, often due to missing a required parameter.
           content:
@@ -284,7 +268,7 @@ paths:
                 type: object            
               examples:
                 success: 
-                  $ref: '#/components/examples/success'
+                  $ref: '#/components/examples/read_holdinglibrarycodes'
         '400':
           description: Invalid query. The request was unacceptable, often due to missing a required parameter.
           content:
@@ -334,7 +318,7 @@ paths:
                 type: object            
               examples:
                 success: 
-                  $ref: '#/components/examples/success'
+                  $ref: '#/components/examples/validateFull'
         '400':
           description: Invalid query. The request was unacceptable, often due to missing a required parameter.
           content:
@@ -384,7 +368,7 @@ paths:
                 type: object            
               examples:
                 success: 
-                  $ref: '#/components/examples/success'
+                  $ref: '#/components/examples/validateAdd'
         '400':
           description: Invalid query. The request was unacceptable, often due to missing a required parameter.
           content:
@@ -434,7 +418,7 @@ paths:
                 type: object            
               examples:
                 success: 
-                  $ref: '#/components/examples/success'
+                  $ref: '#/components/examples/validateReplace'
         '400':
           description: Invalid query. The request was unacceptable, often due to missing a required parameter.
           content:
@@ -520,7 +504,7 @@ paths:
                 type: object            
               examples:
                 success: 
-                  $ref: '#/components/examples/success'
+                  $ref: '#/components/examples/setHolding'
         '400':
           description: Invalid query. The request was unacceptable, often due to missing a required parameter.
           content:
@@ -685,7 +669,7 @@ paths:
                 type: object            
               examples:
                 success: 
-                  $ref: '#/components/examples/success'
+                  $ref: '#/components/examples/checkHoldings'
         '400':
           description: Invalid query. The request was unacceptable, often due to missing a required parameter.
           content:
@@ -758,7 +742,7 @@ paths:
                 type: object            
               examples:
                 success: 
-                  $ref: '#/components/examples/success'
+                  $ref: '#/components/examples/setHoldingsByOCLCNumber'
         '400':
           description: Invalid query. The request was unacceptable, often due to missing a required parameter.
           content:
@@ -903,7 +887,7 @@ paths:
                 type: object            
               examples:
                 success: 
-                  $ref: '#/components/examples/success'
+                  $ref: '#/components/examples/setHoldingsByInstitution'
         '400':
           description: Invalid query. The request was unacceptable, often due to missing a required parameter.
           content:
@@ -1047,7 +1031,7 @@ paths:
                 type: object            
               examples:
                 success: 
-                  $ref: '#/components/examples/success'
+                  $ref: '#/components/examples/read_lbd'
         '400':
           description: Invalid query. The request was unacceptable, often due to missing a required parameter.
           content:
@@ -1119,7 +1103,7 @@ paths:
                 type: object            
               examples:
                 success: 
-                  $ref: '#/components/examples/success'
+                  $ref: '#/components/examples/read_lbd'
         '400':
           description: Invalid query. The request was unacceptable, often due to missing a required parameter.
           content:
@@ -1190,7 +1174,7 @@ paths:
                 type: object            
               examples:
                 success: 
-                  $ref: '#/components/examples/success'
+                  $ref: '#/components/examples/read_lbd'
         '400':
           description: Invalid query. The request was unacceptable, often due to missing a required parameter.
           content:
@@ -1319,7 +1303,7 @@ paths:
                 type: object            
               examples:
                 success: 
-                  $ref: '#/components/examples/success'
+                  $ref: '#/components/examples/search_lbd'
         '400':
           description: Invalid query. The request was unacceptable, often due to missing a required parameter.
           content:
@@ -1374,6 +1358,9 @@ components:
     read_holdinglibrarycodes:
       summary: Read a library holding codes
       value: ""
+    getCurrentOCLCNumber:
+      summary: Get the current OCLC Number(s)
+      value: ""  
     validateAdd:
       summary: Validate Add record response
       value: ""
