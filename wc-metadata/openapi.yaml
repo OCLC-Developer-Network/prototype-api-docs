@@ -42,27 +42,21 @@ paths:
         '200':
           description: Successful create of bibliographic record
           content:
-            'application/atom+xml;content="application/vnd.oclc.marc21+xml"':
-              schema:
-                type: object            
+            'application/atom+xml;content="application/vnd.oclc.marc21+xml"':           
               examples:
                 success: 
                   $ref: '#/components/examples/read_bib'
         '400':
           description: Invalid request. 
           content:
-            '*/*':
-              schema:
-                type: object            
+            '*/*':           
               examples:
                 missing-query-parameter:
                   $ref: '#/components/examples/institution-authorization-failure'
         '403':
           description: Unauthorized
           content:
-            'application/atom+json':
-              schema:
-                type: object            
+            'application/atom+json':           
               examples:
                 unauthorized-error:
                   $ref: '#/components/examples/forbidden'              
@@ -70,9 +64,7 @@ paths:
         '405':
           description: 'Method not supported, see response Allow header'
           content:
-            '*/*':
-              schema:
-                type: object            
+            '*/*':           
               example:
                 $ref: '#/components/examples/method-not-allowed-error'               
         '500':
@@ -113,27 +105,21 @@ paths:
         '200':
           description: Successful update bibliographic record
           content:
-            'application/atom+xml;content="application/vnd.oclc.marc21+xml"':
-              schema:
-                type: object            
+            'application/atom+xml;content="application/vnd.oclc.marc21+xml"':            
               examples:
                 success: 
                   $ref: '#/components/examples/read_bib'
         '400':
           description: Invalid query. The request was unacceptable, often due to missing a required parameter.
           content:
-            '*/*':
-              schema:
-                type: object            
+            '*/*':            
               examples:
                 missing-query-parameter:
                   $ref: '#/components/examples/missing-query-parameter'
         '403':
           description: Unauthorized
           content:
-            '*/*':
-              schema:
-                type: object            
+            '*/*':            
               examples:
                 unauthorized-error:
                   $ref: '#/components/examples/forbidden'              
@@ -141,17 +127,11 @@ paths:
         '405':
           description: 'Method not supported, see response Allow header'
           content:
-            '*/*':
-              schema:
-                type: object            
+            '*/*':            
               example:
                 $ref: '#/components/examples/method-not-allowed-error'               
         '500':
-          description: 'Something went wrong (hopfully rare) - please try again'
-          content:
-            '*/*':
-              schema:
-                type: object                
+          description: 'Something went wrong (hopfully rare) - please try again'                
   /bib/data/{oclcNumber}:
     get:
       tags:
@@ -171,27 +151,21 @@ paths:
         '200':
           description: Successful read of bibliographic data
           content:
-            'application/atom+xml;content="application/vnd.oclc.marc21+xml"':
-              schema:
-                type: object            
+            'application/atom+xml;content="application/vnd.oclc.marc21+xml"':            
               examples:
                 success: 
                   $ref: '#/components/examples/read_bib'
         '400':
           description: Invalid query. The request was unacceptable, often due to missing a required parameter.
           content:
-            '*/*':
-              schema:
-                type: object            
+            '*/*':            
               examples:
                 missing-query-parameter:
                   $ref: '#/components/examples/missing-query-parameter'
         '403':
           description: Unauthorized
           content:
-            '*/*':
-              schema:
-                type: object            
+            '*/*':           
               examples:
                 unauthorized-error:
                   $ref: '#/components/examples/forbidden'              
@@ -199,17 +173,11 @@ paths:
         '405':
           description: 'Method not supported, see response Allow header'
           content:
-            '*/*':
-              schema:
-                type: object            
+            '*/*':          
               example:
                 $ref: '#/components/examples/method-not-allowed-error'               
         '500':
-          description: 'Something went wrong (hopfully rare) - please try again'
-          content:
-            '*/*':
-              schema:
-                type: object  
+          description: 'Something went wrong (hopfully rare) - please try again'  
   /bib/checkcontrolnumbers:
     get:
       tags:
@@ -227,27 +195,21 @@ paths:
         '200':
           description: Successful request for current OCLC number
           content:
-            'application/atom+json':
-              schema:
-                type: object            
+            'application/atom+json':           
               examples:
                 success: 
                   $ref: '#/components/examples/getCurrentOCLCNumber'
         '400':
           description: Invalid query. The request was unacceptable, often due to missing a required parameter.
           content:
-            'application/atom+json':
-              schema:
-                type: object            
+            'application/atom+json':            
               examples:
                 missing-query-parameter:
                   $ref: '#/components/examples/missing-query-parameter'
         '403':
           description: Unauthorized
           content:
-            'application/atom+json':
-              schema:
-                type: object            
+            'application/atom+json':            
               examples:
                 unauthorized-error:
                   $ref: '#/components/examples/forbidden'              
@@ -255,17 +217,11 @@ paths:
         '405':
           description: 'Method not supported, see response Allow header'
           content:
-            'application/atom+json':
-              schema:
-                type: object            
+            'application/atom+json':            
               example:
                 $ref: '#/components/examples/method-not-allowed-error'               
         '500':
           description: 'Something went wrong (hopfully rare) - please try again'
-          content:
-            'application/atom+json':
-              schema:
-                type: object
   /bib/holdinglibraries:
     get:
       tags:
@@ -277,27 +233,21 @@ paths:
         '200':
           description: Successful read of holding libraries
           content:
-            'application/atom+json':
-              schema:
-                type: object            
+            'application/atom+json':           
               examples:
                 success: 
                   $ref: '#/components/examples/read_holdinglibrarycodes'
         '400':
           description: Invalid query. The request was unacceptable, often due to missing a required parameter.
           content:
-            'application/atom+json':
-              schema:
-                type: object            
+            'application/atom+json':           
               examples:
                 missing-query-parameter:
                   $ref: '#/components/examples/missing-query-parameter'
         '403':
           description: Unauthorized
           content:
-            'application/atom+json':
-              schema:
-                type: object            
+            'application/atom+json':           
               examples:
                 unauthorized-error:
                   $ref: '#/components/examples/forbidden'              
@@ -305,17 +255,11 @@ paths:
         '405':
           description: 'Method not supported, see response Allow header'
           content:
-            'application/atom+json':
-              schema:
-                type: object            
+            'application/atom+json':           
               example:
                 $ref: '#/components/examples/method-not-allowed-error'               
         '500':
-          description: 'Something went wrong (hopfully rare) - please try again'
-          content:
-            'application/atom+json':
-              schema:
-                type: object                                                                                              
+          description: 'Something went wrong (hopfully rare) - please try again'                                                                                             
   /bib/validateFull:
     post:
       tags:
@@ -334,27 +278,21 @@ paths:
         '200':
           description: Successful validate
           content:
-            'application/atom+xml;content="application/vnd.oclc.marc21+xml"':
-              schema:
-                type: object            
+            'application/atom+xml;content="application/vnd.oclc.marc21+xml"':            
               examples:
                 success: 
                   $ref: '#/components/examples/validateFull'
         '400':
           description: Invalid query. The request was unacceptable, often due to missing a required parameter.
           content:
-            '*/*':
-              schema:
-                type: object            
+            'application/atom+xml;content="application/vnd.oclc.marc21+xml"':         
               examples:
                 missing-query-parameter:
                   $ref: '#/components/examples/missing-query-parameter'
         '403':
           description: Unauthorized
           content:
-            '*/*':
-              schema:
-                type: object            
+            'application/atom+xml;content="application/vnd.oclc.marc21+xml"':           
               examples:
                 unauthorized-error:
                   $ref: '#/components/examples/forbidden'              
@@ -362,17 +300,11 @@ paths:
         '405':
           description: 'Method not supported, see response Allow header'
           content:
-            '*/*':
-              schema:
-                type: object            
+            'application/atom+xml;content="application/vnd.oclc.marc21+xml"':          
               example:
                 $ref: '#/components/examples/method-not-allowed-error'               
         '500':
           description: 'Something went wrong (hopfully rare) - please try again'
-          content:
-            '*/*':
-              schema:
-                type: object
   /bib/validateAdd:
     post:
       tags:
@@ -391,27 +323,21 @@ paths:
         '200':
           description: Successful validate
           content:
-            'application/atom+xml;content="application/vnd.oclc.marc21+xml"':
-              schema:
-                type: object            
+            'application/atom+xml;content="application/vnd.oclc.marc21+xml"':            
               examples:
                 success: 
                   $ref: '#/components/examples/validateAdd'
         '400':
           description: Invalid query. The request was unacceptable, often due to missing a required parameter.
           content:
-            '*/*':
-              schema:
-                type: object            
+            'application/atom+xml;content="application/vnd.oclc.marc21+xml"':          
               examples:
                 missing-query-parameter:
                   $ref: '#/components/examples/missing-query-parameter'
         '403':
           description: Unauthorized
           content:
-            '*/*':
-              schema:
-                type: object            
+            'application/atom+xml;content="application/vnd.oclc.marc21+xml"':          
               examples:
                 unauthorized-error:
                   $ref: '#/components/examples/forbidden'              
@@ -419,17 +345,11 @@ paths:
         '405':
           description: 'Method not supported, see response Allow header'
           content:
-            '*/*':
-              schema:
-                type: object            
+            'application/atom+xml;content="application/vnd.oclc.marc21+xml"':           
               example:
                 $ref: '#/components/examples/method-not-allowed-error'               
         '500':
           description: 'Something went wrong (hopfully rare) - please try again'
-          content:
-            '*/*':
-              schema:
-                type: object
   /bib/validateReplace:
     post:
       tags:
@@ -448,27 +368,21 @@ paths:
         '200':
           description: Successful validate
           content:
-            'application/atom+xml;content="application/vnd.oclc.marc21+xml"':
-              schema:
-                type: object            
+            'application/atom+xml;content="application/vnd.oclc.marc21+xml"':            
               examples:
                 success: 
                   $ref: '#/components/examples/validateReplace'
         '400':
           description: Invalid query. The request was unacceptable, often due to missing a required parameter.
           content:
-            '*/*':
-              schema:
-                type: object            
+            'application/atom+xml;content="application/vnd.oclc.marc21+xml"':            
               examples:
                 missing-query-parameter:
                   $ref: '#/components/examples/missing-query-parameter'
         '403':
           description: Unauthorized
           content:
-            '*/*':
-              schema:
-                type: object            
+            'application/atom+xml;content="application/vnd.oclc.marc21+xml"':           
               examples:
                 unauthorized-error:
                   $ref: '#/components/examples/forbidden'              
@@ -476,17 +390,11 @@ paths:
         '405':
           description: 'Method not supported, see response Allow header'
           content:
-            '*/*':
-              schema:
-                type: object            
+            'application/atom+xml;content="application/vnd.oclc.marc21+xml"':         
               example:
                 $ref: '#/components/examples/method-not-allowed-error'               
         '500':
-          description: 'Something went wrong (hopfully rare) - please try again'
-          content:
-            '*/*':
-              schema:
-                type: object                                   
+          description: 'Something went wrong (hopfully rare) - please try again'                                   
   /ih/data:
     post:
       tags:
@@ -534,27 +442,21 @@ paths:
         '200':
           description: Successful create institution holding
           content:
-            'application/atom+json':
-              schema:
-                type: object            
+            'application/atom+json':           
               examples:
                 success: 
                   $ref: '#/components/examples/setHolding'
         '400':
           description: Invalid query. The request was unacceptable, often due to missing a required parameter.
           content:
-            'application/atom+json':
-              schema:
-                type: object            
+            'application/atom+json':          
               examples:
                 missing-query-parameter:
                   $ref: '#/components/examples/missing-query-parameter'
         '403':
           description: Unauthorized
           content:
-            'application/atom+json':
-              schema:
-                type: object            
+            'application/atom+json':          
               examples:
                 unauthorized-error:
                   $ref: '#/components/examples/forbidden'              
@@ -562,17 +464,11 @@ paths:
         '405':
           description: 'Method not supported, see response Allow header'
           content:
-            'application/atom+json':
-              schema:
-                type: object            
+            'application/atom+json':           
               example:
                 $ref: '#/components/examples/method-not-allowed-error'               
         '500':
           description: 'Something went wrong (hopfully rare) - please try again'
-          content:
-            'application/atom+json':
-              schema:
-                type: object
     delete:
       tags:
         - Institution Holdings
@@ -632,18 +528,14 @@ paths:
         '400':
           description: Invalid query. The request was unacceptable, often due to missing a required parameter.
           content:
-            'application/atom+json':
-              schema:
-                type: object            
+            'application/atom+json':            
               examples:
                 missing-query-parameter:
                   $ref: '#/components/examples/missing-query-parameter'
         '403':
           description: Unauthorized
           content:
-            'application/atom+json':
-              schema:
-                type: object            
+            'application/atom+json':      
               examples:
                 unauthorized-error:
                   $ref: '#/components/examples/forbidden'              
@@ -651,17 +543,11 @@ paths:
         '405':
           description: 'Method not supported, see response Allow header'
           content:
-            'application/atom+json':
-              schema:
-                type: object            
+            'application/atom+json':          
               example:
                 $ref: '#/components/examples/method-not-allowed-error'               
         '500':
-          description: 'Something went wrong (hopfully rare) - please try again'
-          content:
-            'application/atom+json':
-              schema:
-                type: object                        
+          description: 'Something went wrong (hopfully rare) - please try again'                      
   /ih/checkholdings:
     post:
       tags:
@@ -696,27 +582,21 @@ paths:
         '200':
           description: Successful check status of institution holding
           content:
-            'application/atom+json':
-              schema:
-                type: object            
+            'application/atom+json':            
               examples:
                 success: 
                   $ref: '#/components/examples/checkHoldings'
         '400':
           description: Invalid query. The request was unacceptable, often due to missing a required parameter.
           content:
-            'application/atom+json':
-              schema:
-                type: object            
+            'application/atom+json':           
               examples:
                 missing-query-parameter:
                   $ref: '#/components/examples/missing-query-parameter'
         '403':
           description: Unauthorized
           content:
-            'application/atom+json':
-              schema:
-                type: object            
+            'application/atom+json':           
               examples:
                 unauthorized-error:
                   $ref: '#/components/examples/forbidden'              
@@ -724,9 +604,7 @@ paths:
         '405':
           description: 'Method not supported, see response Allow header'
           content:
-            'application/atom+json':
-              schema:
-                type: object            
+            'application/atom+json':            
               example:
                 $ref: '#/components/examples/method-not-allowed-error'               
         '500':
@@ -769,27 +647,21 @@ paths:
         '200':
           description: Successful batch set institution holdings on OCLC Number
           content:
-            'application/atom+json':
-              schema:
-                type: object            
+            'application/atom+json':           
               examples:
                 success: 
                   $ref: '#/components/examples/setHoldingsByOCLCNumber'
         '400':
           description: Invalid query. The request was unacceptable, often due to missing a required parameter.
           content:
-            'application/atom+json':
-              schema:
-                type: object            
+            'application/atom+json':            
               examples:
                 missing-query-parameter:
                   $ref: '#/components/examples/missing-query-parameter'
         '403':
           description: Unauthorized
           content:
-            'application/atom+json':
-              schema:
-                type: object            
+            'application/atom+json':           
               examples:
                 unauthorized-error:
                   $ref: '#/components/examples/forbidden'              
@@ -797,17 +669,11 @@ paths:
         '405':
           description: 'Method not supported, see response Allow header'
           content:
-            'application/atom+json':
-              schema:
-                type: object            
+            'application/atom+json':           
               example:
                 $ref: '#/components/examples/method-not-allowed-error'               
         '500':
           description: 'Something went wrong (hopfully rare) - please try again'
-          content:
-            'application/atom+json':
-              schema:
-                type: object
     delete:
       tags:
         - Institution Holdings
@@ -854,18 +720,14 @@ paths:
         '400':
           description: Invalid query. The request was unacceptable, often due to missing a required parameter.
           content:
-            'application/atom+json':
-              schema:
-                type: object            
+            'application/atom+json':        
               examples:
                 missing-query-parameter:
                   $ref: '#/components/examples/missing-query-parameter'
         '403':
           description: Unauthorized
           content:
-            'application/atom+json':
-              schema:
-                type: object            
+            'application/atom+json':           
               examples:
                 unauthorized-error:
                   $ref: '#/components/examples/forbidden'              
@@ -873,17 +735,11 @@ paths:
         '405':
           description: 'Method not supported, see response Allow header'
           content:
-            'application/atom+json':
-              schema:
-                type: object            
+            'application/atom+json':          
               example:
                 $ref: '#/components/examples/method-not-allowed-error'               
         '500':
           description: 'Something went wrong (hopfully rare) - please try again'
-          content:
-            'application/atom+json':
-              schema:
-                type: object
   /ih/institutionlist:
     post:
       tags:
@@ -911,27 +767,21 @@ paths:
         '200':
           description: Successfully set holdings for an institution on multiple OCLC number
           content:
-            'application/atom+json':
-              schema:
-                type: object            
+            'application/atom+json':           
               examples:
                 success: 
                   $ref: '#/components/examples/setHoldingsByInstitution'
         '400':
           description: Invalid query. The request was unacceptable, often due to missing a required parameter.
           content:
-            'application/atom+json':
-              schema:
-                type: object            
+            'application/atom+json':           
               examples:
                 missing-query-parameter:
                   $ref: '#/components/examples/missing-query-parameter'
         '403':
           description: Unauthorized
           content:
-            'application/atom+json':
-              schema:
-                type: object            
+            'application/atom+json':           
               examples:
                 unauthorized-error:
                   $ref: '#/components/examples/forbidden'              
@@ -939,17 +789,11 @@ paths:
         '405':
           description: 'Method not supported, see response Allow header'
           content:
-            'application/atom+json':
-              schema:
-                type: object            
+            'application/atom+json':          
               example:
                 $ref: '#/components/examples/method-not-allowed-error'               
         '500':
           description: 'Something went wrong (hopfully rare) - please try again'
-          content:
-            'application/atom+json':
-              schema:
-                type: object
     delete:
       tags:
         - Institution Holdings
@@ -989,18 +833,14 @@ paths:
         '400':
           description: Invalid query. The request was unacceptable, often due to missing a required parameter.
           content:
-            'application/atom+json':
-              schema:
-                type: object            
+            'application/atom+json':            
               examples:
                 missing-query-parameter:
                   $ref: '#/components/examples/missing-query-parameter'
         '403':
           description: Unauthorized
           content:
-            'application/atom+json':
-              schema:
-                type: object            
+            'application/atom+json':            
               examples:
                 unauthorized-error:
                   $ref: '#/components/examples/forbidden'              
@@ -1008,17 +848,11 @@ paths:
         '405':
           description: 'Method not supported, see response Allow header'
           content:
-            'application/atom+json':
-              schema:
-                type: object            
+            'application/atom+json':            
               example:
                 $ref: '#/components/examples/method-not-allowed-error'               
         '500':
-          description: 'Something went wrong (hopfully rare) - please try again'
-          content:
-            'application/atom+json':
-              schema:
-                type: object                                                 
+          description: 'Something went wrong (hopfully rare) - please try again'                                                 
   /lbd/data:
     description: >
       <h3>Key Fields in an LBD</h3>
@@ -1085,27 +919,21 @@ paths:
         '200':
           description: Successfully create local bibliographic record
           content:
-            'application/atom+xml;content="application/vnd.oclc.marc21+xml"':
-              schema:
-                type: object            
+            'application/atom+xml;content="application/vnd.oclc.marc21+xml"':          
               examples:
                 success: 
                   $ref: '#/components/examples/read_lbd'
         '400':
           description: Invalid query. The request was unacceptable, often due to missing a required parameter.
           content:
-            '*/*':
-              schema:
-                type: object            
+            'application/atom+xml;content="application/vnd.oclc.marc21+xml"':           
               examples:
                 missing-query-parameter:
                   $ref: '#/components/examples/missing-query-parameter'
         '403':
           description: Unauthorized
           content:
-            '*/*':
-              schema:
-                type: object            
+            'application/atom+xml;content="application/vnd.oclc.marc21+xml"':            
               examples:
                 unauthorized-error:
                   $ref: '#/components/examples/forbidden'              
@@ -1113,17 +941,11 @@ paths:
         '405':
           description: 'Method not supported, see response Allow header'
           content:
-            '*/*':
-              schema:
-                type: object            
+            'application/atom+xml;content="application/vnd.oclc.marc21+xml"':          
               example:
                 $ref: '#/components/examples/method-not-allowed-error'               
         '500':
           description: 'Something went wrong (hopfully rare) - please try again'
-          content:
-            '*/*':
-              schema:
-                type: object
   /lbd/data/{accessionNumber}:
     get:
       tags:
@@ -1164,27 +986,21 @@ paths:
         '200':
           description: Successfully read local bibliographic data
           content:
-            'application/atom+xml;content="application/vnd.oclc.marc21+xml"':
-              schema:
-                type: object            
+            'application/atom+xml;content="application/vnd.oclc.marc21+xml"':         
               examples:
                 success: 
                   $ref: '#/components/examples/read_lbd'
         '400':
           description: Invalid query. The request was unacceptable, often due to missing a required parameter.
           content:
-            '*/*':
-              schema:
-                type: object            
+            'application/atom+xml;content="application/vnd.oclc.marc21+xml"':          
               examples:
                 missing-query-parameter:
                   $ref: '#/components/examples/missing-query-parameter'
         '403':
           description: Unauthorized
           content:
-            '*/*':
-              schema:
-                type: object            
+            'application/atom+xml;content="application/vnd.oclc.marc21+xml"':
               examples:
                 unauthorized-error:
                   $ref: '#/components/examples/forbidden'              
@@ -1192,17 +1008,11 @@ paths:
         '405':
           description: 'Method not supported, see response Allow header'
           content:
-            '*/*':
-              schema:
-                type: object            
+            'application/atom+xml;content="application/vnd.oclc.marc21+xml"':
               example:
                 $ref: '#/components/examples/method-not-allowed-error'               
         '500':
-          description: 'Something went wrong (hopfully rare) - please try again'
-          content:
-            '*/*':
-              schema:
-                type: object  
+          description: 'Something went wrong (hopfully rare) - please try again' 
     put:
       tags:
         - Local Bibliographic Data
@@ -1242,27 +1052,21 @@ paths:
         '200':
           description: Successfully update local bibliographic data
           content:
-            'application/atom+xml;content="application/vnd.oclc.marc21+xml"':
-              schema:
-                type: object            
+            'application/atom+xml;content="application/vnd.oclc.marc21+xml"':           
               examples:
                 success: 
                   $ref: '#/components/examples/read_lbd'
         '400':
           description: Invalid query. The request was unacceptable, often due to missing a required parameter.
           content:
-            '*/*':
-              schema:
-                type: object            
+            'application/atom+xml;content="application/vnd.oclc.marc21+xml"':           
               examples:
                 missing-query-parameter:
                   $ref: '#/components/examples/missing-query-parameter'
         '403':
           description: Unauthorized
           content:
-            '*/*':
-              schema:
-                type: object            
+            'application/atom+xml;content="application/vnd.oclc.marc21+xml"':          
               examples:
                 unauthorized-error:
                   $ref: '#/components/examples/forbidden'              
@@ -1270,17 +1074,11 @@ paths:
         '405':
           description: 'Method not supported, see response Allow header'
           content:
-            '*/*':
-              schema:
-                type: object            
+            'application/atom+xml;content="application/vnd.oclc.marc21+xml"':     
               example:
                 $ref: '#/components/examples/method-not-allowed-error'               
         '500':
           description: 'Something went wrong (hopfully rare) - please try again'
-          content:
-            '*/*':
-              schema:
-                type: object   
     delete:
       tags:
         - Local Bibliographic Data
@@ -1326,18 +1124,14 @@ paths:
         '400':
           description: Invalid query. The request was unacceptable, often due to missing a required parameter.
           content:
-            '*/*':
-              schema:
-                type: object            
+            'application/atom+xml;content="application/vnd.oclc.marc21+xml"':            
               examples:
                 missing-query-parameter:
                   $ref: '#/components/examples/missing-query-parameter'
         '403':
           description: Unauthorized
           content:
-            '*/*':
-              schema:
-                type: object            
+            'application/atom+xml;content="application/vnd.oclc.marc21+xml"':           
               examples:
                 unauthorized-error:
                   $ref: '#/components/examples/forbidden'              
@@ -1345,17 +1139,11 @@ paths:
         '405':
           description: 'Method not supported, see response Allow header'
           content:
-            '*/*':
-              schema:
-                type: object            
+            'application/atom+xml;content="application/vnd.oclc.marc21+xml"':     
               example:
                 $ref: '#/components/examples/method-not-allowed-error'               
         '500':
-          description: 'Something went wrong (hopfully rare) - please try again'
-          content:
-            '*/*':
-              schema:
-                type: object  
+          description: 'Something went wrong (hopfully rare) - please try again' 
   /lbd/search:
     get:
       tags:
@@ -1375,27 +1163,21 @@ paths:
         '200':
           description: Successfully search for local bibliographic data
           content:
-            'application/atom+xml;content="application/vnd.oclc.marc21+xml"':
-              schema:
-                type: object            
+            'application/atom+xml;content="application/vnd.oclc.marc21+xml"':           
               examples:
                 success: 
                   $ref: '#/components/examples/search_lbd'
         '400':
           description: Invalid query. The request was unacceptable, often due to missing a required parameter.
           content:
-            '*/*':
-              schema:
-                type: object            
+            'application/atom+xml;content="application/vnd.oclc.marc21+xml"':           
               examples:
                 missing-query-parameter:
                   $ref: '#/components/examples/missing-query-parameter'
         '403':
           description: Unauthorized
           content:
-            '*/*':
-              schema:
-                type: object            
+            'application/atom+xml;content="application/vnd.oclc.marc21+xml"':            
               examples:
                 unauthorized-error:
                   $ref: '#/components/examples/forbidden'              
@@ -1403,17 +1185,11 @@ paths:
         '405':
           description: 'Method not supported, see response Allow header'
           content:
-            '*/*':
-              schema:
-                type: object            
+            'application/atom+xml;content="application/vnd.oclc.marc21+xml"':            
               example:
                 $ref: '#/components/examples/method-not-allowed-error'               
         '500':
-          description: 'Something went wrong (hopfully rare) - please try again'
-          content:
-            '*/*':
-              schema:
-                type: object                                                           
+          description: 'Something went wrong (hopfully rare) - please try again'          
 components:
   securitySchemes:
     worldcat_metadata_auth:
