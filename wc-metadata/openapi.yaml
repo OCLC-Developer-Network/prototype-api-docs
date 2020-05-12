@@ -2081,7 +2081,26 @@ components:
       value: ""
     create_lbd:
       summary: Create a local bibliographic record
-      value: ""                                         
+      value: >
+        <?xml version="1.0" encoding="UTF-8"?>
+        <record xmlns="http://www.loc.gov/MARC21/slim">
+            <leader>00000n   a2200000   4500</leader>
+            <controlfield tag="004">99999999999999999999999</controlfield>
+            <datafield tag="240" ind1="1" ind2="4">
+                <subfield code="a">UniformTitleF</subfield>
+                <subfield code="l">LanguageOfWork</subfield>
+                <subfield code="g">OCL</subfield>
+            </datafield>
+            <datafield tag="500" ind1=" " ind2=" ">
+                <subfield code="a">FOR OCLC DEVELOPER NETWORK DOCUMENTATION</subfield>
+            </datafield>
+            <datafield tag="935" ind1=" " ind2=" ">
+                <subfield code="a">MyLocalSystemNumber</subfield>
+            </datafield>
+            <datafield tag="940" ind1=" " ind2=" ">
+                <subfield code="a">OCWMS</subfield>
+            </datafield>
+        </record>                                               
     read_lbd:
       summary: Read a local bibliographic record
       value: >
@@ -2143,7 +2162,27 @@ components:
         </feed>        
     update_lbd:
       summary: Update a local bibliographic record
-      value: ""    
+      value: >
+        <?xml version="1.0" encoding="UTF-8"?>
+        <record xmlns="http://www.loc.gov/MARC21/slim">
+            <leader>00000n   a2200000   4500</leader>
+            <controlfield tag="001">11111111111111111111111</controlfield>
+            <controlfield tag="004">99999999999999999999999</controlfield>
+            <datafield tag="240" ind1="1" ind2="4">
+                <subfield code="a">UniformTitleF</subfield>
+                <subfield code="l">LanguageOfWork</subfield>
+                <subfield code="g">OCL</subfield>
+            </datafield>
+            <datafield tag="500" ind1=" " ind2=" ">
+                <subfield code="a">FOR OCLC DEVELOPER NETWORK DOCUMENTATION</subfield>
+            </datafield>
+            <datafield tag="935" ind1=" " ind2=" ">
+                <subfield code="a">MyLocalSystemNumber</subfield>
+            </datafield>
+            <datafield tag="940" ind1=" " ind2=" ">
+                <subfield code="a">OCWMS</subfield>
+            </datafield>
+        </record>          
     setHolding:
       summary: Set holdings response
       value: >
