@@ -34,7 +34,7 @@ paths:
       requestBody:
         description: Create bibliographic record to the system
         content:
-          'application/marc+xml': 
+          'application/vnd.oclc.marc21+xml': 
             examples:
               create-bib:
                 $ref: '#/components/examples/create_bib'                                                        
@@ -42,7 +42,7 @@ paths:
         '200':
           description: Successful create of bibliographic record
           content:
-            '*/*':
+            'application/atom+xml;content="application/vnd.oclc.marc21+xml"':
               schema:
                 type: object            
               examples:
@@ -60,7 +60,7 @@ paths:
         '403':
           description: Unauthorized
           content:
-            '*/*':
+            'application/atom+json':
               schema:
                 type: object            
               examples:
@@ -105,7 +105,7 @@ paths:
       requestBody:
         description: Update bibliographic record to the system
         content:
-          'application/marc+xml': 
+          'application/vnd.oclc.marc21+xml': 
             examples:
               update-bib:
                 $ref: '#/components/examples/update_bib'                            
@@ -113,7 +113,7 @@ paths:
         '200':
           description: Successful update bibliographic record
           content:
-            '*/*':
+            'application/atom+xml;content="application/vnd.oclc.marc21+xml"':
               schema:
                 type: object            
               examples:
@@ -171,7 +171,7 @@ paths:
         '200':
           description: Successful read of bibliographic data
           content:
-            '*/*':
+            'application/atom+xml;content="application/vnd.oclc.marc21+xml"':
               schema:
                 type: object            
               examples:
@@ -227,7 +227,7 @@ paths:
         '200':
           description: Successful request for current OCLC number
           content:
-            '*/*':
+            'application/atom+json':
               schema:
                 type: object            
               examples:
@@ -277,7 +277,7 @@ paths:
         '200':
           description: Successful read of holding libraries
           content:
-            '*/*':
+            'application/atom+json':
               schema:
                 type: object            
               examples:
@@ -326,7 +326,7 @@ paths:
       requestBody:
         description: Validate full bibliographic record to be updated in the system
         content:
-          'application/marc+xml': 
+          'application/vnd.oclc.marc21+xml': 
             examples:
               update-bib:
                 $ref: '#/components/examples/update_bib'           
@@ -334,7 +334,7 @@ paths:
         '200':
           description: Successful validate
           content:
-            '*/*':
+            'application/atom+xml;content="application/vnd.oclc.marc21+xml"':
               schema:
                 type: object            
               examples:
@@ -383,7 +383,7 @@ paths:
       requestBody:
         description: Validate bibliographic record to be added to the system
         content:
-          'application/marc+xml': 
+          'application/vnd.oclc.marc21+xml': 
             examples:
               validate-add-bib:
                 $ref: '#/components/examples/create_bib'           
@@ -391,7 +391,7 @@ paths:
         '200':
           description: Successful validate
           content:
-            '*/*':
+            'application/atom+xml;content="application/vnd.oclc.marc21+xml"':
               schema:
                 type: object            
               examples:
@@ -440,7 +440,7 @@ paths:
       requestBody:
         description: Validate bibliographic record to be updated in to the system
         content:
-          'application/marc+xml': 
+          'application/vnd.oclc.marc21+xml': 
             examples:
               update-bib:
                 $ref: '#/components/examples/update_bib'          
@@ -448,7 +448,7 @@ paths:
         '200':
           description: Successful validate
           content:
-            '*/*':
+            'application/atom+xml;content="application/vnd.oclc.marc21+xml"':
               schema:
                 type: object            
               examples:
@@ -534,7 +534,7 @@ paths:
         '200':
           description: Successful create institution holding
           content:
-            '*/*':
+            'application/atom+json':
               schema:
                 type: object            
               examples:
@@ -626,7 +626,7 @@ paths:
         '200':
           description: Successful delete institution holding
           content:
-            '*/*':
+            'application/atom+json':
               schema:
                 type: object
         '400':
@@ -696,7 +696,7 @@ paths:
         '200':
           description: Successful check status of institution holding
           content:
-            '*/*':
+            'application/atom+json':
               schema:
                 type: object            
               examples:
@@ -769,7 +769,7 @@ paths:
         '200':
           description: Successful batch set institution holdings on OCLC Number
           content:
-            '*/*':
+            'application/atom+json':
               schema:
                 type: object            
               examples:
@@ -848,13 +848,13 @@ paths:
         '200':
           description: Successfully batch remove institution holdings for OCLC Numbers
           content:
-            '*/*':
+            'application/atom+json':
               schema:
                 type: object            
         '400':
           description: Invalid query. The request was unacceptable, often due to missing a required parameter.
           content:
-            '*/*':
+            'application/atom+json':
               schema:
                 type: object            
               examples:
@@ -1051,7 +1051,7 @@ paths:
       requestBody:
         description: Add local bibliographic record to the system
         content:
-          'application/marc+xml': 
+          'application/vnd.oclc.marc21+xml': 
             examples:
               create_lbd:
                 $ref: '#/components/examples/create_lbd'
@@ -1059,7 +1059,7 @@ paths:
         '200':
           description: Successfully create local bibliographic record
           content:
-            '*/*':
+            'application/atom+xml;content="application/vnd.oclc.marc21+xml"':
               schema:
                 type: object            
               examples:
@@ -1131,7 +1131,7 @@ paths:
         '200':
           description: Successfully read local bibliographic data
           content:
-            '*/*':
+            'application/atom+xml;content="application/vnd.oclc.marc21+xml"':
               schema:
                 type: object            
               examples:
@@ -1202,7 +1202,7 @@ paths:
         '200':
           description: Successfully update local bibliographic data
           content:
-            '*/*':
+            'application/atom+xml;content="application/vnd.oclc.marc21+xml"':
               schema:
                 type: object            
               examples:
@@ -1328,7 +1328,7 @@ paths:
         '200':
           description: Successfully search for local bibliographic data
           content:
-            '*/*':
+            'application/atom+xml;content="application/vnd.oclc.marc21+xml"':
               schema:
                 type: object            
               examples:
