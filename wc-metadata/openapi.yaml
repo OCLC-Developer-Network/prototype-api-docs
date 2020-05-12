@@ -543,7 +543,7 @@ paths:
         '400':
           description: Invalid query. The request was unacceptable, often due to missing a required parameter.
           content:
-            '*/*':
+            'application/atom+json':
               schema:
                 type: object            
               examples:
@@ -552,7 +552,7 @@ paths:
         '403':
           description: Unauthorized
           content:
-            '*/*':
+            'application/atom+json':
               schema:
                 type: object            
               examples:
@@ -562,7 +562,7 @@ paths:
         '405':
           description: 'Method not supported, see response Allow header'
           content:
-            '*/*':
+            'application/atom+json':
               schema:
                 type: object            
               example:
@@ -570,7 +570,7 @@ paths:
         '500':
           description: 'Something went wrong (hopfully rare) - please try again'
           content:
-            '*/*':
+            'application/atom+json':
               schema:
                 type: object
     delete:
@@ -632,7 +632,7 @@ paths:
         '400':
           description: Invalid query. The request was unacceptable, often due to missing a required parameter.
           content:
-            '*/*':
+            'application/atom+json':
               schema:
                 type: object            
               examples:
@@ -641,7 +641,7 @@ paths:
         '403':
           description: Unauthorized
           content:
-            '*/*':
+            'application/atom+json':
               schema:
                 type: object            
               examples:
@@ -651,7 +651,7 @@ paths:
         '405':
           description: 'Method not supported, see response Allow header'
           content:
-            '*/*':
+            'application/atom+json':
               schema:
                 type: object            
               example:
@@ -659,7 +659,7 @@ paths:
         '500':
           description: 'Something went wrong (hopfully rare) - please try again'
           content:
-            '*/*':
+            'application/atom+json':
               schema:
                 type: object                        
   /ih/checkholdings:
@@ -705,7 +705,7 @@ paths:
         '400':
           description: Invalid query. The request was unacceptable, often due to missing a required parameter.
           content:
-            '*/*':
+            'application/atom+json':
               schema:
                 type: object            
               examples:
@@ -714,7 +714,7 @@ paths:
         '403':
           description: Unauthorized
           content:
-            '*/*':
+            'application/atom+json':
               schema:
                 type: object            
               examples:
@@ -724,7 +724,7 @@ paths:
         '405':
           description: 'Method not supported, see response Allow header'
           content:
-            '*/*':
+            'application/atom+json':
               schema:
                 type: object            
               example:
@@ -732,7 +732,7 @@ paths:
         '500':
           description: 'Something went wrong (hopfully rare) - please try again'
           content:
-            '*/*':
+            'application/atom+json':
               schema:
                 type: object
   /ih/datalist:
@@ -778,7 +778,7 @@ paths:
         '400':
           description: Invalid query. The request was unacceptable, often due to missing a required parameter.
           content:
-            '*/*':
+            'application/atom+json':
               schema:
                 type: object            
               examples:
@@ -787,7 +787,7 @@ paths:
         '403':
           description: Unauthorized
           content:
-            '*/*':
+            'application/atom+json':
               schema:
                 type: object            
               examples:
@@ -797,7 +797,7 @@ paths:
         '405':
           description: 'Method not supported, see response Allow header'
           content:
-            '*/*':
+            'application/atom+json':
               schema:
                 type: object            
               example:
@@ -805,7 +805,7 @@ paths:
         '500':
           description: 'Something went wrong (hopfully rare) - please try again'
           content:
-            '*/*':
+            'application/atom+json':
               schema:
                 type: object
     delete:
@@ -863,7 +863,7 @@ paths:
         '403':
           description: Unauthorized
           content:
-            '*/*':
+            'application/atom+json':
               schema:
                 type: object            
               examples:
@@ -873,7 +873,7 @@ paths:
         '405':
           description: 'Method not supported, see response Allow header'
           content:
-            '*/*':
+            'application/atom+json':
               schema:
                 type: object            
               example:
@@ -881,7 +881,7 @@ paths:
         '500':
           description: 'Something went wrong (hopfully rare) - please try again'
           content:
-            '*/*':
+            'application/atom+json':
               schema:
                 type: object
   /ih/institutionlist:
@@ -911,7 +911,7 @@ paths:
         '200':
           description: Successfully set holdings for an institution on multiple OCLC number
           content:
-            '*/*':
+            'application/atom+json':
               schema:
                 type: object            
               examples:
@@ -920,7 +920,7 @@ paths:
         '400':
           description: Invalid query. The request was unacceptable, often due to missing a required parameter.
           content:
-            '*/*':
+            'application/atom+json':
               schema:
                 type: object            
               examples:
@@ -929,7 +929,7 @@ paths:
         '403':
           description: Unauthorized
           content:
-            '*/*':
+            'application/atom+json':
               schema:
                 type: object            
               examples:
@@ -939,7 +939,7 @@ paths:
         '405':
           description: 'Method not supported, see response Allow header'
           content:
-            '*/*':
+            'application/atom+json':
               schema:
                 type: object            
               example:
@@ -947,7 +947,7 @@ paths:
         '500':
           description: 'Something went wrong (hopfully rare) - please try again'
           content:
-            '*/*':
+            'application/atom+json':
               schema:
                 type: object
     delete:
@@ -983,13 +983,13 @@ paths:
         '200':
           description: Successfully unset holdings for an institution on multiple OCLC number
           content:
-            '*/*':
+            'application/atom+json':
               schema:
                 type: object
         '400':
           description: Invalid query. The request was unacceptable, often due to missing a required parameter.
           content:
-            '*/*':
+            'application/atom+json':
               schema:
                 type: object            
               examples:
@@ -998,7 +998,7 @@ paths:
         '403':
           description: Unauthorized
           content:
-            '*/*':
+            'application/atom+json':
               schema:
                 type: object            
               examples:
@@ -1008,7 +1008,7 @@ paths:
         '405':
           description: 'Method not supported, see response Allow header'
           content:
-            '*/*':
+            'application/atom+json':
               schema:
                 type: object            
               example:
@@ -1016,7 +1016,7 @@ paths:
         '500':
           description: 'Something went wrong (hopfully rare) - please try again'
           content:
-            '*/*':
+            'application/atom+json':
               schema:
                 type: object                                                 
   /lbd/data:
