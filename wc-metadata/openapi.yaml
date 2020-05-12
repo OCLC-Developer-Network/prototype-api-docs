@@ -1233,6 +1233,12 @@ components:
           tokenUrl: https://oauth.oclc.org/token
           scopes:
             WorldCatMetadataAPI: perform all the operation in the WorldCat Metadata API
+  schemas:
+    marcxml:
+      type: object
+      externalDocs:
+        description: Learn about the Marc Bibliographic Standard
+        url: https://www.loc.gov/standards/marcxml/
   examples:
     create_bib:
       summary: Create a bibliographic record
