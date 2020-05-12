@@ -16,6 +16,9 @@ paths:
       summary: 'Create Bibliographic Record'
       description: 'Create Bibliographic Record'
       operationId: create-bib
+      externalDocs: 
+        description: Learn about MARC Bibliographic records
+        url: https://help.oclc.org/Metadata_Services/WorldShare_Record_Manager/Bibliographic_records      
       parameters:
         - name: inst
           in: query
@@ -49,14 +52,14 @@ paths:
         '400':
           description: Invalid request. 
           content:
-            '*/*':           
+            'application/atom+xml;content="application/vnd.oclc.marc21+xml"':          
               examples:
                 missing-query-parameter:
                   $ref: '#/components/examples/institution-authorization-failure'
         '403':
           description: Unauthorized
           content:
-            'application/atom+json':           
+            'application/atom+xml;content="application/vnd.oclc.marc21+xml"':           
               examples:
                 unauthorized-error:
                   $ref: '#/components/examples/forbidden'              
@@ -64,20 +67,19 @@ paths:
         '405':
           description: 'Method not supported, see response Allow header'
           content:
-            '*/*':           
+            'application/atom+xml;content="application/vnd.oclc.marc21+xml"':          
               example:
                 $ref: '#/components/examples/method-not-allowed-error'               
         '500':
           description: 'Something went wrong (hopfully rare) - please try again'
-          content:
-            '*/*':
-              schema:
-                type: object
     put:
       tags:
         - Bibliographic Records
       summary: 'Update Bibliographic record'
       description: 'Update Bibliographic record'
+      externalDocs: 
+        description: Learn about MARC Bibliographic records
+        url: https://help.oclc.org/Metadata_Services/WorldShare_Record_Manager/Bibliographic_records      
       operationId: update-bib
       parameters:
         - name: inst
@@ -112,14 +114,14 @@ paths:
         '400':
           description: Invalid query. The request was unacceptable, often due to missing a required parameter.
           content:
-            '*/*':            
+            'application/atom+xml;content="application/vnd.oclc.marc21+xml"':            
               examples:
                 missing-query-parameter:
                   $ref: '#/components/examples/missing-query-parameter'
         '403':
           description: Unauthorized
           content:
-            '*/*':            
+            'application/atom+xml;content="application/vnd.oclc.marc21+xml"':           
               examples:
                 unauthorized-error:
                   $ref: '#/components/examples/forbidden'              
@@ -127,7 +129,7 @@ paths:
         '405':
           description: 'Method not supported, see response Allow header'
           content:
-            '*/*':            
+            'application/atom+xml;content="application/vnd.oclc.marc21+xml"':            
               example:
                 $ref: '#/components/examples/method-not-allowed-error'               
         '500':
@@ -138,6 +140,9 @@ paths:
         - Bibliographic Records
       summary: 'Read Bibliographic data'
       description: 'Read Bibliographic data'
+      externalDocs: 
+        description: Learn about MARC Bibliographic records
+        url: https://help.oclc.org/Metadata_Services/WorldShare_Record_Manager/Bibliographic_records      
       operationId: read-bib
       parameters:
         - name: oclcNumber
@@ -158,14 +163,14 @@ paths:
         '400':
           description: Invalid query. The request was unacceptable, often due to missing a required parameter.
           content:
-            '*/*':            
+            'application/atom+xml;content="application/vnd.oclc.marc21+xml"':            
               examples:
                 missing-query-parameter:
                   $ref: '#/components/examples/missing-query-parameter'
         '403':
           description: Unauthorized
           content:
-            '*/*':           
+            'application/atom+xml;content="application/vnd.oclc.marc21+xml"':           
               examples:
                 unauthorized-error:
                   $ref: '#/components/examples/forbidden'              
@@ -173,7 +178,7 @@ paths:
         '405':
           description: 'Method not supported, see response Allow header'
           content:
-            '*/*':          
+            'application/atom+xml;content="application/vnd.oclc.marc21+xml"':          
               example:
                 $ref: '#/components/examples/method-not-allowed-error'               
         '500':
@@ -885,6 +890,9 @@ paths:
         - Local Bibliographic Data
       summary: 'Create Local Bibliographic Data'
       description: 'Create Local Bibliographic Data'
+      externalDocs: 
+        description: Learn about Local Bibliographic records
+        url: https://help.oclc.org/Metadata_Services/WorldShare_Record_Manager/LBD  
       operationId: lbd-create    
       parameters:
         - name: inst
@@ -910,6 +918,7 @@ paths:
           example: MAIN
       requestBody:
         description: Add local bibliographic record to the system
+        required: true
         content:
           'application/vnd.oclc.marc21+xml': 
             examples:
@@ -952,6 +961,9 @@ paths:
         - Local Bibliographic Data
       summary: 'Read Local Bibliographic Data'
       description: 'Read Local Bibliographic Data'
+      externalDocs: 
+        description: Learn about Local Bibliographic records
+        url: https://help.oclc.org/Metadata_Services/WorldShare_Record_Manager/LBD      
       operationId: lbd-read    
       parameters:
         - name: accessionNumber
@@ -1018,6 +1030,9 @@ paths:
         - Local Bibliographic Data
       summary: 'Update Local Bibliographic Data'
       description: 'Update Local Bibliographic Data'
+      externalDocs: 
+        description: Learn about Local Bibliographic records
+        url: https://help.oclc.org/Metadata_Services/WorldShare_Record_Manager/LBD      
       operationId: lbd-update    
       parameters:
         - name: accessionNumber
@@ -1048,6 +1063,14 @@ paths:
           schema:
             type: string
           example: MAIN
+      requestBody:
+        description: Update local bibliographic record to the system
+        required: true
+        content:
+          'application/vnd.oclc.marc21+xml': 
+            examples:
+              update_lbd:
+                $ref: '#/components/examples/update_lbd'      
       responses:
         '200':
           description: Successfully update local bibliographic data
@@ -1084,6 +1107,9 @@ paths:
         - Local Bibliographic Data
       summary: 'Delete Local Bibliographic Data'
       description: 'Delete Local Bibliographic Data'
+      externalDocs: 
+        description: Learn about Local Bibliographic records
+        url: https://help.oclc.org/Metadata_Services/WorldShare_Record_Manager/LBD      
       operationId: lbd-delete    
       parameters:
         - name: accessionNumber
@@ -1150,6 +1176,9 @@ paths:
         - Local Bibliographic Data
       summary: 'Search Local Bibliographic Data'
       description: 'Search Local Bibliographic Data'
+      externalDocs: 
+        description: Learn about Local Bibliographic records
+        url: https://help.oclc.org/Metadata_Services/WorldShare_Record_Manager/LBD      
       operationId: lbd-search    
       parameters:
         - name: oclcNumber
@@ -1161,7 +1190,7 @@ paths:
           example: 1
       responses:
         '200':
-          description: Successfully search for local bibliographic data
+          description: Successfully search for local bibliographic data          
           content:
             'application/atom+xml;content="application/vnd.oclc.marc21+xml"':           
               examples:
