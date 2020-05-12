@@ -49,14 +49,14 @@ paths:
                 success: 
                   $ref: '#/components/examples/read_bib'
         '400':
-          description: Invalid query. The request was unacceptable, often due to missing a required parameter.
+          description: Invalid request. 
           content:
             '*/*':
               schema:
                 type: object            
               examples:
                 missing-query-parameter:
-                  $ref: '#/components/examples/missing-query-parameter'
+                  $ref: '#/components/examples/institution-authorization-failure'
         '403':
           description: Unauthorized
           content:
@@ -236,7 +236,7 @@ paths:
         '400':
           description: Invalid query. The request was unacceptable, often due to missing a required parameter.
           content:
-            '*/*':
+            'application/atom+json':
               schema:
                 type: object            
               examples:
@@ -245,7 +245,7 @@ paths:
         '403':
           description: Unauthorized
           content:
-            '*/*':
+            'application/atom+json':
               schema:
                 type: object            
               examples:
@@ -255,7 +255,7 @@ paths:
         '405':
           description: 'Method not supported, see response Allow header'
           content:
-            '*/*':
+            'application/atom+json':
               schema:
                 type: object            
               example:
@@ -263,7 +263,7 @@ paths:
         '500':
           description: 'Something went wrong (hopfully rare) - please try again'
           content:
-            '*/*':
+            'application/atom+json':
               schema:
                 type: object
   /bib/holdinglibraries:
@@ -286,7 +286,7 @@ paths:
         '400':
           description: Invalid query. The request was unacceptable, often due to missing a required parameter.
           content:
-            '*/*':
+            'application/atom+json':
               schema:
                 type: object            
               examples:
@@ -295,7 +295,7 @@ paths:
         '403':
           description: Unauthorized
           content:
-            '*/*':
+            'application/atom+json':
               schema:
                 type: object            
               examples:
@@ -305,7 +305,7 @@ paths:
         '405':
           description: 'Method not supported, see response Allow header'
           content:
-            '*/*':
+            'application/atom+json':
               schema:
                 type: object            
               example:
@@ -313,7 +313,7 @@ paths:
         '500':
           description: 'Something went wrong (hopfully rare) - please try again'
           content:
-            '*/*':
+            'application/atom+json':
               schema:
                 type: object                                                                                              
   /bib/validateFull:
@@ -1020,6 +1020,32 @@ paths:
               schema:
                 type: object                                                 
   /lbd/data:
+    description: >
+      <h3>Key Fields in an LBD</h3>
+      <table cellspacing="1" cellpadding="1" border="1">
+      <tbody>
+      <tr>
+      <th>Field</th>
+      <th>Description</th>
+      </tr>
+      <tr>
+      <td>001 $a</td>
+      <td>The control number of Accession number for the LBD</td>
+      </tr>
+      <tr>
+      <td>004 $a</td>
+      <td>The OCLC Number the LBD is associated with</td>
+      </tr>
+      <tr>
+      <td>935 $a</td>
+      <td>Local System Number - This field is required and must be unique for the associated OCLC number and the institution creating the LBD record. A timestamp may be used as a value if the LBD has no other associated local system number..</td>
+      </tr>
+      <tr>
+      <td>940 $a</td>
+      <td>Institution Number - The MARC code for the organization that created the local bibliographic data. This code is the same type of code as is found in the 040 $a in the master bibliographic record.</td>
+      </tr>
+      </tbody>
+      </table>    
     post:
       tags:
         - Local Bibliographic Data
@@ -1106,6 +1132,13 @@ paths:
       description: 'Read Local Bibliographic Data'
       operationId: lbd-read    
       parameters:
+        - name: accessionNumber
+          in: path
+          description: Accession number of the local bibliographic record
+          required: true
+          schema:
+            type: integer
+          example: 906268152       
         - name: inst
           in: query
           description: Registry ID of the institution whose holdings are being set on the record
@@ -1177,6 +1210,13 @@ paths:
       description: 'Update Local Bibliographic Data'
       operationId: lbd-update    
       parameters:
+        - name: accessionNumber
+          in: path
+          description: Accession number of the local bibliographic record
+          required: true
+          schema:
+            type: integer
+          example: 906268152      
         - name: inst
           in: query
           description: Registry ID of the institution whose holdings are being set on the record
@@ -1248,6 +1288,13 @@ paths:
       description: 'Delete Local Bibliographic Data'
       operationId: lbd-delete    
       parameters:
+        - name: accessionNumber
+          in: path
+          description: Accession number of the local bibliographic record
+          required: true
+          schema:
+            type: integer
+          example: 906268152      
         - name: inst
           in: query
           description: Registry ID of the institution whose holdings are being set on the record
@@ -2371,7 +2418,10 @@ components:
             },
             "details": "Authorization header: Bearer tk_SQCtlCkzBUBLG6gOPpqM2r3jjzwPORx1vQkK",
             "message": "AccessToken {tk_SQCtlCkzBUBLG6gOPpqM2r3jjzwPORx1vQkK} is invalid"
-        }      
+        }
+    unauthorized-xml:
+      summary: Error returned when valid API credentials not sent or invalid
+      value: ""                      
     forbidden:
       summary: Error returned when API credentials not for resource
       value: >
@@ -2383,6 +2433,9 @@ components:
             "details": "Authorization header: Bearer tk_vKDWLmGf6BM3LRU5PNcxqOPZCAO1Tx1aeYiM",
             "message": "AccessToken {tk_vKDWLmGf6BM3LRU5PNcxqOPZCAO1Tx1aeYiM} does not have access to service {WorldCatMetadataAPI}"
         }      
+    forbidden-xml:
+      summary: Error returned when API credentials not for resource
+      value: ""
     method-not-allowed-error:
       summary: Error when invalid HTTP method used
       value: >
@@ -2393,7 +2446,10 @@ components:
             },
             "message": "Method on request not supported",
             "detail": "Request method 'POST' not supported"
-        }      
+        }
+    method-not-allowed-error-xml:          
+      summary: Error when invalid HTTP method used
+      value: ""
     not-acceptable-error:
       summary: Error when media type in Accept header not supported
       value: >
@@ -2401,7 +2457,10 @@ components:
         <error xmlns="http://worldcat.org/xmlschemas/response">
             <code type="http">406</code>
             <message>Requested media-type is not supported.  Supported types: application/atom+xml;content="application/vnd.oclc.cdf", application/atom+xml;content="application/vnd.oclc.marc21+xml", application/atom+json.</message>
-        </error>                                                                                              
+        </error>
+    institution-authorization-failure:  
+      summary: Error when client doesn't have permission to act as the institution/symbol passed
+      value: ""                                                                                                    
     missing-query-parameter:
       summary: Error when required query parameter is missing
       value: ""
