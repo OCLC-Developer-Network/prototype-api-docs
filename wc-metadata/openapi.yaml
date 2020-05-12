@@ -1384,7 +1384,28 @@ components:
   examples:
     create_bib:
       summary: Create a bibliographic record
-      value: ""  
+      value: >
+        <?xml version="1.0" encoding="UTF-8"?>
+        <record xmlns="http://www.loc.gov/MARC21/slim">
+            <leader>00000nam a2200000 a 4500</leader>
+            <controlfield tag="008">120827s2012    nyua          000 0 eng d</controlfield>
+            <datafield tag="010" ind1=" " ind2=" ">
+                <subfield code="a">   63011276 </subfield>
+            </datafield>
+            <datafield tag="040" ind1=" " ind2=" ">
+                <subfield code="a">OCWMS</subfield>
+                <subfield code="c">OCWMS</subfield>
+            </datafield>
+            <datafield tag="100" ind1=" " ind2="0">
+                <subfield code="a">OCLC Developer Network</subfield>
+            </datafield>
+            <datafield tag="245" ind1="4" ind2="0">
+                <subfield code="a">Test Record</subfield>
+            </datafield>
+            <datafield tag="500" ind1=" " ind2=" ">
+                <subfield code="a">FOR OCLC DEVELOPER NETWORK DOCUMENTATION</subfield>
+            </datafield>
+        </record>        
     read_bib:
       summary: Read a bibliographic record
       value: >
@@ -2011,7 +2032,29 @@ components:
         </entry>      
     update_bib:
       summary: Update a bibliographic record
-      value: ""
+      value: >
+        <?xml version="1.0" encoding="UTF-8"?>
+        <record xmlns="http://www.loc.gov/MARC21/slim">
+            <leader>00000nam a2200000 a 4500</leader>
+            <controlfield tag="001">99999999999999999999999</controlfield>
+            <controlfield tag="008">120827s2012    nyua          000 0 eng d</controlfield>
+            <datafield tag="010" ind1=" " ind2=" ">
+                <subfield code="a">   63011276 </subfield>
+            </datafield>
+            <datafield tag="040" ind1=" " ind2=" ">
+                <subfield code="a">OCWMS</subfield>
+                <subfield code="c">OCWMS</subfield>
+            </datafield>
+            <datafield tag="100" ind1=" " ind2="0">
+                <subfield code="a">OCLC Developer Network</subfield>
+            </datafield>
+            <datafield tag="245" ind1="4" ind2="0">
+                <subfield code="a">Test Record</subfield>
+            </datafield>
+            <datafield tag="500" ind1=" " ind2=" ">
+                <subfield code="a">FOR OCLC DEVELOPER NETWORK DOCUMENTATION</subfield>
+            </datafield>
+        </record>      
     read_holdinglibrarycodes:
       summary: Read a library holding codes
       value: >
@@ -2072,7 +2115,7 @@ components:
         }        
     validateAdd:
       summary: Validate Add record response
-      value: ""
+      value: ""      
     validateReplace:
       summary: Validate replace record response
       value: ""  
