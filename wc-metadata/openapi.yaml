@@ -54,10 +54,19 @@ paths:
           content:
             'application/atom+xml;content="application/vnd.oclc.marc21+xml"':          
               examples:
-                missing-query-parameter:
+                institution-authorization-failure:
                   $ref: '#/components/examples/institution-authorization-failure'
-        '403':
+                wrong-format:
+                  $ref: '#/components/examples/wrong-format'                  
+        '401':
           description: Unauthorized
+          content:
+            'application/atom+xml;content="application/vnd.oclc.marc21+xml"':           
+              examples:
+                unauthorized-error:
+                  $ref: '#/components/examples/unauthorized-xml'
+        '403':
+          description: Forbidden
           content:
             'application/atom+xml;content="application/vnd.oclc.marc21+xml"':           
               examples:
@@ -112,14 +121,23 @@ paths:
                 success: 
                   $ref: '#/components/examples/read_bib'
         '400':
-          description: Invalid query. The request was unacceptable, often due to missing a required parameter.
+          description: Invalid request. 
           content:
-            'application/atom+xml;content="application/vnd.oclc.marc21+xml"':            
+            'application/atom+xml;content="application/vnd.oclc.marc21+xml"':          
               examples:
-                missing-query-parameter:
-                  $ref: '#/components/examples/missing-query-parameter'
-        '403':
+                institution-authorization-failure:
+                  $ref: '#/components/examples/institution-authorization-failure'
+                wrong-format:
+                  $ref: '#/components/examples/wrong-format' 
+        '401':
           description: Unauthorized
+          content:
+            'application/atom+xml;content="application/vnd.oclc.marc21+xml"':           
+              examples:
+                unauthorized-error:
+                  $ref: '#/components/examples/unauthorized-xml'                  
+        '403':
+          description: Forbidden
           content:
             'application/atom+xml;content="application/vnd.oclc.marc21+xml"':           
               examples:
@@ -161,14 +179,21 @@ paths:
                 success: 
                   $ref: '#/components/examples/read_bib'
         '400':
-          description: Invalid query. The request was unacceptable, often due to missing a required parameter.
+          description: Invalid request. 
           content:
-            'application/atom+xml;content="application/vnd.oclc.marc21+xml"':            
+            'application/atom+xml;content="application/vnd.oclc.marc21+xml"':          
               examples:
-                missing-query-parameter:
-                  $ref: '#/components/examples/missing-query-parameter'
-        '403':
+                institution-authorization-failure:
+                  $ref: '#/components/examples/institution-authorization-failure'                 
+        '401':
           description: Unauthorized
+          content:
+            'application/atom+xml;content="application/vnd.oclc.marc21+xml"':           
+              examples:
+                unauthorized-error:
+                  $ref: '#/components/examples/unauthorized-xml'                  
+        '403':
+          description: Forbidden
           content:
             'application/atom+xml;content="application/vnd.oclc.marc21+xml"':           
               examples:
@@ -209,10 +234,17 @@ paths:
           content:
             'application/atom+json':            
               examples:
-                missing-query-parameter:
-                  $ref: '#/components/examples/missing-query-parameter'
-        '403':
+                missing-query-parameter-oclcnumbers:
+                  $ref: '#/components/examples/missing-query-parameter-oclcnumbers'
+        '401':
           description: Unauthorized
+          content:
+            'application/atom+json':           
+              examples:
+                unauthorized-error:
+                  $ref: '#/components/examples/unauthorized'                  
+        '403':
+          description: Forbidden
           content:
             'application/atom+json':            
               examples:
@@ -242,20 +274,20 @@ paths:
               examples:
                 success: 
                   $ref: '#/components/examples/read_holdinglibrarycodes'
-        '400':
-          description: Invalid query. The request was unacceptable, often due to missing a required parameter.
-          content:
-            'application/atom+json':           
-              examples:
-                missing-query-parameter:
-                  $ref: '#/components/examples/missing-query-parameter'
-        '403':
+        '401':
           description: Unauthorized
           content:
             'application/atom+json':           
               examples:
                 unauthorized-error:
-                  $ref: '#/components/examples/forbidden'              
+                  $ref: '#/components/examples/unauthorized'                  
+        '403':
+          description: Forbidden
+          content:
+            'application/atom+json':            
+              examples:
+                unauthorized-error:
+                  $ref: '#/components/examples/forbidden'            
         
         '405':
           description: 'Method not supported, see response Allow header'
@@ -288,26 +320,40 @@ paths:
                 success: 
                   $ref: '#/components/examples/validateFull'
         '400':
-          description: Invalid query. The request was unacceptable, often due to missing a required parameter.
+          description: The request was unacceptable, often due to malformed request body.
           content:
             'application/atom+xml;content="application/vnd.oclc.marc21+xml"':         
               examples:
-                missing-query-parameter:
-                  $ref: '#/components/examples/missing-query-parameter'
-        '403':
+                wrong-format:
+                  $ref: '#/components/examples/wrong-format'
+        '401':
           description: Unauthorized
           content:
             'application/atom+xml;content="application/vnd.oclc.marc21+xml"':           
               examples:
                 unauthorized-error:
-                  $ref: '#/components/examples/forbidden'              
+                  $ref: '#/components/examples/unauthorized-xml'                  
+        '403':
+          description: Forbidden
+          content:
+            'application/atom+xml;content="application/vnd.oclc.marc21+xml"':           
+              examples:
+                unauthorized-error:
+                  $ref: '#/components/examples/forbidden'             
         
         '405':
           description: 'Method not supported, see response Allow header'
           content:
             'application/atom+xml;content="application/vnd.oclc.marc21+xml"':          
               example:
-                $ref: '#/components/examples/method-not-allowed-error'               
+                $ref: '#/components/examples/method-not-allowed-error'
+        '409':
+          description: Conflict
+          content:
+            'application/atom+xml;content="application/vnd.oclc.marc21+xml"':           
+              examples:
+                validation-error:
+                  $ref: '#/components/examples/validateFull-error'                               
         '500':
           description: 'Something went wrong (hopfully rare) - please try again'
   /bib/validateAdd:
@@ -333,26 +379,40 @@ paths:
                 success: 
                   $ref: '#/components/examples/validateAdd'
         '400':
-          description: Invalid query. The request was unacceptable, often due to missing a required parameter.
+          description: The request was unacceptable, often due to malformed request body.
           content:
-            'application/atom+xml;content="application/vnd.oclc.marc21+xml"':          
+            'application/atom+xml;content="application/vnd.oclc.marc21+xml"':         
               examples:
-                missing-query-parameter:
-                  $ref: '#/components/examples/missing-query-parameter'
-        '403':
+                wrong-format:
+                  $ref: '#/components/examples/wrong-format'
+        '401':
           description: Unauthorized
           content:
-            'application/atom+xml;content="application/vnd.oclc.marc21+xml"':          
+            'application/atom+xml;content="application/vnd.oclc.marc21+xml"':           
               examples:
                 unauthorized-error:
-                  $ref: '#/components/examples/forbidden'              
+                  $ref: '#/components/examples/unauthorized-xml'                  
+        '403':
+          description: Forbidden
+          content:
+            'application/atom+xml;content="application/vnd.oclc.marc21+xml"':           
+              examples:
+                unauthorized-error:
+                  $ref: '#/components/examples/forbidden'             
         
         '405':
           description: 'Method not supported, see response Allow header'
           content:
             'application/atom+xml;content="application/vnd.oclc.marc21+xml"':           
               example:
-                $ref: '#/components/examples/method-not-allowed-error'               
+                $ref: '#/components/examples/method-not-allowed-error'
+        '409':
+          description: Conflict
+          content:
+            'application/atom+xml;content="application/vnd.oclc.marc21+xml"':           
+              examples:
+                validation-error:
+                  $ref: '#/components/examples/validateAdd-error'                               
         '500':
           description: 'Something went wrong (hopfully rare) - please try again'
   /bib/validateReplace:
@@ -378,26 +438,40 @@ paths:
                 success: 
                   $ref: '#/components/examples/validateReplace'
         '400':
-          description: Invalid query. The request was unacceptable, often due to missing a required parameter.
+          description: The request was unacceptable, often due to malformed request body.
           content:
-            'application/atom+xml;content="application/vnd.oclc.marc21+xml"':            
+            'application/atom+xml;content="application/vnd.oclc.marc21+xml"':         
               examples:
-                missing-query-parameter:
-                  $ref: '#/components/examples/missing-query-parameter'
-        '403':
+                wrong-format:
+                  $ref: '#/components/examples/wrong-format'
+        '401':
           description: Unauthorized
           content:
             'application/atom+xml;content="application/vnd.oclc.marc21+xml"':           
               examples:
                 unauthorized-error:
-                  $ref: '#/components/examples/forbidden'              
+                  $ref: '#/components/examples/unauthorized-xml'                  
+        '403':
+          description: Forbidden
+          content:
+            'application/atom+xml;content="application/vnd.oclc.marc21+xml"':           
+              examples:
+                unauthorized-error:
+                  $ref: '#/components/examples/forbidden'             
         
         '405':
           description: 'Method not supported, see response Allow header'
           content:
             'application/atom+xml;content="application/vnd.oclc.marc21+xml"':         
               example:
-                $ref: '#/components/examples/method-not-allowed-error'               
+                $ref: '#/components/examples/method-not-allowed-error'
+        '409':
+          description: Conflict
+          content:
+            'application/atom+xml;content="application/vnd.oclc.marc21+xml"':           
+              examples:
+                validation-error:
+                  $ref: '#/components/examples/validateReplace-error'                                
         '500':
           description: 'Something went wrong (hopfully rare) - please try again'                                   
   /ih/data:
@@ -457,7 +531,9 @@ paths:
             'application/atom+json':          
               examples:
                 missing-query-parameter:
-                  $ref: '#/components/examples/missing-query-parameter'
+                  $ref: '#/components/examples/missing-query-parameter-oclcnumber'
+                institution-authorization-failure:
+                  $ref: '#/components/examples/institution-authorization-failure'                  
         '403':
           description: Unauthorized
           content:
@@ -535,8 +611,12 @@ paths:
           content:
             'application/atom+json':            
               examples:
-                missing-query-parameter:
-                  $ref: '#/components/examples/missing-query-parameter'
+                missing-query-parameter-oclcnumber:
+                  $ref: '#/components/examples/missing-query-parameter-oclcnumber'
+                missing-query-parameter-cascade:
+                  $ref: '#/components/examples/missing-query-parameter-cascade'
+                institution-authorization-failure:
+                  $ref: '#/components/examples/institution-authorization-failure'                                    
         '403':
           description: Unauthorized
           content:
@@ -596,8 +676,10 @@ paths:
           content:
             'application/atom+json':           
               examples:
-                missing-query-parameter:
-                  $ref: '#/components/examples/missing-query-parameter'
+                missing-query-parameter-oclcnumber:
+                  $ref: '#/components/examples/missing-query-parameter-oclcnumber'
+                institution-authorization-failure:
+                  $ref: '#/components/examples/institution-authorization-failure'                  
         '403':
           description: Unauthorized
           content:
@@ -661,8 +743,10 @@ paths:
           content:
             'application/atom+json':            
               examples:
-                missing-query-parameter:
-                  $ref: '#/components/examples/missing-query-parameter'
+                missing-query-parameter-oclcnumber:
+                  $ref: '#/components/examples/missing-query-parameter-oclcnumbers'
+                institution-authorization-failure:
+                  $ref: '#/components/examples/institution-authorization-failure'                  
         '403':
           description: Unauthorized
           content:
@@ -727,8 +811,12 @@ paths:
           content:
             'application/atom+json':        
               examples:
-                missing-query-parameter:
-                  $ref: '#/components/examples/missing-query-parameter'
+                missing-query-parameter-oclcnumber:
+                  $ref: '#/components/examples/missing-query-parameter-oclcnumbers'
+                missing-query-parameter-cascade:
+                  $ref: '#/components/examples/missing-query-parameter-cascade'
+                institution-authorization-failure:
+                  $ref: '#/components/examples/institution-authorization-failure'                                    
         '403':
           description: Unauthorized
           content:
@@ -753,7 +841,7 @@ paths:
       description: 'Batch set institution holdings for multiple institutions'
       operationId: batch-create-ih-institution    
       parameters:
-        - name: oclcNumbers
+        - name: oclcNumber
           in: query
           description: OCLC number for the record holdings should be checked on
           schema:
@@ -781,8 +869,10 @@ paths:
           content:
             'application/atom+json':           
               examples:
-                missing-query-parameter:
-                  $ref: '#/components/examples/missing-query-parameter'
+                missing-query-parameter-instSymbols:
+                  $ref: '#/components/examples/missing-query-parameter-instSymbols'
+                missing-query-parameter-oclcnumber:
+                  $ref: '#/components/examples/missing-query-parameter-oclcnumber'                  
         '403':
           description: Unauthorized
           content:
@@ -840,10 +930,21 @@ paths:
           content:
             'application/atom+json':            
               examples:
-                missing-query-parameter:
-                  $ref: '#/components/examples/missing-query-parameter'
-        '403':
+                missing-query-parameter-instSymbols:
+                  $ref: '#/components/examples/missing-query-parameter-instSymbols'
+                missing-query-parameter-oclcnumber:
+                  $ref: '#/components/examples/missing-query-parameter-oclcnumber'
+                missing-query-parameter-cascade:
+                  $ref: '#/components/examples/missing-query-parameter-cascade'                  
+        '401':
           description: Unauthorized
+          content:
+            'application/atom+json':            
+              examples:
+                unauthorized-error:
+                  $ref: '#/components/examples/unauthorized'
+        '403':
+          description: Forbidden
           content:
             'application/atom+json':            
               examples:
@@ -933,26 +1034,34 @@ paths:
                 success: 
                   $ref: '#/components/examples/read_lbd'
         '400':
-          description: Invalid query. The request was unacceptable, often due to missing a required parameter.
+          description: Invalid query. The request was unacceptable, often due to invalid request body.
           content:
             'application/atom+xml;content="application/vnd.oclc.marc21+xml"':           
               examples:
-                missing-query-parameter:
-                  $ref: '#/components/examples/missing-query-parameter'
-        '403':
+                institution-authorization-failure:
+                  $ref: '#/components/examples/institution-authorization-failure'
+                wrong-format:
+                  $ref: '#/components/examples/wrong-format'
+        '401':
           description: Unauthorized
           content:
-            'application/atom+xml;content="application/vnd.oclc.marc21+xml"':            
+            'application/atom+xml;content="application/vnd.oclc.marc21+xml"':           
               examples:
                 unauthorized-error:
-                  $ref: '#/components/examples/forbidden'              
-        
+                  $ref: '#/components/examples/unauthorized-xml'                  
+        '403':
+          description: Forbidden
+          content:
+            'application/atom+xml;content="application/vnd.oclc.marc21+xml"':           
+              examples:
+                unauthorized-error:
+                  $ref: '#/components/examples/forbidden-xml'                     
         '405':
           description: 'Method not supported, see response Allow header'
           content:
             'application/atom+xml;content="application/vnd.oclc.marc21+xml"':          
               example:
-                $ref: '#/components/examples/method-not-allowed-error'               
+                $ref: '#/components/examples/method-not-allowed-error-xml'               
         '500':
           description: 'Something went wrong (hopfully rare) - please try again'
   /lbd/data/{accessionNumber}:
@@ -1003,26 +1112,33 @@ paths:
                 success: 
                   $ref: '#/components/examples/read_lbd'
         '400':
-          description: Invalid query. The request was unacceptable, often due to missing a required parameter.
+          description: Invalid query. The request was unacceptable.
           content:
-            'application/atom+xml;content="application/vnd.oclc.marc21+xml"':          
+            'application/atom+xml;content="application/vnd.oclc.marc21+xml"':           
               examples:
-                missing-query-parameter:
-                  $ref: '#/components/examples/missing-query-parameter'
-        '403':
+                institution-authorization-failure:
+                  $ref: '#/components/examples/institution-authorization-failure'
+        '401':
           description: Unauthorized
           content:
-            'application/atom+xml;content="application/vnd.oclc.marc21+xml"':
+            'application/atom+xml;content="application/vnd.oclc.marc21+xml"':           
               examples:
                 unauthorized-error:
-                  $ref: '#/components/examples/forbidden'              
+                  $ref: '#/components/examples/unauthorized-xml'                  
+        '403':
+          description: Forbidden
+          content:
+            'application/atom+xml;content="application/vnd.oclc.marc21+xml"':           
+              examples:
+                unauthorized-error:
+                  $ref: '#/components/examples/forbidden-xml'             
         
         '405':
           description: 'Method not supported, see response Allow header'
           content:
             'application/atom+xml;content="application/vnd.oclc.marc21+xml"':
               example:
-                $ref: '#/components/examples/method-not-allowed-error'               
+                $ref: '#/components/examples/method-not-allowed-error-xml'               
         '500':
           description: 'Something went wrong (hopfully rare) - please try again' 
     put:
@@ -1080,26 +1196,35 @@ paths:
                 success: 
                   $ref: '#/components/examples/read_lbd'
         '400':
-          description: Invalid query. The request was unacceptable, often due to missing a required parameter.
+          description: Invalid query. The request was unacceptable, often due to invalid request body.
           content:
             'application/atom+xml;content="application/vnd.oclc.marc21+xml"':           
               examples:
-                missing-query-parameter:
-                  $ref: '#/components/examples/missing-query-parameter'
-        '403':
+                institution-authorization-failure:
+                  $ref: '#/components/examples/institution-authorization-failure'
+                wrong-format:
+                  $ref: '#/components/examples/wrong-format'
+        '401':
           description: Unauthorized
           content:
-            'application/atom+xml;content="application/vnd.oclc.marc21+xml"':          
+            'application/atom+xml;content="application/vnd.oclc.marc21+xml"':           
               examples:
                 unauthorized-error:
-                  $ref: '#/components/examples/forbidden'              
+                  $ref: '#/components/examples/unauthorized-xml'                  
+        '403':
+          description: Forbidden
+          content:
+            'application/atom+xml;content="application/vnd.oclc.marc21+xml"':           
+              examples:
+                unauthorized-error:
+                  $ref: '#/components/examples/forbidden-xml'             
         
         '405':
           description: 'Method not supported, see response Allow header'
           content:
             'application/atom+xml;content="application/vnd.oclc.marc21+xml"':     
               example:
-                $ref: '#/components/examples/method-not-allowed-error'               
+                $ref: '#/components/examples/method-not-allowed-error-xml'               
         '500':
           description: 'Something went wrong (hopfully rare) - please try again'
     delete:
@@ -1148,26 +1273,33 @@ paths:
               schema:
                 type: object
         '400':
-          description: Invalid query. The request was unacceptable, often due to missing a required parameter.
+          description: Invalid query. The request was unacceptable, often due to invalid request body.
           content:
-            'application/atom+xml;content="application/vnd.oclc.marc21+xml"':            
+            'application/atom+xml;content="application/vnd.oclc.marc21+xml"':           
               examples:
-                missing-query-parameter:
-                  $ref: '#/components/examples/missing-query-parameter'
-        '403':
+                institution-authorization-failure:
+                  $ref: '#/components/examples/institution-authorization-failure'
+        '401':
           description: Unauthorized
           content:
             'application/atom+xml;content="application/vnd.oclc.marc21+xml"':           
               examples:
                 unauthorized-error:
-                  $ref: '#/components/examples/forbidden'              
+                  $ref: '#/components/examples/unauthorized-xml'                  
+        '403':
+          description: Forbidden
+          content:
+            'application/atom+xml;content="application/vnd.oclc.marc21+xml"':           
+              examples:
+                unauthorized-error:
+                  $ref: '#/components/examples/forbidden-xml'            
         
         '405':
           description: 'Method not supported, see response Allow header'
           content:
             'application/atom+xml;content="application/vnd.oclc.marc21+xml"':     
               example:
-                $ref: '#/components/examples/method-not-allowed-error'               
+                $ref: '#/components/examples/method-not-allowed-error-xml'               
         '500':
           description: 'Something went wrong (hopfully rare) - please try again' 
   /lbd/search:
@@ -1201,22 +1333,30 @@ paths:
           content:
             'application/atom+xml;content="application/vnd.oclc.marc21+xml"':           
               examples:
-                missing-query-parameter:
-                  $ref: '#/components/examples/missing-query-parameter'
-        '403':
+                missing-query-parameter-oclcnumber:
+                  $ref: '#/components/examples/missing-query-parameter-oclcnumber'
+                institution-authorization-failure:
+                  $ref: '#/components/examples/institution-authorization-failure'
+        '401':
           description: Unauthorized
           content:
-            'application/atom+xml;content="application/vnd.oclc.marc21+xml"':            
+            'application/atom+xml;content="application/vnd.oclc.marc21+xml"':           
               examples:
                 unauthorized-error:
-                  $ref: '#/components/examples/forbidden'              
-        
+                  $ref: '#/components/examples/unauthorized-xml'                  
+        '403':
+          description: Forbidden
+          content:
+            'application/atom+xml;content="application/vnd.oclc.marc21+xml"':           
+              examples:
+                unauthorized-error:
+                  $ref: '#/components/examples/forbidden-xml'        
         '405':
           description: 'Method not supported, see response Allow header'
           content:
             'application/atom+xml;content="application/vnd.oclc.marc21+xml"':            
               example:
-                $ref: '#/components/examples/method-not-allowed-error'               
+                $ref: '#/components/examples/method-not-allowed-error-xml'               
         '500':
           description: 'Something went wrong (hopfully rare) - please try again'          
 components:
@@ -1252,12 +1392,13 @@ components:
             </datafield>
             <datafield tag="040" ind1=" " ind2=" ">
                 <subfield code="a">OCWMS</subfield>
-                <subfield code="c">OCWMS</subfield>
+                <subfield code="b">eng</subfield>
+                <subfield code="c">OCPSB</subfield>
             </datafield>
-            <datafield tag="100" ind1=" " ind2="0">
+            <datafield tag="100" ind1="0" ind2=" ">
                 <subfield code="a">OCLC Developer Network</subfield>
             </datafield>
-            <datafield tag="245" ind1="4" ind2="0">
+            <datafield tag="245" ind1="1" ind2="0">
                 <subfield code="a">Test Record</subfield>
             </datafield>
             <datafield tag="500" ind1=" " ind2=" ">
@@ -1973,13 +2114,322 @@ components:
         }        
     validateAdd:
       summary: Validate Add record response
-      value: ""      
+      value: >
+        <?xml version="1.0" encoding="UTF-8"?>
+        <entry xmlns="http://www.w3.org/2005/Atom">
+            <content type="application/xml">
+                <response xmlns="http://worldcat.org/rb" mimeType="application/vnd.oclc.marc21+xml">
+                    <record xmlns="http://www.loc.gov/MARC21/slim">
+                        <leader>00000nam a2200000 a 4500</leader>
+                        <controlfield tag="008">120827s2012    nyua          000 0 eng d</controlfield>
+                        <datafield tag="010" ind1=" " ind2=" ">
+                            <subfield code="a">   63011276 </subfield>
+                        </datafield>
+                        <datafield tag="040" ind1=" " ind2=" ">
+                            <subfield code="a">OCWMS</subfield>
+                            <subfield code="b">eng</subfield>
+                            <subfield code="c">OCPSB</subfield>
+                        </datafield>
+                        <datafield tag="049" ind1=" " ind2=" ">
+                            <subfield code="a">MAIN</subfield>
+                        </datafield>
+                        <datafield tag="100" ind1="0" ind2=" ">
+                            <subfield code="a">OCLC Developer Network</subfield>
+                        </datafield>
+                        <datafield tag="245" ind1="1" ind2="0">
+                            <subfield code="a">Test Record RecordBuilder Add Original Test: 2020-05-12 15:17:53.179</subfield>
+                        </datafield>
+                        <datafield tag="500" ind1=" " ind2=" ">
+                            <subfield code="a">FOR OCLC DEVELOPER NETWORK DOCUMENTATION</subfield>
+                        </datafield>
+                    </record>
+                </response>
+            </content>
+            <id>http://worldcat.org/oclc/</id>
+            <link href="http://worldcat.org/oclc/"></link>
+        </entry>      
+    validateAdd-error:
+      summary: Validate Add record response - Validation error
+      value: >
+        <?xml version="1.0" encoding="UTF-8"?>
+        <entry xmlns="http://www.w3.org/2005/Atom" xmlns:oclc="http://worldcat.org/xmlschemas/response">
+            <content type="application/xml">
+                <response xmlns="http://worldcat.org/rb" mimeType="application/vnd.oclc.marc21+xml">
+                    <record xmlns="http://www.loc.gov/MARC21/slim">
+                        <leader>00000nam a2200000 a 4500</leader>
+                        <controlfield tag="008">120827s2012    nyua          000 0 eng d</controlfield>
+                        <datafield tag="010" ind1=" " ind2=" ">
+                            <subfield code="a">   63011276 </subfield>
+                        </datafield>
+                        <datafield tag="040" ind1=" " ind2=" ">
+                            <subfield code="a">OCWMS</subfield>
+                            <subfield code="c">OCWMS</subfield>
+                        </datafield>
+                        <datafield tag="049" ind1=" " ind2=" ">
+                            <subfield code="a">MAIN</subfield>
+                        </datafield>
+                        <datafield tag="100" ind1=" " ind2="0">
+                            <subfield code="a">OCLC Developer Network</subfield>
+                        </datafield>
+                        <datafield tag="245" ind1="4" ind2="0">
+                            <subfield code="a">Test Record RecordBuilder Add Original Test: 2020-05-12 15:04:16.065</subfield>
+                        </datafield>
+                        <datafield tag="500" ind1=" " ind2=" ">
+                            <subfield code="a">FOR OCLC DEVELOPER NETWORK DOCUMENTATION</subfield>
+                        </datafield>
+                    </record>
+                </response>
+            </content>
+            <oclc:error>
+                <oclc:code type="application">CAT-VALIDATION</oclc:code>
+                <oclc:message>Record is invalid</oclc:message>
+                <oclc:detail type="application/xml">
+                    <validationErrors xmlns="">
+                        <validationError type="fixed field">
+                            <field occurrence="1" name="000"></field>
+                            <message>Invalid relationship - when Encoding Level (Leader/17) is equal to blank, then $b in 040 must be present.</message>
+                        </validationError>
+                        <validationError type="variable field">
+                            <field occurrence="1" name="100"></field>
+                            <message>Invalid code in indicator 1 in 1st 100.</message>
+                        </validationError>
+                        <validationError type="variable field">
+                            <field occurrence="1" name="100"></field>
+                            <message>Invalid code in indicator 2 in 1st 100.</message>
+                        </validationError>
+                        <validationError type="variable field">
+                            <field occurrence="1" name="245"></field>
+                            <message>Invalid code in indicator 1 in 1st 245.</message>
+                        </validationError>
+                        <validationError type="variable field">
+                            <field occurrence="1" name="040"></field>
+                            <message>Invalid symbol OCWMS in 1st $c in 1st 040.</message>
+                        </validationError>
+                    </validationErrors>
+                </oclc:detail>
+            </oclc:error>
+            <id>http://worldcat.org/oclc/</id>
+        </entry>            
     validateReplace:
       summary: Validate replace record response
-      value: ""  
+      value: >
+        <?xml version="1.0" encoding="UTF-8"?>
+        <entry xmlns="http://www.w3.org/2005/Atom">
+            <content type="application/xml">
+                <response xmlns="http://worldcat.org/rb" mimeType="application/vnd.oclc.marc21+xml">
+                    <record xmlns="http://www.loc.gov/MARC21/slim">
+                        <leader>00000cam a2200000Ia 4500</leader>
+                        <controlfield tag="001">ocn823520512</controlfield>
+                        <controlfield tag="003">OCoLC</controlfield>
+                        <controlfield tag="005">20151020225613.4</controlfield>
+                        <controlfield tag="008">120827s2012    nyua          000 0 eng d</controlfield>
+                        <datafield tag="040" ind1=" " ind2=" ">
+                            <subfield code="a">OCPSB</subfield>
+                            <subfield code="b">eng</subfield>
+                            <subfield code="c">OCPSB</subfield>
+                            <subfield code="d">OCWMS</subfield>
+                            <subfield code="d">OCLCQ</subfield>
+                        </datafield>
+                        <datafield tag="035" ind1=" " ind2=" ">
+                            <subfield code="a">(OCoLC)823520512</subfield>
+                        </datafield>
+                        <datafield tag="049" ind1=" " ind2=" ">
+                            <subfield code="a">MAIN</subfield>
+                        </datafield>
+                        <datafield tag="100" ind1="0" ind2=" ">
+                            <subfield code="a">OCLC RecordBuilder.</subfield>
+                        </datafield>
+                        <datafield tag="245" ind1="1" ind2="0">
+                            <subfield code="a">Record Builder Added This Test Record On 03/04/13 08:36:54. RecordBuilder Add Original Test: 2020-05-12 15:24:20.614</subfield>
+                        </datafield>
+                        <datafield tag="336" ind1=" " ind2=" ">
+                            <subfield code="a">text</subfield>
+                            <subfield code="b">txt</subfield>
+                            <subfield code="2">rdacontent</subfield>
+                        </datafield>
+                        <datafield tag="337" ind1=" " ind2=" ">
+                            <subfield code="a">unmediated</subfield>
+                            <subfield code="b">n</subfield>
+                            <subfield code="2">rdamedia</subfield>
+                        </datafield>
+                        <datafield tag="500" ind1=" " ind2=" ">
+                            <subfield code="a">TEST RECORD Update-- DO NOT USE.</subfield>
+                        </datafield>
+                    </record>
+                </response>
+            </content>
+            <id>http://worldcat.org/oclc/823520512</id>
+            <link href="http://worldcat.org/oclc/823520512"></link>
+        </entry>      
+    validateReplace-error:
+      summary: Validate replace record response validation errors
+      value: >
+        <?xml version="1.0" encoding="UTF-8"?>
+        <entry xmlns="http://www.w3.org/2005/Atom" xmlns:oclc="http://worldcat.org/xmlschemas/response">
+            <content type="application/xml">
+                <response xmlns="http://worldcat.org/rb" mimeType="application/vnd.oclc.marc21+xml">
+                    <record xmlns="http://www.loc.gov/MARC21/slim">
+                        <leader>00000cam a2200000Ia 4500</leader>
+                        <controlfield tag="001">ocn823520512</controlfield>
+                        <controlfield tag="003">OCoLC</controlfield>
+                        <controlfield tag="005">20151020225613.4</controlfield>
+                        <controlfield tag="008">120827s2012    nyua          000 0 eng d</controlfield>
+                        <datafield tag="040" ind1=" " ind2=" ">
+                            <subfield code="a">OCPSB</subfield>
+                            <subfield code="b">eng</subfield>
+                            <subfield code="c">OCPSB</subfield>
+                            <subfield code="d">OCWMS</subfield>
+                            <subfield code="d">OCLCQ</subfield>
+                        </datafield>
+                        <datafield tag="035" ind1=" " ind2=" ">
+                            <subfield code="a">(OCoLC)823520512</subfield>
+                        </datafield>
+                        <datafield tag="049" ind1=" " ind2=" ">
+                            <subfield code="a">MAIN</subfield>
+                        </datafield>
+                        <datafield tag="100" ind1="0" ind2=" ">
+                            <subfield code="a">OCLC RecordBuilder.</subfield>
+                        </datafield>
+                        <datafield tag="336" ind1=" " ind2=" ">
+                            <subfield code="a">text</subfield>
+                            <subfield code="b">txt</subfield>
+                            <subfield code="2">rdacontent</subfield>
+                        </datafield>
+                        <datafield tag="337" ind1=" " ind2=" ">
+                            <subfield code="a">unmediated</subfield>
+                            <subfield code="b">n</subfield>
+                            <subfield code="2">rdamedia</subfield>
+                        </datafield>
+                        <datafield tag="500" ind1=" " ind2=" ">
+                            <subfield code="a">TEST RECORD Update-- DO NOT USE.</subfield>
+                        </datafield>
+                    </record>
+                </response>
+            </content>
+            <oclc:error>
+                <oclc:code type="application">CAT-VALIDATION</oclc:code>
+                <oclc:message>Record is invalid</oclc:message>
+                <oclc:detail type="application/xml">
+                    <validationErrors xmlns="">
+                        <validationError type="root">
+                            <field occurrence="1" name="REC"></field>
+                            <message>$a in 245 or $k in 245 must be present.</message>
+                        </validationError>
+                    </validationErrors>
+                </oclc:detail>
+            </oclc:error>
+            <id>http://worldcat.org/oclc/</id>
+        </entry>               
     validateFull:
       summary: Validate full record response
-      value: ""
+      value: >
+        <?xml version="1.0" encoding="UTF-8"?>
+        <entry xmlns="http://www.w3.org/2005/Atom">
+            <content type="application/xml">
+                <response xmlns="http://worldcat.org/rb" mimeType="application/vnd.oclc.marc21+xml">
+                    <record xmlns="http://www.loc.gov/MARC21/slim">
+                        <leader>00000cam a2200000Ia 4500</leader>
+                        <controlfield tag="001">ocn823520512</controlfield>
+                        <controlfield tag="003">OCoLC</controlfield>
+                        <controlfield tag="005">20151020225613.4</controlfield>
+                        <controlfield tag="008">120827s2012    nyua          000 0 eng d</controlfield>
+                        <datafield tag="040" ind1=" " ind2=" ">
+                            <subfield code="a">OCPSB</subfield>
+                            <subfield code="b">eng</subfield>
+                            <subfield code="c">OCPSB</subfield>
+                            <subfield code="d">OCWMS</subfield>
+                            <subfield code="d">OCLCQ</subfield>
+                        </datafield>
+                        <datafield tag="035" ind1=" " ind2=" ">
+                            <subfield code="a">(OCoLC)823520512</subfield>
+                        </datafield>
+                        <datafield tag="049" ind1=" " ind2=" ">
+                            <subfield code="a">MAIN</subfield>
+                        </datafield>
+                        <datafield tag="100" ind1="0" ind2=" ">
+                            <subfield code="a">OCLC RecordBuilder.</subfield>
+                        </datafield>
+                        <datafield tag="245" ind1="1" ind2="0">
+                            <subfield code="a">Record Builder Added This Test Record On 03/04/13 08:36:54. RecordBuilder Add Original Test: 2020-05-12 20:06:56.372</subfield>
+                        </datafield>
+                        <datafield tag="336" ind1=" " ind2=" ">
+                            <subfield code="a">text</subfield>
+                            <subfield code="b">txt</subfield>
+                            <subfield code="2">rdacontent</subfield>
+                        </datafield>
+                        <datafield tag="337" ind1=" " ind2=" ">
+                            <subfield code="a">unmediated</subfield>
+                            <subfield code="b">n</subfield>
+                            <subfield code="2">rdamedia</subfield>
+                        </datafield>
+                        <datafield tag="500" ind1=" " ind2=" ">
+                            <subfield code="a">TEST RECORD Update-- DO NOT USE.</subfield>
+                        </datafield>
+                    </record>
+                </response>
+            </content>
+            <id>http://worldcat.org/oclc/823520512</id>
+            <link href="http://worldcat.org/oclc/823520512"></link>
+        </entry>      
+    validateFull-error:
+      summary: Validate full record response validation errors
+      value: >
+        <?xml version="1.0" encoding="UTF-8"?>
+        <entry xmlns="http://www.w3.org/2005/Atom" xmlns:oclc="http://worldcat.org/xmlschemas/response">
+            <content type="application/xml">
+                <response xmlns="http://worldcat.org/rb" mimeType="application/vnd.oclc.marc21+xml">
+                    <record xmlns="http://www.loc.gov/MARC21/slim">
+                        <leader>00000cam a2200000Ia 4500</leader>
+                        <controlfield tag="001">ocn823520512</controlfield>
+                        <controlfield tag="003">OCoLC</controlfield>
+                        <controlfield tag="005">20151020225613.4</controlfield>
+                        <controlfield tag="008">120827s2012    nyua          000 0 eng d</controlfield>
+                        <datafield tag="040" ind1=" " ind2=" ">
+                            <subfield code="a">OCPSB</subfield>
+                            <subfield code="b">eng</subfield>
+                            <subfield code="c">OCPSB</subfield>
+                            <subfield code="d">OCWMS</subfield>
+                            <subfield code="d">OCLCQ</subfield>
+                        </datafield>
+                        <datafield tag="035" ind1=" " ind2=" ">
+                            <subfield code="a">(OCoLC)823520512</subfield>
+                        </datafield>
+                        <datafield tag="049" ind1=" " ind2=" ">
+                            <subfield code="a">MAIN</subfield>
+                        </datafield>
+                        <datafield tag="245" ind1="1" ind2="0">
+                            <subfield code="a">Record Builder Added This Test Record On 03/04/13 08:36:54. RecordBuilder Add Original Test: 2020-05-12 20:07:57.437</subfield>
+                        </datafield>
+                        <datafield tag="336" ind1=" " ind2=" ">
+                            <subfield code="a">text</subfield>
+                            <subfield code="b">txt</subfield>
+                            <subfield code="2">rdacontent</subfield>
+                        </datafield>
+                        <datafield tag="337" ind1=" " ind2=" ">
+                            <subfield code="a">unmediated</subfield>
+                            <subfield code="b">n</subfield>
+                            <subfield code="2">rdamedia</subfield>
+                        </datafield>
+                        <datafield tag="500" ind1=" " ind2=" ">
+                            <subfield code="a">TEST RECORD Update-- DO NOT USE.</subfield>
+                        </datafield>
+                    </record>
+                </response>
+            </content>
+            <oclc:error>
+                <oclc:code type="application">CAT-VALIDATION</oclc:code>
+                <oclc:message>Record is invalid</oclc:message>
+                <oclc:detail type="application/xml">
+                    <validationErrors xmlns="">
+                        <validationError type="variable field">
+                            <field occurrence="1" name="245"></field>
+                            <message>Invalid relationship - when indicator 1 in 1st 245 is equal to 1, then 100, 110, 111 or 130 must be present.</message>
+                        </validationError>
+                    </validationErrors>
+                </oclc:detail>
+            </oclc:error>
+            <id>http://worldcat.org/oclc/</id>
+        </entry>            
     create_lbd:
       summary: Create a local bibliographic record
       value: >
@@ -2232,7 +2682,9 @@ components:
         }
     unauthorized-xml:
       summary: Error returned when valid API credentials not sent or invalid
-      value: ""                      
+      value: >
+        <error><code type="http">401</code><message>AccessToken {tk_SQCtlCkzBUBLG6gOPpqM2r3jjzwPORx1vQkK
+        } is invalid</message><detail>Authorization header: Bearer tk_SQCtlCkzBUBLG6gOPpqM2r3jjzwPORx1vQkK</detail></error>                            
     forbidden:
       summary: Error returned when API credentials not for resource
       value: >
@@ -2246,7 +2698,10 @@ components:
         }      
     forbidden-xml:
       summary: Error returned when API credentials not for resource
-      value: ""
+      value: >
+        <error><code type="http">403</code><message>AccessToken {tk_JNBtKTGD7PEEhvh1hfc3PV3DfDAAMu58w8Ek
+        } does not have access to service {WorldCatMetadataAPI
+        }</message><detail>Authorization header: Bearer tk_JNBtKTGD7PEEhvh1hfc3PV3DfDAAMu58w8Ek</detail></error>      
     method-not-allowed-error:
       summary: Error when invalid HTTP method used
       value: >
@@ -2260,7 +2715,13 @@ components:
         }
     method-not-allowed-error-xml:          
       summary: Error when invalid HTTP method used
-      value: ""
+      value: >
+        <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+        <error xmlns="http://worldcat.org/xmlschemas/response">
+            <code>405</code>
+            <message>Method on request not supported</message>
+            <detail>Request method 'GET' not supported</detail>
+        </error>      
     not-acceptable-error:
       summary: Error when media type in Accept header not supported
       value: >
@@ -2271,10 +2732,75 @@ components:
         </error>
     institution-authorization-failure:  
       summary: Error when client doesn't have permission to act as the institution/symbol passed
-      value: ""                                                                                                    
-    missing-query-parameter:
+      value: >
+        {
+            "code": {
+                "value": "WS-403",
+                "type": "application"
+            },
+            "message": "The institution identifier provided does not match the WSKey credentials.",
+            "detail": null
+        }       
+    institution-authorization-failure-xml:  
+      summary: Error when client doesn't have permission to act as the institution/symbol passed
+      value: >                                                                                                                
+        <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+        <error xmlns="http://worldcat.org/xmlschemas/response">
+            <code type="application">WS-403</code>
+            <message>The institution identifier provided does not match the WSKey credentials.</message>
+        </error>        
+    missing-query-parameter-oclcnumber:
       summary: Error when required query parameter is missing
-      value: ""
+      value: >
+        {
+            "code": {
+                "value": "400",
+                "type": "http"
+            },
+            "message": "Required parameter oclcNumber missing from request.",
+            "detail": null
+        }
+    missing-query-parameter-cascade:
+      summary: Error when required query parameter is missing
+      value: >
+        {
+            "code": {
+                "value": "400",
+                "type": "http"
+            },
+            "message": "Required parameter cascade missing from request.",
+            "detail": null
+        }        
+    missing-query-parameter-oclcnumbers:
+      summary: Error when required query parameter is missing
+      value: >
+        {
+            "code": {
+                "value": "400",
+                "type": "http"
+            },
+            "message": "Required parameter oclcNumbers missing from request.",
+            "detail": null
+        }
+    missing-query-parameter-instSymbols:
+      summary: Error when required query parameter is missing
+      value: >
+        {
+            "code": {
+                "value": "400",
+                "type": "http"
+            },
+            "message": "Required parameter instSymbols missing from request.",
+            "detail": null
+        }
+    wrong-format:
+      summary: Error when data in request body is wrong format or missing
+      value: >
+        <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+        <error xmlns="http://worldcat.org/xmlschemas/response">
+            <code type="application">WS-400</code>
+            <message>Posted record is in the wrong format or is invalid.</message>
+        </error>                                           
 externalDocs:
   description: Find out more about WorldCatMetadata API
   url: 'https://www.oclc.org/developer/develop/web-services/worldcat-metadata-api.en.html'
