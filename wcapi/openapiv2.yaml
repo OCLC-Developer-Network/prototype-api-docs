@@ -87,6 +87,12 @@ paths:
               examples:
                 success-bibs-retained-holdings:
                   $ref: '#/components/examples/success-bibs-retained-holdings'
+                success-bibs-retained-holdings-monograph:
+                  $ref: '#/components/examples/success-bibs-retained-holdings-monograph'                  
+                success-bibs-retained-holdings-serial:
+                  $ref: '#/components/examples/success-bibs-retained-holdings-serial'
+                success-bibs-retained-holdings-serial-2:
+                  $ref: '#/components/examples/success-bibs-retained-holdings-serial-2'                  
         '206':
           description: Success with partial results
           content:
@@ -1580,6 +1586,12 @@ paths:
               examples:
                 success-retained-holdings:
                   $ref: '#/components/examples/success-retained-holdings'
+                success-retained-holdings-monograph:
+                  $ref: '#/components/examples/success-retained-holdings-monograph'                  
+                success-retained-holdings-serial:
+                  $ref: '#/components/examples/success-retained-holdings-serial'
+                success-retained-holdings-serial-2:
+                  $ref: '#/components/examples/success-retained-holdings-serial-2'                  
         '206':
           description: Success with partial results
           content:
@@ -1710,6 +1722,67 @@ components:
     success-bibs-retained-holdings:
       summary: successful request for bibs retained-holdings
       value: {"numberOfRecords":1,"briefRecords":[{"oclcNumber":"1752384","title":"Human biology.","creator":"Raymond Pearl","date":"1929","language":"eng","generalFormat":"Jrnl","institutionHolding":{"totalHoldingCount":716,"briefHoldings":[{"country":"US","state":"GA","oclcSymbol":"EMU","institutionNumber":"276","institutionName":"EMORY UNIV","illStatus":"S"}]}}]}
+    success-bibs-retained-holdings-monograph:
+      summary: successful request for bibs retained-holdings monograph
+      value: ""               
+    success-bibs-retained-holdings-serial:
+      summary: successful request for bibs retained-holdings serial
+      value: >
+        {
+            "numberOfRecords": 1,
+            "briefRecords": [
+                {
+                    "oclcNumber": "1588319",
+                    "title": "Review of educational research.",
+                    "creator": "Douglas E. Scates",
+                    "date": "1931",
+                    "language": "eng",
+                    "generalFormat": "Jrnl",
+                    "institutionHolding": {
+                        "totalHoldingCount": 1048,
+                        "briefHoldings": [
+                            {
+                                "country": "US",
+                                "state": "IL",
+                                "oclcSymbol": "CRL",
+                                "institutionNumber": "540",
+                                "institutionName": "CENTER FOR RES LIBR",
+                                "illStatus": "N"
+                            }
+                        ]
+                    }
+                }
+            ]
+        }           
+    success-bibs-retained-holdings-serial-2:
+      summary: successful request for bibs retained-holdings serial with enumeration/caption/summary
+      value: >
+        {
+            "numberOfRecords": 1,
+            "briefRecords": [
+                {
+                    "oclcNumber": "1696940",
+                    "title": "The Irish theological quarterly.",
+                    "creator": "St. Patrick's College (Maynooth, Ireland).",
+                    "date": "1906",
+                    "language": "eng",
+                    "generalFormat": "Jrnl",
+                    "institutionHolding": {
+                        "totalHoldingCount": 291,
+                        "briefHoldings": [
+                            {
+                                "country": "US",
+                                "state": "NY",
+                                "oclcSymbol": "VKM",
+                                "institutionNumber": "3368",
+                                "institutionName": "SIENA COL",
+                                "illStatus": "S"
+                            }
+                        ]
+                    }
+                }
+            ]
+        } 
     success-bibs-holdings:
       summary: successful request for bibs and holdings
       value: {
@@ -3554,7 +3627,7 @@ components:
         ]
         }    
     success-retained-holdings-monograph:
-      summary: return retained holdings for for monograph
+      summary: return retained holdings for a monograph
       value: >
           {
             "numberOfHoldings": 1,
@@ -3594,6 +3667,270 @@ components:
                 }
             ]
           }
+    success-retained-holdings-serial:
+      summary: return retained holdings for a serial
+      value: >
+        {
+            "numberOfHoldings": 1,
+            "detailedHoldings": [
+                {
+                    "lhrControlNumber": "293921067",
+                    "lhrDateEntered": "20200122",
+                    "lhrLastUpdated": "20200122",
+                    "oclcNumber": "1588319",
+                    "format": "zu",
+                    "location": {
+                        "holdingLocation": "CRL",
+                        "sublocationCollection": "JSTR"
+                    },
+                    "hasSharedPrintCommitment": "Y",
+                    "sharedPrintCommitments": [
+                        {
+                            "actionNote": "condition reviewed",
+                            "materialsSpecified": "v.1-v.80 (1931-2010)",
+                            "institution": "ICRL",
+                            "dateOfAction": "20110101",
+                            "methodOfAction": "issue-level validation",
+                            "status": "marginalia$torn",
+                            "publicNote": "marginalia v.40:590,592,594-596;v.42:396,153-159;v.44:463;v.45:211;v.46:189,196-197,199;v.49:153-166,168$torn pages v.49:pp.62-64"
+                        },
+                        {
+                            "actionNote": "committed to retain",
+                            "materialsSpecified": "v.1-v.80 (1931-2010)",
+                            "institution": "ICRL",
+                            "dateOfAction": "20110101",
+                            "commitmentExpirationDate": "20501231",
+                            "authorization": "CRLJSTOR",
+                            "siteOfAction": "CRLAA",
+                            "uri": "http://www.crl.edu/archiving-preservation/print-archives/crl-administered/jstor"
+                        }
+                    ],
+                    "summary": "Local Holdings Available."
+                }
+            ]
+        }
+    success-retained-holdings-serial-2:
+      summary: return retained holdings for a serial
+      value: >
+        {
+          "numberOfHoldings": 1,
+          "detailedHoldings": [
+              {
+                  "lhrControlNumber": "2892929",
+                  "lhrDateEntered": "20200505",
+                  "lhrLastUpdated": "20200505",
+                  "oclcNumber": "1696940",
+                  "format": "ta",
+                  "location": {
+                      "holdingLocation": "VKM",
+                      "sublocationCollection": "VKMA"
+                  },
+                  "hasSharedPrintCommitment": "Y",
+                  "sharedPrintCommitments": [
+                      {
+                          "actionNote": "completeness reviewed",
+                          "materialsSpecified": "v.1-5 (1906-1910), v.19 (1952), v.21-25 (1954-1958), v.27 (1960), v.29 (1962), v.32-42 (1965-1975), v.45-56 (1978-1990), v.58-75 (1992-2010)",
+                          "institution": "NLouvS",
+                          "dateOfAction": "20160630",
+                          "commitmentExpirationDate": "20310630",
+                          "methodOfAction": "volume-level validation"
+                      },
+                      {
+                          "actionNote": "committed to retain",
+                          "materialsSpecified": "v.1-5 (1906-1910), v.19 (1952), v.21-25 (1954-1958), v.27 (1960), v.29 (1962), v.32-42 (1965-1975), v.45-56 (1978-1990), v.58-75 (1992-2010)",
+                          "institution": "NLouvS",
+                          "dateOfAction": "20160630",
+                          "commitmentExpirationDate": "20310630",
+                          "authorization": "east",
+                          "uri": "https://eastlibraries.org/retained-materials"
+                      }
+                  ],
+                  "summary": "v.1(1906)-v.5(1910),v.19(1952),v.21(1954)-v.25(1958),v.27(1960),v.29(1962),v.32(1965)-v.42(1975),v.45(1978)-v.56(1990),v.58(1992)-v.75(2010)",
+                  "holdingParts": [
+                      {
+                          "linkingAndSequenceNumber": "1.1",
+                          "enumerations": [
+                              {
+                                  "caption": "v.",
+                                  "value": "1-5"
+                              }
+                          ],
+                          "chronologies": [
+                              {
+                                  "caption": "(year)",
+                                  "value": "1906-1910"
+                              }
+                          ],
+                          "yearRanges": [
+                              {
+                                  "from": "1906",
+                                  "to": "1910"
+                              }
+                          ],
+                          "volumeRanges": [
+                              {
+                                  "from": "1",
+                                  "to": "5"
+                              }
+                          ]
+                      },
+                      {
+                          "linkingAndSequenceNumber": "1.2",
+                          "enumerations": [
+                              {
+                                  "caption": "v.",
+                                  "value": "19"
+                              }
+                          ],
+                          "chronologies": [
+                              {
+                                  "caption": "(year)",
+                                  "value": "1952"
+                              }
+                          ]
+                      },
+                      {
+                          "linkingAndSequenceNumber": "1.3",
+                          "enumerations": [
+                              {
+                                  "caption": "v.",
+                                  "value": "21-25"
+                              }
+                          ],
+                          "chronologies": [
+                              {
+                                  "caption": "(year)",
+                                  "value": "1954-1958"
+                              }
+                          ],
+                          "yearRanges": [
+                              {
+                                  "from": "1954",
+                                  "to": "1958"
+                              }
+                          ],
+                          "volumeRanges": [
+                              {
+                                  "from": "21",
+                                  "to": "25"
+                              }
+                          ]
+                      },
+                      {
+                          "linkingAndSequenceNumber": "1.4",
+                          "enumerations": [
+                              {
+                                  "caption": "v.",
+                                  "value": "27"
+                              }
+                          ],
+                          "chronologies": [
+                              {
+                                  "caption": "(year)",
+                                  "value": "1960"
+                              }
+                          ]
+                      },
+                      {
+                          "linkingAndSequenceNumber": "1.5",
+                          "enumerations": [
+                              {
+                                  "caption": "v.",
+                                  "value": "29"
+                              }
+                          ],
+                          "chronologies": [
+                              {
+                                  "caption": "(year)",
+                                  "value": "1962"
+                              }
+                          ]
+                      },
+                      {
+                          "linkingAndSequenceNumber": "1.6",
+                          "enumerations": [
+                              {
+                                  "caption": "v.",
+                                  "value": "32-42"
+                              }
+                          ],
+                          "chronologies": [
+                              {
+                                  "caption": "(year)",
+                                  "value": "1965-1975"
+                              }
+                          ],
+                          "yearRanges": [
+                              {
+                                  "from": "1965",
+                                  "to": "1975"
+                              }
+                          ],
+                          "volumeRanges": [
+                              {
+                                  "from": "32",
+                                  "to": "42"
+                              }
+                          ]
+                      },
+                      {
+                          "linkingAndSequenceNumber": "1.7",
+                          "enumerations": [
+                              {
+                                  "caption": "v.",
+                                  "value": "45-56"
+                              }
+                          ],
+                          "chronologies": [
+                              {
+                                  "caption": "(year)",
+                                  "value": "1978-1990"
+                              }
+                          ],
+                          "yearRanges": [
+                              {
+                                  "from": "1978",
+                                  "to": "1990"
+                              }
+                          ],
+                          "volumeRanges": [
+                              {
+                                  "from": "45",
+                                  "to": "56"
+                              }
+                          ]
+                      },
+                      {
+                          "linkingAndSequenceNumber": "1.8",
+                          "enumerations": [
+                              {
+                                  "caption": "v.",
+                                  "value": "58-75"
+                              }
+                          ],
+                          "chronologies": [
+                              {
+                                  "caption": "(year)",
+                                  "value": "1992-2010"
+                              }
+                          ],
+                          "yearRanges": [
+                              {
+                                  "from": "1992",
+                                  "to": "2010"
+                              }
+                          ],
+                          "volumeRanges": [
+                              {
+                                  "from": "58",
+                                  "to": "75"
+                              }
+                          ]
+                      }
+                  ]
+              }
+          ]
+        } 
     unauthorized:
       summary: Error returned when valid API credentials not sent or invalid
       value: {"message": "Unauthorized"}
