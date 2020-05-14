@@ -1,0 +1,2497 @@
+openapi: 3.0.2
+info:
+  description: WorldCat Metadata API - Search Functionality
+  version: 1.1.0
+  title: WorldCat Metadata API - Search
+servers:
+  - url: 'https://americas.metadata.api.oclc.org/worldcat/search/v2'
+security:
+  - worldcat_metadata_auth:
+    - WorldCatMetadataAPI
+paths:
+  /bibs-retained-holdings:
+    get:
+      tags:
+        - Member Shared Print Holdings
+      summary: 'Find member shared print holdings for a known item'
+      description: 'Given a known item, find the member library holdings with a commitment to retain (Shared Print)'
+      operationId: find-bib-retained-holdings
+      parameters:
+        - name: Accept
+          in: header
+          description: Content Type the client supports and is requesting (application/json currently supported)
+          schema:
+            type: string
+            default: application/json
+          required: false
+        - name: oclcNumber
+          in: query
+          description: oclc number of the bibliographic item
+          required: false
+          schema:
+            type: string
+          example: 41266045
+        - name: isbn
+          in: query
+          description: isbn of the bibliographic item
+          required: false
+          schema:
+            type: string
+          example: 0439136350
+        - name: issn
+          in: query
+          description: issn of the bibliographic item
+          required: false
+          schema:
+            type: string
+          example: 0099-1333
+        - name: heldByGroup
+          in: query
+          description: Restrict to holdings held by Group Symbol
+          required: false
+          schema:
+            type: string
+          example: ASRL
+        - name: heldInState
+          in: query
+          description: Restrict to holdings held by Institutions in requested state
+          required: false
+          schema:
+            type: string
+          example: TX  
+        - name: offset
+          in: query
+          description: start position of the bib records to return (1 based), default 1
+          required: false
+          schema:
+            type: integer
+            format: int32
+            default: 1
+          example: 10
+        - name: limit
+          in: query
+          description: maximum number of records to return, maximum 50, default 10
+          required: false
+          schema:
+            type: integer
+            format: int32
+            default: 10
+          example: 50
+      responses:
+        '200':
+          description: Successful search
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BibBriefResultSet'
+              examples:
+                success-bibs-retained-holdings: 
+                  $ref: '#/components/examples/success-bibs-retained-holdings'
+                success-bibs-retained-holdings-monograph:
+                  $ref: '#/components/examples/success-bibs-retained-holdings-monograph'                  
+                success-bibs-retained-holdings-serial:
+                  $ref: '#/components/examples/success-bibs-retained-holdings-serial'
+                success-bibs-retained-holdings-serial-2:
+                  $ref: '#/components/examples/success-bibs-retained-holdings-serial-2'                                      
+        '206':
+          description: Success with partial results
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BibBriefResultSet'
+        '400':
+          description: Invalid query. The request was unacceptable, often due to missing a required parameter.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+              examples:
+                missing-query-parameter:
+                  $ref: '#/components/examples/missing-query-parameter'
+                missing-query-parameter-value:
+                  $ref: '#/components/examples/missing-query-parameter-value'
+                invalid-oclc-number:
+                  $ref: '#/components/examples/invalid-oclc-number'
+              
+        '405':
+          description: 'Method not supported, see response Allow header'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+              example:
+                $ref: '#/components/examples/method-not-allowed-error'                
+        '406':
+          description: 'Not Acceptable - resource can only generate content not acceptable according to the Accept headers sent in the request'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+              example:
+                $ref: '#/components/examples/not-acceptable-error'                
+        '500':
+          description: 'Something went wrong (hopfully rare) - please try again'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+      security:
+        - worldcat_metadata_auth:
+            - 'WorldCatMetadataAPI:view_retained_holdings'
+  /bibs-summary-holdings:
+    get:
+      tags:
+        - Member General Holdings
+      summary: 'Get summary of holdings for a known item'
+      description: 'Given a known item, get summary of holdings'
+      operationId: find-bib-summary-holdings
+      parameters:
+        - name: Accept
+          in: header
+          description: Content Type the client supports and is requesting (application/json currently supported)
+          schema:
+            type: string
+            default: application/json
+          required: false
+        - name: oclcNumber
+          in: query
+          description: oclc number of the bibliographic item
+          required: false
+          schema:
+            type: string
+          example: 41266045            
+        - name: isbn
+          in: query
+          description: isbn of the bibliographic item
+          required: false
+          schema:
+            type: string
+          example: 0439136350  
+        - name: issn
+          in: query
+          description: issn of the bibliographic item
+          required: false
+          schema:
+            type: string
+          example: 0099-1333            
+        - name: holdingsAllEditions
+          in: query
+          description: Get holdings for all editions
+          required: false
+          schema:
+            type: boolean
+        - name: heldInCountry
+          in: query
+          description: Restrict to holdings held by institutions in requested country
+          required: false
+          schema:
+            type: string
+          example: US
+        - name: heldByGroup
+          in: query
+          description: Group Symbol
+          required: false
+          schema:
+            type: string
+          example: ASRL  
+        - name: heldBy
+          in: query
+          description: Institution Symbol
+          required: false
+          schema:
+            type: string
+          example: TXH                      
+        - name: lat
+          in: query
+          description: latitude
+          required: false
+          schema:
+            type: number
+            format: double
+          example: 37.502508  
+        - name: lon
+          in: query
+          description: longitude
+          required: false
+          schema:
+            type: number
+            format: double
+          example: -122.22702  
+        - name: distance
+          in: query
+          description: distance
+          required: false
+          schema:
+            type: integer
+            format: int32
+          example: 10  
+        - name: unit
+          in: query
+          description: distance unit
+          required: false
+          schema:
+            type: string
+            enum:
+              - M
+              - K
+          example: M  
+        - name: offset
+          in: query
+          description: start position of the bib records to return (1 based), default 1
+          required: false
+          schema:
+            type: integer
+            format: int32
+            default: 1
+          example: 10  
+        - name: limit
+          in: query
+          description: maximum number of records to return, maximum 50, default 10
+          required: false
+          schema:
+            type: integer
+            format: int32
+            default: 10
+          example: 50  
+      responses:
+        '200':
+          description: Successful search
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BibBriefResultSet'
+              examples:
+                success-bibs-summary-holdings:
+                  $ref: '#/components/examples/success-bibs-summary-holdings'  
+                success-bibs-summary-holdings-2:
+                  $ref: '#/components/examples/success-bibs-summary-holdings-2'                    
+        '206':
+          description: Success with partial results
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BibBriefResultSet'
+        '400':
+          description: Invalid query. The request was unacceptable, often due to missing a required parameter.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+              examples:
+                missing-query-parameter:
+                  $ref: '#/components/examples/missing-query-parameter-heldby-limit'
+                missing-query-parameter-value:
+                  $ref: '#/components/examples/missing-query-parameter-value'
+                invalid-oclc-number:
+                  $ref: '#/components/examples/invalid-oclc-number'                
+        '405':
+          description: 'Method not supported, see response Allow header'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+              example:
+                $ref: '#/components/examples/method-not-allowed-error'                
+        '406':
+          description: 'Not Acceptable - resource can only generate content not acceptable according to the Accept headers sent in the request'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+              example:
+                $ref: '#/components/examples/not-acceptable-error'                
+        '500':
+          description: 'Something went wrong (hopfully rare) - please try again'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+      security:
+        - worldcat_metadata_auth:
+            - 'WorldCatMetadataAPI:view_summary_holdings'
+  /brief-bibs:
+    get:
+      tags:
+        - Bibliographic Resources
+      summary: Search Brief Bibliographic Resources
+      description: Search Brief Bibliographic Resources
+      operationId: search-brief-bibs
+      parameters:
+      - name: Accept
+        in: header
+        description: Content Type the client supports and is requesting (application/json currently supported)
+        schema:
+          type: string
+          default: application/json
+        required: false
+      - name: q
+        in: query
+        description: query in the form of a keyword search or fielded search, for example  (au:gazihan OR au:womacka) AND kw:java
+        required: true
+        schema:
+          type: string
+        example: "ti: Simon's Cat"
+      - name: deweyNumber
+        in: query
+        description: Limiter to restrict the response to the specified dewey classification number(s). For multiple values repeat the URL parameter. (794, 180)
+        required: false
+        schema:
+          type: array
+          items:
+            type: string
+        example: ""
+      - name: datePublished
+        in: query
+        description: Limiter to restrict the response to one or more dates or to a range. (2000, 2000-2010, 1990,1991)
+        required: false
+        schema:
+          type: array
+          items:
+            type: string
+        examples:
+          single_date:
+            value: 2000
+          multiple_dates:
+            value: 1990,1991
+          range:
+            value: 2000-2010
+      - name: heldBy
+        in: query
+        description: Limiter to restrict search results to items held by a given institution(s). For multiple values repeat the URL parameter. (OCWMS)
+        required: false
+        schema:
+          type: array
+          items:
+            type: string
+        example: TXH
+      - name: heldByGroup
+        in: query
+        description: Limiter to restrict search results to items held by a given institution(s) associationed with a particular group symbol. For multiple values repeat the URL parameter.
+        required: false
+        schema:
+          type: array
+          items:
+            type: string
+        example: EAST
+      - name: inLanguage
+        in: query
+        description: Limiter to restrict the response to the single specified language. (eng, fre, ger)
+        required: false
+        schema:
+          type: string
+        example: eng
+      - name: inCatalogLanguage
+        in: query
+        description: Limiter to restrict the response to the single specified cataloging language. (dut, eng)
+        required: false
+        schema:
+          type: string
+        example: eng
+      - name: materialType
+        in: query
+        description: Limiter to restrict the response to the specified material type. (URL, LPS)
+        required: false
+        schema:
+          type: string
+        example: ""
+      - name: catalogSource
+        in: query
+        description: Limiter to restrict the response to the single OCLC symbol as the cataloging source. (OSL)
+        required: false
+        schema:
+          type: string
+        example: OCL
+      - name: itemType
+        in: query
+        description: Limiter to restrict the response to the single specified OCLC top-level facet type. (book, image)
+        required: false
+        schema:
+          type: string
+        example: book
+      - name: itemSubType
+        in: query
+        description: Limiter to restrict the response to the single specified OCLC sub facet type. (dvd, digital)
+        required: false
+        schema:
+          type: string
+        example: digital
+      - name: retentionCommitments
+        in: query
+        description: Limiter to restrict the response to bibliographic records with a retention commitment.
+        required: false
+        schema:
+          type: boolean
+          default: false
+      - name: spProgram
+        in: query
+        description: Limiter to restrict the response to bibliographic records associated with a particular shared print program.
+        required: false
+        schema:
+          type: string
+        example: WEST
+      - name: facets
+        in: query
+        description: The requested list of facets requested in the response
+        required: false
+        schema:
+          type: array
+          items:
+            type: string
+            enum:
+            - subject
+            - creator
+            - datePublished
+            - genre
+            - itemType
+            - itemSubtype
+            - language
+      - name: groupRelatedEditions
+        in: query
+        description: Whether or not to use FRBR grouping. Default is 'N'
+        required: false
+        schema:
+          type: string
+          enum:
+          - Y
+          - N
+      - name: orderBy
+        in: query
+        description: result sort key
+        required: false
+        schema:
+          type: string
+          default: bestMatch
+          enum:
+          - recency
+          - bestMatch
+          - creator
+          - publicationDateAsc
+          - publicationDateDesc
+          - mostWidelyHeld
+          - title
+      - name: offset
+        in: query
+        description: start position of the bib records to return (1 based), default 1
+        required: false
+        schema:
+          type: integer
+          format: int32
+          default: 1
+        example: 10
+      - name: limit
+        in: query
+        description: maximum number of records to return, maximum 50, default 10
+        required: false
+        schema:
+          type: integer
+          format: int32
+          default: 10
+        example: 50
+      responses:
+        '200':
+          description: Successful search
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BibBriefResultSet'
+              examples:
+                success-brief-bibs-search:
+                  $ref: '#/components/examples/success-brief-bibs-search'
+        '206':
+          description: Success with partial results
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BibBriefResultSet'
+        '400':
+          description: Invalid query. The request was unacceptable, often due to missing a required parameter.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+              examples:
+                missing-query-parameter:
+                  $ref: '#/components/examples/missing-query-parameter'
+                missing-query-parameter-value:
+                  $ref: '#/components/examples/missing-query-parameter-value'
+                invalid-query-parameter-bad-index:
+                  $ref: '#/components/examples/invalid-query-parameter-bad-index'
+                invalid-query-parameter-bad-facet-name:
+                  $ref: '#/components/examples/invalid-query-parameter-bad-facet-name'
+                invalid-query-parameter-bad-facet-number:
+                  $ref: '#/components/examples/invalid-query-parameter-bad-facet-number'
+                invalid-query-parameter-bad-orderBy:
+                  $ref: '#/components/examples/invalid-query-parameter-bad-orderBy'
+        '405':
+          description: 'Method not supported, see response Allow header'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+              example:
+                $ref: '#/components/examples/method-not-allowed-error'
+        '406':
+          description: 'Not Acceptable - resource can only generate content not acceptable according to the Accept headers sent in the request'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+              example:
+                $ref: '#/components/examples/not-acceptable-error'
+        '500':
+          description: 'Something went wrong (hopfully rare) - please try again'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+      security:
+        - worldcat_metadata_auth:
+            - 'WorldCatMetadataAPI:view_brief_bib'
+  /brief-bibs/{oclcNumber}:
+    get:
+      tags:
+        - Bibliographic Resources
+      summary: Retrieve specific Bibliographic Resource
+      description: Retrieve specific Bibliographic Resource
+      operationId: retrieve-brief-bib
+      parameters:
+        - name: Accept
+          in: header
+          description: Content Type the client supports and is requesting (application/json currently supported)
+          schema:
+            type: string
+            default: application/json
+          required: false
+        - name: oclcNumber
+          in: path
+          description: record OCLC number
+          required: true
+          schema:
+            type: string
+          example: 41266045
+      responses:
+        '200':
+          description: Successful search
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BibRecordBrief'
+              examples:
+                success-brief-bibs-oclcnumber:
+                  $ref: '#/components/examples/success-brief-bibs-oclcnumber'
+                success-brief-bibs-ebook:
+                  $ref: '#/components/examples/success-brief-bibs-ebook'
+                success-brief-bibs-chapter:
+                  $ref: '#/components/examples/success-brief-bibs-chapter'
+                success-brief-bibs-article:
+                  $ref: '#/components/examples/success-brief-bibs-article'
+                success-brief-bibs-digital_article:
+                  $ref: '#/components/examples/success-brief-bibs-digital_article'
+                success-brief-bibs-dissertation:
+                  $ref: '#/components/examples/success-brief-bibs-dissertation'
+                success-brief-bibs-film:
+                  $ref: '#/components/examples/success-brief-bibs-film'
+                success-brief-bibs-painting:
+                  $ref: '#/components/examples/success-brief-bibs-painting'
+                success-brief-bibs-photo:
+                  $ref: '#/components/examples/success-brief-bibs-photo'
+                success-brief-bibs-website:
+                  $ref: '#/components/examples/success-brief-bibs-website'
+        '206':
+          description: Success with partial results
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BibRecordBrief'
+        '400':
+          description: Invalid query. The request was unacceptable, often due to missing a required parameter.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+              examples:
+                invalid-oclc-number:
+                  $ref: '#/components/examples/invalid-oclc-number'
+        '405':
+          description: 'Method not supported, see response Allow header'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+              example:
+                $ref: '#/components/examples/method-not-allowed-error'
+        '406':
+          description: 'Not Acceptable - resource can only generate content not acceptable according to the Accept headers sent in the request'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+              example:
+                $ref: '#/components/examples/not-acceptable-error'
+        '500':
+          description: 'Something went wrong (hopfully rare) - please try again'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+      security:
+        - worldcat_metadata_auth:
+            - 'WorldCatMetadataAPI:view_brief_bib'
+  /brief-bibs/{oclcNumber}/other-editions:
+    get:
+      tags:
+        - Bibliographic Resources
+      summary: Retrieve Other Editions related to a particular Bibliographic Resource
+      description: Retrieve Other Editions related to a particular Bibliographic Resource
+      operationId: retrieve-other-editions
+      parameters:
+        - name: Accept
+          in: header
+          description: Content Type the client supports and is requesting (application/json currently supported)
+          schema:
+            type: string
+            default: application/json
+          required: false
+        - name: oclcNumber
+          in: path
+          description: record OCLC number
+          required: true
+          schema:
+            type: string
+          example: 41266045
+        - name: offset
+          in: query
+          description: start position of the bib records to return (1 based), default 1
+          required: false
+          schema:
+            type: integer
+            format: int32
+            default: 1
+          example: 10
+        - name: limit
+          in: query
+          description: maximum number of records to return, maximum 50, default 10
+          required: false
+          schema:
+            type: integer
+            format: int32
+            default: 10
+          example: 50
+      responses:
+        '200':
+          description: Successful search
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BibBriefResultSet'
+              examples:
+                success-brief-bibs-other-editions:
+                  $ref: '#/components/examples/success-brief-bibs-other-editions'
+        '206':
+          description: Success with partial results
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BibBriefResultSet'
+        '400':
+          description: Invalid query. The request was unacceptable, often due to missing a required parameter.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+              examples:
+                invalid-oclc-number:
+                  $ref: '#/components/examples/invalid-oclc-number'
+        '405':
+          description: 'Method not supported, see response Allow header'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+              example:
+                $ref: '#/components/examples/method-not-allowed-error'
+        '406':
+          description: 'Not Acceptable - resource can only generate content not acceptable according to the Accept headers sent in the request'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+              example:
+                $ref: '#/components/examples/not-acceptable-error'
+        '500':
+          description: 'Something went wrong (hopfully rare) - please try again'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+      security:
+        - worldcat_metadata_auth:
+            - 'WorldCatMetadataAPI:view_brief_bib'
+  /my-holdings/{control-number}:
+    get:
+      tags:
+        - Local Holdings Resources
+      summary: Retrieve LHR Resource
+      description: Retrieve LHR Resource
+      operationId: retrieve-lhr
+      parameters:
+        - name: Accept
+          in: header
+          description: Content Type the client supports and is requesting (application/json currently supported)
+          schema:
+            type: string
+            default: application/json
+          required: false
+        - name: control-number
+          in: path
+          description: LHR control number
+          required: true
+          schema:
+            type: string
+          example: 238374600
+      responses:
+        '200':
+          description: Successful search
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HoldingDetail'
+              examples:
+                success-my-holdings-accession-number:
+                  $ref: '#/components/examples/success-my-holdings-accession-number'  
+        '206':
+          description: Success with partial results
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HoldingDetail'
+        '400':
+          description: Invalid query. The request was unacceptable, often due to missing a required parameter.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+              examples:
+                invalid-accession-number:
+                  $ref: '#/components/examples/invalid-accession-number'                
+        '405':
+          description: 'Method not supported, see response Allow header'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+              example:
+                $ref: '#/components/examples/method-not-allowed-error'                
+        '406':
+          description: 'Not Acceptable - resource can only generate content not acceptable according to the Accept headers sent in the request'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+              example:
+                $ref: '#/components/examples/not-acceptable-error'                
+        '500':
+          description: 'Something went wrong (hopfully rare) - please try again'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+      security:
+        - worldcat_metadata_auth:
+            - 'WorldCatMetadataAPI:view_my_holdings'
+  /my-holdings:
+    get:
+      tags:
+        - Local Holdings Resources
+      summary: Search LHR Resources
+      description: Search LHR Resources
+      operationId: search-lhr
+      parameters:
+        - name: Accept
+          in: header
+          description: Content Type the client supports and is requesting (application/json currently supported)
+          schema:
+            type: string
+          required: false
+        - name: oclcNumber
+          in: query
+          description: OCLC Number
+          required: false
+          schema:
+            type: string
+          example: 41266045  
+        - name: barcode
+          in: query
+          description: barcode
+          required: false
+          schema:
+            type: string
+          example: K123456789  
+        - name: orderBy
+          in: query
+          description: result sort key          
+          required: false
+          schema:
+            type: string
+            default: oclcSymbol
+            enum:
+            - commitmentExpirationDate
+            - location
+            - oclcSymbol
+        - name: offset
+          in: query
+          description: start position of the holding to return (1 based), default 1
+          required: false
+          schema:
+            type: integer
+            format: int32
+            default: 1
+          example: 10
+        - name: limit
+          in: query
+          description: maximum number of holdings to return, maximum 50, default 10
+          required: false
+          schema:
+            type: integer
+            format: int32
+            default: 10
+          example: 50
+      responses:
+        '200':
+          description: Successful search
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HoldingResultSet'
+              examples:
+                success-my-holdings:
+                  $ref: '#/components/examples/success-my-holdings'  
+        '206':
+          description: Success with partial results
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HoldingResultSet'
+        '400':
+          description: Invalid query. The request was unacceptable, often due to missing a required parameter.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+              examples:
+                missing-query-parameter:
+                  $ref: '#/components/examples/missing-query-parameter'
+                missing-query-parameter-value:
+                  $ref: '#/components/examples/missing-query-parameter-value'
+                invalid-query-parameter-bad-orderBy:
+                  $ref: '#/components/examples/invalid-query-parameter-bad-orderBy'
+                invalid-oclc-number:
+                  $ref: '#/components/examples/invalid-oclc-number'                
+        '405':
+          description: 'Method not supported, see response Allow header'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+              example:
+                $ref: '#/components/examples/method-not-allowed-error'                
+        '406':
+          description: 'Not Acceptable - resource can only generate content not acceptable according to the Accept headers sent in the request'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+              example:
+                $ref: '#/components/examples/not-acceptable-error'                
+        '500':
+          description: 'Something went wrong (hopfully rare) - please try again'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+      security:
+        - worldcat_metadata_auth:
+            - 'WorldCatMetadataAPI:view_my_holdings'
+  /retained-holdings:
+    get:
+      tags:
+        - Local Holdings Resources
+      summary: Search for shared print LHR Resources
+      description: Search for shared print LHR Resources
+      operationId: search-retrained-lhr
+      parameters:
+        - name: Accept
+          in: header
+          description: Content Type the client supports and is requesting (application/json currently supported)
+          schema:
+            type: string
+            default: application/json
+          required: false
+        - name: oclcNumber
+          in: query
+          description: OCLC number
+          required: false
+          schema:
+            type: string
+          example: 41266045  
+        - name: barcode
+          in: query
+          description: barcode
+          required: false
+          schema:
+            type: string
+          example: K123456789  
+        - name: heldBy
+          in: query
+          description: institution symbol - may be derive from  incoming API key or compare with associated inst. from incoming API key
+          required: true
+          schema:
+            type: array
+            items:
+              type: string
+          example: TXH    
+        - name: spProgram
+          in: query
+          description: Limiter to restrict the response to bibliographic records associated with a particular shared print program.
+          required: false
+          schema:
+            type: string
+          example: WEST         
+        - name: orderBy
+          in: query
+          description: result sort key
+          required: false
+          schema:
+            type: string
+            default: oclcSymbol
+            enum:
+            - commitmentExpirationDate
+            - location
+            - oclcSymbol
+        - name: offset
+          in: query
+          description: start position of the holding to return (1 based), default 1
+          required: false
+          schema:
+            type: integer
+            format: int32
+            default: 10
+          example: 10  
+        - name: limit
+          in: query
+          description: maximum number of holdings to return, maximum 50, default 10
+          required: false
+          schema:
+            type: integer
+            format: int32
+            default: 10
+          example: 50  
+      responses:
+        '200':
+          description: Successful search
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HoldingResultSet'
+              examples:
+                success-retained-holdings:
+                  $ref: '#/components/examples/success-retained-holdings'
+                success-retained-holdings-monograph:
+                  $ref: '#/components/examples/success-retained-holdings-monograph'                  
+                success-retained-holdings-serial:
+                  $ref: '#/components/examples/success-retained-holdings-serial'
+                success-retained-holdings-serial-2:
+                  $ref: '#/components/examples/success-retained-holdings-serial-2'                                      
+        '206':
+          description: Success with partial results
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HoldingResultSet'
+        '400':
+          description: Invalid query. The request was unacceptable, often due to missing a required parameter.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+              examples:
+                missing-query-parameter:
+                  $ref: '#/components/examples/missing-query-parameter'
+                missing-query-parameter-value:
+                  $ref: '#/components/examples/missing-query-parameter-value'
+                invalid-query-parameter-bad-orderBy:
+                  $ref: '#/components/examples/invalid-query-parameter-bad-orderBy'
+                invalid-oclc-number:
+                  $ref: '#/components/examples/invalid-oclc-number'                
+        '405':
+          description: 'Method not supported, see response Allow header'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+              example:
+                $ref: '#/components/examples/method-not-allowed-error'
+        '406':
+          description: 'Not Acceptable - resource can only generate content not acceptable according to the Accept headers sent in the request'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+              example:
+                $ref: '#/components/examples/not-acceptable-error'  
+        '500':
+          description: 'Something went wrong (hopfully rare) - please try again'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+      security:
+        - worldcat_metadata_auth:
+            - 'WorldCatMetadataAPI:view_retained_holdings'
+components:
+  securitySchemes:
+    worldcat_metadata_auth:
+      type: oauth2
+      flows:
+        clientCredentials:
+          tokenUrl: https://oauth.oclc.org/token
+          scopes:
+            WorldCatMetadataAPI: perform all the operation in the WorldCat Metadata API
+            WorldCatMetadataAPI:view_brief_bib: view brief bibliographic data
+            WorldCatMetadataAPI:view_retained_holdings: view holdings which libraries have chosen to retain
+            WorldCatMetadataAPI:view_summary_holdings: view summary information about library holdings
+            WorldCatMetadataAPI:view_my_holdings: view detailed information about the authentication institution's holdings
+        authorizationCode:
+          authorizationUrl: https://oauth.oclc.org/auth
+          tokenUrl: https://oauth.oclc.org/token
+          scopes:
+            WorldCatMetadataAPI: perform all the operation in the WorldCat Metadata API
+            WorldCatMetadataAPI:view_brief_bib: view brief bibliographic data
+            WorldCatMetadataAPI:view_retained_holdings: view holdings which libraries have chosen to retain
+            WorldCatMetadataAPI:view_summary_holdings: view summary information about library holdings
+            WorldCatMetadataAPI:view_my_holdings: view detailed information about the authentication institution's holdings
+  examples:
+    success-bibs-summary-holdings:
+      summary: successful request for bibs and holdings
+      value: {"numberOfRecords":1,"briefRecords":[{"oclcNumber":"318877925","title":"Simon's cat / by Simon Tofield.","creator":"Simon. Tofield","date":"2009.","language":"eng","generalFormat":"Book","specificFormat":"PrintBook","institutionHolding":{"totalHoldingCount":464, "totalSharedPrintCount": 0}}]}     
+    success-bibs-summary-holdings-2:
+      summary: successful request for bibs and holdings whre there is more than 1 bib returned
+      value: {
+        "numberOfRecords": 3,
+        "briefRecords": [
+            {
+                "oclcNumber": "49569228",
+                "title": "Pride and prejudice",
+                "creator": "Jane Austen",
+                "date": "1990",
+                "language": "eng",
+                "generalFormat": "Book",
+                "specificFormat": "Digital",
+                "publisher": "Oxford University Press",
+                "institutionHolding": {
+                    "totalHoldingCount": 1732,
+                    "totalSharedPrintCount": 0
+                }    
+            },
+            {
+                "oclcNumber": "1105472416",
+                "title": "Pride and prejudice",
+                "creator": "Jane Austen",
+                "date": "1990",
+                "language": "eng",
+                "generalFormat": "Book",
+                "specificFormat": "Digital",
+                "publisher": "Oxford University Press",
+                "institutionHolding": {
+                    "totalHoldingCount": 1,
+                    "totalSharedPrintCount": 0
+                }
+             },
+            {
+                "oclcNumber": "940644121",
+                "title": "Pride and prejudice",
+                "creator": "Jane Austen",
+                "date": "1990",
+                "language": "eng",
+                "generalFormat": "Book",
+                "specificFormat": "Digital",
+                "publisher": "Oxford University Press",
+                "institutionHolding": {
+                    "totalHoldingCount": 1,
+                    "totalSharedPrintCount": 0
+                }
+             }   
+        ]
+    }  
+    success-bibs-retained-holdings:
+      summary: successful request for bibs retained-holdings
+      value: {"numberOfRecords":1,"briefRecords":[{"oclcNumber":"1752384","title":"Human biology.","creator":"Raymond Pearl","date":"1929","language":"eng","generalFormat":"Jrnl","institutionHolding":{"totalHoldingCount":716,"briefHoldings":[{"country":"US","state":"GA","oclcSymbol":"EMU","institutionNumber":"276","institutionName":"EMORY UNIV","illStatus":"S"}]}}]}
+    success-bibs-retained-holdings-monograph:
+      summary: successful request for bibs retained-holdings monograph
+      value: ""               
+    success-bibs-retained-holdings-serial:
+      summary: successful request for bibs retained-holdings serial
+      value: >
+        {
+            "numberOfRecords": 1,
+            "briefRecords": [
+                {
+                    "oclcNumber": "1588319",
+                    "title": "Review of educational research.",
+                    "creator": "Douglas E. Scates",
+                    "date": "1931",
+                    "language": "eng",
+                    "generalFormat": "Jrnl",
+                    "institutionHolding": {
+                        "totalHoldingCount": 1048,
+                        "briefHoldings": [
+                            {
+                                "country": "US",
+                                "state": "IL",
+                                "oclcSymbol": "CRL",
+                                "institutionNumber": "540",
+                                "institutionName": "CENTER FOR RES LIBR",
+                                "illStatus": "N"
+                            }
+                        ]
+                    }
+                }
+            ]
+        }           
+    success-bibs-retained-holdings-serial-2:
+      summary: successful request for bibs retained-holdings serial with enumeration/caption/summary
+      value: >
+        {
+            "numberOfRecords": 1,
+            "briefRecords": [
+                {
+                    "oclcNumber": "1696940",
+                    "title": "The Irish theological quarterly.",
+                    "creator": "St. Patrick's College (Maynooth, Ireland).",
+                    "date": "1906",
+                    "language": "eng",
+                    "generalFormat": "Jrnl",
+                    "institutionHolding": {
+                        "totalHoldingCount": 291,
+                        "briefHoldings": [
+                            {
+                                "country": "US",
+                                "state": "NY",
+                                "oclcSymbol": "VKM",
+                                "institutionNumber": "3368",
+                                "institutionName": "SIENA COL",
+                                "illStatus": "S"
+                            }
+                        ]
+                    }
+                }
+            ]
+        }                  
+    success-brief-bibs-oclcnumber:
+      summary: successful request a brief bib record by OCLC Number
+      value: {
+        "oclcNumber": "318877925",
+        "title": "Simon's cat",
+        "creator": "Simon. Tofield",
+        "date": "2009",
+        "language": "eng",
+        "generalFormat": "Book",
+        "specificFormat": "PrintBook",
+        "edition": "1st ed.",
+        "publisher": "Grand Central Pub."
+        }
+    success-brief-bibs-ebook:
+      summary: OCLC Number for ebook material format
+      value: {
+        "oclcNumber": "43475873",
+        "title": "EBay the smart way : selling, buying, and profiting on the Webʼs #1 auction site",
+        "creator": "Joseph T. Sinclair",
+        "date": "1999.",
+        "language": "eng",
+        "generalFormat": "Book",
+        "specificFormat": "Digital",
+        "publisher": "American Management Association"
+        }
+    success-brief-bibs-chapter:
+      summary: OCLC Number for chapter material format
+      value: {
+        "oclcNumber": "748392933",
+        "title": "Nanomachine computing by quorum sensing",
+        "creator": "Wiedermann J.",
+        "date": "2011",
+        "language": "eng",
+        "generalFormat": "ArtChap",
+        "specificFormat": "Chptr"
+         }
+    success-brief-bibs-article:
+          summary: OCLC Number for article material format
+          value: {
+          "oclcNumber": '806039046',
+          "title": "Where to find it guide 2012.",
+          "date": "2012",
+          "language": "eng",
+          "generalFormat": "ArtChap",
+          "specificFormat": "Artcl"
+          }
+    success-brief-bibs-digital_article:
+          summary: OCLC Number for article material format
+          value: {
+            "oclcNumber":'316235490',
+            "title": "Tables of difference of latitude and departure : constructed to every quarter of a degree of thr [sic] quadrant, and continued from one, to the distance of one hundred miles or chains.",
+            "creator": "J. Robertson",
+            "date": "1785.",
+            "language": "eng",
+            "generalFormat": "ArtChap",
+            "specificFormat": "Digital",
+            "publisher": "Printed and sold by Joseph Crukshank, in Market-Street, between Second and Third-Streets"
+            }
+    success-brief-bibs-dissertation:
+          summary: OCLC Number for dissertation material format
+          value:  {
+            "oclcNumber": '904777276',
+            "title": "The lived experience of long-term unemployment among middle-aged managerial-level U.S. males : a phenomenological study",
+            "creator": "Daniel S. Szuhay",
+            "date": "2014",
+            "language": "eng",
+            "generalFormat": "Book",
+            "specificFormat": "thsis",
+            "publisher": "Pacifica Graduate Institute."
+            }
+    success-brief-bibs-film:
+          summary: OCLC Number for film material format
+          value: {
+            "oclcNumber": '12140861',
+            "title": "Easy street.",
+            "creator": "Charlie Chaplin",
+            "date": "[197-?]",
+            "language": "eng",
+            "generalFormat": "Video",
+            "specificFormat": "Film",
+            "publisher": "Blackhawk Films / Eastin-Phelan Corp."
+            }
+    success-brief-bibs-painting:
+          summary: OCLC Number for painting material format
+          value: {
+            "oclcNumber": "879604262",
+            "title": "Chinese painting & calligraphy.",
+            "creator": "Seattle Art Museum",
+            "date": "2011",
+            "language": "eng",
+            "generalFormat": "Vis",
+            "specificFormat": "Digital",
+            "publisher": "Seattle Art Museum"
+          }
+    success-brief-bibs-photo:
+          summary: OCLC Number for photo material format
+          value: {
+            "oclcNumber": "722875457",
+            "title": "NRCS photo gallery.",
+            "creator": "United States.",
+            "date": "200u",
+            "language": "eng",
+            "generalFormat": "Vis",
+            "specificFormat": "Digital",
+            "publisher": "U.S. Dept. of Agriculture, Natural Resources Conservation Service"
+        }
+    success-brief-bibs-website:
+          summary: OCLC Number for website material format
+          value: {
+            "oclcNumber": "37853368",
+            "title": "Web of science.",
+            "creator": "Institute for Scientific Information",
+            "date": "19uu",
+            "language": "eng",
+            "generalFormat": "Web",
+            "specificFormat": "Digital",
+            "publisher": "Institute for Scientific Information"
+        }
+    success-brief-bibs-search:
+      summary: successful search request for brief-bibs
+      value: {
+      "numberOfRecords": 2,
+      "briefRecords": [
+            {
+              "oclcNumber": "44959645",
+              "title": "Pride and prejudice.",
+              "creator": "Jane Austen",
+              "date": "199u",
+              "language": "eng",
+              "generalFormat": "Book",
+              "specificFormat": "Digital",
+              "publisher": "Project Gutenberg"
+            },
+            {
+              "oclcNumber": "1103229133",
+              "title": "Pride and Prejudice [eBook - RBdigital].",
+              "creator": "Jane Austen",
+              "date": "1998",
+              "language": "eng",
+              "generalFormat": "Book",
+              "specificFormat": "Digital",
+              "publisher": "Project Gutenberg Literary Archive Foundation"
+            }
+      ]
+    }
+    success-brief-bibs-other-editions:
+      summary: successful request for brief-bibs other editions
+      value: {
+      "numberOfRecords": 61,
+      "briefRecords": [
+        {
+          "oclcNumber": "318877925",
+          "title": "Simon's cat / by Simon Tofield.",
+          "creator": "Simon. Tofield",
+          "date": "2009",
+          "language": "eng",
+          "generalFormat": "Book",
+          "specificFormat": "PrintBook",
+          "edition": "1st ed.",
+          "publisher": "Grand Central Pub."
+        },
+        {
+        "oclcNumber": "668192366",
+        "title": "Simon's cat : beyond the fence.",
+        "creator": "Simon. Tofield",
+        "date": "2011",
+        "language": "eng",
+        "generalFormat": "Book",
+        "specificFormat": "PrintBook",
+        "edition": "1st ed.",
+        "publisher": "Grand Central Pub."
+        },
+       {
+        "oclcNumber": "426122879",
+        "title": "Simon's cat.",
+        "creator": "Simon. Tofield",
+        "date": "2009",
+        "language": "eng",
+        "generalFormat": "Book",
+        "specificFormat": "PrintBook",
+        "publisher": "Canongate"
+        },
+        {
+        "oclcNumber": "698261374",
+        "title": "Simon's cat : beyond the fence.",
+        "creator": "Simon. Tofield",
+        "date": "2010",
+        "language": "eng",
+        "generalFormat": "Book",
+        "specificFormat": "Digital",
+        "publisher": "Canongate"
+        },
+        {
+        "oclcNumber": "716443553",
+        "title": "Simon's cat beyond the fence.",
+        "creator": "Simon. Tofield",
+        "date": "2010",
+        "language": "eng",
+        "generalFormat": "Book",
+        "specificFormat": "PrintBook",
+        "publisher": "Canongate"
+        },
+        {
+        "oclcNumber": "869821272",
+        "title": "Beyond the fence.",
+        "creator": "Simon Tofield",
+        "date": "2011",
+        "language": "eng",
+        "generalFormat": "Book",
+        "specificFormat": "Digital",
+        "publisher": "Grand Central Publishing"
+        },
+        {
+        "oclcNumber": "698364575",
+        "title": "Simon's cat.",
+        "creator": "Simon. Tofield",
+        "date": "2009",
+        "language": "eng",
+        "generalFormat": "Book",
+        "specificFormat": "Digital",
+        "publisher": "Canongate"
+        },
+        {
+        "oclcNumber": "471205692",
+        "title": "Simon's cat.",
+        "creator": "Simon. Tofield",
+        "date": "2009",
+        "language": "eng",
+        "generalFormat": "Book",
+        "specificFormat": "PrintBook",
+        "publisher": "Canongate"
+        },
+        {
+        "oclcNumber": "883250952",
+        "title": "Simon's cat.",
+        "creator": "Simon Tofield",
+        "date": "2009",
+        "language": "eng",
+        "generalFormat": "Book",
+        "specificFormat": "Digital",
+        "edition": "First edition.",
+        "publisher": "Grand Central Publishing"
+        },
+        {
+        "oclcNumber": "637439104",
+        "title": "Simon's cat : beyond the fence.",
+        "creator": "Simon. Tofield",
+        "date": "2010",
+        "language": "eng",
+        "generalFormat": "Book",
+        "specificFormat": "PrintBook",
+        "publisher": "Penguin Canada"
+        }
+      ]
+    }                  
+    success-my-holdings-accession-number:
+      summary: successful request for holding by accession number
+      value: >
+       {
+          "lhrControlNumber": "132422447",
+          "lhrDateEntered": "20190816",
+          "lhrLastUpdated": "20190816",
+          "oclcNumber": "246197114",
+          "format": "zu",
+          "location": {
+              "holdingLocation": "OCWMS",
+              "sublocationCollection": "CENT",
+              "shelvingLocation": "CENT-STACKS"
+          },
+          "copyNumber": "1",
+          "callNumber": {
+              "displayCallNumber": "CATS",
+              "classificationPart": "CATS"
+          },
+          "hasSharedPrintCommitment": "N",
+          "summary": "Local holdings available.",
+          "holdingParts": [{
+              "pieceDesignation": "CR963528",
+              "temporaryLocation": "présêlection"
+          }]
+        }
+    success-my-holdings:
+      summary: successful request for holdings
+      value: >
+        {
+          "numberOfHoldings": 1,
+          "detailedHoldings": [{
+              "lhrControlNumber": "132422447",
+              "lhrDateEntered": "20190816",
+              "lhrLastUpdated": "20190816",
+              "oclcNumber": "246197114",
+              "format": "zu",
+              "location": {
+                  "holdingLocation": "OCWMS",
+                  "sublocationCollection": "CENT",
+                  "shelvingLocation": "CENT-STACKS"
+              },
+              "copyNumber": "1",
+              "callNumber": {
+                  "displayCallNumber": "CATS",
+                  "classificationPart": "CATS"
+              },
+              "hasSharedPrintCommitment": "N",
+              "summary": "Local holdings available.",
+              "holdingParts": [{"pieceDesignation": "CR963528"}]
+          }]
+        }
+    success-retained-holdings:
+      summary: successful request for retained holdings
+      value: >
+        {
+        "numberOfHoldings": 18,
+        "detailedHoldings": [
+            {
+                "lhrControlNumber": "168860541",
+                "lhrDateEntered": "20180928",
+                "lhrLastUpdated": "20180928",
+                "oclcNumber": "25748966",
+                "format": "zu",
+                "location": {
+                    "holdingLocation": "ANZSL",
+                    "sublocationCollection": "ANZS",
+                    "shelvingLocation": "Adult Non-Fiction"
+                },
+                "copyNumber": "1",
+                "callNumber": {
+                    "displayCallNumber": "655 ART",
+                    "classificationPart": "655",
+                    "suffixes": ["ART"]
+                },
+                "hasSharedPrintCommitment": "Y",
+                "summary": "Local Holdings Available.",
+                "holdingParts": [{"pieceDesignation": "5445454"}]
+            },
+            {
+                "lhrControlNumber": "184074541",
+                "lhrDateEntered": "20170807",
+                "lhrLastUpdated": "20170807",
+                "oclcNumber": "880521265",
+                "format": "zu",
+                "location": {
+                    "holdingLocation": "ANZSL",
+                    "sublocationCollection": "WEST",
+                    "shelvingLocation": "Junior Fiction"
+                },
+                "copyNumber": "1",
+                "callNumber": {
+                    "displayCallNumber": "PB 823 WIL",
+                    "classificationPart": "823",
+                    "prefixes": ["PB"],
+                    "suffixes": ["WIL"]
+                },
+                "hasSharedPrintCommitment": "Y",
+                "summary": "Local Holdings Available.",
+                "holdingParts": [{"pieceDesignation": "38273625"}]
+            },
+            {
+                "lhrControlNumber": "161419350",
+                "lhrDateEntered": "20180928",
+                "lhrLastUpdated": "20180928",
+                "oclcNumber": "57358293",
+                "format": "zu",
+                "location": {
+                    "holdingLocation": "ANZSL",
+                    "sublocationCollection": "ANZS",
+                    "shelvingLocation": "Junior Non-Fiction"
+                },
+                "copyNumber": "1",
+                "callNumber": {
+                    "displayCallNumber": "JF ROW",
+                    "classificationPart": "ROW",
+                    "prefixes": ["JF"]
+                },
+                "hasSharedPrintCommitment": "Y",
+                "summary": "Local Holdings Available.",
+                "holdingParts": [{"pieceDesignation": "741258"}]
+            },
+            {
+                "lhrControlNumber": "103218573",
+                "lhrDateEntered": "20190328",
+                "lhrLastUpdated": "20190328",
+                "oclcNumber": "38374762",
+                "format": "zu",
+                "location": {
+                    "holdingLocation": "ANZSL",
+                    "sublocationCollection": "ANZS",
+                    "shelvingLocation": "Reference"
+                },
+                "callNumber": {
+                    "displayCallNumber": "REF 346.94052 REST",
+                    "classificationPart": "REF 346.94052 REST"
+                },
+                "hasSharedPrintCommitment": "Y",
+                "summary": "Local Holdings Available.",
+                "holdingParts": [{"pieceDesignation": "980474432"}]
+            },
+            {
+                "lhrControlNumber": "103216969",
+                "lhrDateEntered": "20190328",
+                "lhrLastUpdated": "20190328",
+                "oclcNumber": "877594832",
+                "format": "zu",
+                "location": {
+                    "holdingLocation": "ANZSL",
+                    "sublocationCollection": "ANZS",
+                    "shelvingLocation": "Junior Paperback"
+                },
+                "callNumber": {
+                    "displayCallNumber": "JPB DICK",
+                    "classificationPart": "JPB DICK"
+                },
+                "hasSharedPrintCommitment": "Y",
+                "summary": "Local Holdings Available.",
+                "holdingParts": [{"pieceDesignation": "980391610"}]
+            },
+            {
+                "lhrControlNumber": "195202980",
+                "lhrDateEntered": "20190328",
+                "lhrLastUpdated": "20190328",
+                "oclcNumber": "77485772",
+                "format": "zu",
+                "location": {
+                    "holdingLocation": "ANZSL",
+                    "sublocationCollection": "ANZS",
+                    "shelvingLocation": "Junior Fiction"
+                },
+                "copyNumber": "1",
+                "callNumber": {
+                    "displayCallNumber": "823 BEI",
+                    "classificationPart": "823",
+                    "suffixes": ["BEI"]
+                },
+                "hasSharedPrintCommitment": "Y",
+                "sharedPrintCommitments": [
+                    {
+                        "actionNote": "digitized",
+                        "materialsSpecified": "Scenario 5a",
+                        "institution": "ESBiUD",
+                        "dateOfAction": "20190212",
+                        "commitmentExpirationDate": "20201212",
+                        "methodOfAction": "known A",
+                        "status": "current",
+                        "publicNote": "LHR-3388"
+                    },
+                    {
+                        "actionNote": "condition reviewed",
+                        "materialsSpecified": "Scenario 5b",
+                        "institution": "ESBiUD",
+                        "dateOfAction": "20190414 20190515",
+                        "commitmentExpirationDate": "20211111 20211010",
+                        "methodOfAction": "unknown unknown B",
+                        "status": "not current",
+                        "publicNote": "LHR-3388"
+                    }
+                ],
+                "summary": "Local Holdings Available.",
+                "holdingParts": [{"pieceDesignation": "201010"}]
+            },
+            {
+                "lhrControlNumber": "103217002",
+                "lhrDateEntered": "20191029",
+                "lhrLastUpdated": "20191029",
+                "oclcNumber": "40064472",
+                "format": "zu",
+                "location": {
+                    "holdingLocation": "ANZSL",
+                    "sublocationCollection": "ANZS",
+                    "shelvingLocation": "Junior Fiction"
+                },
+                "callNumber": {
+                    "displayCallNumber": "F LEW",
+                    "classificationPart": "F LEW"
+                },
+                "hasSharedPrintCommitment": "Y",
+                "sharedPrintCommitments": [{
+                    "actionNote": "committed to retain",
+                    "materialsSpecified": "none",
+                    "institution": "ESBiUD",
+                    "dateOfAction": "20190311",
+                    "commitmentExpirationDate": "20201225",
+                    "authorization": "CLOCKSS",
+                    "methodOfAction": "known",
+                    "status": "current",
+                    "publicNote": "LHR-3486"
+                }],
+                "summary": "Local Holdings Available.",
+                "holdingParts": [{"pieceDesignation": "61008"}]
+            },
+            {
+                "lhrControlNumber": "103349801",
+                "lhrDateEntered": "20191115",
+                "lhrLastUpdated": "20191115",
+                "oclcNumber": "806097045",
+                "format": "zu",
+                "location": {
+                    "holdingLocation": "ANZSL",
+                    "sublocationCollection": "ANZS",
+                    "shelvingLocation": "Music Cassette"
+                },
+                "callNumber": {
+                    "displayCallNumber": "TALKING BOOK CORN",
+                    "classificationPart": "TALKING BOOK CORN"
+                },
+                "hasSharedPrintCommitment": "Y",
+                "sharedPrintCommitments": [{
+                    "actionNote": "committed to retain",
+                    "materialsSpecified": "none",
+                    "institution": "ESBiUD",
+                    "dateOfAction": "20190311",
+                    "commitmentExpirationDate": "20201225",
+                    "authorization": "CLOCKSS",
+                    "methodOfAction": "known",
+                    "status": "current",
+                    "publicNote": "update"
+                }],
+                "summary": "Local Holdings Available.",
+                "holdingParts": [{"pieceDesignation": "980378205"}]
+            },
+            {
+                "lhrControlNumber": "225635989",
+                "lhrDateEntered": "20191115",
+                "lhrLastUpdated": "20191115",
+                "oclcNumber": "809427327",
+                "format": "zu",
+                "location": {
+                    "holdingLocation": "ANZSL",
+                    "sublocationCollection": "ANZS"
+                },
+                "hasSharedPrintCommitment": "Y",
+                "sharedPrintCommitments": [{
+                    "actionNote": "committed to retain",
+                    "materialsSpecified": "none",
+                    "institution": "ESBiUD",
+                    "dateOfAction": "20190311",
+                    "commitmentExpirationDate": "20201225",
+                    "authorization": "CLOCKSS",
+                    "methodOfAction": "known",
+                    "status": "current",
+                    "publicNote": "update"
+                }],
+                "summary": "Local Holdings Available."
+            },
+            {
+                "lhrControlNumber": "187490232",
+                "lhrDateEntered": "20190328",
+                "lhrLastUpdated": "20190328",
+                "oclcNumber": "870425058",
+                "format": "zu",
+                "location": {
+                    "holdingLocation": "ANZSL",
+                    "sublocationCollection": "ANZS",
+                    "shelvingLocation": "Junior Non-Fiction"
+                },
+                "copyNumber": "1",
+                "callNumber": {
+                    "displayCallNumber": "933.05092 TRU",
+                    "classificationPart": "933.05092",
+                    "suffixes": ["TRU"]
+                },
+                "hasSharedPrintCommitment": "Y",
+                "sharedPrintCommitments": [{
+                    "actionNote": "digitized",
+                    "materialsSpecified": "Scenario 3a",
+                    "institution": "ESBiUD",
+                    "dateOfAction": "20190311 20190212",
+                    "commitmentExpirationDate": "20201225 20201212",
+                    "methodOfAction": "known known A",
+                    "status": "current",
+                    "publicNote": "LHR-3388"
+                }],
+                "summary": "Local Holdings Available.",
+                "holdingParts": [{"pieceDesignation": "564474"}]
+            }
+        ]
+        }    
+    success-retained-holdings-monograph:
+      summary: return retained holdings for a monograph
+      value: >
+          {
+            "numberOfHoldings": 1,
+            "detailedHoldings": [
+                {
+                    "lhrControlNumber": "184757025",
+                    "lhrDateEntered": "20171208",
+                    "lhrLastUpdated": "20171208",
+                    "oclcNumber": "650",
+                    "format": "zu",
+                    "location": {
+                        "holdingLocation": "NKF",
+                        "sublocationCollection": "NKFA",
+                        "shelvingLocation": "Stacks"
+                    },
+                    "callNumber": {
+                        "displayCallNumber": "QA9.F85",
+                        "classificationPart": "QA9.F85"
+                    },
+                    "hasSharedPrintCommitment": "Y",
+                    "sharedPrintCommitments": [
+                        {
+                            "actionNote": "committed to retain",
+                            "institution": "MChiL",
+                            "dateOfAction": "20160630",
+                            "commitmentExpirationDate": "20310630",
+                            "authorization": "EAST",
+                            "uri": "http://eastlibraries.org/retained-materials"
+                        }
+                    ],
+                    "summary": "Local Holdings Available.",
+                    "holdingParts": [
+                        {
+                            "pieceDesignation": "30594001082474"
+                        }
+                    ]
+                }
+            ]
+          }
+    success-retained-holdings-serial:
+      summary: return retained holdings for a serial
+      value: >
+        {
+            "numberOfHoldings": 1,
+            "detailedHoldings": [
+                {
+                    "lhrControlNumber": "293921067",
+                    "lhrDateEntered": "20200122",
+                    "lhrLastUpdated": "20200122",
+                    "oclcNumber": "1588319",
+                    "format": "zu",
+                    "location": {
+                        "holdingLocation": "CRL",
+                        "sublocationCollection": "JSTR"
+                    },
+                    "hasSharedPrintCommitment": "Y",
+                    "sharedPrintCommitments": [
+                        {
+                            "actionNote": "condition reviewed",
+                            "materialsSpecified": "v.1-v.80 (1931-2010)",
+                            "institution": "ICRL",
+                            "dateOfAction": "20110101",
+                            "methodOfAction": "issue-level validation",
+                            "status": "marginalia$torn",
+                            "publicNote": "marginalia v.40:590,592,594-596;v.42:396,153-159;v.44:463;v.45:211;v.46:189,196-197,199;v.49:153-166,168$torn pages v.49:pp.62-64"
+                        },
+                        {
+                            "actionNote": "committed to retain",
+                            "materialsSpecified": "v.1-v.80 (1931-2010)",
+                            "institution": "ICRL",
+                            "dateOfAction": "20110101",
+                            "commitmentExpirationDate": "20501231",
+                            "authorization": "CRLJSTOR",
+                            "siteOfAction": "CRLAA",
+                            "uri": "http://www.crl.edu/archiving-preservation/print-archives/crl-administered/jstor"
+                        }
+                    ],
+                    "summary": "Local Holdings Available."
+                }
+            ]
+        }
+    success-retained-holdings-serial-2:
+      summary: return retained holdings for a serial
+      value: >
+        {
+          "numberOfHoldings": 1,
+          "detailedHoldings": [
+              {
+                  "lhrControlNumber": "2892929",
+                  "lhrDateEntered": "20200505",
+                  "lhrLastUpdated": "20200505",
+                  "oclcNumber": "1696940",
+                  "format": "ta",
+                  "location": {
+                      "holdingLocation": "VKM",
+                      "sublocationCollection": "VKMA"
+                  },
+                  "hasSharedPrintCommitment": "Y",
+                  "sharedPrintCommitments": [
+                      {
+                          "actionNote": "completeness reviewed",
+                          "materialsSpecified": "v.1-5 (1906-1910), v.19 (1952), v.21-25 (1954-1958), v.27 (1960), v.29 (1962), v.32-42 (1965-1975), v.45-56 (1978-1990), v.58-75 (1992-2010)",
+                          "institution": "NLouvS",
+                          "dateOfAction": "20160630",
+                          "commitmentExpirationDate": "20310630",
+                          "methodOfAction": "volume-level validation"
+                      },
+                      {
+                          "actionNote": "committed to retain",
+                          "materialsSpecified": "v.1-5 (1906-1910), v.19 (1952), v.21-25 (1954-1958), v.27 (1960), v.29 (1962), v.32-42 (1965-1975), v.45-56 (1978-1990), v.58-75 (1992-2010)",
+                          "institution": "NLouvS",
+                          "dateOfAction": "20160630",
+                          "commitmentExpirationDate": "20310630",
+                          "authorization": "east",
+                          "uri": "https://eastlibraries.org/retained-materials"
+                      }
+                  ],
+                  "summary": "v.1(1906)-v.5(1910),v.19(1952),v.21(1954)-v.25(1958),v.27(1960),v.29(1962),v.32(1965)-v.42(1975),v.45(1978)-v.56(1990),v.58(1992)-v.75(2010)",
+                  "holdingParts": [
+                      {
+                          "linkingAndSequenceNumber": "1.1",
+                          "enumerations": [
+                              {
+                                  "caption": "v.",
+                                  "value": "1-5"
+                              }
+                          ],
+                          "chronologies": [
+                              {
+                                  "caption": "(year)",
+                                  "value": "1906-1910"
+                              }
+                          ],
+                          "yearRanges": [
+                              {
+                                  "from": "1906",
+                                  "to": "1910"
+                              }
+                          ],
+                          "volumeRanges": [
+                              {
+                                  "from": "1",
+                                  "to": "5"
+                              }
+                          ]
+                      },
+                      {
+                          "linkingAndSequenceNumber": "1.2",
+                          "enumerations": [
+                              {
+                                  "caption": "v.",
+                                  "value": "19"
+                              }
+                          ],
+                          "chronologies": [
+                              {
+                                  "caption": "(year)",
+                                  "value": "1952"
+                              }
+                          ]
+                      },
+                      {
+                          "linkingAndSequenceNumber": "1.3",
+                          "enumerations": [
+                              {
+                                  "caption": "v.",
+                                  "value": "21-25"
+                              }
+                          ],
+                          "chronologies": [
+                              {
+                                  "caption": "(year)",
+                                  "value": "1954-1958"
+                              }
+                          ],
+                          "yearRanges": [
+                              {
+                                  "from": "1954",
+                                  "to": "1958"
+                              }
+                          ],
+                          "volumeRanges": [
+                              {
+                                  "from": "21",
+                                  "to": "25"
+                              }
+                          ]
+                      },
+                      {
+                          "linkingAndSequenceNumber": "1.4",
+                          "enumerations": [
+                              {
+                                  "caption": "v.",
+                                  "value": "27"
+                              }
+                          ],
+                          "chronologies": [
+                              {
+                                  "caption": "(year)",
+                                  "value": "1960"
+                              }
+                          ]
+                      },
+                      {
+                          "linkingAndSequenceNumber": "1.5",
+                          "enumerations": [
+                              {
+                                  "caption": "v.",
+                                  "value": "29"
+                              }
+                          ],
+                          "chronologies": [
+                              {
+                                  "caption": "(year)",
+                                  "value": "1962"
+                              }
+                          ]
+                      },
+                      {
+                          "linkingAndSequenceNumber": "1.6",
+                          "enumerations": [
+                              {
+                                  "caption": "v.",
+                                  "value": "32-42"
+                              }
+                          ],
+                          "chronologies": [
+                              {
+                                  "caption": "(year)",
+                                  "value": "1965-1975"
+                              }
+                          ],
+                          "yearRanges": [
+                              {
+                                  "from": "1965",
+                                  "to": "1975"
+                              }
+                          ],
+                          "volumeRanges": [
+                              {
+                                  "from": "32",
+                                  "to": "42"
+                              }
+                          ]
+                      },
+                      {
+                          "linkingAndSequenceNumber": "1.7",
+                          "enumerations": [
+                              {
+                                  "caption": "v.",
+                                  "value": "45-56"
+                              }
+                          ],
+                          "chronologies": [
+                              {
+                                  "caption": "(year)",
+                                  "value": "1978-1990"
+                              }
+                          ],
+                          "yearRanges": [
+                              {
+                                  "from": "1978",
+                                  "to": "1990"
+                              }
+                          ],
+                          "volumeRanges": [
+                              {
+                                  "from": "45",
+                                  "to": "56"
+                              }
+                          ]
+                      },
+                      {
+                          "linkingAndSequenceNumber": "1.8",
+                          "enumerations": [
+                              {
+                                  "caption": "v.",
+                                  "value": "58-75"
+                              }
+                          ],
+                          "chronologies": [
+                              {
+                                  "caption": "(year)",
+                                  "value": "1992-2010"
+                              }
+                          ],
+                          "yearRanges": [
+                              {
+                                  "from": "1992",
+                                  "to": "2010"
+                              }
+                          ],
+                          "volumeRanges": [
+                              {
+                                  "from": "58",
+                                  "to": "75"
+                              }
+                          ]
+                      }
+                  ]
+              }
+          ]
+        }                           
+    unauthorized:
+      summary: Error returned when valid API credentials not sent or invalid
+      value: {"message": "Unauthorized"}
+    forbidden:
+      summary: Error returned when API credentials not for resource
+      value: {"message": "Forbidden"}
+    method-not-allowed-error:
+      summary: Error when invalid HTTP method used
+      value: {"title": "NOT_ALLOWED", "detail": "POST method not allowed"}
+    not-acceptable-error:
+      summary: Error when media type in Accept header not supported
+      value: {"title": "NOT_ACCEPTABLE", "detail": "Media type application/xml not supported. Supported media types: application/json"}
+    missing-query-parameter:
+      summary: Error returned when required query parameter not sent
+      value: {"type": "MISSING_QUERY_PARAMETER", "title": "Validation Failure", "detail": "Required String parameter 'q' is not present"}
+    missing-query-parameter-heldby-limit:
+      summary: Error returned when a required query parameter not sent
+      value: {"type": "MISSING_QUERY_PARAMETER", "title": "Validation Failure", "detail": "At least one group of items must be present in the request. One of following groups of fields is required: heldInCountry or lat and lon"}
+    missing-query-parameter-heldby:
+      summary: Error returned when a required query parameter not sent
+      value: {"type": "MISSING_QUERY_PARAMETER", "title": "Validation Failure", "detail": "At least one item must be present in the request. One of following fields is required: heldByGroup, heldBy"}          
+    missing-query-parameter-value:
+      summary: Error returned when query parameter value not valid
+      value: {"type": "INVALID_QUERY_PARAMETER_VALUE", "title": "Validation Failure", "detail": "Query term is not provided."}
+    invalid-query-parameter-bad-index:
+      summary: Error returned when q parameter contains invalid index
+      value: {"type": "INVALID_QUERY_PARAMETER_VALUE", "title": "Validation Failure", "detail": "Search term 'mt:doc' is invalid. Following indexes are not allowed: [dd=, dd:, yr=, yr:, li=, li:, ln=, ln:, ll=, ll:, mt=, mt:, cs=, cs:, x0=, x0:, x4=, x4:]"}
+    invalid-query-parameter-bad-facet-name:
+      summary: Error returned when facet parameter contains invalid value
+      value: {"type": "INVALID_QUERY_PARAMETER_VALUE", "title": "Validation Failure", "detail": "Facet name 'author' is invalid. Acceptable facet name: [datePublished, creator, itemType, subject, genre, itemSubType, language]"}      
+    invalid-query-parameter-bad-facet-number:
+      summary: Error returned when facet parameter contains invalid value
+      value: {"type": "INVALID_QUERY_PARAMETER_VALUE", "title": "Validation Failure", "detail": "Number of facet is not numeric."}
+    invalid-query-parameter-bad-orderBy:
+      summary: Error returned when orderBy parameter contains invalid value
+      value: {"type": "INVALID_QUERY_PARAMETER_VALUE", "title": "Validation Failure", "detail": "orderBy value 'somekey' is invalid. Acceptable orderBy values: [recency, bestMatch, creator, publicationDateAsc, publicationDateDesc, mostWidelyHeld, title]"}
+    invalid-oclc-number:
+      summary: Error returned when oclc number isn't valid
+      value: {"type": "INVALID_QUERY_PARAMETER_VALUE", "title": "Validation Failure", "detail": "oclcNumber must be a positive whole number"}      
+    invalid-accession-number:
+      summary: Error returned when accession number isn't valid
+      value: {"type": "INVALID_QUERY_PARAMETER_VALUE", "title": "Validation Failure", "detail": "accession number must be a positive whole number"}      
+  schemas:
+    InstitutionHolding:
+      type: object
+      properties:
+        totalHoldingCount:
+          description: Number of holdings for this item [Holdings/TotalLibCount || FRBRHoldings/B]
+          type: integer
+          format: int32
+        totalWorksHoldingCount:
+          description: Number of holdings in the workset [FRBRHoldings/B]
+          type: integer
+          format: int32
+        totalSharedPrintCount:
+          description: Number of retentions for this item
+          type: integer
+          format: int32            
+      oneOf:          
+        - $ref: '#/components/schemas/briefHoldings'
+        - $ref: '#/components/schemas/detailedHoldings'
+        - $ref: '#/components/schemas/editionsHoldings'
+    briefHoldings:
+      type: array
+      items:
+        $ref: '#/components/schemas/HoldingBrief'
+    detailedHoldings:
+      type: array
+      items:
+        $ref: '#/components/schemas/HoldingDetail'
+    editionsHoldings:
+      type: array
+      items:
+        $ref: '#/components/schemas/Edition'
+    Edition:
+      type: object
+      properties:
+        oclcNumber:
+          description: the oclc number of this edition
+          type: string
+        editionHolding:
+          description: the holdings on this edition
+          type: object
+          properties:
+            oclcSymbol:
+              type: string
+            institutionLink:
+              type: string                
+    Problem:
+      type: object
+      description: RFC 7807 description of an error.
+      properties:
+        type:
+          description: A URI reference [RFC3986] that identifies the problem type. (COMMON URIs TBD)
+          type: string
+          format: uri
+        title:
+          description: A short, human-readable summary of the problem type.
+          type: string
+        instance:
+          description: A URI reference that identifies the specific occurrence of the problem.
+          type: string
+        detail:
+          description: A human-readable explanation specific to this occurrence of the problem.,
+          type: string
+        invalidParams:
+          description: An array of validation errors.
+          type: array
+          items:
+            description: The validation error descriptor.
+            type: object
+            properties:
+              path:
+                type: string
+              name:
+                type: string
+              reason:
+                type: string
+    BibRecordBrief:
+      type: object
+      properties:
+        oclcNumber:
+          type: string
+        title:
+          type: string
+        creator:
+          type: string
+        date:
+          type: string
+        language:
+          type: string
+        generalFormat:
+          type: string
+        specificFormat:
+          type: string
+        institutionHolding:
+          $ref: '#/components/schemas/InstitutionHolding'
+    HoldingBrief:
+      type: object
+      properties:
+        country:
+          description: Country of holding institution [Holdings/Library/Country]
+          type: string
+        state:
+          description: State of holding institution [Holdings/Library/State]
+          type: string
+        oclcSymbol:
+          description: Oclc Symbol of holding institution [Holdings/Library/InstSym]
+          type: string
+        institutionNumber:
+          description: Oclc Number of holding institution [Holdings/Library/InstNum]
+          type: string
+        institutionName:
+          description: Name of holding institution [Holdings/Library/InstName]
+          type: string
+        distance:
+          description: Distance from location if lat/log was specified
+          type: string
+        self:
+          description: URI to find more info about the institution
+          type: string
+          format: uri
+        illStatus:
+          description: ILL status [Holdings/Library/ILLStatus]
+          type: string
+        illGroup:
+          description: ILL group [Holdings/Library/ILLGroup]
+          type: string
+    HoldingDetail:
+      type: object
+      properties:
+        lhrControlNumber:
+          description: LHR Control Number [LHR -> HldDetRec/c001]
+          type: string
+        lhrDateEntered:
+          description: LHR Date Entered [LHR -> HldDetRec/Admin/CreateDate]
+          type: string
+        lhrLastUpdated:
+          description: LHR Date Last Used [LHR -> HldDetRec/Admin/ReplacedDate]
+          type: string
+        oclcNumber:
+          description: OCLC Number [LHR -> HldDetRec/c004]
+          type: string
+        format:
+          description: material format [LHR -> HldDetRec/c007]
+          type: string
+        location:
+          $ref: '#/components/schemas/HoldingLocation'
+        copyNumber:
+          description: copy number [LHR -> HldDetRec/v852st]
+          type: string
+        callNumber:
+          $ref: '#/components/schemas/CallNumber'
+        lendingPolicy:
+          description: local lending policy [LHR -> HldDetRec/Admin/Lend]
+          type: string
+        hasSharedPrintCommitment:
+          description: institution has shared print commitment [Holdings/LibHasSharedPrint || LHR -> HldDetRec/Admin/SPReg]
+          type: string
+          enum:
+            - Y
+            - N
+        sharedPrintCommitments:
+          description: shared print details [LHR -> HldDetRec/v583]
+          type: array
+          items:
+            $ref: '#/components/schemas/SharedPrintCommitment'
+        summary:
+          description: summary statement [LHR -> HldSummRec/v966sa]
+          type: string
+        holdingParts:
+          description: Textual Holding [LHR -> HldDetRec/v866,v867,v868] Item Information Holding [LHR -> HldDetRec/v876,v877,v878] Enumeration Chronology Holding [LHR -> HldDetRec/v863,v864,v865]
+          type: array
+          items:
+            $ref: '#/components/schemas/HoldingPart'
+    SharedPrintCommitment:
+      type: object
+      properties:
+        actionNote:
+          description: Action Note [LHR -> HldDetRec/v583sa]
+          type: string
+        materialsSpecified:
+          description: Materials Sepcified [LHR -> HldDetRec/v583s3]
+          type: string
+        institution:
+          description: Institution to which applies [LHR -> HldDetRec/v583s5]
+          type: string
+        dateOfAction:
+          description: date of action [LHR -> HldDetRec/v583sc]
+          type: string
+        commitmentExpirationDate:
+          description: commitment expiration date [LHR -> HldDetRec/v583sd]
+          type: string
+        authorization:
+          description: Authorization [LHR -> HldDetRec/v583sf]
+          type: string
+        methodOfAction:
+          description: Method of Action [LHR -> HldDetRec/v583si]
+          type: string
+        siteOfAction:
+          description: Site of Action [LHR -> HldDetRec/v583sj]
+          type: string
+        status:
+          description: Status [LHR -> HldDetRec/v583sl]
+          type: string
+        uri:
+          description: URI [LHR -> HldDetRec/v583su]
+          type: string
+        publicNote:
+          description: Public Note [LHR -> HldDetRec/v583sz]
+          type: string
+    HoldingPart:
+      type: object
+      properties:
+        linkingAndSequenceNumber:
+          description: Field link and sequence number [852/863-865/866-868/876-878 | s8]
+          type: string
+        summaryOfHoldings:
+          description: Summary of Holdings [https://www.loc.gov/marc/holdings/echdcntf.html]
+          type: string
+        enumerations:
+          description: Enumerations [853-855/863-865 |a-h]
+          type: array
+          items:
+            $ref: '#/components/schemas/CaptionValuePair'
+        chronologies:
+          description: Chronologies [853-855/863-865 |i-v]
+          type: array
+          items:
+            $ref: '#/components/schemas/CaptionValuePair'
+        textualHoldings:
+          description: Textual holdings [866-868 |a]
+          type: string
+        itemMaterialSpecified:
+          description: Item material [876-878 |3]
+          type: string
+        pieceDesignation:
+          description: Piece Designation [852/863-865/866-868/876-878 |p]
+          type: string
+        cancelledPieceDesignations:
+          description: Cancelled Piece Designation [876-878 |r]
+          type: array
+          items:
+            type: string
+        temporaryLocation:
+          description: Temporary location [876-878 |l]
+          type: string
+        publicNotes:
+          description: Public notes [852/863-865/866-868/876-878 |z]
+          type: array
+          items:
+            type: string
+        yearRanges:
+          description: Year as Range [si]
+          type: array
+          items:
+            $ref: '#/components/schemas/HoldingRange'
+        volumeRanges:
+          description: Volume Number As Range [sb]
+          type: array
+          items:
+            $ref: '#/components/schemas/HoldingRange'
+    CaptionValuePair:
+      description: Caption-Value Pair
+      type: object
+      properties:
+        caption:
+          type: string
+        value:
+          type: string
+    HoldingRange:
+      type: object
+      properties:
+        from:
+          type: string
+        to:
+          type: string
+    HoldingLocation:
+      description: Local holding location [LHR -> v852sa,b,c]
+      type: object
+      properties:
+        holdingLocation:
+          description: Institution Symbol [LHR -> v852sa]
+          type: string
+        sublocationCollection:
+          description: Sublocation or collection [LHR -> v852sb]
+          type: string
+        shelvingLocation:
+          description: Shelving location [LHR -> v852sc]
+          type: string
+    CallNumber:
+      description: Local call number [LHR -> v852sh,i,j,k,l,m]
+      type: object
+      properties:
+        displayCallNumber:
+          description: Display call Number [LHR -> v852 |k,h,i,m / |j/ |l]
+          type: string
+        classificationPart:
+          description: LHR -> v852sh
+          type: string
+        itemParts:
+          description: LHR -> v852si
+          type: array
+          items:
+            type: string
+        shelvingControlNumber:
+          description: LHR -> v852sj
+          type: string
+        prefixes:
+          description: LHR -> v852sk
+          type: array
+          items:
+            type: string
+        shelvingForm:
+          description: LHR -> v852sl
+          type: string
+        suffixes:
+          description: LHR -> v852sm
+          type: array
+          items:
+            type: string
+    SearchFacet:
+      type: object
+      properties:
+        index:
+          type: string
+        facetType:
+          type: string
+        values:
+          type: array
+          items:
+            $ref: '#/components/schemas/FacetValue'
+    SubFacet:
+      type: object
+      properties:
+        index:
+          type: string
+        facetType:
+          type: string
+        values:
+          type: array
+          items:
+            $ref: '#/components/schemas/SubFacetValue'
+    FacetValue:
+      type: object
+      properties:
+        value:
+          type: string
+        count:
+          type: integer
+          format: int32
+        subFacet:
+          $ref: '#/components/schemas/SubFacet'
+    SubFacetValue:
+      type: object
+      properties:
+        value:
+          type: string
+        count:
+          type: integer
+          format: int32
+    BibBriefResultSet:
+      type: object
+      properties:
+        numberOfRecords:
+          type: integer
+          format: int32
+        briefRecords:
+          type: array
+          items:
+            $ref: '#/components/schemas/BibRecordBrief'
+        searchFacets:
+          type: array
+          items:
+            $ref: '#/components/schemas/SearchFacet'
+    HoldingResultSet:
+      type: object
+      properties:
+        numberOfHoldings:
+          type: integer
+          format: int32
+        detailedHoldings:
+          type: array
+          items:
+            $ref: '#/components/schemas/HoldingDetail'
+externalDocs:
+  description: Find out more about WorldCatMetadata API
+  url: 'https://www.oclc.org/developer/develop/web-services/worldcat-metadata-api.en.html'
