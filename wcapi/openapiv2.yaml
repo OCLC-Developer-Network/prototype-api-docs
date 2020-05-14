@@ -5145,5 +5145,5 @@ components:
           items:
             $ref: '#/components/schemas/HoldingDetail'
 externalDocs:
-  description: Find out more about OCLC
-  url: 'https://www.oclc.org'
+  description: Find out more about WorldCat Search API
+  url: 'https://www.oclc.org/developer/develop/web-services/worldcat-search-api.en.html'

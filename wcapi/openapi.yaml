@@ -1614,5 +1614,5 @@ components:
       summary: Error returned when searching holdings and none found
       value: {"title":"Simon's cat","author":"Tofield, Simon.","publisher":"Grand Central Pub.","date":"2009.","ISBN":["9780446560061","0446560065"],"OCLCnumber":"318877925","library":[{"diagnostic":{"uri":"info:srw/diagnostic/1/65","details":"","message":"Holding not found"}}]}                                                                                                                                                                                                     
 externalDocs:
-  description: Find out more about OCLC
-  url: 'https://www.oclc.org'
+  description: Find out more about WorldCat Search API
+  url: 'https://www.oclc.org/developer/develop/web-services/worldcat-search-api.en.html'
